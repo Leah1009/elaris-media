@@ -1,0 +1,29 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: light;
+}
+
+html,
+body {
+  background: #f3e8d6;
+  color: #16130f;
+}
+
+body {
+  font-family: var(--font-jost), sans-serif;
+  font-weight: 300;
+  overflow-x: hidden;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-family: var(--font-playfair), serif;
+  font-weight: 600;
+  line-height: 1.12;
+  letter-spacing: -0.01em;
+}
