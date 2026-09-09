@@ -114,23 +114,36 @@ export async function updateAppointmentStatus(formData: FormData): Promise<void>
   await supabase.from("appointments").update({ status }).eq("id", appointmentId);
 
   if (status === "completed" && appointment.status !== "completed") {
-    const { data: client } = await supabase
-      .from("clients")
-      .select("id, total_visits, first_visit_at")
-      .eq("id", appointment.client_id)
-      .maybeSingle();
-
-    if (client) {
-      await supabase
-        .from("clients")
-        .update({
-          total_visits: client.total_visits + 1,
-          first_visit_at: client.first_visit_at ?? appointment.start_at,
-          last_visit_at: appointment.start_at,
-        })
-        .eq("id", client.id);
-    }
+    await recordClientVisit(supabase, appointment.client_id, appointment.start_at);
   }
 
   revalidatePath("/dashboard/calendar");
+}
+
+/**
+ * Shared by manual status updates and checkout: marking an appointment
+ * completed always advances the client's visit stats the same way,
+ * whether that happens from the calendar or from taking payment.
+ */
+export async function recordClientVisit(
+  supabase: Awaited<ReturnType<typeof createClient>>,
+  clientId: string,
+  visitAt: string,
+) {
+  const { data: client } = await supabase
+    .from("clients")
+    .select("id, total_visits, first_visit_at")
+    .eq("id", clientId)
+    .maybeSingle();
+
+  if (!client) return;
+
+  await supabase
+    .from("clients")
+    .update({
+      total_visits: client.total_visits + 1,
+      first_visit_at: client.first_visit_at ?? visitAt,
+      last_visit_at: visitAt,
+    })
+    .eq("id", client.id);
 }

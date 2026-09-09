@@ -107,6 +107,12 @@ export default async function CalendarPage({
                       {appt.status.replace("_", " ")}
                     </span>
                     <AppointmentStatusForm appointmentId={appt.id} currentStatus={appt.status} />
+                    <Link
+                      href={`/dashboard/checkout/${appt.id}`}
+                      className="mt-1 block text-[11px] font-medium text-gold-deep underline underline-offset-2"
+                    >
+                      Checkout
+                    </Link>
                   </div>
                 ))
               )}

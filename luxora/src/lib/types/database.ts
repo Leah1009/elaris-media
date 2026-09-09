@@ -293,6 +293,7 @@ export type Database = {
           slug: string
           state: string | null
           status: string
+          tax_rate_percent: number
           timezone: string
           updated_at: string
           zip: string | null
@@ -312,6 +313,7 @@ export type Database = {
           slug: string
           state?: string | null
           status?: string
+          tax_rate_percent?: number
           timezone?: string
           updated_at?: string
           zip?: string | null
@@ -331,6 +333,7 @@ export type Database = {
           slug?: string
           state?: string | null
           status?: string
+          tax_rate_percent?: number
           timezone?: string
           updated_at?: string
           zip?: string | null
@@ -775,6 +778,129 @@ export type Database = {
             referencedColumns: ["id"]
           },
         ]
+      }
+      payments: {
+        Row: {
+          appointment_id: string | null
+          business_id: string
+          client_id: string | null
+          created_at: string
+          deposit_applied_cents: number
+          discount_cents: number
+          id: string
+          method: string
+          notes: string | null
+          products_cents: number
+          services_cents: number
+          status: string
+          stripe_payment_intent_id: string | null
+          tax_cents: number
+          tip_cents: number
+          total_cents: number
+          updated_at: string
+        }
+        Insert: {
+          appointment_id?: string | null
+          business_id: string
+          client_id?: string | null
+          created_at?: string
+          deposit_applied_cents?: number
+          discount_cents?: number
+          id?: string
+          method: string
+          notes?: string | null
+          products_cents?: number
+          services_cents?: number
+          status?: string
+          stripe_payment_intent_id?: string | null
+          tax_cents?: number
+          tip_cents?: number
+          total_cents: number
+          updated_at?: string
+        }
+        Update: {
+          appointment_id?: string | null
+          business_id?: string
+          client_id?: string | null
+          created_at?: string
+          deposit_applied_cents?: number
+          discount_cents?: number
+          id?: string
+          method?: string
+          notes?: string | null
+          products_cents?: number
+          services_cents?: number
+          status?: string
+          stripe_payment_intent_id?: string | null
+          tax_cents?: number
+          tip_cents?: number
+          total_cents?: number
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      refunds: {
+        Row: {
+          amount_cents: number
+          business_id: string
+          created_at: string
+          id: string
+          payment_id: string
+          reason: string | null
+          stripe_refund_id: string | null
+        }
+        Insert: {
+          amount_cents: number
+          business_id: string
+          created_at?: string
+          id?: string
+          payment_id: string
+          reason?: string | null
+          stripe_refund_id?: string | null
+        }
+        Update: {
+          amount_cents?: number
+          business_id?: string
+          created_at?: string
+          id?: string
+          payment_id?: string
+          reason?: string | null
+          stripe_refund_id?: string | null
+        }
+        Relationships: []
+      }
+      stripe_connected_accounts: {
+        Row: {
+          business_id: string
+          charges_enabled: boolean
+          created_at: string
+          details_submitted: boolean
+          id: string
+          payouts_enabled: boolean
+          stripe_account_id: string
+          updated_at: string
+        }
+        Insert: {
+          business_id: string
+          charges_enabled?: boolean
+          created_at?: string
+          details_submitted?: boolean
+          id?: string
+          payouts_enabled?: boolean
+          stripe_account_id: string
+          updated_at?: string
+        }
+        Update: {
+          business_id?: string
+          charges_enabled?: boolean
+          created_at?: string
+          details_submitted?: boolean
+          id?: string
+          payouts_enabled?: boolean
+          stripe_account_id?: string
+          updated_at?: string
+        }
+        Relationships: []
       }
       plan_entitlements: {
         Row: {

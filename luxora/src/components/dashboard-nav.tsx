@@ -24,8 +24,8 @@ const GROUPS: NavGroup[] = [
   {
     title: "Money",
     links: [
-      { label: "Checkout / POS" },
-      { label: "Payments" },
+      { label: "Checkout / POS", href: "/dashboard/calendar" },
+      { label: "Payments", href: "/dashboard/payments" },
       { label: "Gift Cards" },
       { label: "Memberships" },
       { label: "Reports" },
@@ -50,7 +50,7 @@ const GROUPS: NavGroup[] = [
     links: [
       { label: "Business Profile" },
       { label: "Locations", href: "/dashboard/settings/locations" },
-      { label: "Payments" },
+      { label: "Payments", href: "/dashboard/settings/payments" },
       { label: "Hardware" },
       { label: "Subscription", href: "/dashboard/settings/subscription" },
     ],
