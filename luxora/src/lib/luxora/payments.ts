@@ -22,6 +22,7 @@ export function computeTotal({
   taxCents,
   tipCents = 0,
   depositAppliedCents = 0,
+  giftCardAppliedCents = 0,
 }: {
   servicesCents: number;
   productsCents?: number;
@@ -29,9 +30,16 @@ export function computeTotal({
   taxCents: number;
   tipCents?: number;
   depositAppliedCents?: number;
+  giftCardAppliedCents?: number;
 }): number {
   return Math.max(
     0,
-    servicesCents + productsCents - discountCents + taxCents + tipCents - depositAppliedCents,
+    servicesCents +
+      productsCents -
+      discountCents +
+      taxCents +
+      tipCents -
+      depositAppliedCents -
+      giftCardAppliedCents,
   );
 }

@@ -16,12 +16,14 @@ export function CheckoutForm({
   appointmentId,
   clientName,
   serviceLines,
+  products,
   taxRatePercent,
   cardEnabled,
 }: {
   appointmentId: string;
   clientName: string;
   serviceLines: { name: string; price_cents: number }[];
+  products: { id: string; name: string; retail_price_cents: number; quantity_on_hand: number }[];
   taxRatePercent: number;
   cardEnabled: boolean;
 }) {
@@ -36,16 +38,31 @@ export function CheckoutForm({
   const [discount, setDiscount] = useState("0");
   const [tip, setTip] = useState("0");
   const [method, setMethod] = useState<string>("cash");
+  const [productQty, setProductQty] = useState<Record<string, number>>({});
+  const [giftCardCode, setGiftCardCode] = useState("");
+  const [giftCardAmount, setGiftCardAmount] = useState("0");
 
   const servicesCents = serviceLines.reduce((sum, l) => sum + l.price_cents, 0);
+  const productsCents = products.reduce((sum, p) => sum + (productQty[p.id] ?? 0) * p.retail_price_cents, 0);
   const discountCents = Math.round((Number(discount) || 0) * 100);
   const tipCents = Math.round((Number(tip) || 0) * 100);
   const taxCents = useMemo(
-    () => computeTax(servicesCents - discountCents, taxRatePercent),
-    [servicesCents, discountCents, taxRatePercent],
+    () => computeTax(servicesCents + productsCents - discountCents, taxRatePercent),
+    [servicesCents, productsCents, discountCents, taxRatePercent],
   );
-  const totalCents = computeTotal({ servicesCents, discountCents, taxCents, tipCents });
+  const giftCardAppliedCents = giftCardCode.trim() ? Math.round((Number(giftCardAmount) || 0) * 100) : 0;
+  const totalCents = computeTotal({
+    servicesCents,
+    productsCents,
+    discountCents,
+    taxCents,
+    tipCents,
+    giftCardAppliedCents,
+  });
   const isManualMethod = (MANUAL_METHODS as readonly string[]).includes(method);
+  const selectedProductIds = Object.entries(productQty)
+    .filter(([, qty]) => qty > 0)
+    .map(([id]) => id);
 
   return (
     <div className="flex flex-col gap-5">
@@ -59,6 +76,29 @@ export function CheckoutForm({
             </div>
           ))}
         </div>
+
+        {products.length > 0 ? (
+          <div className="mt-4 flex flex-col gap-2 border-t border-border pt-4">
+            <p className="text-xs font-medium uppercase tracking-wide text-ink/60">Add Products</p>
+            {products.map((p) => (
+              <div key={p.id} className="flex items-center justify-between text-sm">
+                <span className="text-ink">
+                  {p.name} · {formatCents(p.retail_price_cents)}
+                </span>
+                <input
+                  type="number"
+                  min="0"
+                  max={p.quantity_on_hand}
+                  value={productQty[p.id] ?? 0}
+                  onChange={(e) =>
+                    setProductQty((prev) => ({ ...prev, [p.id]: Math.max(0, Number(e.target.value) || 0) }))
+                  }
+                  className="w-16 rounded-sm border border-border px-2 py-1 text-right text-charcoal"
+                />
+              </div>
+            ))}
+          </div>
+        ) : null}
 
         <div className="mt-4 flex flex-col gap-2 border-t border-border pt-4 text-sm">
           <div className="flex items-center justify-between">
@@ -104,6 +144,31 @@ export function CheckoutForm({
                 {pct}%
               </button>
             ))}
+          </div>
+        </div>
+
+        <div className="mt-4 flex flex-col gap-2 border-t border-border pt-4 text-sm">
+          <label htmlFor="gift-card-code" className="text-ink">
+            Gift Card Code (optional)
+          </label>
+          <div className="flex gap-2">
+            <input
+              id="gift-card-code"
+              type="text"
+              value={giftCardCode}
+              onChange={(e) => setGiftCardCode(e.target.value.toUpperCase())}
+              placeholder="LUX-XXXXXXXX"
+              className="flex-1 rounded-sm border border-border px-2 py-1 text-charcoal"
+            />
+            <input
+              type="number"
+              min="0"
+              step="0.01"
+              value={giftCardAmount}
+              onChange={(e) => setGiftCardAmount(e.target.value)}
+              disabled={!giftCardCode.trim()}
+              className="w-24 rounded-sm border border-border px-2 py-1 text-right text-charcoal disabled:opacity-50"
+            />
           </div>
         </div>
 
@@ -166,6 +231,14 @@ export function CheckoutForm({
           <input type="hidden" name="discount" value={discount} />
           <input type="hidden" name="tip" value={tip} />
           <input type="hidden" name="method" value={method} />
+          <input type="hidden" name="giftCardCode" value={giftCardCode} />
+          <input type="hidden" name="giftCardAmount" value={giftCardAmount} />
+          {selectedProductIds.map((id) => (
+            <span key={id}>
+              <input type="hidden" name="productIds" value={id} />
+              <input type="hidden" name={`qty_${id}`} value={productQty[id]} />
+            </span>
+          ))}
           {manualState?.error ? <p className="text-sm text-danger">{manualState.error}</p> : null}
           <button
             type="submit"

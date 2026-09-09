@@ -3,6 +3,7 @@
 import { useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
 import { formatCents } from "@/lib/luxora/money";
+import { WaitlistJoin } from "@/components/waitlist-join";
 
 type ServiceOption = {
   id: string;
@@ -296,7 +297,10 @@ export function BookingWizard({
             ))}
           </div>
         ) : (
-          <p className="text-sm text-ink">No availability on this date. Try another day.</p>
+          <div className="rounded-sm border border-border bg-white p-4">
+            <p className="text-sm text-ink">No availability on this date. Try another day, or:</p>
+            <WaitlistJoin slug={slug} serviceIds={selectedServiceIds} />
+          </div>
         )}
 
         <div className="flex gap-3">

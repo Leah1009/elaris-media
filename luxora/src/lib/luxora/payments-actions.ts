@@ -6,6 +6,7 @@ import { z } from "zod";
 import { createClient } from "@/lib/supabase/server";
 import { getBusinessContext } from "@/lib/luxora/business-context";
 import { recordClientVisit } from "@/lib/luxora/appointments-actions";
+import { redeemGiftCardForPayment } from "@/lib/luxora/gift-cards-actions";
 import { dollarsToCents } from "@/lib/luxora/money";
 import { computeTax, computeTotal, MANUAL_METHODS } from "@/lib/luxora/payments";
 import type { ActionState } from "@/lib/luxora/actions";
@@ -16,6 +17,8 @@ const CheckoutSchema = z.object({
   tip: z.string().optional(),
   method: z.enum(MANUAL_METHODS),
   notes: z.string().optional(),
+  giftCardCode: z.string().optional(),
+  giftCardAmount: z.string().optional(),
 });
 
 /**
@@ -51,27 +54,89 @@ export async function recordManualPayment(_prevState: ActionState, formData: For
     .eq("appointment_id", appointment.id);
 
   const servicesCents = (lineItems ?? []).reduce((sum, i) => sum + i.price_cents, 0);
+
+  const productIds = formData.getAll("productIds").map(String).filter(Boolean);
+  let productsCents = 0;
+  const productSales: { id: string; name: string; retail_price_cents: number; quantity_on_hand: number; qty: number }[] = [];
+
+  if (productIds.length > 0) {
+    const { data: products } = await supabase
+      .from("products")
+      .select("id, name, retail_price_cents, quantity_on_hand")
+      .eq("business_id", ctx.business.id)
+      .in("id", productIds);
+
+    for (const product of products ?? []) {
+      const qty = Math.max(0, Math.floor(Number(formData.get(`qty_${product.id}`)) || 0));
+      if (qty <= 0) continue;
+      if (qty > product.quantity_on_hand) {
+        return { error: `Not enough stock for ${product.name}.` };
+      }
+      productsCents += product.retail_price_cents * qty;
+      productSales.push({ ...product, qty });
+    }
+  }
+
   const discountCents = dollarsToCents(data.discount ?? "0");
   const tipCents = dollarsToCents(data.tip ?? "0");
-  const taxCents = computeTax(servicesCents - discountCents, ctx.business.tax_rate_percent ?? 0);
-  const totalCents = computeTotal({ servicesCents, discountCents, taxCents, tipCents });
+  const taxCents = computeTax(servicesCents + productsCents - discountCents, ctx.business.tax_rate_percent ?? 0);
+  const preGiftCardTotal = computeTotal({ servicesCents, productsCents, discountCents, taxCents, tipCents });
 
-  const { error } = await supabase.from("payments").insert({
-    business_id: ctx.business.id,
-    appointment_id: appointment.id,
-    client_id: appointment.client_id,
-    services_cents: servicesCents,
-    discount_cents: discountCents,
-    tax_cents: taxCents,
-    tip_cents: tipCents,
-    total_cents: totalCents,
-    method: data.method,
-    status: "succeeded",
-    notes: data.notes || null,
-  });
+  const giftCardCode = data.giftCardCode?.trim();
+  const requestedGiftCardCents = dollarsToCents(data.giftCardAmount ?? "0");
+  const giftCardAppliedCents = giftCardCode ? Math.min(requestedGiftCardCents, preGiftCardTotal) : 0;
+  const totalCents = preGiftCardTotal - giftCardAppliedCents;
 
-  if (error) {
-    return { error: error.message };
+  const { data: payment, error } = await supabase
+    .from("payments")
+    .insert({
+      business_id: ctx.business.id,
+      appointment_id: appointment.id,
+      client_id: appointment.client_id,
+      services_cents: servicesCents,
+      products_cents: productsCents,
+      discount_cents: discountCents,
+      tax_cents: taxCents,
+      tip_cents: tipCents,
+      gift_card_applied_cents: giftCardAppliedCents,
+      total_cents: totalCents,
+      method: data.method,
+      status: "succeeded",
+      notes: data.notes || null,
+    })
+    .select("id")
+    .single();
+
+  if (error || !payment) {
+    return { error: error?.message ?? "Could not record payment." };
+  }
+
+  if (giftCardCode && giftCardAppliedCents > 0) {
+    const redemption = await redeemGiftCardForPayment(
+      supabase,
+      ctx.business.id,
+      giftCardCode,
+      giftCardAppliedCents,
+      payment.id,
+    );
+    if ("error" in redemption) {
+      await supabase.from("payments").delete().eq("id", payment.id);
+      return { error: redemption.error };
+    }
+  }
+
+  for (const sale of productSales) {
+    await supabase.from("inventory_movements").insert({
+      business_id: ctx.business.id,
+      product_id: sale.id,
+      change_type: "sale",
+      quantity_delta: -sale.qty,
+      payment_id: payment.id,
+    });
+    await supabase
+      .from("products")
+      .update({ quantity_on_hand: sale.quantity_on_hand - sale.qty })
+      .eq("id", sale.id);
   }
 
   if (appointment.status !== "completed") {

@@ -16,9 +16,10 @@ const GROUPS: NavGroup[] = [
     links: [
       { label: "Services", href: "/dashboard/services" },
       { label: "Staff", href: "/dashboard/staff" },
-      { label: "Inventory" },
-      { label: "Products" },
+      { label: "Inventory", href: "/dashboard/products" },
+      { label: "Products", href: "/dashboard/products" },
       { label: "Forms", href: "/dashboard/forms" },
+      { label: "Waitlist", href: "/dashboard/waitlist" },
     ],
   },
   {
@@ -26,8 +27,9 @@ const GROUPS: NavGroup[] = [
     links: [
       { label: "Checkout / POS", href: "/dashboard/calendar" },
       { label: "Payments", href: "/dashboard/payments" },
-      { label: "Gift Cards" },
-      { label: "Memberships" },
+      { label: "Gift Cards", href: "/dashboard/gift-cards" },
+      { label: "Memberships", href: "/dashboard/memberships" },
+      { label: "Packages", href: "/dashboard/packages" },
       { label: "Reports" },
     ],
   },

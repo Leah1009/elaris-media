@@ -12,7 +12,7 @@ export default async function ReceiptPage({ params }: { params: Promise<{ appoin
 
   const { data: payment } = await supabase
     .from("payments")
-    .select("services_cents, discount_cents, tax_cents, tip_cents, total_cents, method, created_at")
+    .select("services_cents, products_cents, discount_cents, tax_cents, tip_cents, total_cents, method, created_at")
     .eq("appointment_id", appointmentId)
     .eq("business_id", ctx.business.id)
     .order("created_at", { ascending: false })
@@ -29,6 +29,12 @@ export default async function ReceiptPage({ params }: { params: Promise<{ appoin
           <span className="text-ink">Services</span>
           <span className="text-charcoal">{formatCents(payment.services_cents)}</span>
         </div>
+        {payment.products_cents > 0 ? (
+          <div className="flex justify-between">
+            <span className="text-ink">Products</span>
+            <span className="text-charcoal">{formatCents(payment.products_cents)}</span>
+          </div>
+        ) : null}
         {payment.discount_cents > 0 ? (
           <div className="flex justify-between">
             <span className="text-ink">Discount</span>

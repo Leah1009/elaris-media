@@ -28,6 +28,14 @@ export default async function CheckoutPage({ params }: { params: Promise<{ appoi
     .eq("business_id", ctx.business.id)
     .maybeSingle();
 
+  const { data: products } = await supabase
+    .from("products")
+    .select("id, name, retail_price_cents, quantity_on_hand")
+    .eq("business_id", ctx.business.id)
+    .eq("active", true)
+    .gt("quantity_on_hand", 0)
+    .order("name");
+
   const serviceLines = (lineItemRows ?? []).map((row) => ({
     name: (row.service as unknown as { name: string } | null)?.name ?? "Service",
     price_cents: row.price_cents,
@@ -41,6 +49,7 @@ export default async function CheckoutPage({ params }: { params: Promise<{ appoi
           appointmentId={appointment.id}
           clientName={(appointment.client as unknown as { full_name: string } | null)?.full_name ?? "Client"}
           serviceLines={serviceLines}
+          products={products ?? []}
           taxRatePercent={Number(ctx.business.tax_rate_percent ?? 0)}
           cardEnabled={connectedAccount?.charges_enabled ?? false}
         />
