@@ -11,12 +11,14 @@ export default async function ReviewsPage() {
   const [{ data: reviews }, { data: pendingAppointments }, { data: summary }] = await Promise.all([
     supabase
       .from("reviews")
-      .select("id, rating, comment, status, response, created_at, client:client_id(full_name)")
+      .select("id, rating, comment, status, response, created_at, client:reviews_client_business_fkey(full_name)")
       .eq("business_id", ctx.business.id)
       .order("created_at", { ascending: false }),
     supabase
       .from("appointments")
-      .select("id, start_at, client:client_id(full_name), review_requests(id, token, status)")
+      .select(
+        "id, start_at, client:client_id(full_name), review_requests:review_requests_appointment_business_fkey(id, token, status)",
+      )
       .eq("business_id", ctx.business.id)
       .eq("status", "completed")
       .order("start_at", { ascending: false })
@@ -66,7 +68,7 @@ export default async function ReviewsPage() {
             </thead>
             <tbody>
               {(pendingAppointments ?? []).map((a) => {
-                const request = a.review_requests;
+                const request = a.review_requests[0];
                 return (
                   <tr key={a.id} className="border-b border-border last:border-0">
                     <td className="px-4 py-3 text-ink">{a.client?.full_name ?? "—"}</td>

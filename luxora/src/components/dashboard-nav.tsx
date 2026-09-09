@@ -30,7 +30,7 @@ const GROUPS: NavGroup[] = [
       { label: "Gift Cards", href: "/dashboard/gift-cards" },
       { label: "Memberships", href: "/dashboard/memberships" },
       { label: "Packages", href: "/dashboard/packages" },
-      { label: "Reports" },
+      { label: "Reports", href: "/dashboard/reports" },
     ],
   },
   {
@@ -45,12 +45,16 @@ const GROUPS: NavGroup[] = [
   },
   {
     title: "Online",
-    links: [{ label: "Website" }, { label: "Online Booking" }, { label: "Online Store" }],
+    links: [
+      { label: "Website", href: "/dashboard/settings/website" },
+      { label: "Online Booking", href: "/dashboard/settings/online-booking" },
+      { label: "Online Store" },
+    ],
   },
   {
     title: "Settings",
     links: [
-      { label: "Business Profile" },
+      { label: "Business Profile", href: "/dashboard/settings/business-profile" },
       { label: "Locations", href: "/dashboard/settings/locations" },
       { label: "Payments", href: "/dashboard/settings/payments" },
       { label: "Hardware" },

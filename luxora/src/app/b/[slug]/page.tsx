@@ -38,23 +38,49 @@ export default async function PublicBusinessPage({ params }: { params: Promise<{
   ]);
 
   return (
-    <main className="mx-auto max-w-2xl px-6 py-16">
-      <span className="font-display text-xs uppercase tracking-[0.3em] text-gold-deep">
-        Book with
-      </span>
-      <h1 className="mt-2 font-display text-4xl text-charcoal">{business.name}</h1>
-      {business.description ? <p className="mt-3 text-ink">{business.description}</p> : null}
-      <p className="mt-3 text-sm text-ink">
-        {business.address_line1}, {business.city}, {business.state} {business.zip}
-        {business.phone ? ` · ${business.phone}` : ""}
-      </p>
+    <main>
+      {business.cover_image_url ? (
+        // eslint-disable-next-line @next/next/no-img-element
+        <img
+          src={business.cover_image_url}
+          alt=""
+          className="h-48 w-full object-cover sm:h-64"
+        />
+      ) : null}
 
-      <Link
-        href={`/b/${slug}/book`}
-        className="mt-8 inline-block rounded-sm bg-charcoal px-8 py-3 text-sm font-medium tracking-wide text-white transition hover:bg-charcoal-soft"
-      >
-        Book Now
-      </Link>
+      <div className="mx-auto max-w-2xl px-6 py-16">
+        <div className="flex items-center gap-3">
+          {business.logo_url ? (
+            // eslint-disable-next-line @next/next/no-img-element
+            <img
+              src={business.logo_url}
+              alt={`${business.name} logo`}
+              className="h-14 w-14 rounded-full border border-border object-cover"
+            />
+          ) : null}
+          <div>
+            <span className="font-display text-xs uppercase tracking-[0.3em] text-gold-deep">
+              Book with
+            </span>
+            <h1 className="font-display text-4xl text-charcoal">{business.name}</h1>
+          </div>
+        </div>
+        {business.website_tagline ? (
+          <p className="mt-2 text-sm italic text-ink/70">{business.website_tagline}</p>
+        ) : null}
+        {business.description ? <p className="mt-3 text-ink">{business.description}</p> : null}
+        <p className="mt-3 text-sm text-ink">
+          {business.address_line1}, {business.city}, {business.state} {business.zip}
+          {business.phone ? ` · ${business.phone}` : ""}
+        </p>
+
+        <Link
+          href={`/b/${slug}/book`}
+          style={business.brand_color ? { backgroundColor: business.brand_color } : undefined}
+          className="mt-8 inline-block rounded-sm bg-charcoal px-8 py-3 text-sm font-medium tracking-wide text-white transition hover:opacity-90"
+        >
+          Book Now
+        </Link>
 
       <section className="mt-12">
         <h2 className="font-display text-xl text-charcoal">Services</h2>
@@ -135,7 +161,8 @@ export default async function PublicBusinessPage({ params }: { params: Promise<{
         </section>
       ) : null}
 
-      <p className="mt-16 text-center text-xs text-ink/40">Powered by Luxora</p>
+        <p className="mt-16 text-center text-xs text-ink/40">Powered by Luxora</p>
+      </div>
     </main>
   );
 }

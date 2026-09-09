@@ -245,11 +245,11 @@ export type Database = {
             referencedColumns: ["id"]
           },
           {
-            foreignKeyName: "automation_rules_template_id_fkey"
-            columns: ["template_id"]
+            foreignKeyName: "automation_rules_template_business_fkey"
+            columns: ["template_id", "business_id"]
             isOneToOne: false
             referencedRelation: "message_templates"
-            referencedColumns: ["id"]
+            referencedColumns: ["id", "business_id"]
           },
         ]
       }
@@ -340,14 +340,21 @@ export type Database = {
       businesses: {
         Row: {
           address_line1: string | null
+          booking_window_days: number
+          brand_color: string | null
+          buffer_minutes: number
           business_type: string
           business_type_other: string | null
           city: string | null
+          cover_image_url: string | null
           created_at: string
           description: string | null
           email: string | null
           id: string
+          logo_url: string | null
+          min_notice_hours: number
           name: string
+          online_booking_enabled: boolean
           owner_profile_id: string
           phone: string | null
           slug: string
@@ -356,18 +363,26 @@ export type Database = {
           tax_rate_percent: number
           timezone: string
           updated_at: string
+          website_tagline: string | null
           zip: string | null
         }
         Insert: {
           address_line1?: string | null
+          booking_window_days?: number
+          brand_color?: string | null
+          buffer_minutes?: number
           business_type: string
           business_type_other?: string | null
           city?: string | null
+          cover_image_url?: string | null
           created_at?: string
           description?: string | null
           email?: string | null
           id?: string
+          logo_url?: string | null
+          min_notice_hours?: number
           name: string
+          online_booking_enabled?: boolean
           owner_profile_id: string
           phone?: string | null
           slug: string
@@ -376,18 +391,26 @@ export type Database = {
           tax_rate_percent?: number
           timezone?: string
           updated_at?: string
+          website_tagline?: string | null
           zip?: string | null
         }
         Update: {
           address_line1?: string | null
+          booking_window_days?: number
+          brand_color?: string | null
+          buffer_minutes?: number
           business_type?: string
           business_type_other?: string | null
           city?: string | null
+          cover_image_url?: string | null
           created_at?: string
           description?: string | null
           email?: string | null
           id?: string
+          logo_url?: string | null
+          min_notice_hours?: number
           name?: string
+          online_booking_enabled?: boolean
           owner_profile_id?: string
           phone?: string | null
           slug?: string
@@ -396,6 +419,7 @@ export type Database = {
           tax_rate_percent?: number
           timezone?: string
           updated_at?: string
+          website_tagline?: string | null
           zip?: string | null
         }
         Relationships: [
@@ -2186,11 +2210,11 @@ export type Database = {
         }
         Relationships: [
           {
-            foreignKeyName: "review_requests_appointment_id_fkey"
-            columns: ["appointment_id"]
-            isOneToOne: true
+            foreignKeyName: "review_requests_appointment_business_fkey"
+            columns: ["appointment_id", "business_id"]
+            isOneToOne: false
             referencedRelation: "appointments"
-            referencedColumns: ["id"]
+            referencedColumns: ["id", "business_id"]
           },
           {
             foreignKeyName: "review_requests_business_id_fkey"
@@ -2207,11 +2231,11 @@ export type Database = {
             referencedColumns: ["id"]
           },
           {
-            foreignKeyName: "review_requests_client_id_fkey"
-            columns: ["client_id"]
+            foreignKeyName: "review_requests_client_business_fkey"
+            columns: ["client_id", "business_id"]
             isOneToOne: false
             referencedRelation: "clients"
-            referencedColumns: ["id"]
+            referencedColumns: ["id", "business_id"]
           },
         ]
       }
@@ -2257,11 +2281,11 @@ export type Database = {
         }
         Relationships: [
           {
-            foreignKeyName: "reviews_appointment_id_fkey"
-            columns: ["appointment_id"]
-            isOneToOne: true
+            foreignKeyName: "reviews_appointment_business_fkey"
+            columns: ["appointment_id", "business_id"]
+            isOneToOne: false
             referencedRelation: "appointments"
-            referencedColumns: ["id"]
+            referencedColumns: ["id", "business_id"]
           },
           {
             foreignKeyName: "reviews_business_id_fkey"
@@ -2278,11 +2302,11 @@ export type Database = {
             referencedColumns: ["id"]
           },
           {
-            foreignKeyName: "reviews_client_id_fkey"
-            columns: ["client_id"]
+            foreignKeyName: "reviews_client_business_fkey"
+            columns: ["client_id", "business_id"]
             isOneToOne: false
             referencedRelation: "clients"
-            referencedColumns: ["id"]
+            referencedColumns: ["id", "business_id"]
           },
         ]
       }

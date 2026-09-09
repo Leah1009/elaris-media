@@ -26,6 +26,9 @@ export async function GET(request: Request, { params }: { params: Promise<{ slug
   if (!business) {
     return Response.json({ error: "This business is not accepting bookings." }, { status: 404 });
   }
+  if (!business.online_booking_enabled) {
+    return Response.json({ slots: [] });
+  }
 
   const supabase = await createClient();
   const tz = business.timezone;
@@ -104,6 +107,11 @@ export async function GET(request: Request, { params }: { params: Promise<{ slug
   const dayStart = zonedTimeToUtc(date, "00:00", tz);
   const dayEnd = zonedTimeToUtc(date, "23:59", tz);
 
+  const windowEndMs = Date.now() + business.booking_window_days * 24 * 60 * 60 * 1000;
+  if (dayStart.getTime() > windowEndMs) {
+    return Response.json({ slots: [] });
+  }
+
   const { data: existingAppointments } = await supabase
     .from("appointments")
     .select("staff_id, start_at, end_at")
@@ -127,6 +135,8 @@ export async function GET(request: Request, { params }: { params: Promise<{ slug
 
   const slots: { time: string; staffId: string }[] = [];
   const now = Date.now();
+  const earliestBookableMs = now + business.min_notice_hours * 60 * 60 * 1000;
+  const bufferMs = business.buffer_minutes * 60 * 1000;
 
   for (let m = openMinutes; m + totalMinutes <= closeMinutes; m += SLOT_INCREMENT_MINUTES) {
     const hh = String(Math.floor(m / 60)).padStart(2, "0");
@@ -135,11 +145,11 @@ export async function GET(request: Request, { params }: { params: Promise<{ slug
     const slotStartMs = slotStart.getTime();
     const slotEndMs = slotStartMs + totalMinutes * 60_000;
 
-    if (slotStartMs <= now) continue;
+    if (slotStartMs < earliestBookableMs) continue;
 
     const freeStaff = candidateStaffIds.find((staffId) => {
       const busy = busyByStaff.get(staffId) ?? [];
-      return !busy.some((b) => slotStartMs < b.end && slotEndMs > b.start);
+      return !busy.some((b) => slotStartMs < b.end + bufferMs && slotEndMs > b.start - bufferMs);
     });
 
     if (freeStaff) {

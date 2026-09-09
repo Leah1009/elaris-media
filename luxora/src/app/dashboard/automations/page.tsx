@@ -25,7 +25,9 @@ export default async function AutomationsPage() {
       .order("created_at", { ascending: false }),
     supabase
       .from("automation_rules")
-      .select("id, name, trigger_type, delay_hours, active, template:template_id(name, channel)")
+      .select(
+        "id, name, trigger_type, delay_hours, active, template:automation_rules_template_business_fkey(name, channel)",
+      )
       .eq("business_id", ctx.business.id)
       .order("created_at", { ascending: false }),
     supabase

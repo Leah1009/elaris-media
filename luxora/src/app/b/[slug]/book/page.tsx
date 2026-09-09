@@ -8,6 +8,21 @@ export default async function BookPage({ params }: { params: Promise<{ slug: str
   const business = await getBookableBusinessBySlug(slug);
   if (!business) notFound();
 
+  if (!business.online_booking_enabled) {
+    return (
+      <main className="mx-auto max-w-xl px-6 py-12">
+        <span className="font-display text-xs uppercase tracking-[0.3em] text-gold-deep">
+          {business.name}
+        </span>
+        <h1 className="mt-2 font-display text-3xl text-charcoal">Book an Appointment</h1>
+        <p className="mt-6 text-sm text-ink">
+          Online booking isn&apos;t available right now — please contact {business.name} directly to
+          schedule.
+        </p>
+      </main>
+    );
+  }
+
   const supabase = await createClient();
 
   const [{ data: services }, { data: staff }, { data: staffServices }, { data: forms }] = await Promise.all([
@@ -41,6 +56,7 @@ export default async function BookPage({ params }: { params: Promise<{ slug: str
           staff={staff ?? []}
           staffServices={staffServices ?? []}
           forms={(forms ?? []) as unknown as FormOption[]}
+          bookingWindowDays={business.booking_window_days}
         />
       </div>
     </main>

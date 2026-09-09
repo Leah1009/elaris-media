@@ -45,12 +45,14 @@ export function BookingWizard({
   staff,
   staffServices,
   forms,
+  bookingWindowDays,
 }: {
   slug: string;
   services: ServiceOption[];
   staff: StaffOption[];
   staffServices: StaffServiceRow[];
   forms: FormOption[];
+  bookingWindowDays: number;
 }) {
   const router = useRouter();
   const [step, setStep] = useState<Step>("services");
@@ -270,6 +272,7 @@ export function BookingWizard({
           type="date"
           value={date}
           min={todayStr()}
+          max={new Date(new Date().getTime() + bookingWindowDays * 86_400_000).toISOString().slice(0, 10)}
           onChange={(e) => {
             setDate(e.target.value);
             loadSlots(e.target.value, selectedStaffId);
