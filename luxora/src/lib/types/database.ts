@@ -2814,6 +2814,120 @@ export type Database = {
       }
     }
     Functions: {
+      admin_extend_trial: {
+        Args: { p_business_id: string; p_new_trial_end: string }
+        Returns: undefined
+      }
+      admin_get_business: {
+        Args: { p_business_id: string }
+        Returns: {
+          business_type: string
+          created_at: string
+          email: string
+          id: string
+          is_locked: boolean
+          name: string
+          phone: string
+          plan_id: string
+          plan_name: string
+          slug: string
+          status: string
+          subscription_id: string
+          subscription_status: string
+          trial_ends_at: string
+        }[]
+      }
+      admin_list_audit_logs: {
+        Args: { p_business_id: string; p_limit?: number }
+        Returns: {
+          action: string
+          actor_name: string
+          created_at: string
+          id: string
+          metadata: Json
+          target_id: string
+          target_table: string
+        }[]
+      }
+      admin_list_business_members: {
+        Args: { p_business_id: string }
+        Returns: {
+          full_name: string
+          profile_id: string
+          role: string
+          status: string
+        }[]
+      }
+      admin_list_businesses: {
+        Args: never
+        Returns: {
+          business_type: string
+          created_at: string
+          email: string
+          id: string
+          is_locked: boolean
+          member_count: number
+          name: string
+          phone: string
+          plan_name: string
+          slug: string
+          status: string
+          subscription_status: string
+          trial_ends_at: string
+        }[]
+      }
+      admin_list_plans: {
+        Args: never
+        Returns: {
+          badge: string
+          display_order: number
+          entitlements: Json
+          id: string
+          is_active: boolean
+          key: string
+          name: string
+          price_monthly_cents: number
+        }[]
+      }
+      admin_platform_stats: {
+        Args: never
+        Returns: {
+          active_count: number
+          locked_count: number
+          mrr_cents: number
+          total_businesses: number
+          trialing_count: number
+        }[]
+      }
+      admin_set_business_status: {
+        Args: { p_business_id: string; p_status: string }
+        Returns: undefined
+      }
+      admin_update_plan: {
+        Args: {
+          p_badge: string
+          p_is_active: boolean
+          p_name: string
+          p_plan_id: string
+          p_price_monthly_cents: number
+        }
+        Returns: undefined
+      }
+      admin_update_subscription: {
+        Args: { p_business_id: string; p_plan_id: string; p_status: string }
+        Returns: undefined
+      }
+      admin_upsert_entitlement: {
+        Args: {
+          p_key: string
+          p_plan_id: string
+          p_value_boolean?: boolean | null
+          p_value_integer?: number | null
+          p_value_text?: string | null
+          p_value_type: string
+        }
+        Returns: undefined
+      }
       create_online_booking: {
         Args: {
           p_business_id: string
@@ -2875,6 +2989,7 @@ export type Database = {
         Args: { target_business_id: string }
         Returns: boolean
       }
+      is_platform_admin: { Args: never; Returns: boolean }
       normalize_email: { Args: { p_email: string }; Returns: string }
       normalize_phone: { Args: { p_phone: string }; Returns: string }
       redeem_promotion: {
