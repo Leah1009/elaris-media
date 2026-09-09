@@ -5,8 +5,8 @@ type NavGroup = { title: string; links: NavLink[] };
 
 const TOP_LINKS: NavLink[] = [
   { label: "Dashboard", href: "/dashboard" },
-  { label: "Calendar" },
-  { label: "Clients" },
+  { label: "Calendar", href: "/dashboard/calendar" },
+  { label: "Clients", href: "/dashboard/clients" },
   { label: "Messages" },
 ];
 
@@ -14,8 +14,8 @@ const GROUPS: NavGroup[] = [
   {
     title: "Business",
     links: [
-      { label: "Services" },
-      { label: "Staff" },
+      { label: "Services", href: "/dashboard/services" },
+      { label: "Staff", href: "/dashboard/staff" },
       { label: "Inventory" },
       { label: "Products" },
       { label: "Forms" },
@@ -49,7 +49,7 @@ const GROUPS: NavGroup[] = [
     title: "Settings",
     links: [
       { label: "Business Profile" },
-      { label: "Locations" },
+      { label: "Locations", href: "/dashboard/settings/locations" },
       { label: "Payments" },
       { label: "Hardware" },
       { label: "Subscription", href: "/dashboard/settings/subscription" },
