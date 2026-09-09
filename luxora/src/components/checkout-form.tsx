@@ -19,6 +19,10 @@ export function CheckoutForm({
   products,
   taxRatePercent,
   cardEnabled,
+  loyaltyEnabled,
+  loyaltyPointValueCents,
+  loyaltyMinRedeemPoints,
+  loyaltyBalance,
 }: {
   appointmentId: string;
   clientName: string;
@@ -26,6 +30,10 @@ export function CheckoutForm({
   products: { id: string; name: string; retail_price_cents: number; quantity_on_hand: number }[];
   taxRatePercent: number;
   cardEnabled: boolean;
+  loyaltyEnabled: boolean;
+  loyaltyPointValueCents: number;
+  loyaltyMinRedeemPoints: number;
+  loyaltyBalance: number;
 }) {
   const [manualState, manualAction, manualPending] = useActionState<ActionState, FormData>(
     recordManualPayment,
@@ -41,6 +49,8 @@ export function CheckoutForm({
   const [productQty, setProductQty] = useState<Record<string, number>>({});
   const [giftCardCode, setGiftCardCode] = useState("");
   const [giftCardAmount, setGiftCardAmount] = useState("0");
+  const [promoCode, setPromoCode] = useState("");
+  const [loyaltyPoints, setLoyaltyPoints] = useState("0");
 
   const servicesCents = serviceLines.reduce((sum, l) => sum + l.price_cents, 0);
   const productsCents = products.reduce((sum, p) => sum + (productQty[p.id] ?? 0) * p.retail_price_cents, 0);
@@ -51,6 +61,9 @@ export function CheckoutForm({
     [servicesCents, productsCents, discountCents, taxRatePercent],
   );
   const giftCardAppliedCents = giftCardCode.trim() ? Math.round((Number(giftCardAmount) || 0) * 100) : 0;
+  const loyaltyAppliedCents = loyaltyEnabled
+    ? Math.max(0, Math.floor(Number(loyaltyPoints) || 0)) * loyaltyPointValueCents
+    : 0;
   const totalCents = computeTotal({
     servicesCents,
     productsCents,
@@ -58,6 +71,7 @@ export function CheckoutForm({
     taxCents,
     tipCents,
     giftCardAppliedCents,
+    loyaltyAppliedCents,
   });
   const isManualMethod = (MANUAL_METHODS as readonly string[]).includes(method);
   const selectedProductIds = Object.entries(productQty)
@@ -172,6 +186,48 @@ export function CheckoutForm({
           </div>
         </div>
 
+        <div className="mt-4 flex flex-col gap-2 border-t border-border pt-4 text-sm">
+          <label htmlFor="promo-code" className="text-ink">
+            Promo Code (optional)
+          </label>
+          <input
+            id="promo-code"
+            type="text"
+            value={promoCode}
+            onChange={(e) => setPromoCode(e.target.value.toUpperCase())}
+            placeholder="SUMMER10"
+            className="rounded-sm border border-border px-2 py-1 text-charcoal"
+          />
+          {promoCode.trim() ? (
+            <p className="text-xs text-ink/60">Discount is validated and applied when you submit.</p>
+          ) : null}
+        </div>
+
+        {loyaltyEnabled && loyaltyBalance > 0 ? (
+          <div className="mt-4 flex flex-col gap-2 border-t border-border pt-4 text-sm">
+            <div className="flex items-center justify-between">
+              <label htmlFor="loyalty-points" className="text-ink">
+                Redeem Loyalty Points ({loyaltyBalance} available
+                {loyaltyMinRedeemPoints > 0 ? `, min ${loyaltyMinRedeemPoints}` : ""})
+              </label>
+              <input
+                id="loyalty-points"
+                type="number"
+                min="0"
+                max={loyaltyBalance}
+                value={loyaltyPoints}
+                onChange={(e) => setLoyaltyPoints(e.target.value)}
+                className="w-24 rounded-sm border border-border px-2 py-1 text-right text-charcoal"
+              />
+            </div>
+            {Number(loyaltyPoints) > 0 ? (
+              <p className="text-xs text-ink/60">
+                Applies {formatCents(loyaltyAppliedCents)} toward this total.
+              </p>
+            ) : null}
+          </div>
+        ) : null}
+
         <div className="mt-4 flex justify-between border-t border-border pt-4 text-base font-medium text-charcoal">
           <span>Total</span>
           <span>{formatCents(totalCents)}</span>
@@ -233,6 +289,8 @@ export function CheckoutForm({
           <input type="hidden" name="method" value={method} />
           <input type="hidden" name="giftCardCode" value={giftCardCode} />
           <input type="hidden" name="giftCardAmount" value={giftCardAmount} />
+          <input type="hidden" name="promoCode" value={promoCode} />
+          <input type="hidden" name="loyaltyPoints" value={loyaltyPoints} />
           {selectedProductIds.map((id) => (
             <span key={id}>
               <input type="hidden" name="productIds" value={id} />

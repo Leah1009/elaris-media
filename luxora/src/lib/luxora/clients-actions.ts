@@ -17,6 +17,8 @@ const ClientSchema = z.object({
   state: z.string().optional(),
   zip: z.string().optional(),
   notes: z.string().optional(),
+  smsConsent: z.string().optional(),
+  emailConsent: z.string().optional(),
 });
 
 function getTagIds(formData: FormData): string[] {
@@ -41,6 +43,8 @@ export async function createClientRecord(_prevState: ActionState, formData: Form
   }
   const data = parsed.data;
   const supabase = await createClient();
+  const smsConsent = data.smsConsent === "on";
+  const emailConsent = data.emailConsent === "on";
 
   const { data: client, error } = await supabase
     .from("clients")
@@ -55,6 +59,10 @@ export async function createClientRecord(_prevState: ActionState, formData: Form
       state: data.state || null,
       zip: data.zip || null,
       notes: data.notes || null,
+      sms_consent: smsConsent,
+      sms_consent_at: smsConsent ? new Date().toISOString() : null,
+      email_consent: emailConsent,
+      email_consent_at: emailConsent ? new Date().toISOString() : null,
     })
     .select("id")
     .single();
@@ -81,6 +89,15 @@ export async function updateClientRecord(
   }
   const data = parsed.data;
   const supabase = await createClient();
+  const smsConsent = data.smsConsent === "on";
+  const emailConsent = data.emailConsent === "on";
+
+  const { data: existing } = await supabase
+    .from("clients")
+    .select("sms_consent, sms_consent_at, email_consent, email_consent_at")
+    .eq("id", clientId)
+    .eq("business_id", ctx.business.id)
+    .maybeSingle();
 
   const { error } = await supabase
     .from("clients")
@@ -94,6 +111,14 @@ export async function updateClientRecord(
       state: data.state || null,
       zip: data.zip || null,
       notes: data.notes || null,
+      sms_consent: smsConsent,
+      sms_consent_at: smsConsent ? (existing?.sms_consent ? existing.sms_consent_at : new Date().toISOString()) : null,
+      email_consent: emailConsent,
+      email_consent_at: emailConsent
+        ? existing?.email_consent
+          ? existing.email_consent_at
+          : new Date().toISOString()
+        : null,
     })
     .eq("id", clientId)
     .eq("business_id", ctx.business.id);

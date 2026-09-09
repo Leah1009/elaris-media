@@ -195,6 +195,64 @@ export type Database = {
           },
         ]
       }
+      automation_rules: {
+        Row: {
+          active: boolean
+          business_id: string
+          created_at: string
+          delay_hours: number
+          id: string
+          name: string
+          template_id: string
+          trigger_type: string
+          updated_at: string
+        }
+        Insert: {
+          active?: boolean
+          business_id: string
+          created_at?: string
+          delay_hours?: number
+          id?: string
+          name: string
+          template_id: string
+          trigger_type: string
+          updated_at?: string
+        }
+        Update: {
+          active?: boolean
+          business_id?: string
+          created_at?: string
+          delay_hours?: number
+          id?: string
+          name?: string
+          template_id?: string
+          trigger_type?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "automation_rules_business_id_fkey"
+            columns: ["business_id"]
+            isOneToOne: false
+            referencedRelation: "business_access_status"
+            referencedColumns: ["business_id"]
+          },
+          {
+            foreignKeyName: "automation_rules_business_id_fkey"
+            columns: ["business_id"]
+            isOneToOne: false
+            referencedRelation: "businesses"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "automation_rules_template_id_fkey"
+            columns: ["template_id"]
+            isOneToOne: false
+            referencedRelation: "message_templates"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       business_hours: {
         Row: {
           close_time: string | null
@@ -404,6 +462,49 @@ export type Database = {
             columns: ["service_id"]
             isOneToOne: false
             referencedRelation: "services"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      client_loyalty_points: {
+        Row: {
+          business_id: string
+          client_id: string
+          points_balance: number
+          updated_at: string
+        }
+        Insert: {
+          business_id: string
+          client_id: string
+          points_balance?: number
+          updated_at?: string
+        }
+        Update: {
+          business_id?: string
+          client_id?: string
+          points_balance?: number
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "client_loyalty_points_business_id_fkey"
+            columns: ["business_id"]
+            isOneToOne: false
+            referencedRelation: "business_access_status"
+            referencedColumns: ["business_id"]
+          },
+          {
+            foreignKeyName: "client_loyalty_points_business_id_fkey"
+            columns: ["business_id"]
+            isOneToOne: false
+            referencedRelation: "businesses"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "client_loyalty_points_client_id_fkey"
+            columns: ["client_id"]
+            isOneToOne: true
+            referencedRelation: "clients"
             referencedColumns: ["id"]
           },
         ]
@@ -625,6 +726,8 @@ export type Database = {
           city: string | null
           created_at: string
           email: string | null
+          email_consent: boolean
+          email_consent_at: string | null
           first_visit_at: string | null
           full_name: string
           id: string
@@ -633,6 +736,8 @@ export type Database = {
           notes: string | null
           phone: string | null
           preferred_staff_id: string | null
+          sms_consent: boolean
+          sms_consent_at: string | null
           state: string | null
           total_visits: number
           updated_at: string
@@ -645,6 +750,8 @@ export type Database = {
           city?: string | null
           created_at?: string
           email?: string | null
+          email_consent?: boolean
+          email_consent_at?: string | null
           first_visit_at?: string | null
           full_name: string
           id?: string
@@ -653,6 +760,8 @@ export type Database = {
           notes?: string | null
           phone?: string | null
           preferred_staff_id?: string | null
+          sms_consent?: boolean
+          sms_consent_at?: string | null
           state?: string | null
           total_visits?: number
           updated_at?: string
@@ -665,6 +774,8 @@ export type Database = {
           city?: string | null
           created_at?: string
           email?: string | null
+          email_consent?: boolean
+          email_consent_at?: string | null
           first_visit_at?: string | null
           full_name?: string
           id?: string
@@ -673,6 +784,8 @@ export type Database = {
           notes?: string | null
           phone?: string | null
           preferred_staff_id?: string | null
+          sms_consent?: boolean
+          sms_consent_at?: string | null
           state?: string | null
           total_visits?: number
           updated_at?: string
@@ -1102,6 +1215,107 @@ export type Database = {
           },
         ]
       }
+      loyalty_programs: {
+        Row: {
+          business_id: string
+          cents_spent_per_point: number
+          enabled: boolean
+          min_redeem_points: number
+          point_value_cents: number
+          updated_at: string
+        }
+        Insert: {
+          business_id: string
+          cents_spent_per_point?: number
+          enabled?: boolean
+          min_redeem_points?: number
+          point_value_cents?: number
+          updated_at?: string
+        }
+        Update: {
+          business_id?: string
+          cents_spent_per_point?: number
+          enabled?: boolean
+          min_redeem_points?: number
+          point_value_cents?: number
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "loyalty_programs_business_id_fkey"
+            columns: ["business_id"]
+            isOneToOne: true
+            referencedRelation: "business_access_status"
+            referencedColumns: ["business_id"]
+          },
+          {
+            foreignKeyName: "loyalty_programs_business_id_fkey"
+            columns: ["business_id"]
+            isOneToOne: true
+            referencedRelation: "businesses"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      loyalty_transactions: {
+        Row: {
+          business_id: string
+          client_id: string
+          created_at: string
+          id: string
+          payment_id: string | null
+          points_delta: number
+          type: string
+        }
+        Insert: {
+          business_id: string
+          client_id: string
+          created_at?: string
+          id?: string
+          payment_id?: string | null
+          points_delta: number
+          type: string
+        }
+        Update: {
+          business_id?: string
+          client_id?: string
+          created_at?: string
+          id?: string
+          payment_id?: string | null
+          points_delta?: number
+          type?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "loyalty_transactions_business_id_fkey"
+            columns: ["business_id"]
+            isOneToOne: false
+            referencedRelation: "business_access_status"
+            referencedColumns: ["business_id"]
+          },
+          {
+            foreignKeyName: "loyalty_transactions_business_id_fkey"
+            columns: ["business_id"]
+            isOneToOne: false
+            referencedRelation: "businesses"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "loyalty_transactions_client_id_fkey"
+            columns: ["client_id"]
+            isOneToOne: false
+            referencedRelation: "clients"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "loyalty_transactions_payment_id_fkey"
+            columns: ["payment_id"]
+            isOneToOne: false
+            referencedRelation: "payments"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       membership_plan_services: {
         Row: {
           membership_plan_id: string
@@ -1229,6 +1443,154 @@ export type Database = {
           },
         ]
       }
+      message_log: {
+        Row: {
+          appointment_id: string | null
+          automation_rule_id: string | null
+          body: string
+          business_id: string
+          channel: string
+          client_id: string | null
+          created_at: string
+          error: string | null
+          id: string
+          provider_message_id: string | null
+          status: string
+          subject: string | null
+          template_id: string | null
+          to_address: string | null
+        }
+        Insert: {
+          appointment_id?: string | null
+          automation_rule_id?: string | null
+          body: string
+          business_id: string
+          channel: string
+          client_id?: string | null
+          created_at?: string
+          error?: string | null
+          id?: string
+          provider_message_id?: string | null
+          status: string
+          subject?: string | null
+          template_id?: string | null
+          to_address?: string | null
+        }
+        Update: {
+          appointment_id?: string | null
+          automation_rule_id?: string | null
+          body?: string
+          business_id?: string
+          channel?: string
+          client_id?: string | null
+          created_at?: string
+          error?: string | null
+          id?: string
+          provider_message_id?: string | null
+          status?: string
+          subject?: string | null
+          template_id?: string | null
+          to_address?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "message_log_appointment_id_fkey"
+            columns: ["appointment_id"]
+            isOneToOne: false
+            referencedRelation: "appointments"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "message_log_automation_rule_fkey"
+            columns: ["automation_rule_id"]
+            isOneToOne: false
+            referencedRelation: "automation_rules"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "message_log_business_id_fkey"
+            columns: ["business_id"]
+            isOneToOne: false
+            referencedRelation: "business_access_status"
+            referencedColumns: ["business_id"]
+          },
+          {
+            foreignKeyName: "message_log_business_id_fkey"
+            columns: ["business_id"]
+            isOneToOne: false
+            referencedRelation: "businesses"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "message_log_client_id_fkey"
+            columns: ["client_id"]
+            isOneToOne: false
+            referencedRelation: "clients"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "message_log_template_id_fkey"
+            columns: ["template_id"]
+            isOneToOne: false
+            referencedRelation: "message_templates"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      message_templates: {
+        Row: {
+          active: boolean
+          body: string
+          business_id: string
+          channel: string
+          created_at: string
+          id: string
+          name: string
+          subject: string | null
+          type: string
+          updated_at: string
+        }
+        Insert: {
+          active?: boolean
+          body: string
+          business_id: string
+          channel: string
+          created_at?: string
+          id?: string
+          name: string
+          subject?: string | null
+          type: string
+          updated_at?: string
+        }
+        Update: {
+          active?: boolean
+          body?: string
+          business_id?: string
+          channel?: string
+          created_at?: string
+          id?: string
+          name?: string
+          subject?: string | null
+          type?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "message_templates_business_id_fkey"
+            columns: ["business_id"]
+            isOneToOne: false
+            referencedRelation: "business_access_status"
+            referencedColumns: ["business_id"]
+          },
+          {
+            foreignKeyName: "message_templates_business_id_fkey"
+            columns: ["business_id"]
+            isOneToOne: false
+            referencedRelation: "businesses"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       package_plans: {
         Row: {
           active: boolean
@@ -1333,10 +1695,13 @@ export type Database = {
           discount_cents: number
           gift_card_applied_cents: number
           id: string
+          loyalty_applied_cents: number
+          loyalty_points_earned: number
           method: string
           notes: string | null
           package_credit_applied: boolean
           products_cents: number
+          promotion_id: string | null
           services_cents: number
           status: string
           stripe_payment_intent_id: string | null
@@ -1354,10 +1719,13 @@ export type Database = {
           discount_cents?: number
           gift_card_applied_cents?: number
           id?: string
+          loyalty_applied_cents?: number
+          loyalty_points_earned?: number
           method: string
           notes?: string | null
           package_credit_applied?: boolean
           products_cents?: number
+          promotion_id?: string | null
           services_cents?: number
           status?: string
           stripe_payment_intent_id?: string | null
@@ -1375,10 +1743,13 @@ export type Database = {
           discount_cents?: number
           gift_card_applied_cents?: number
           id?: string
+          loyalty_applied_cents?: number
+          loyalty_points_earned?: number
           method?: string
           notes?: string | null
           package_credit_applied?: boolean
           products_cents?: number
+          promotion_id?: string | null
           services_cents?: number
           status?: string
           stripe_payment_intent_id?: string | null
@@ -1414,6 +1785,13 @@ export type Database = {
             columns: ["client_id"]
             isOneToOne: false
             referencedRelation: "clients"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "payments_promotion_id_fkey"
+            columns: ["promotion_id"]
+            isOneToOne: false
+            referencedRelation: "promotions"
             referencedColumns: ["id"]
           },
         ]
@@ -1591,6 +1969,138 @@ export type Database = {
         }
         Relationships: []
       }
+      promotion_redemptions: {
+        Row: {
+          business_id: string
+          client_id: string | null
+          created_at: string
+          discount_cents: number
+          id: string
+          payment_id: string | null
+          promotion_id: string
+        }
+        Insert: {
+          business_id: string
+          client_id?: string | null
+          created_at?: string
+          discount_cents: number
+          id?: string
+          payment_id?: string | null
+          promotion_id: string
+        }
+        Update: {
+          business_id?: string
+          client_id?: string | null
+          created_at?: string
+          discount_cents?: number
+          id?: string
+          payment_id?: string | null
+          promotion_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "promotion_redemptions_business_id_fkey"
+            columns: ["business_id"]
+            isOneToOne: false
+            referencedRelation: "business_access_status"
+            referencedColumns: ["business_id"]
+          },
+          {
+            foreignKeyName: "promotion_redemptions_business_id_fkey"
+            columns: ["business_id"]
+            isOneToOne: false
+            referencedRelation: "businesses"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "promotion_redemptions_client_id_fkey"
+            columns: ["client_id"]
+            isOneToOne: false
+            referencedRelation: "clients"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "promotion_redemptions_payment_id_fkey"
+            columns: ["payment_id"]
+            isOneToOne: false
+            referencedRelation: "payments"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "promotion_redemptions_promotion_id_fkey"
+            columns: ["promotion_id"]
+            isOneToOne: false
+            referencedRelation: "promotions"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      promotions: {
+        Row: {
+          active: boolean
+          business_id: string
+          code: string
+          created_at: string
+          description: string | null
+          discount_type: string
+          discount_value: number
+          id: string
+          max_uses: number | null
+          per_client_limit: number | null
+          updated_at: string
+          uses_count: number
+          valid_from: string | null
+          valid_to: string | null
+        }
+        Insert: {
+          active?: boolean
+          business_id: string
+          code: string
+          created_at?: string
+          description?: string | null
+          discount_type: string
+          discount_value: number
+          id?: string
+          max_uses?: number | null
+          per_client_limit?: number | null
+          updated_at?: string
+          uses_count?: number
+          valid_from?: string | null
+          valid_to?: string | null
+        }
+        Update: {
+          active?: boolean
+          business_id?: string
+          code?: string
+          created_at?: string
+          description?: string | null
+          discount_type?: string
+          discount_value?: number
+          id?: string
+          max_uses?: number | null
+          per_client_limit?: number | null
+          updated_at?: string
+          uses_count?: number
+          valid_from?: string | null
+          valid_to?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "promotions_business_id_fkey"
+            columns: ["business_id"]
+            isOneToOne: false
+            referencedRelation: "business_access_status"
+            referencedColumns: ["business_id"]
+          },
+          {
+            foreignKeyName: "promotions_business_id_fkey"
+            columns: ["business_id"]
+            isOneToOne: false
+            referencedRelation: "businesses"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       refunds: {
         Row: {
           amount_cents: number
@@ -1639,6 +2149,139 @@ export type Database = {
             columns: ["payment_id"]
             isOneToOne: false
             referencedRelation: "payments"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      review_requests: {
+        Row: {
+          appointment_id: string
+          business_id: string
+          client_id: string
+          completed_at: string | null
+          id: string
+          requested_at: string
+          status: string
+          token: string
+        }
+        Insert: {
+          appointment_id: string
+          business_id: string
+          client_id: string
+          completed_at?: string | null
+          id?: string
+          requested_at?: string
+          status?: string
+          token?: string
+        }
+        Update: {
+          appointment_id?: string
+          business_id?: string
+          client_id?: string
+          completed_at?: string | null
+          id?: string
+          requested_at?: string
+          status?: string
+          token?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "review_requests_appointment_id_fkey"
+            columns: ["appointment_id"]
+            isOneToOne: true
+            referencedRelation: "appointments"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "review_requests_business_id_fkey"
+            columns: ["business_id"]
+            isOneToOne: false
+            referencedRelation: "business_access_status"
+            referencedColumns: ["business_id"]
+          },
+          {
+            foreignKeyName: "review_requests_business_id_fkey"
+            columns: ["business_id"]
+            isOneToOne: false
+            referencedRelation: "businesses"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "review_requests_client_id_fkey"
+            columns: ["client_id"]
+            isOneToOne: false
+            referencedRelation: "clients"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      reviews: {
+        Row: {
+          appointment_id: string
+          business_id: string
+          client_id: string
+          comment: string | null
+          created_at: string
+          id: string
+          rating: number
+          responded_at: string | null
+          response: string | null
+          status: string
+          updated_at: string
+        }
+        Insert: {
+          appointment_id: string
+          business_id: string
+          client_id: string
+          comment?: string | null
+          created_at?: string
+          id?: string
+          rating: number
+          responded_at?: string | null
+          response?: string | null
+          status?: string
+          updated_at?: string
+        }
+        Update: {
+          appointment_id?: string
+          business_id?: string
+          client_id?: string
+          comment?: string | null
+          created_at?: string
+          id?: string
+          rating?: number
+          responded_at?: string | null
+          response?: string | null
+          status?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "reviews_appointment_id_fkey"
+            columns: ["appointment_id"]
+            isOneToOne: true
+            referencedRelation: "appointments"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "reviews_business_id_fkey"
+            columns: ["business_id"]
+            isOneToOne: false
+            referencedRelation: "business_access_status"
+            referencedColumns: ["business_id"]
+          },
+          {
+            foreignKeyName: "reviews_business_id_fkey"
+            columns: ["business_id"]
+            isOneToOne: false
+            referencedRelation: "businesses"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "reviews_client_id_fkey"
+            columns: ["client_id"]
+            isOneToOne: false
+            referencedRelation: "clients"
             referencedColumns: ["id"]
           },
         ]
@@ -2171,6 +2814,31 @@ export type Database = {
           total_visits: number
         }[]
       }
+      get_public_review_summary: {
+        Args: { p_business_id: string }
+        Returns: {
+          average_rating: number
+          review_count: number
+        }[]
+      }
+      get_public_reviews: {
+        Args: { p_business_id: string }
+        Returns: {
+          client_display_name: string
+          comment: string
+          created_at: string
+          id: string
+          rating: number
+          response: string
+        }[]
+      }
+      get_review_request: {
+        Args: { p_token: string }
+        Returns: {
+          business_name: string
+          status: string
+        }[]
+      }
       is_business_admin: {
         Args: { target_business_id: string }
         Returns: boolean
@@ -2185,6 +2853,14 @@ export type Database = {
       }
       normalize_email: { Args: { p_email: string }; Returns: string }
       normalize_phone: { Args: { p_phone: string }; Returns: string }
+      redeem_promotion: {
+        Args: { p_business_id: string; p_client_id?: string | null; p_code: string }
+        Returns: {
+          discount_type: string
+          discount_value: number
+          id: string
+        }[]
+      }
       register_business: {
         Args: {
           p_address_line1: string
@@ -2201,6 +2877,11 @@ export type Database = {
           p_trial_days?: number
           p_zip: string
         }
+        Returns: string
+      }
+      run_due_automations: { Args: { p_business_id: string }; Returns: number }
+      submit_review: {
+        Args: { p_comment?: string | null; p_rating: number; p_token: string }
         Returns: string
       }
     }

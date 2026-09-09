@@ -12,7 +12,9 @@ export default async function EditClientPage({ params }: { params: Promise<{ id:
   const [{ data: client }, { data: tags }, { data: assignments }] = await Promise.all([
     supabase
       .from("clients")
-      .select("id, full_name, phone, email, birthday, address_line1, city, state, zip, notes")
+      .select(
+        "id, full_name, phone, email, birthday, address_line1, city, state, zip, notes, sms_consent, email_consent",
+      )
       .eq("id", id)
       .eq("business_id", ctx.business.id)
       .maybeSingle(),

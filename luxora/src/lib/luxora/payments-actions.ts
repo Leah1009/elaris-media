@@ -7,6 +7,8 @@ import { createClient } from "@/lib/supabase/server";
 import { getBusinessContext } from "@/lib/luxora/business-context";
 import { recordClientVisit } from "@/lib/luxora/appointments-actions";
 import { redeemGiftCardForPayment } from "@/lib/luxora/gift-cards-actions";
+import { earnLoyaltyPoints, redeemLoyaltyPointsForPayment } from "@/lib/luxora/loyalty-actions";
+import { resolvePromotionDiscount } from "@/lib/luxora/promotions-actions";
 import { dollarsToCents } from "@/lib/luxora/money";
 import { computeTax, computeTotal, MANUAL_METHODS } from "@/lib/luxora/payments";
 import type { ActionState } from "@/lib/luxora/actions";
@@ -19,6 +21,8 @@ const CheckoutSchema = z.object({
   notes: z.string().optional(),
   giftCardCode: z.string().optional(),
   giftCardAmount: z.string().optional(),
+  promoCode: z.string().optional(),
+  loyaltyPoints: z.string().optional(),
 });
 
 /**
@@ -77,7 +81,23 @@ export async function recordManualPayment(_prevState: ActionState, formData: For
     }
   }
 
-  const discountCents = dollarsToCents(data.discount ?? "0");
+  let discountCents = dollarsToCents(data.discount ?? "0");
+
+  const promoCode = data.promoCode?.trim();
+  let promotionId: string | null = null;
+  if (promoCode) {
+    const promoResult = await resolvePromotionDiscount(
+      supabase,
+      ctx.business.id,
+      promoCode,
+      appointment.client_id,
+      Math.max(0, servicesCents + productsCents - discountCents),
+    );
+    if ("error" in promoResult) return { error: promoResult.error };
+    promotionId = promoResult.promotionId;
+    discountCents += promoResult.discountCents;
+  }
+
   const tipCents = dollarsToCents(data.tip ?? "0");
   const taxCents = computeTax(servicesCents + productsCents - discountCents, ctx.business.tax_rate_percent ?? 0);
   const preGiftCardTotal = computeTotal({ servicesCents, productsCents, discountCents, taxCents, tipCents });
@@ -85,7 +105,26 @@ export async function recordManualPayment(_prevState: ActionState, formData: For
   const giftCardCode = data.giftCardCode?.trim();
   const requestedGiftCardCents = dollarsToCents(data.giftCardAmount ?? "0");
   const giftCardAppliedCents = giftCardCode ? Math.min(requestedGiftCardCents, preGiftCardTotal) : 0;
-  const totalCents = preGiftCardTotal - giftCardAppliedCents;
+
+  const remainingAfterGiftCard = preGiftCardTotal - giftCardAppliedCents;
+  const requestedLoyaltyPoints = Math.max(0, Math.floor(Number(data.loyaltyPoints) || 0));
+  let loyaltyAppliedCents = 0;
+  let loyaltyPointsToRedeem = 0;
+  if (requestedLoyaltyPoints > 0) {
+    const { data: loyaltyProgram } = await supabase
+      .from("loyalty_programs")
+      .select("point_value_cents")
+      .eq("business_id", ctx.business.id)
+      .maybeSingle();
+    if (loyaltyProgram) {
+      const requestedCents = requestedLoyaltyPoints * loyaltyProgram.point_value_cents;
+      const cappedCents = Math.min(requestedCents, remainingAfterGiftCard);
+      loyaltyPointsToRedeem = Math.floor(cappedCents / loyaltyProgram.point_value_cents);
+      loyaltyAppliedCents = loyaltyPointsToRedeem * loyaltyProgram.point_value_cents;
+    }
+  }
+
+  const totalCents = remainingAfterGiftCard - loyaltyAppliedCents;
 
   const { data: payment, error } = await supabase
     .from("payments")
@@ -99,6 +138,8 @@ export async function recordManualPayment(_prevState: ActionState, formData: For
       tax_cents: taxCents,
       tip_cents: tipCents,
       gift_card_applied_cents: giftCardAppliedCents,
+      loyalty_applied_cents: loyaltyAppliedCents,
+      promotion_id: promotionId,
       total_cents: totalCents,
       method: data.method,
       status: "succeeded",
@@ -109,6 +150,16 @@ export async function recordManualPayment(_prevState: ActionState, formData: For
 
   if (error || !payment) {
     return { error: error?.message ?? "Could not record payment." };
+  }
+
+  if (promotionId) {
+    await supabase.from("promotion_redemptions").insert({
+      business_id: ctx.business.id,
+      promotion_id: promotionId,
+      client_id: appointment.client_id,
+      payment_id: payment.id,
+      discount_cents: discountCents,
+    });
   }
 
   if (giftCardCode && giftCardAppliedCents > 0) {
@@ -123,6 +174,25 @@ export async function recordManualPayment(_prevState: ActionState, formData: For
       await supabase.from("payments").delete().eq("id", payment.id);
       return { error: redemption.error };
     }
+  }
+
+  if (loyaltyPointsToRedeem > 0) {
+    const redemption = await redeemLoyaltyPointsForPayment(
+      supabase,
+      ctx.business.id,
+      appointment.client_id,
+      loyaltyPointsToRedeem,
+      payment.id,
+    );
+    if ("error" in redemption) {
+      await supabase.from("payments").delete().eq("id", payment.id);
+      return { error: redemption.error };
+    }
+  }
+
+  const pointsEarned = await earnLoyaltyPoints(supabase, ctx.business.id, appointment.client_id, totalCents, payment.id);
+  if (pointsEarned > 0) {
+    await supabase.from("payments").update({ loyalty_points_earned: pointsEarned }).eq("id", payment.id);
   }
 
   for (const sale of productSales) {

@@ -32,6 +32,11 @@ export default async function PublicBusinessPage({ params }: { params: Promise<{
         .order("day_of_week")
     : { data: [] };
 
+  const [{ data: reviewSummary }, { data: reviews }] = await Promise.all([
+    supabase.rpc("get_public_review_summary", { p_business_id: business.id }).maybeSingle(),
+    supabase.rpc("get_public_reviews", { p_business_id: business.id }),
+  ]);
+
   return (
     <main className="mx-auto max-w-2xl px-6 py-16">
       <span className="font-display text-xs uppercase tracking-[0.3em] text-gold-deep">
@@ -96,6 +101,37 @@ export default async function PublicBusinessPage({ params }: { params: Promise<{
               </div>
             ))}
           </dl>
+        </section>
+      ) : null}
+
+      {reviews && reviews.length > 0 ? (
+        <section className="mt-12">
+          <h2 className="font-display text-xl text-charcoal">
+            Reviews
+            {reviewSummary?.average_rating ? (
+              <span className="ml-2 text-sm font-normal text-ink/70">
+                {reviewSummary.average_rating} ★ ({reviewSummary.review_count})
+              </span>
+            ) : null}
+          </h2>
+          <div className="mt-4 flex flex-col gap-3">
+            {reviews.map((r) => (
+              <div key={r.id} className="rounded-sm border border-border bg-white p-4">
+                <div>
+                  <span className="text-gold-deep">{"★".repeat(r.rating)}</span>
+                  <span className="text-ink/30">{"★".repeat(5 - r.rating)}</span>
+                  <span className="ml-2 text-sm text-charcoal">{r.client_display_name}</span>
+                </div>
+                {r.comment ? <p className="mt-2 text-sm text-ink">{r.comment}</p> : null}
+                {r.response ? (
+                  <p className="mt-2 rounded-sm bg-cream-deep p-2 text-xs text-charcoal">
+                    <span className="font-medium">Response: </span>
+                    {r.response}
+                  </p>
+                ) : null}
+              </div>
+            ))}
+          </div>
         </section>
       ) : null}
 

@@ -14,6 +14,8 @@ export type ClientFormValues = {
   state?: string | null;
   zip?: string | null;
   notes?: string | null;
+  sms_consent?: boolean | null;
+  email_consent?: boolean | null;
 };
 
 export function ClientForm({
@@ -80,6 +82,28 @@ export function ClientForm({
           className="rounded-sm border border-border bg-white px-3.5 py-2.5 text-base text-charcoal outline-none focus:border-gold-deep"
         />
       </div>
+
+      <fieldset className="flex flex-col gap-2">
+        <legend className="text-sm font-medium text-charcoal">Communication Consent</legend>
+        <label className="flex items-center gap-2 text-sm text-ink">
+          <input
+            type="checkbox"
+            name="smsConsent"
+            defaultChecked={defaultValues?.sms_consent ?? false}
+            className="h-4 w-4 accent-gold-deep"
+          />
+          Client agreed to receive SMS messages
+        </label>
+        <label className="flex items-center gap-2 text-sm text-ink">
+          <input
+            type="checkbox"
+            name="emailConsent"
+            defaultChecked={defaultValues?.email_consent ?? false}
+            className="h-4 w-4 accent-gold-deep"
+          />
+          Client agreed to receive email messages
+        </label>
+      </fieldset>
 
       {tags.length > 0 ? (
         <fieldset className="flex flex-col gap-2">

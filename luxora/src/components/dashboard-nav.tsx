@@ -37,10 +37,10 @@ const GROUPS: NavGroup[] = [
     title: "Growth",
     links: [
       { label: "Marketing" },
-      { label: "Promotions" },
-      { label: "Automations" },
-      { label: "Reviews" },
-      { label: "Loyalty" },
+      { label: "Promotions", href: "/dashboard/promotions" },
+      { label: "Automations", href: "/dashboard/automations" },
+      { label: "Reviews", href: "/dashboard/reviews" },
+      { label: "Loyalty", href: "/dashboard/loyalty" },
     ],
   },
   {

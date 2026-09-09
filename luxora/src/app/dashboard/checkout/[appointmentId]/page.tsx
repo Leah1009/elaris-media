@@ -10,12 +10,25 @@ export default async function CheckoutPage({ params }: { params: Promise<{ appoi
 
   const { data: appointment } = await supabase
     .from("appointments")
-    .select("id, client:client_id(full_name)")
+    .select("id, client_id, client:client_id(full_name)")
     .eq("id", appointmentId)
     .eq("business_id", ctx.business.id)
     .maybeSingle();
 
   if (!appointment) notFound();
+
+  const [{ data: loyaltyProgram }, { data: loyaltyBalance }] = await Promise.all([
+    supabase
+      .from("loyalty_programs")
+      .select("enabled, point_value_cents, min_redeem_points")
+      .eq("business_id", ctx.business.id)
+      .maybeSingle(),
+    supabase
+      .from("client_loyalty_points")
+      .select("points_balance")
+      .eq("client_id", appointment.client_id)
+      .maybeSingle(),
+  ]);
 
   const { data: lineItemRows } = await supabase
     .from("appointment_services")
@@ -52,6 +65,10 @@ export default async function CheckoutPage({ params }: { params: Promise<{ appoi
           products={products ?? []}
           taxRatePercent={Number(ctx.business.tax_rate_percent ?? 0)}
           cardEnabled={connectedAccount?.charges_enabled ?? false}
+          loyaltyEnabled={loyaltyProgram?.enabled ?? false}
+          loyaltyPointValueCents={loyaltyProgram?.point_value_cents ?? 1}
+          loyaltyMinRedeemPoints={loyaltyProgram?.min_redeem_points ?? 0}
+          loyaltyBalance={loyaltyBalance?.points_balance ?? 0}
         />
       </div>
     </div>
