@@ -1249,7 +1249,35 @@ export type Database = {
       }
     }
     Functions: {
+      create_online_booking: {
+        Args: {
+          p_business_id: string
+          p_client_id?: string | null
+          p_form_submissions?: Json
+          p_location_id: string
+          p_new_client_email?: string | null
+          p_new_client_full_name?: string | null
+          p_new_client_phone?: string | null
+          p_notes?: string | null
+          p_service_ids: string[]
+          p_staff_id: string
+          p_start_at: string
+        }
+        Returns: string
+      }
+      find_client_for_booking: {
+        Args: { p_business_id: string; p_email: string | null; p_phone: string | null }
+        Returns: {
+          display_name: string
+          id: string
+          total_visits: number
+        }[]
+      }
       is_business_admin: {
+        Args: { target_business_id: string }
+        Returns: boolean
+      }
+      is_business_bookable: {
         Args: { target_business_id: string }
         Returns: boolean
       }
