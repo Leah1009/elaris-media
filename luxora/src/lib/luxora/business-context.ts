@@ -79,6 +79,28 @@ export const getBusinessContext = cache(async (): Promise<BusinessContext> => {
   };
 });
 
+/**
+ * Route Handlers can't use next/navigation's redirect() the way pages can —
+ * they return null instead so the caller can respond with a proper HTTP
+ * status.
+ */
+export async function getBusinessIdForCurrentUser(): Promise<string | null> {
+  const supabase = await createClient();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+  if (!user) return null;
+
+  const { data: membership } = await supabase
+    .from("business_members")
+    .select("business_id")
+    .eq("profile_id", user.id)
+    .limit(1)
+    .maybeSingle();
+
+  return membership?.business_id ?? null;
+}
+
 export function daysRemaining(trialEndsAt: string | null): number {
   if (!trialEndsAt) return 0;
   const ms = new Date(trialEndsAt).getTime() - Date.now();

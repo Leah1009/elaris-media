@@ -27,12 +27,20 @@ export default async function ClientsPage({
     <div className="flex flex-col gap-6">
       <div className="flex flex-wrap items-center justify-between gap-3">
         <h1 className="font-display text-2xl text-charcoal">Clients</h1>
+        <div className="flex gap-2">
+        <Link
+          href="/dashboard/clients/import"
+          className="rounded-sm border border-border px-5 py-2.5 text-sm font-medium text-charcoal transition hover:border-gold-deep"
+        >
+          Import Clients
+        </Link>
         <Link
           href="/dashboard/clients/new"
           className="rounded-sm bg-charcoal px-5 py-2.5 text-sm font-medium text-white transition hover:bg-charcoal-soft"
         >
           Add Client
         </Link>
+        </div>
       </div>
 
       <form className="max-w-sm">
