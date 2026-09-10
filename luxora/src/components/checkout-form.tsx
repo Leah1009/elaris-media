@@ -9,7 +9,7 @@ import type { ActionState } from "@/lib/luxora/actions";
 
 const UNAVAILABLE_METHODS: Record<string, string> = {
   terminal: "Requires a paired Stripe card reader — hardware ordering isn't set up yet.",
-  tap_to_pay: "Requires the Luxora mobile app, which doesn't exist yet.",
+  tap_to_pay: "Requires the Luxore mobile app, which doesn't exist yet.",
 };
 
 export function CheckoutForm({

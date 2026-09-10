@@ -1,109 +1,109 @@
-import Link from "next/link";
+"use client";
 
-type NavLink = { label: string; href?: string };
-type NavGroup = { title: string; links: NavLink[] };
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { t, type Locale, type TranslationKey } from "@/lib/luxora/i18n";
+
+type NavLink = { key: TranslationKey; href?: string };
+type NavGroup = { titleKey: TranslationKey; links: NavLink[] };
 
 const TOP_LINKS: NavLink[] = [
-  { label: "Dashboard", href: "/dashboard" },
-  { label: "Calendar", href: "/dashboard/calendar" },
-  { label: "Clients", href: "/dashboard/clients" },
-  { label: "Messages" },
+  { key: "nav_dashboard", href: "/dashboard" },
+  { key: "nav_calendar", href: "/dashboard/calendar" },
+  { key: "nav_clients", href: "/dashboard/clients" },
+  { key: "nav_messages", href: "/dashboard/messages" },
 ];
 
 const GROUPS: NavGroup[] = [
   {
-    title: "Business",
+    titleKey: "nav_business",
     links: [
-      { label: "Services", href: "/dashboard/services" },
-      { label: "Staff", href: "/dashboard/staff" },
-      { label: "Inventory", href: "/dashboard/products" },
-      { label: "Products", href: "/dashboard/products" },
-      { label: "Forms", href: "/dashboard/forms" },
-      { label: "Waitlist", href: "/dashboard/waitlist" },
+      { key: "nav_services", href: "/dashboard/services" },
+      { key: "nav_staff", href: "/dashboard/staff" },
+      { key: "nav_inventory", href: "/dashboard/products" },
+      { key: "nav_forms", href: "/dashboard/forms" },
+      { key: "nav_waitlist", href: "/dashboard/waitlist" },
+      { key: "nav_message_templates", href: "/dashboard/automations" },
     ],
   },
   {
-    title: "Money",
+    titleKey: "nav_money",
     links: [
-      { label: "Checkout / POS", href: "/dashboard/calendar" },
-      { label: "Payments", href: "/dashboard/payments" },
-      { label: "Gift Cards", href: "/dashboard/gift-cards" },
-      { label: "Memberships", href: "/dashboard/memberships" },
-      { label: "Packages", href: "/dashboard/packages" },
-      { label: "Reports", href: "/dashboard/reports" },
+      { key: "nav_checkout", href: "/dashboard/calendar" },
+      { key: "nav_payments", href: "/dashboard/payments" },
+      { key: "nav_gift_cards", href: "/dashboard/gift-cards" },
+      { key: "nav_memberships", href: "/dashboard/memberships" },
+      { key: "nav_packages", href: "/dashboard/packages" },
+      { key: "nav_reports", href: "/dashboard/reports" },
     ],
   },
   {
-    title: "Growth",
+    titleKey: "nav_growth",
     links: [
-      { label: "Marketing" },
-      { label: "Promotions", href: "/dashboard/promotions" },
-      { label: "Automations", href: "/dashboard/automations" },
-      { label: "Reviews", href: "/dashboard/reviews" },
-      { label: "Loyalty", href: "/dashboard/loyalty" },
+      { key: "nav_marketing" },
+      { key: "nav_promotions", href: "/dashboard/promotions" },
+      { key: "nav_automations", href: "/dashboard/automations" },
+      { key: "nav_reviews", href: "/dashboard/reviews" },
+      { key: "nav_loyalty", href: "/dashboard/loyalty" },
     ],
   },
   {
-    title: "Online",
+    titleKey: "nav_online",
     links: [
-      { label: "Website", href: "/dashboard/settings/website" },
-      { label: "Online Booking", href: "/dashboard/settings/online-booking" },
-      { label: "Online Store" },
-    ],
-  },
-  {
-    title: "Settings",
-    links: [
-      { label: "Business Profile", href: "/dashboard/settings/business-profile" },
-      { label: "Locations", href: "/dashboard/settings/locations" },
-      { label: "Payments", href: "/dashboard/settings/payments" },
-      { label: "Hardware" },
-      { label: "Subscription", href: "/dashboard/settings/subscription" },
+      { key: "nav_website", href: "/dashboard/settings/website" },
+      { key: "nav_online_booking", href: "/dashboard/settings/online-booking" },
+      { key: "nav_online_store" },
     ],
   },
 ];
 
-function NavItem({ link }: { link: NavLink }) {
+function NavItem({ link, lang }: { link: NavLink; lang: Locale }) {
+  const pathname = usePathname();
+  const isActive = link.href && (pathname === link.href || pathname?.startsWith(`${link.href}/`));
+  const label = t(lang, link.key);
+
   if (link.href) {
     return (
       <Link
         href={link.href}
-        className="block rounded-sm px-3 py-2 text-sm text-charcoal transition hover:bg-cream-deep"
+        className={`block rounded-sm px-3 py-2 text-sm transition ${
+          isActive ? "bg-cream-deep font-medium text-charcoal" : "text-ink hover:bg-cream-deep hover:text-charcoal"
+        }`}
       >
-        {link.label}
+        {label}
       </Link>
     );
   }
   return (
     <span className="flex items-center justify-between rounded-sm px-3 py-2 text-sm text-ink/50">
-      {link.label}
+      {label}
       <span className="rounded-full border border-border px-1.5 py-0.5 text-[10px] uppercase tracking-wide text-ink/50">
-        Soon
+        {t(lang, "nav_soon")}
       </span>
     </span>
   );
 }
 
-export function DashboardNav() {
+export function DashboardNav({ lang }: { lang: Locale }) {
   return (
     <nav aria-label="Main navigation" className="flex flex-col gap-1 p-4">
       <ul className="flex flex-col gap-0.5">
         {TOP_LINKS.map((link) => (
-          <li key={link.label}>
-            <NavItem link={link} />
+          <li key={link.key}>
+            <NavItem link={link} lang={lang} />
           </li>
         ))}
       </ul>
 
       {GROUPS.map((group) => (
-        <details key={group.title} className="mt-3 group" open>
-          <summary className="cursor-pointer select-none rounded-sm px-3 py-1.5 text-xs font-semibold uppercase tracking-widest text-gold-deep">
-            {group.title}
+        <details key={group.titleKey} className="mt-4 group" open>
+          <summary className="cursor-pointer select-none rounded-sm px-3 py-1.5 text-xs font-semibold uppercase tracking-[0.15em] text-gold-deep">
+            {t(lang, group.titleKey)}
           </summary>
-          <ul className="mt-1 flex flex-col gap-0.5">
+          <ul className="mt-1 flex flex-col gap-0.5 border-l border-border pl-2">
             {group.links.map((link) => (
-              <li key={link.label}>
-                <NavItem link={link} />
+              <li key={link.key}>
+                <NavItem link={link} lang={lang} />
               </li>
             ))}
           </ul>

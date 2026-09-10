@@ -2,16 +2,9 @@ import Link from "next/link";
 import { createClient } from "@/lib/supabase/server";
 import { getBusinessContext } from "@/lib/luxora/business-context";
 import { getWeekDates, addDays, todayDateStr, weekdayLabel, dayLabel } from "@/lib/luxora/calendar";
-import { zonedTimeToUtc, dateStrInTimeZone, formatInTimeZone } from "@/lib/luxora/timezone";
-import { AppointmentStatusForm } from "@/components/appointment-status-form";
-
-const STATUS_STYLES: Record<string, string> = {
-  pending: "bg-cream-deep text-charcoal",
-  confirmed: "bg-gold/20 text-gold-deep",
-  completed: "bg-charcoal text-white",
-  cancelled: "border border-border text-ink/50 line-through",
-  no_show: "border border-danger text-danger",
-};
+import { zonedTimeToUtc } from "@/lib/luxora/timezone";
+import { CalendarDayGrid, type CalendarAppointment, type CalendarStaff } from "@/components/calendar-day-grid";
+import { t } from "@/lib/luxora/i18n";
 
 export default async function CalendarPage({
   searchParams,
@@ -20,106 +13,167 @@ export default async function CalendarPage({
 }) {
   const { date } = await searchParams;
   const ctx = await getBusinessContext();
+  const lang = ctx.business.preferred_language;
   const anchor = date ?? todayDateStr();
   const weekDates = getWeekDates(anchor);
   const tz = ctx.business.timezone;
 
-  const rangeStart = zonedTimeToUtc(weekDates[0], "00:00", tz);
-  const rangeEnd = zonedTimeToUtc(addDays(weekDates[6], 1), "00:00", tz);
-
   const supabase = await createClient();
+
+  const { data: locations } = await supabase
+    .from("locations")
+    .select("id, is_primary")
+    .eq("business_id", ctx.business.id)
+    .order("is_primary", { ascending: false });
+  const primaryLocation = locations?.[0] ?? null;
+
+  const dayOfWeek = new Date(`${anchor}T00:00:00Z`).getUTCDay();
+  const { data: hours } = primaryLocation
+    ? await supabase
+        .from("business_hours")
+        .select("open_time, close_time, closed")
+        .eq("location_id", primaryLocation.id)
+        .eq("day_of_week", dayOfWeek)
+        .maybeSingle()
+    : { data: null };
+
+  const { data: staff } = await supabase
+    .from("staff")
+    .select("id, full_name")
+    .eq("business_id", ctx.business.id)
+    .eq("active", true)
+    .order("full_name");
+
+  const dayStart = zonedTimeToUtc(anchor, "00:00", tz);
+  const dayEnd = zonedTimeToUtc(addDays(anchor, 1), "00:00", tz);
+
   const { data: appointments } = await supabase
     .from("appointments")
     .select(
-      "id, start_at, end_at, status, notes, client:client_id(full_name), staff:staff_id(full_name)",
+      `id, start_at, end_at, status, notes, staff_id,
+       deposit_status, deposit_amount_cents, deposit_paid_cents,
+       client:client_id(id, full_name, phone, email, sms_consent, email_consent),
+       appointment_services(service:service_id(name, color))`,
     )
     .eq("business_id", ctx.business.id)
-    .gte("start_at", rangeStart.toISOString())
-    .lt("start_at", rangeEnd.toISOString())
+    .gte("start_at", dayStart.toISOString())
+    .lt("start_at", dayEnd.toISOString())
     .order("start_at");
 
-  const byDay = new Map<string, typeof appointments>();
-  for (const day of weekDates) byDay.set(day, []);
-  for (const appt of appointments ?? []) {
-    const day = dateStrInTimeZone(new Date(appt.start_at), tz);
-    byDay.get(day)?.push(appt);
-  }
+  const appointmentIds = (appointments ?? []).map((a) => a.id);
+  const { data: messages } = appointmentIds.length
+    ? await supabase
+        .from("message_log")
+        .select("id, appointment_id, channel, body, status, created_at")
+        .in("appointment_id", appointmentIds)
+        .order("created_at", { ascending: true })
+    : { data: [] };
 
-  const prevWeek = addDays(weekDates[0], -7);
-  const nextWeek = addDays(weekDates[0], 7);
+  const calendarAppointments: CalendarAppointment[] = (appointments ?? []).map((a) => {
+    const client = a.client as unknown as {
+      id: string;
+      full_name: string;
+      phone: string | null;
+      email: string | null;
+      sms_consent: boolean;
+      email_consent: boolean;
+    } | null;
+    const services = (a.appointment_services as unknown as { service: { name: string; color: string } | null }[]) ?? [];
+    return {
+      id: a.id,
+      startAt: a.start_at,
+      endAt: a.end_at,
+      status: a.status,
+      notes: a.notes,
+      staffId: a.staff_id,
+      depositStatus: a.deposit_status,
+      depositAmountCents: a.deposit_amount_cents,
+      depositPaidCents: a.deposit_paid_cents,
+      client,
+      services: services.map((s) => s.service).filter((s): s is { name: string; color: string } => Boolean(s)),
+      messages: (messages ?? [])
+        .filter((m) => m.appointment_id === a.id)
+        .map((m) => ({ id: m.id, channel: m.channel, body: m.body, status: m.status, createdAt: m.created_at })),
+    };
+  });
+
+  const calendarStaff: CalendarStaff[] = staff ?? [];
+
+  const prevDay = addDays(anchor, -1);
+  const nextDay = addDays(anchor, 1);
+  const today = todayDateStr();
 
   return (
     <div className="flex flex-col gap-6">
       <div className="flex flex-wrap items-center justify-between gap-3">
-        <h1 className="font-display text-2xl text-charcoal">Calendar</h1>
+        <h1 className="font-display text-2xl text-charcoal">{t(lang, "calendar_title")}</h1>
         <div className="flex items-center gap-2">
           <Link
-            href={`/dashboard/calendar?date=${prevWeek}`}
+            href={`/dashboard/calendar?date=${prevDay}`}
             className="rounded-sm border border-border px-3 py-1.5 text-sm text-charcoal hover:border-gold-deep"
           >
-            ← Prev
+            ← {t(lang, "prev")}
           </Link>
           <Link
-            href={`/dashboard/calendar?date=${todayDateStr()}`}
+            href={`/dashboard/calendar?date=${today}`}
             className="rounded-sm border border-border px-3 py-1.5 text-sm text-charcoal hover:border-gold-deep"
           >
-            Today
+            {t(lang, "today")}
           </Link>
           <Link
-            href={`/dashboard/calendar?date=${nextWeek}`}
+            href={`/dashboard/calendar?date=${nextDay}`}
             className="rounded-sm border border-border px-3 py-1.5 text-sm text-charcoal hover:border-gold-deep"
           >
-            Next →
+            {t(lang, "next")} →
           </Link>
           <Link
             href={`/dashboard/calendar/new?date=${anchor}`}
             className="rounded-sm bg-charcoal px-4 py-1.5 text-sm font-medium text-white hover:bg-charcoal-soft"
           >
-            New Appointment
+            {t(lang, "new_appointment")}
           </Link>
         </div>
       </div>
 
-      <div className="grid grid-cols-1 gap-4 sm:grid-cols-7">
+      <div className="grid grid-cols-7 gap-1.5 sm:gap-2">
         {weekDates.map((day) => (
-          <div key={day} className="rounded-sm border border-border bg-white p-3">
-            <p className="text-xs font-medium uppercase tracking-wide text-ink/60">
-              {weekdayLabel(day)} <span className="text-charcoal">{dayLabel(day)}</span>
-            </p>
-            <div className="mt-2 flex flex-col gap-2">
-              {(byDay.get(day) ?? []).length === 0 ? (
-                <p className="text-xs text-ink/40">—</p>
-              ) : (
-                byDay.get(day)!.map((appt) => (
-                  <div key={appt.id} className="rounded-sm border border-border p-2">
-                    <p className="text-xs font-medium text-charcoal">
-                      {formatInTimeZone(new Date(appt.start_at), tz, { hour: "numeric", minute: "2-digit" })}
-                    </p>
-                    <p className="mt-0.5 text-xs text-ink">
-                      {(appt.client as unknown as { full_name: string } | null)?.full_name}
-                    </p>
-                    <p className="text-[11px] text-ink/60">
-                      {(appt.staff as unknown as { full_name: string } | null)?.full_name}
-                    </p>
-                    <span
-                      className={`mt-1 inline-block rounded-full px-1.5 py-0.5 text-[10px] capitalize ${STATUS_STYLES[appt.status] ?? ""}`}
-                    >
-                      {appt.status.replace("_", " ")}
-                    </span>
-                    <AppointmentStatusForm appointmentId={appt.id} currentStatus={appt.status} />
-                    <Link
-                      href={`/dashboard/checkout/${appt.id}`}
-                      className="mt-1 block text-[11px] font-medium text-gold-deep underline underline-offset-2"
-                    >
-                      Checkout
-                    </Link>
-                  </div>
-                ))
-              )}
-            </div>
-          </div>
+          <Link
+            key={day}
+            href={`/dashboard/calendar?date=${day}`}
+            className={`flex flex-col items-center rounded-sm border px-1 py-2 text-center transition ${
+              day === anchor
+                ? "border-gold-deep bg-gold/10 text-charcoal"
+                : "border-border bg-white text-ink hover:border-gold-deep"
+            }`}
+          >
+            <span className="text-[10px] font-medium uppercase tracking-wide text-ink/60">{weekdayLabel(day)}</span>
+            <span className="text-sm font-medium">{dayLabel(day)}</span>
+          </Link>
         ))}
       </div>
+
+      {hours?.closed ? (
+        <p className="rounded-sm border border-border bg-cream-deep p-3 text-sm text-charcoal">
+          This location is closed on {weekdayLabel(anchor)}s. Any appointments below were booked outside regular
+          hours.
+        </p>
+      ) : !hours ? (
+        <p className="rounded-sm border border-border bg-cream-deep p-3 text-sm text-charcoal">
+          No business hours configured for this day yet — showing a default 8 AM–8 PM window.{" "}
+          <Link href="/dashboard/settings/locations" className="underline underline-offset-2">
+            Set business hours
+          </Link>
+        </p>
+      ) : null}
+
+      <CalendarDayGrid
+        openTime={hours && !hours.closed ? hours.open_time : null}
+        closeTime={hours && !hours.closed ? hours.close_time : null}
+        staff={calendarStaff}
+        appointments={calendarAppointments}
+        timezone={tz}
+        date={anchor}
+      />
     </div>
   );
 }

@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { createClient } from "@/lib/supabase/server";
 import { getBusinessContext } from "@/lib/luxora/business-context";
+import { t } from "@/lib/luxora/i18n";
 
 export default async function ClientsPage({
   searchParams,
@@ -9,6 +10,7 @@ export default async function ClientsPage({
 }) {
   const { q } = await searchParams;
   const ctx = await getBusinessContext();
+  const lang = ctx.business.preferred_language;
   const supabase = await createClient();
 
   let query = supabase
@@ -26,19 +28,19 @@ export default async function ClientsPage({
   return (
     <div className="flex flex-col gap-6">
       <div className="flex flex-wrap items-center justify-between gap-3">
-        <h1 className="font-display text-2xl text-charcoal">Clients</h1>
+        <h1 className="font-display text-2xl text-charcoal">{t(lang, "clients_title")}</h1>
         <div className="flex gap-2">
         <Link
           href="/dashboard/clients/import"
           className="rounded-sm border border-border px-5 py-2.5 text-sm font-medium text-charcoal transition hover:border-gold-deep"
         >
-          Import Clients
+          {t(lang, "import_clients")}
         </Link>
         <Link
           href="/dashboard/clients/new"
           className="rounded-sm bg-charcoal px-5 py-2.5 text-sm font-medium text-white transition hover:bg-charcoal-soft"
         >
-          Add Client
+          {t(lang, "add_client")}
         </Link>
         </div>
       </div>
@@ -48,7 +50,7 @@ export default async function ClientsPage({
           type="search"
           name="q"
           defaultValue={q}
-          placeholder="Search by name, phone or email"
+          placeholder={t(lang, "search_clients_placeholder")}
           className="w-full rounded-sm border border-border bg-white px-3.5 py-2.5 text-sm text-charcoal outline-none focus:border-gold-deep"
         />
       </form>
@@ -58,10 +60,10 @@ export default async function ClientsPage({
           <table className="w-full min-w-[560px] text-left text-sm">
             <thead>
               <tr className="border-b border-border text-xs uppercase tracking-wide text-ink/60">
-                <th className="px-4 py-3">Name</th>
-                <th className="px-4 py-3">Contact</th>
-                <th className="px-4 py-3">Visits</th>
-                <th className="px-4 py-3">Last Visit</th>
+                <th className="px-4 py-3">{t(lang, "col_name")}</th>
+                <th className="px-4 py-3">{t(lang, "col_contact")}</th>
+                <th className="px-4 py-3">{t(lang, "col_visits")}</th>
+                <th className="px-4 py-3">{t(lang, "col_last_visit")}</th>
               </tr>
             </thead>
             <tbody>
@@ -87,7 +89,7 @@ export default async function ClientsPage({
         </div>
       ) : (
         <p className="rounded-sm border border-border bg-white p-6 text-sm text-ink">
-          {q ? "No clients match your search." : "No clients yet. Add your first client."}
+          {q ? t(lang, "no_clients_search") : t(lang, "no_clients_yet")}
         </p>
       )}
     </div>

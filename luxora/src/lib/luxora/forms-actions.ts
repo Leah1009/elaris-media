@@ -14,6 +14,102 @@ const FormSchema = z.object({
   serviceId: z.string().optional(),
 });
 
+/**
+ * A starting point, not a mandatory built-in: creates a real, editable form +
+ * fields row set (the same tables/RLS every other form uses) that the
+ * business can then rename, reorder, or delete fields from via the normal
+ * builder. The Yes/No allergy field and its follow-up demonstrate the
+ * conditional-field mechanism (depends_on_field_id/depends_on_value).
+ */
+export async function createNewClientTemplateForm(): Promise<void> {
+  const ctx = await getBusinessContext();
+  const supabase = await createClient();
+
+  const { data: form, error } = await supabase
+    .from("client_forms")
+    .insert({
+      business_id: ctx.business.id,
+      name: "New Client",
+      description: "Collects the essentials for a new client and keeps their profile in sync.",
+      trigger: "first_visit_only",
+      service_id: null,
+    })
+    .select("id")
+    .single();
+
+  if (error || !form) {
+    return;
+  }
+
+  const { data: allergyField, error: allergyError } = await supabase
+    .from("form_fields")
+    .insert({
+      form_id: form.id,
+      label: "Do you have any allergies?",
+      field_type: "multiple_choice",
+      options: ["Yes", "No"],
+      required: true,
+      client_field_key: "has_allergies",
+      sort_order: 4,
+    })
+    .select("id")
+    .single();
+
+  if (allergyError || !allergyField) {
+    revalidatePath("/dashboard/forms");
+    redirect(`/dashboard/forms/${form.id}/edit`);
+    return;
+  }
+
+  await supabase.from("form_fields").insert([
+    {
+      form_id: form.id,
+      label: "Full Name",
+      field_type: "text",
+      required: true,
+      client_field_key: "full_name",
+      sort_order: 0,
+    },
+    {
+      form_id: form.id,
+      label: "Phone Number",
+      field_type: "text",
+      required: true,
+      client_field_key: "phone",
+      sort_order: 1,
+    },
+    {
+      form_id: form.id,
+      label: "Email Address",
+      field_type: "text",
+      required: true,
+      client_field_key: "email",
+      sort_order: 2,
+    },
+    {
+      form_id: form.id,
+      label: "Date of Birth",
+      field_type: "date",
+      required: true,
+      client_field_key: "birthday",
+      sort_order: 3,
+    },
+    {
+      form_id: form.id,
+      label: "Please list any allergies",
+      field_type: "textarea",
+      required: true,
+      client_field_key: "allergy_notes",
+      depends_on_field_id: allergyField.id,
+      depends_on_value: "Yes",
+      sort_order: 5,
+    },
+  ]);
+
+  revalidatePath("/dashboard/forms");
+  redirect(`/dashboard/forms/${form.id}/edit`);
+}
+
 export async function createForm(_prevState: ActionState, formData: FormData): Promise<ActionState> {
   const ctx = await getBusinessContext();
   const parsed = FormSchema.safeParse(Object.fromEntries(formData.entries()));
@@ -90,11 +186,16 @@ export async function toggleFormActive(formData: FormData): Promise<void> {
   revalidatePath("/dashboard/forms");
 }
 
+const CLIENT_FIELD_KEYS = ["full_name", "phone", "email", "birthday", "has_allergies", "allergy_notes"] as const;
+
 const FieldSchema = z.object({
   label: z.string().min(1, "Label is required."),
   fieldType: z.enum(["text", "textarea", "checkbox", "multiple_choice", "date", "signature", "consent"]),
   required: z.string().optional(),
   options: z.string().optional(),
+  clientFieldKey: z.enum(CLIENT_FIELD_KEYS).optional().or(z.literal("")),
+  dependsOnFieldId: z.string().optional(),
+  dependsOnValue: z.string().optional(),
 });
 
 function parseOptions(raw: string | undefined): string[] | null {
@@ -135,6 +236,9 @@ export async function addField(formId: string, formData: FormData): Promise<void
     field_type: data.fieldType,
     required: data.required === "on",
     options: data.fieldType === "multiple_choice" ? parseOptions(data.options) : null,
+    client_field_key: data.clientFieldKey || null,
+    depends_on_field_id: data.dependsOnFieldId || null,
+    depends_on_value: data.dependsOnFieldId ? data.dependsOnValue || null : null,
     sort_order: (maxRow?.sort_order ?? -1) + 1,
   });
 
@@ -155,6 +259,9 @@ export async function updateField(fieldId: string, formData: FormData): Promise<
       field_type: data.fieldType,
       required: data.required === "on",
       options: data.fieldType === "multiple_choice" ? parseOptions(data.options) : null,
+      client_field_key: data.clientFieldKey || null,
+      depends_on_field_id: data.dependsOnFieldId || null,
+      depends_on_value: data.dependsOnFieldId ? data.dependsOnValue || null : null,
     })
     .eq("id", fieldId);
 

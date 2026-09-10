@@ -12,7 +12,7 @@ export default function LoginPage() {
     <main className="flex min-h-screen items-center justify-center px-6 py-16">
       <div className="w-full max-w-sm">
         <Link href="/" className="font-display text-sm uppercase tracking-[0.3em] text-gold-deep">
-          Luxora
+          Luxore
         </Link>
         <h1 className="mt-4 font-display text-3xl text-charcoal">Welcome back</h1>
         <p className="mt-2 text-sm text-ink">Log in to manage your business.</p>
@@ -51,7 +51,7 @@ export default function LoginPage() {
         </form>
 
         <p className="mt-6 text-sm text-ink">
-          New to Luxora?{" "}
+          New to Luxore?{" "}
           <Link href="/register" className="font-medium text-gold-deep underline underline-offset-2">
             Start your free month
           </Link>

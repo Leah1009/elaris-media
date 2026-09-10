@@ -13,7 +13,7 @@ export default async function EditClientPage({ params }: { params: Promise<{ id:
     supabase
       .from("clients")
       .select(
-        "id, full_name, phone, email, birthday, address_line1, city, state, zip, notes, sms_consent, email_consent",
+        "id, full_name, phone, email, birthday, address_line1, city, state, zip, notes, has_allergies, allergy_notes, sms_consent, email_consent",
       )
       .eq("id", id)
       .eq("business_id", ctx.business.id)

@@ -21,7 +21,7 @@ const CheckoutSchema = z.object({
  * mobile app: a direct charge on the business's own connected account via
  * Stripe Checkout. The staff opens this at the front desk and hands the
  * screen to the customer (or shares the link) — no card data ever touches
- * Luxora's server. Terminal and Tap to Pay need hardware/a native app this
+ * Luxore's server. Terminal and Tap to Pay need hardware/a native app this
  * product doesn't have yet, so they aren't wired even once Stripe is
  * connected (see checkout-form.tsx).
  */

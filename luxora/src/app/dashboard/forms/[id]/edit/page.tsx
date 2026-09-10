@@ -18,7 +18,11 @@ export default async function EditFormPage({ params }: { params: Promise<{ id: s
       .eq("business_id", ctx.business.id)
       .maybeSingle(),
     supabase.from("services").select("id, name").eq("business_id", ctx.business.id).order("name"),
-    supabase.from("form_fields").select("id, label, field_type, required, options, sort_order").eq("form_id", id).order("sort_order"),
+    supabase
+      .from("form_fields")
+      .select("id, label, field_type, required, options, sort_order, client_field_key, depends_on_field_id, depends_on_value")
+      .eq("form_id", id)
+      .order("sort_order"),
   ]);
 
   if (!form) notFound();

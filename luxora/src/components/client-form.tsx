@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import { useActionState } from "react";
 import { FormField } from "@/components/form-field";
 import type { ActionState } from "@/lib/luxora/actions";
@@ -14,6 +15,8 @@ export type ClientFormValues = {
   state?: string | null;
   zip?: string | null;
   notes?: string | null;
+  has_allergies?: boolean | null;
+  allergy_notes?: string | null;
   sms_consent?: boolean | null;
   email_consent?: boolean | null;
 };
@@ -32,6 +35,7 @@ export function ClientForm({
   submitLabel: string;
 }) {
   const [state, formAction, pending] = useActionState<ActionState, FormData>(action, null);
+  const [hasAllergies, setHasAllergies] = useState(defaultValues?.has_allergies ?? false);
 
   return (
     <form action={formAction} className="flex flex-col gap-5" noValidate>
@@ -70,6 +74,30 @@ export function ClientForm({
         <FormField label="State" name="state" defaultValue={defaultValues?.state ?? undefined} />
         <FormField label="ZIP" name="zip" defaultValue={defaultValues?.zip ?? undefined} />
       </div>
+      <fieldset className="flex flex-col gap-2 rounded-sm border border-border p-3.5">
+        <legend className="px-1 text-sm font-medium text-charcoal">Allergies</legend>
+        <label className="flex items-center gap-2 text-sm text-ink">
+          <input
+            type="checkbox"
+            name="hasAllergies"
+            checked={hasAllergies}
+            onChange={(e) => setHasAllergies(e.target.checked)}
+            className="h-4 w-4 accent-gold-deep"
+          />
+          Client has allergies
+        </label>
+        {hasAllergies ? (
+          <textarea
+            name="allergyNotes"
+            rows={2}
+            required
+            placeholder="List any allergies…"
+            defaultValue={defaultValues?.allergy_notes ?? undefined}
+            className="rounded-sm border border-border bg-white px-3.5 py-2.5 text-base text-charcoal outline-none focus:border-gold-deep"
+          />
+        ) : null}
+      </fieldset>
+
       <div className="flex flex-col gap-1.5">
         <label htmlFor="notes" className="text-sm font-medium text-charcoal">
           Notes

@@ -15,9 +15,9 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "Luxora — Run your beauty business, beautifully",
+  title: "Luxore — Run your beauty business, beautifully",
   description:
-    "Luxora is the all-in-one operating and growth platform for beauty businesses: bookings, clients, payments, inventory, marketing and your own website in one place.",
+    "Luxore is the all-in-one operating and growth platform for beauty businesses: bookings, clients, payments, inventory, marketing and your own website in one place.",
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

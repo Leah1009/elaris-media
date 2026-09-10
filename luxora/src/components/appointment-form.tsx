@@ -4,20 +4,40 @@ import { useActionState } from "react";
 import { createAppointment } from "@/lib/luxora/appointments-actions";
 import type { ActionState } from "@/lib/luxora/actions";
 
+type DefaultValues = {
+  clientId?: string;
+  serviceIds?: string[];
+  staffId?: string;
+  locationId?: string;
+  time?: string;
+  status?: string;
+  notes?: string;
+  depositAmount?: string;
+};
+
 export function AppointmentForm({
   clients,
   services,
   staff,
   locations,
   defaultDate,
+  action,
+  defaultValues,
+  submitLabel,
+  pendingLabel,
 }: {
   clients: { id: string; full_name: string }[];
   services: { id: string; name: string; duration_minutes: number; price_cents: number }[];
   staff: { id: string; full_name: string }[];
   locations: { id: string; name: string }[];
   defaultDate: string;
+  action?: (state: ActionState, formData: FormData) => Promise<ActionState>;
+  defaultValues?: DefaultValues;
+  submitLabel?: string;
+  pendingLabel?: string;
 }) {
-  const [state, formAction, pending] = useActionState<ActionState, FormData>(createAppointment, null);
+  const [state, formAction, pending] = useActionState<ActionState, FormData>(action ?? createAppointment, null);
+  const dv = defaultValues ?? {};
 
   return (
     <form action={formAction} className="flex flex-col gap-5" noValidate>
@@ -29,7 +49,7 @@ export function AppointmentForm({
           id="clientId"
           name="clientId"
           required
-          defaultValue=""
+          defaultValue={dv.clientId ?? ""}
           className="rounded-sm border border-border bg-white px-3.5 py-2.5 text-base text-charcoal outline-none focus:border-gold-deep"
         >
           <option value="" disabled>
@@ -52,7 +72,13 @@ export function AppointmentForm({
         </legend>
         {services.map((s) => (
           <label key={s.id} className="flex items-center gap-2 text-sm text-ink">
-            <input type="checkbox" name="serviceIds" value={s.id} className="h-4 w-4 accent-gold-deep" />
+            <input
+              type="checkbox"
+              name="serviceIds"
+              value={s.id}
+              defaultChecked={dv.serviceIds?.includes(s.id)}
+              className="h-4 w-4 accent-gold-deep"
+            />
             {s.name} · {s.duration_minutes} min · ${(s.price_cents / 100).toFixed(0)}
           </label>
         ))}
@@ -66,7 +92,7 @@ export function AppointmentForm({
           id="staffId"
           name="staffId"
           required
-          defaultValue=""
+          defaultValue={dv.staffId ?? ""}
           className="rounded-sm border border-border bg-white px-3.5 py-2.5 text-base text-charcoal outline-none focus:border-gold-deep"
         >
           <option value="" disabled>
@@ -92,7 +118,7 @@ export function AppointmentForm({
             id="locationId"
             name="locationId"
             required
-            defaultValue=""
+            defaultValue={dv.locationId ?? ""}
             className="rounded-sm border border-border bg-white px-3.5 py-2.5 text-base text-charcoal outline-none focus:border-gold-deep"
           >
             <option value="" disabled>
@@ -132,6 +158,7 @@ export function AppointmentForm({
             type="time"
             name="time"
             required
+            defaultValue={dv.time ?? ""}
             className="rounded-sm border border-border bg-white px-3.5 py-2.5 text-base text-charcoal outline-none focus:border-gold-deep"
           />
         </div>
@@ -144,12 +171,35 @@ export function AppointmentForm({
         <select
           id="status"
           name="status"
-          defaultValue="confirmed"
+          defaultValue={dv.status ?? "confirmed"}
           className="rounded-sm border border-border bg-white px-3.5 py-2.5 text-base text-charcoal outline-none focus:border-gold-deep"
         >
           <option value="confirmed">Confirmed</option>
           <option value="pending">Pending</option>
         </select>
+      </div>
+
+      <div className="flex flex-col gap-1.5">
+        <label htmlFor="depositAmount" className="text-sm font-medium text-charcoal">
+          Deposit required
+        </label>
+        <div className="flex items-center gap-2">
+          <span className="text-ink/60">$</span>
+          <input
+            id="depositAmount"
+            type="number"
+            name="depositAmount"
+            step="0.01"
+            min="0"
+            defaultValue={dv.depositAmount ?? ""}
+            placeholder="0.00"
+            className="w-full rounded-sm border border-border bg-white px-3.5 py-2.5 text-base text-charcoal outline-none focus:border-gold-deep"
+          />
+        </div>
+        <p className="text-xs text-ink/50">
+          If set, the client is automatically messaged that this deposit is due within 24 hours or the
+          appointment will be cancelled.
+        </p>
       </div>
 
       <div className="flex flex-col gap-1.5">
@@ -160,6 +210,7 @@ export function AppointmentForm({
           id="notes"
           name="notes"
           rows={2}
+          defaultValue={dv.notes ?? ""}
           className="rounded-sm border border-border bg-white px-3.5 py-2.5 text-base text-charcoal outline-none focus:border-gold-deep"
         />
       </div>
@@ -175,7 +226,7 @@ export function AppointmentForm({
         disabled={pending}
         className="mt-2 self-start rounded-sm bg-charcoal px-6 py-2.5 text-sm font-medium tracking-wide text-white transition hover:bg-charcoal-soft disabled:opacity-60"
       >
-        {pending ? "Booking…" : "Create Appointment"}
+        {pending ? (pendingLabel ?? "Booking…") : (submitLabel ?? "Create Appointment")}
       </button>
     </form>
   );

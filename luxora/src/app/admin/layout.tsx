@@ -15,7 +15,7 @@ export default async function AdminLayout({ children }: { children: React.ReactN
     <div className="min-h-screen bg-cream">
       <header className="flex items-center justify-between border-b border-border bg-charcoal px-4 py-3 sm:px-6">
         <div className="flex items-center gap-6">
-          <span className="font-display text-lg text-white">Luxora Admin</span>
+          <span className="font-display text-lg text-white">Luxore Admin</span>
           <nav className="flex gap-4">
             {LINKS.map((link) => (
               <Link key={link.href} href={link.href} className="text-sm text-white/80 hover:text-white">

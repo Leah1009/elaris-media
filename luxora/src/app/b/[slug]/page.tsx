@@ -161,7 +161,7 @@ export default async function PublicBusinessPage({ params }: { params: Promise<{
         </section>
       ) : null}
 
-        <p className="mt-16 text-center text-xs text-ink/40">Powered by Luxora</p>
+        <p className="mt-16 text-center text-xs text-ink/40">Powered by Luxore</p>
       </div>
     </main>
   );

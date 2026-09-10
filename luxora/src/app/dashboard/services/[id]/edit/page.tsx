@@ -11,7 +11,7 @@ export default async function EditServicePage({ params }: { params: Promise<{ id
 
   const { data: service } = await supabase
     .from("services")
-    .select("id, name, category, description, duration_minutes, price_cents, deposit_required, deposit_cents, active")
+    .select("id, name, category, description, duration_minutes, price_cents, deposit_required, deposit_cents, active, color")
     .eq("id", id)
     .eq("business_id", ctx.business.id)
     .maybeSingle();

@@ -1,4 +1,4 @@
-# Luxora database
+# Luxore database
 
 Migrations in `migrations/` are applied, in order, to the `luxora` Supabase
 project (ref `ihfhbfxsqsiotiofpyrr`, us-east-1). They are the source of

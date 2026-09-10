@@ -10,15 +10,15 @@ export type StripeActionState = { error?: string } | null;
 
 /**
  * Creates (or resumes) the business's Stripe Connect Express account and
- * sends the owner to Stripe's own hosted onboarding. Luxora never collects
+ * sends the owner to Stripe's own hosted onboarding. Luxore never collects
  * or stores bank details, SSNs, or KYC documents itself — Stripe does, and
  * only the account id + a few status booleans come back to us. Funds this
  * account receives go straight to the business's own bank via Stripe,
- * never through a Luxora-owned account.
+ * never through a Luxore-owned account.
  */
 export async function startStripeOnboarding(): Promise<StripeActionState> {
   if (!isStripeConfigured()) {
-    return { error: "Stripe is not connected to Luxora yet. This will be available soon." };
+    return { error: "Stripe is not connected to Luxore yet. This will be available soon." };
   }
 
   const ctx = await getBusinessContext();

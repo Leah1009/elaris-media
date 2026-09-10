@@ -23,7 +23,7 @@ export default async function PaymentsSettingsPage() {
       <h1 className="font-display text-2xl text-charcoal">Payments</h1>
       <p className="mt-1 text-sm text-ink">
         Connect Stripe to accept cards, Tap to Pay and Terminal payments. Funds go directly to
-        your own bank account through Stripe — Luxora never holds your money.
+        your own bank account through Stripe — Luxore never holds your money.
       </p>
 
       <div className="mt-6 rounded-sm border border-border bg-white p-6">

@@ -26,6 +26,7 @@ const RegisterSchema = z
     businessType: z.enum(businessTypeValues),
     businessTypeOther: z.string().optional(),
     description: z.string().optional(),
+    preferredLanguage: z.enum(["en", "es"]).default("en"),
     email: z.email("Enter a valid login email."),
     password: z.string().min(8, "Password must be at least 8 characters."),
     confirmPassword: z.string(),
@@ -65,6 +66,7 @@ export async function registerBusiness(
     zip: data.zip,
     description: data.description || null,
     slug: `${slugify(data.businessName)}-${randomSlugSuffix()}`,
+    preferred_language: data.preferredLanguage,
   };
 
   const { data: signUpData, error: signUpError } = await supabase.auth.signUp({

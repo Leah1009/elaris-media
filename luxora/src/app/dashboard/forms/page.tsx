@@ -1,7 +1,8 @@
 import Link from "next/link";
 import { createClient } from "@/lib/supabase/server";
 import { getBusinessContext } from "@/lib/luxora/business-context";
-import { toggleFormActive } from "@/lib/luxora/forms-actions";
+import { toggleFormActive, createNewClientTemplateForm } from "@/lib/luxora/forms-actions";
+import { t } from "@/lib/luxora/i18n";
 
 const TRIGGER_LABELS: Record<string, string> = {
   manual: "Manual",
@@ -11,6 +12,7 @@ const TRIGGER_LABELS: Record<string, string> = {
 
 export default async function FormsPage() {
   const ctx = await getBusinessContext();
+  const lang = ctx.business.preferred_language;
   const supabase = await createClient();
 
   const { data: forms } = await supabase
@@ -21,14 +23,30 @@ export default async function FormsPage() {
 
   return (
     <div className="flex flex-col gap-6">
-      <div className="flex items-center justify-between">
-        <h1 className="font-display text-2xl text-charcoal">Client Forms</h1>
+      <div className="flex flex-wrap items-center justify-between gap-3">
+        <h1 className="font-display text-2xl text-charcoal">{t(lang, "forms_title")}</h1>
         <Link
           href="/dashboard/forms/new"
           className="rounded-sm bg-charcoal px-5 py-2.5 text-sm font-medium text-white transition hover:bg-charcoal-soft"
         >
-          New Form
+          {t(lang, "new_form")}
         </Link>
+      </div>
+
+      <div className="rounded-sm border border-dashed border-gold-deep/50 bg-gold/5 p-4">
+        <p className="text-sm font-medium text-charcoal">Start from a template</p>
+        <p className="mt-1 text-sm text-ink">
+          &ldquo;New Client&rdquo; collects name, phone, email, date of birth, and allergies — and keeps the
+          client&apos;s profile in sync automatically. Fully editable afterward.
+        </p>
+        <form action={createNewClientTemplateForm} className="mt-3">
+          <button
+            type="submit"
+            className="rounded-sm border border-gold-deep px-4 py-2 text-sm font-medium text-gold-deep transition hover:bg-gold-deep hover:text-white"
+          >
+            Use &ldquo;New Client&rdquo; Template
+          </button>
+        </form>
       </div>
 
       {forms && forms.length > 0 ? (

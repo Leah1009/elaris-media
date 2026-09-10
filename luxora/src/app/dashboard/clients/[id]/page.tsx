@@ -14,7 +14,7 @@ export default async function ClientDetailPage({ params }: { params: Promise<{ i
   const { data: client } = await supabase
     .from("clients")
     .select(
-      "id, full_name, phone, email, birthday, address_line1, city, state, zip, notes, total_visits, lifetime_spend_cents, first_visit_at, last_visit_at",
+      "id, full_name, phone, email, birthday, address_line1, city, state, zip, notes, has_allergies, allergy_notes, total_visits, lifetime_spend_cents, first_visit_at, last_visit_at",
     )
     .eq("id", id)
     .eq("business_id", ctx.business.id)
@@ -138,6 +138,20 @@ export default async function ClientDetailPage({ params }: { params: Promise<{ i
             </dd>
           </div>
         </dl>
+        {client.has_allergies !== null ? (
+          <div className="mt-4 border-t border-border pt-4">
+            <dt className="text-sm text-ink/60">Allergies</dt>
+            <dd className="mt-1 text-sm text-charcoal">
+              {client.has_allergies ? (
+                <span className="inline-flex items-center gap-1.5 rounded-full bg-danger/10 px-2.5 py-0.5 text-xs font-medium text-danger">
+                  ⚠ {client.allergy_notes || "Yes — see notes"}
+                </span>
+              ) : (
+                <span className="text-ink/60">None reported</span>
+              )}
+            </dd>
+          </div>
+        ) : null}
         {client.notes ? (
           <div className="mt-4 border-t border-border pt-4">
             <dt className="text-sm text-ink/60">Notes</dt>

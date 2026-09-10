@@ -14,6 +14,7 @@ export type PendingBusiness = {
   zip: string;
   description: string | null;
   slug: string;
+  preferred_language: "en" | "es";
 };
 
 /**
@@ -62,6 +63,10 @@ export async function completeBusinessRegistrationIfNeeded(
   if (error) {
     console.error("register_business failed", error);
     return { businessId: null, justCreated: false };
+  }
+
+  if (businessId) {
+    await supabase.from("businesses").update({ preferred_language: pending.preferred_language }).eq("id", businessId);
   }
 
   return { businessId, justCreated: true };

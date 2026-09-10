@@ -61,6 +61,9 @@ export type Database = {
           business_id: string
           client_id: string
           created_at: string
+          deposit_amount_cents: number
+          deposit_due_at: string | null
+          deposit_paid_cents: number
           deposit_status: string
           end_at: string
           id: string
@@ -76,6 +79,9 @@ export type Database = {
           business_id: string
           client_id: string
           created_at?: string
+          deposit_amount_cents?: number
+          deposit_due_at?: string | null
+          deposit_paid_cents?: number
           deposit_status?: string
           end_at: string
           id?: string
@@ -91,6 +97,9 @@ export type Database = {
           business_id?: string
           client_id?: string
           created_at?: string
+          deposit_amount_cents?: number
+          deposit_due_at?: string | null
+          deposit_paid_cents?: number
           deposit_status?: string
           end_at?: string
           id?: string
@@ -357,6 +366,7 @@ export type Database = {
           online_booking_enabled: boolean
           owner_profile_id: string
           phone: string | null
+          preferred_language: string
           slug: string
           state: string | null
           status: string
@@ -385,6 +395,7 @@ export type Database = {
           online_booking_enabled?: boolean
           owner_profile_id: string
           phone?: string | null
+          preferred_language?: string
           slug: string
           state?: string | null
           status?: string
@@ -413,6 +424,7 @@ export type Database = {
           online_booking_enabled?: boolean
           owner_profile_id?: string
           phone?: string | null
+          preferred_language?: string
           slug?: string
           state?: string | null
           status?: string
@@ -745,6 +757,7 @@ export type Database = {
       clients: {
         Row: {
           address_line1: string | null
+          allergy_notes: string | null
           birthday: string | null
           business_id: string
           city: string | null
@@ -754,6 +767,7 @@ export type Database = {
           email_consent_at: string | null
           first_visit_at: string | null
           full_name: string
+          has_allergies: boolean | null
           id: string
           last_visit_at: string | null
           lifetime_spend_cents: number
@@ -769,6 +783,7 @@ export type Database = {
         }
         Insert: {
           address_line1?: string | null
+          allergy_notes?: string | null
           birthday?: string | null
           business_id: string
           city?: string | null
@@ -778,6 +793,7 @@ export type Database = {
           email_consent_at?: string | null
           first_visit_at?: string | null
           full_name: string
+          has_allergies?: boolean | null
           id?: string
           last_visit_at?: string | null
           lifetime_spend_cents?: number
@@ -793,6 +809,7 @@ export type Database = {
         }
         Update: {
           address_line1?: string | null
+          allergy_notes?: string | null
           birthday?: string | null
           business_id?: string
           city?: string | null
@@ -802,6 +819,7 @@ export type Database = {
           email_consent_at?: string | null
           first_visit_at?: string | null
           full_name?: string
+          has_allergies?: boolean | null
           id?: string
           last_visit_at?: string | null
           lifetime_spend_cents?: number
@@ -841,6 +859,9 @@ export type Database = {
       }
       form_fields: {
         Row: {
+          client_field_key: string | null
+          depends_on_field_id: string | null
+          depends_on_value: string | null
           field_type: string
           form_id: string
           id: string
@@ -850,6 +871,9 @@ export type Database = {
           sort_order: number
         }
         Insert: {
+          client_field_key?: string | null
+          depends_on_field_id?: string | null
+          depends_on_value?: string | null
           field_type: string
           form_id: string
           id?: string
@@ -859,6 +883,9 @@ export type Database = {
           sort_order?: number
         }
         Update: {
+          client_field_key?: string | null
+          depends_on_field_id?: string | null
+          depends_on_value?: string | null
           field_type?: string
           form_id?: string
           id?: string
@@ -868,6 +895,13 @@ export type Database = {
           sort_order?: number
         }
         Relationships: [
+          {
+            foreignKeyName: "form_fields_depends_on_field_id_fkey"
+            columns: ["depends_on_field_id"]
+            isOneToOne: false
+            referencedRelation: "form_fields"
+            referencedColumns: ["id"]
+          },
           {
             foreignKeyName: "form_fields_form_id_fkey"
             columns: ["form_id"]
@@ -2345,6 +2379,7 @@ export type Database = {
           active: boolean
           business_id: string
           category: string | null
+          color: string | null
           created_at: string
           deposit_cents: number | null
           deposit_required: boolean
@@ -2360,6 +2395,7 @@ export type Database = {
           active?: boolean
           business_id: string
           category?: string | null
+          color?: string | null
           created_at?: string
           deposit_cents?: number | null
           deposit_required?: boolean
@@ -2375,6 +2411,7 @@ export type Database = {
           active?: boolean
           business_id?: string
           category?: string | null
+          color?: string | null
           created_at?: string
           deposit_cents?: number | null
           deposit_required?: boolean
@@ -2944,6 +2981,10 @@ export type Database = {
         }
         Returns: string
       }
+      enforce_deposit_deadlines: {
+        Args: { p_business_id: string }
+        Returns: number
+      }
       find_client_for_booking: {
         Args: { p_business_id: string; p_email: string | null; p_phone: string | null }
         Returns: {
@@ -3006,7 +3047,7 @@ export type Database = {
           p_business_type: string
           p_business_type_other: string | null
           p_city: string
-          p_default_plan_key?: string
+          p_default_plan_key?: string | null
           p_description: string | null
           p_email: string
           p_name: string

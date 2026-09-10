@@ -21,6 +21,8 @@ type FormFieldRow = {
   options: string[] | null;
   required: boolean;
   sort_order: number;
+  depends_on_field_id: string | null;
+  depends_on_value: string | null;
 };
 export type FormOption = {
   id: string;
@@ -152,10 +154,21 @@ export function BookingWizard({
               ? undefined
               : { fullName, phone, email },
           notes,
-          formSubmissions: applicableForms.map((f) => ({
-            form_id: f.id,
-            answers: formAnswers[f.id] ?? {},
-          })),
+          formSubmissions: applicableForms.map((f) => {
+            const answers = formAnswers[f.id] ?? {};
+            const visibleFieldIds = new Set(
+              f.form_fields
+                .filter(
+                  (field) =>
+                    !field.depends_on_field_id || answers[field.depends_on_field_id] === field.depends_on_value,
+                )
+                .map((field) => field.id),
+            );
+            return {
+              form_id: f.id,
+              answers: Object.fromEntries(Object.entries(answers).filter(([fieldId]) => visibleFieldIds.has(fieldId))),
+            };
+          }),
         }),
       });
       const data = await res.json();
@@ -420,6 +433,10 @@ export function BookingWizard({
             <div className="mt-3 flex flex-col gap-3">
               {[...form.form_fields]
                 .sort((a, b) => a.sort_order - b.sort_order)
+                .filter((field) => {
+                  if (!field.depends_on_field_id) return true;
+                  return (formAnswers[form.id]?.[field.depends_on_field_id] ?? "") === field.depends_on_value;
+                })
                 .map((field) => (
                   <div key={field.id} className="flex flex-col gap-1">
                     <label className="text-sm text-charcoal">

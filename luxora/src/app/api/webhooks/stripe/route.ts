@@ -6,7 +6,7 @@ import { createServiceRoleClient } from "@/lib/supabase/service-role";
  * Register this endpoint in the Stripe Dashboard as a CONNECT webhook (not
  * a regular account webhook) so it also receives events — like
  * payment_intent.succeeded — from businesses' connected accounts, not just
- * Luxora's own platform account.
+ * Luxore's own platform account.
  *
  * Authenticated entirely by Stripe's signature (no Supabase session exists
  * for a server-to-server callback), so this is the one place in the app

@@ -10,6 +10,9 @@ export type FormFieldRow = {
   required: boolean;
   options: string[] | null;
   sort_order: number;
+  client_field_key: string | null;
+  depends_on_field_id: string | null;
+  depends_on_value: string | null;
 };
 
 const FIELD_TYPES = [
@@ -22,7 +25,71 @@ const FIELD_TYPES = [
   { value: "consent", label: "Consent" },
 ];
 
-function FieldEditor({ formId, field, onDone }: { formId: string; field: FormFieldRow; onDone: () => void }) {
+const CLIENT_FIELD_OPTIONS = [
+  { value: "", label: "Don't sync to client profile" },
+  { value: "full_name", label: "Client's full name" },
+  { value: "phone", label: "Client's phone number" },
+  { value: "email", label: "Client's email address" },
+  { value: "birthday", label: "Client's date of birth" },
+  { value: "has_allergies", label: "Client has allergies (Yes/No)" },
+  { value: "allergy_notes", label: "Client's allergy details" },
+];
+
+function DependsOnControl({
+  otherFields,
+  defaultFieldId,
+  defaultValue,
+}: {
+  otherFields: FormFieldRow[];
+  defaultFieldId?: string;
+  defaultValue?: string;
+}) {
+  const [dependsOnFieldId, setDependsOnFieldId] = useState(defaultFieldId ?? "");
+
+  if (otherFields.length === 0) return null;
+
+  return (
+    <div className="flex flex-col gap-2 rounded-sm border border-border/70 bg-cream-deep/50 p-3">
+      <label className="text-xs font-medium text-charcoal">
+        Only show this field when… <span className="font-normal text-ink/50">(optional)</span>
+      </label>
+      <select
+        name="dependsOnFieldId"
+        value={dependsOnFieldId}
+        onChange={(e) => setDependsOnFieldId(e.target.value)}
+        className="rounded-sm border border-border px-3 py-2 text-sm text-charcoal"
+      >
+        <option value="">Always show</option>
+        {otherFields.map((f) => (
+          <option key={f.id} value={f.id}>
+            {f.label}
+          </option>
+        ))}
+      </select>
+      {dependsOnFieldId ? (
+        <input
+          name="dependsOnValue"
+          defaultValue={defaultValue ?? ""}
+          placeholder="…is answered (e.g. Yes)"
+          required
+          className="rounded-sm border border-border px-3 py-2 text-sm text-charcoal"
+        />
+      ) : null}
+    </div>
+  );
+}
+
+function FieldEditor({
+  formId,
+  field,
+  otherFields,
+  onDone,
+}: {
+  formId: string;
+  field: FormFieldRow;
+  otherFields: FormFieldRow[];
+  onDone: () => void;
+}) {
   const [type, setType] = useState(field.field_type);
   const boundUpdate = updateField.bind(null, field.id);
 
@@ -65,6 +132,28 @@ function FieldEditor({ formId, field, onDone }: { formId: string; field: FormFie
         <input type="checkbox" name="required" defaultChecked={field.required} className="h-4 w-4 accent-gold-deep" />
         Required
       </label>
+
+      <div className="flex flex-col gap-1.5">
+        <label className="text-xs font-medium text-charcoal">Sync answer to client profile</label>
+        <select
+          name="clientFieldKey"
+          defaultValue={field.client_field_key ?? ""}
+          className="rounded-sm border border-border px-3 py-2 text-sm text-charcoal"
+        >
+          {CLIENT_FIELD_OPTIONS.map((o) => (
+            <option key={o.value} value={o.value}>
+              {o.label}
+            </option>
+          ))}
+        </select>
+      </div>
+
+      <DependsOnControl
+        otherFields={otherFields}
+        defaultFieldId={field.depends_on_field_id ?? undefined}
+        defaultValue={field.depends_on_value ?? undefined}
+      />
+
       <div className="flex gap-2">
         <button type="submit" className="rounded-sm bg-charcoal px-4 py-1.5 text-sm text-white">
           Save
@@ -85,7 +174,13 @@ export function FormFieldsManager({ formId, fields }: { formId: string; fields: 
     <div className="flex flex-col gap-3">
       {fields.map((field, i) =>
         editingId === field.id ? (
-          <FieldEditor key={field.id} formId={formId} field={field} onDone={() => setEditingId(null)} />
+          <FieldEditor
+            key={field.id}
+            formId={formId}
+            field={field}
+            otherFields={fields.filter((f) => f.id !== field.id)}
+            onDone={() => setEditingId(null)}
+          />
         ) : (
           <div
             key={field.id}
@@ -98,6 +193,10 @@ export function FormFieldsManager({ formId, fields }: { formId: string; fields: 
               <p className="text-xs text-ink/60">
                 {FIELD_TYPES.find((t) => t.value === field.field_type)?.label}
                 {field.options ? ` — ${field.options.join(", ")}` : ""}
+                {field.client_field_key ? " · syncs to client profile" : ""}
+                {field.depends_on_field_id
+                  ? ` · shown only if "${fields.find((f) => f.id === field.depends_on_field_id)?.label}" = ${field.depends_on_value}`
+                  : ""}
               </p>
             </div>
             <div className="flex items-center gap-1">
@@ -174,6 +273,20 @@ export function FormFieldsManager({ formId, fields }: { formId: string; fields: 
           <input type="checkbox" name="required" className="h-4 w-4 accent-gold-deep" />
           Required
         </label>
+
+        <div className="flex flex-col gap-1.5">
+          <label className="text-xs font-medium text-charcoal">Sync answer to client profile</label>
+          <select name="clientFieldKey" defaultValue="" className="rounded-sm border border-border px-3 py-2 text-sm text-charcoal">
+            {CLIENT_FIELD_OPTIONS.map((o) => (
+              <option key={o.value} value={o.value}>
+                {o.label}
+              </option>
+            ))}
+          </select>
+        </div>
+
+        <DependsOnControl otherFields={fields} />
+
         <button type="submit" className="self-start rounded-sm border border-border px-4 py-1.5 text-sm text-charcoal hover:border-gold-deep">
           Add Field
         </button>

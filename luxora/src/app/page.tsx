@@ -4,7 +4,7 @@ export default function HomePage() {
   return (
     <main className="flex min-h-screen flex-col items-center justify-center px-6 py-24 text-center">
       <span className="font-display text-sm uppercase tracking-[0.3em] text-gold-deep">
-        Luxora
+        Luxore
       </span>
       <h1 className="mt-6 max-w-3xl font-display text-4xl leading-tight text-charcoal sm:text-5xl">
         Built for beauty businesses that expect more.

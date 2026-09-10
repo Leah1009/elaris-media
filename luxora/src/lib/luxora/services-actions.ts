@@ -17,6 +17,7 @@ const ServiceSchema = z.object({
   depositRequired: z.string().optional(),
   depositAmount: z.string().optional(),
   active: z.string().optional(),
+  color: z.union([z.string().regex(/^#[0-9a-fA-F]{6}$/, "Use a hex color like #a97142."), z.literal("")]).optional(),
 });
 
 export async function createService(_prevState: ActionState, formData: FormData): Promise<ActionState> {
@@ -38,6 +39,7 @@ export async function createService(_prevState: ActionState, formData: FormData)
     deposit_required: data.depositRequired === "on",
     deposit_cents: data.depositRequired === "on" ? dollarsToCents(data.depositAmount ?? "0") : null,
     active: data.active !== "off",
+    color: data.color || "#a97142",
   });
 
   if (error) {
@@ -72,6 +74,7 @@ export async function updateService(
       deposit_required: data.depositRequired === "on",
       deposit_cents: data.depositRequired === "on" ? dollarsToCents(data.depositAmount ?? "0") : null,
       active: data.active !== "off",
+      color: data.color || "#a97142",
     })
     .eq("id", serviceId)
     .eq("business_id", ctx.business.id);

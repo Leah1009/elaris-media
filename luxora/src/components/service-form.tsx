@@ -1,7 +1,8 @@
 "use client";
 
-import { useActionState } from "react";
+import { useActionState, useState } from "react";
 import { FormField } from "@/components/form-field";
+import { SERVICE_COLOR_PALETTE } from "@/lib/luxora/service-colors";
 import type { ActionState } from "@/lib/luxora/actions";
 
 export type ServiceFormValues = {
@@ -13,6 +14,7 @@ export type ServiceFormValues = {
   deposit_required?: boolean | null;
   deposit_cents?: number | null;
   active?: boolean | null;
+  color?: string | null;
 };
 
 export function ServiceForm({
@@ -25,6 +27,7 @@ export function ServiceForm({
   submitLabel: string;
 }) {
   const [state, formAction, pending] = useActionState<ActionState, FormData>(action, null);
+  const [color, setColor] = useState(defaultValues?.color ?? SERVICE_COLOR_PALETTE[0]);
 
   return (
     <form action={formAction} className="flex flex-col gap-5" noValidate>
@@ -103,6 +106,30 @@ export function ServiceForm({
         />
         Active (visible for booking)
       </label>
+
+      <div className="flex flex-col gap-1.5">
+        <label className="text-sm font-medium text-charcoal">Calendar Color</label>
+        <div className="flex flex-wrap items-center gap-2">
+          {SERVICE_COLOR_PALETTE.map((c) => (
+            <button
+              key={c}
+              type="button"
+              onClick={() => setColor(c)}
+              style={{ backgroundColor: c }}
+              className={`h-7 w-7 rounded-full border-2 ${color === c ? "border-charcoal" : "border-transparent"}`}
+              aria-label={c}
+            />
+          ))}
+          <input
+            type="color"
+            value={color}
+            onChange={(e) => setColor(e.target.value)}
+            className="h-7 w-9 rounded-sm border border-border"
+            aria-label="Custom color"
+          />
+        </div>
+        <input type="hidden" name="color" value={color} />
+      </div>
 
       {state?.error ? (
         <p role="alert" className="text-sm text-danger">

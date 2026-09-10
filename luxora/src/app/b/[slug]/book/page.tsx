@@ -36,7 +36,9 @@ export default async function BookPage({ params }: { params: Promise<{ slug: str
     supabase.from("staff_services").select("staff_id, service_id"),
     supabase
       .from("client_forms")
-      .select("id, name, service_id, trigger, form_fields(id, label, field_type, options, required, sort_order)")
+      .select(
+        "id, name, service_id, trigger, form_fields(id, label, field_type, options, required, sort_order, depends_on_field_id, depends_on_value)",
+      )
       .eq("business_id", business.id)
       .eq("is_active", true)
       .in("trigger", ["first_visit_only", "every_appointment"]),

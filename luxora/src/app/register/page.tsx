@@ -13,6 +13,7 @@ export default function RegisterPage() {
   );
   const [step, setStep] = useState<1 | 2>(1);
   const [businessType, setBusinessType] = useState("");
+  const [preferredLanguage, setPreferredLanguage] = useState<"en" | "es">("en");
 
   const step1HasErrors = Boolean(
     state?.fieldErrors &&
@@ -36,7 +37,7 @@ export default function RegisterPage() {
     <main className="flex min-h-screen items-center justify-center px-6 py-16">
       <div className="w-full max-w-lg">
         <Link href="/" className="font-display text-sm uppercase tracking-[0.3em] text-gold-deep">
-          Luxora
+          Luxore
         </Link>
         <h1 className="mt-4 font-display text-3xl text-charcoal">Start your free month</h1>
         <p className="mt-2 text-sm text-ink">30 days free. No credit card required.</p>
@@ -48,6 +49,36 @@ export default function RegisterPage() {
 
         <form action={formAction} className="mt-6 flex flex-col gap-5" noValidate>
           <fieldset hidden={step !== 1} className="flex flex-col gap-5">
+            <div className="flex flex-col gap-1.5">
+              <label className="text-sm font-medium text-charcoal">
+                Dashboard Language / Idioma del panel <span className="text-gold-deep">*</span>
+              </label>
+              <input type="hidden" name="preferredLanguage" value={preferredLanguage} />
+              <div className="flex overflow-hidden rounded-sm border border-border">
+                <button
+                  type="button"
+                  onClick={() => setPreferredLanguage("en")}
+                  className={`flex-1 px-4 py-2.5 text-sm font-medium transition ${
+                    preferredLanguage === "en" ? "bg-charcoal text-white" : "bg-white text-charcoal hover:bg-cream-deep"
+                  }`}
+                >
+                  English
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setPreferredLanguage("es")}
+                  className={`flex-1 px-4 py-2.5 text-sm font-medium transition ${
+                    preferredLanguage === "es" ? "bg-charcoal text-white" : "bg-white text-charcoal hover:bg-cream-deep"
+                  }`}
+                >
+                  Español
+                </button>
+              </div>
+              <p className="text-xs text-ink/50">
+                Your dashboard will use this language. You can change it later in Settings.
+              </p>
+            </div>
+
             <FormField
               label="Business Name"
               name="businessName"
