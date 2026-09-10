@@ -1,32 +1,18 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useMemo, useRef, useState } from "react";
 import { formatInTimeZone } from "@/lib/luxora/timezone";
+import { deleteAppointmentBlock } from "@/lib/luxora/appointment-blocks-actions";
 import { AppointmentDetailModal } from "@/components/appointment-detail-modal";
+import {
+  CalendarCreateChoiceModal,
+  type CalendarStaffOption,
+  type CalendarLocationOption,
+  type SlotSelection,
+} from "@/components/calendar-create-choice-modal";
+import type { CalendarStaff, CalendarAppointment, CalendarBlock } from "@/components/calendar-types";
 
-export type CalendarStaff = { id: string; full_name: string };
-
-export type CalendarAppointment = {
-  id: string;
-  startAt: string;
-  endAt: string;
-  status: string;
-  notes: string | null;
-  staffId: string;
-  depositStatus: string;
-  depositAmountCents: number;
-  depositPaidCents: number;
-  client: {
-    id: string;
-    full_name: string;
-    phone: string | null;
-    email: string | null;
-    sms_consent: boolean;
-    email_consent: boolean;
-  } | null;
-  services: { name: string; color: string }[];
-  messages: { id: string; channel: string; body: string; status: string; createdAt: string }[];
-};
+export type { CalendarStaff, CalendarAppointment };
 
 const ROW_HEIGHT_PX = 64;
 const DEFAULT_OPEN_MIN = 8 * 60;
@@ -52,21 +38,38 @@ function parseTimeToMinutes(t: string): number {
   return h * 60 + m;
 }
 
+function roundToStep(minutes: number, step = 15): number {
+  return Math.max(0, Math.round(minutes / step) * step);
+}
+
+function isTouchDevice(): boolean {
+  return typeof window !== "undefined" && window.matchMedia("(pointer: coarse)").matches;
+}
+
 export function CalendarDayGrid({
   openTime,
   closeTime,
   staff,
   appointments,
+  blocks,
   timezone,
+  date,
+  locations,
+  defaultLocationId,
 }: {
   openTime: string | null;
   closeTime: string | null;
   staff: CalendarStaff[];
   appointments: CalendarAppointment[];
+  blocks: CalendarBlock[];
   timezone: string;
   date: string;
+  locations: CalendarLocationOption[];
+  defaultLocationId?: string;
 }) {
   const [selected, setSelected] = useState<CalendarAppointment | null>(null);
+  const [selection, setSelection] = useState<SlotSelection | null>(null);
+  const columnRefs = useRef<(HTMLDivElement | null)[]>([]);
 
   const enriched = useMemo(
     () =>
@@ -76,6 +79,16 @@ export function CalendarDayGrid({
         endMin: minutesOfDayInTz(a.endAt, timezone),
       })),
     [appointments, timezone],
+  );
+
+  const enrichedBlocks = useMemo(
+    () =>
+      blocks.map((b) => ({
+        ...b,
+        startMin: minutesOfDayInTz(b.startAt, timezone),
+        endMin: minutesOfDayInTz(b.endAt, timezone),
+      })),
+    [blocks, timezone],
   );
 
   let gridStart = openTime ? parseTimeToMinutes(openTime) : DEFAULT_OPEN_MIN;
@@ -90,8 +103,25 @@ export function CalendarDayGrid({
   const hourMarks: number[] = [];
   for (let m = gridStart; m < gridEnd; m += 60) hourMarks.push(m);
 
-  const columns = staff.length > 0 ? staff : [{ id: "__unassigned", full_name: "Unassigned" }];
+  const columns: CalendarStaffOption[] = staff.length > 0 ? staff : [{ id: "__unassigned", full_name: "Unassigned" }];
   const gridHeightPx = ((gridEnd - gridStart) / 60) * ROW_HEIGHT_PX;
+
+  function openChoiceFromEvent(colIndex: number, staffId: string, clientY: number) {
+    const col = columnRefs.current[colIndex];
+    if (!col) return;
+    const rect = col.getBoundingClientRect();
+    const offsetY = clientY - rect.top;
+    const minutes = gridStart + (offsetY / ROW_HEIGHT_PX) * 60;
+    const rounded = roundToStep(minutes);
+    const hh = String(Math.floor(rounded / 60)).padStart(2, "0");
+    const mm = String(rounded % 60).padStart(2, "0");
+    setSelection({
+      date,
+      time: `${hh}:${mm}`,
+      staffId: staffId === "__unassigned" ? undefined : staffId,
+      locationId: defaultLocationId,
+    });
+  }
 
   return (
     <>
@@ -122,8 +152,19 @@ export function CalendarDayGrid({
             ))}
           </div>
 
-          {columns.map((s) => (
-            <div key={s.id} className="relative border-l border-border" style={{ height: gridHeightPx }}>
+          {columns.map((s, colIndex) => (
+            <div
+              key={s.id}
+              ref={(el) => {
+                columnRefs.current[colIndex] = el;
+              }}
+              className="relative border-l border-border"
+              style={{ height: gridHeightPx }}
+              onDoubleClick={(e) => openChoiceFromEvent(colIndex, s.id, e.clientY)}
+              onClick={(e) => {
+                if (isTouchDevice()) openChoiceFromEvent(colIndex, s.id, e.clientY);
+              }}
+            >
               {hourMarks.map((m) => (
                 <div
                   key={m}
@@ -131,6 +172,32 @@ export function CalendarDayGrid({
                   style={{ top: ((m - gridStart) / 60) * ROW_HEIGHT_PX }}
                 />
               ))}
+
+              {enrichedBlocks
+                .filter((b) => b.staffId === s.id || b.staffId === null)
+                .map((b) => {
+                  const top = ((Math.max(b.startMin, gridStart) - gridStart) / 60) * ROW_HEIGHT_PX;
+                  const height = Math.max(16, ((Math.min(b.endMin, gridEnd) - Math.max(b.startMin, gridStart)) / 60) * ROW_HEIGHT_PX);
+                  return (
+                    <button
+                      key={b.id}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        if (window.confirm(`Remove this block${b.reason ? ` (${b.reason})` : ""}?`)) {
+                          const fd = new FormData();
+                          fd.set("blockId", b.id);
+                          deleteAppointmentBlock(fd);
+                        }
+                      }}
+                      className="absolute left-1 right-1 overflow-hidden rounded-sm border border-dashed border-ink/30 bg-[repeating-linear-gradient(45deg,rgba(74,66,56,0.06),rgba(74,66,56,0.06)_6px,transparent_6px,transparent_12px)] px-1.5 py-1 text-left text-[10px] text-ink/60"
+                      style={{ top, height }}
+                      title="Click to remove this block"
+                    >
+                      🚫 {b.reason || "Blocked"}
+                    </button>
+                  );
+                })}
+
               {enriched
                 .filter((a) => (staff.length > 0 ? a.staffId === s.id : true))
                 .map((a) => {
@@ -140,7 +207,10 @@ export function CalendarDayGrid({
                   return (
                     <button
                       key={a.id}
-                      onClick={() => setSelected(a)}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setSelected(a);
+                      }}
                       className={`absolute left-1 right-1 overflow-hidden rounded-sm px-2 py-1 text-left text-xs shadow-sm transition hover:brightness-95 ${STATUS_STYLES[a.status] ?? ""}`}
                       style={{ top, height, backgroundColor: `${color}22` }}
                     >
@@ -156,6 +226,15 @@ export function CalendarDayGrid({
           ))}
         </div>
       </div>
+
+      {selection ? (
+        <CalendarCreateChoiceModal
+          selection={selection}
+          staff={staff}
+          locations={locations}
+          onClose={() => setSelection(null)}
+        />
+      ) : null}
 
       {selected ? (
         <AppointmentDetailModal

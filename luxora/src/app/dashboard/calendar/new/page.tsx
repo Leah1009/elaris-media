@@ -6,9 +6,9 @@ import { todayDateStr } from "@/lib/luxora/calendar";
 export default async function NewAppointmentPage({
   searchParams,
 }: {
-  searchParams: Promise<{ date?: string }>;
+  searchParams: Promise<{ date?: string; time?: string; staffId?: string; locationId?: string }>;
 }) {
-  const { date } = await searchParams;
+  const { date, time, staffId, locationId } = await searchParams;
   const ctx = await getBusinessContext();
   const supabase = await createClient();
 
@@ -47,6 +47,7 @@ export default async function NewAppointmentPage({
             staff={staff}
             locations={locations ?? []}
             defaultDate={date ?? todayDateStr()}
+            defaultValues={{ time, staffId, locationId }}
           />
         </div>
       )}

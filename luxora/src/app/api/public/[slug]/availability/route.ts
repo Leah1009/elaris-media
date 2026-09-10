@@ -4,12 +4,13 @@ import { zonedTimeToUtc } from "@/lib/luxora/timezone";
 
 /**
  * Real availability: business hours for the requested day, minus whatever
- * conflicts already exist for each candidate staff member — not a fake
- * stub. There's no staff-specific working-hours override yet (that table
- * exists but has no editor UI), so every active staff qualified for the
- * selected services is treated as available during business hours. The
- * database's EXCLUDE constraint is still the final word if two people book
- * the same slot at the same instant.
+ * conflicts already exist for each candidate staff member (real
+ * appointments and blocked time alike) — not a fake stub. There's no
+ * staff-specific working-hours override yet (that table exists but has no
+ * editor UI), so every active staff qualified for the selected services is
+ * treated as available during business hours. The database's EXCLUDE
+ * constraint and the block-conflict trigger are still the final word if
+ * two people book the same slot at the same instant.
  */
 export async function GET(request: Request, { params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
@@ -112,20 +113,27 @@ export async function GET(request: Request, { params }: { params: Promise<{ slug
     return Response.json({ slots: [] });
   }
 
-  const { data: existingAppointments } = await supabase
-    .from("appointments")
-    .select("staff_id, start_at, end_at")
-    .eq("business_id", business.id)
-    .in("staff_id", candidateStaffIds)
-    .neq("status", "cancelled")
-    .gte("start_at", dayStart.toISOString())
-    .lte("end_at", dayEnd.toISOString());
+  // appointments and appointment_blocks are member-only under RLS (they
+  // carry client names/notes/reasons), so this anon-facing route can't
+  // select either table directly — it reads through a SECURITY DEFINER
+  // function that returns only the time ranges, the same pattern the rest
+  // of public booking uses to expose the minimum a visitor needs.
+  const { data: busyPeriods } = await supabase.rpc("get_public_busy_periods", {
+    p_business_id: business.id,
+    p_location_id: location.id,
+    p_range_start: dayStart.toISOString(),
+    p_range_end: dayEnd.toISOString(),
+  });
 
   const busyByStaff = new Map<string, { start: number; end: number }[]>();
-  for (const appt of existingAppointments ?? []) {
-    const list = busyByStaff.get(appt.staff_id) ?? [];
-    list.push({ start: new Date(appt.start_at).getTime(), end: new Date(appt.end_at).getTime() });
-    busyByStaff.set(appt.staff_id, list);
+  for (const period of busyPeriods ?? []) {
+    const range = { start: new Date(period.start_at).getTime(), end: new Date(period.end_at).getTime() };
+    const affectedStaffIds = period.staff_id ? [period.staff_id] : candidateStaffIds;
+    for (const staffId of affectedStaffIds) {
+      const list = busyByStaff.get(staffId) ?? [];
+      list.push(range);
+      busyByStaff.set(staffId, list);
+    }
   }
 
   const [openH, openM] = hours.open_time.slice(0, 5).split(":").map(Number);

@@ -14,6 +14,68 @@ export type Database = {
   }
   public: {
     Tables: {
+      appointment_blocks: {
+        Row: {
+          business_id: string
+          created_at: string
+          end_at: string
+          id: string
+          location_id: string
+          reason: string | null
+          staff_id: string | null
+          start_at: string
+        }
+        Insert: {
+          business_id: string
+          created_at?: string
+          end_at: string
+          id?: string
+          location_id: string
+          reason?: string | null
+          staff_id?: string | null
+          start_at: string
+        }
+        Update: {
+          business_id?: string
+          created_at?: string
+          end_at?: string
+          id?: string
+          location_id?: string
+          reason?: string | null
+          staff_id?: string | null
+          start_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "appointment_blocks_business_id_fkey"
+            columns: ["business_id"]
+            isOneToOne: false
+            referencedRelation: "business_access_status"
+            referencedColumns: ["business_id"]
+          },
+          {
+            foreignKeyName: "appointment_blocks_business_id_fkey"
+            columns: ["business_id"]
+            isOneToOne: false
+            referencedRelation: "businesses"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "appointment_blocks_location_id_fkey"
+            columns: ["location_id"]
+            isOneToOne: false
+            referencedRelation: "locations"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "appointment_blocks_staff_id_fkey"
+            columns: ["staff_id"]
+            isOneToOne: false
+            referencedRelation: "staff"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       appointment_services: {
         Row: {
           appointment_id: string
@@ -3000,6 +3062,19 @@ export type Database = {
           display_name: string
           id: string
           total_visits: number
+        }[]
+      }
+      get_public_busy_periods: {
+        Args: {
+          p_business_id: string
+          p_location_id: string
+          p_range_end: string
+          p_range_start: string
+        }
+        Returns: {
+          end_at: string
+          staff_id: string | null
+          start_at: string
         }[]
       }
       get_public_review_summary: {

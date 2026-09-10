@@ -35,3 +35,22 @@ export function dayLabel(dateStr: string): string {
     timeZone: "UTC",
   });
 }
+
+/** Monday-start weeks covering the full calendar month containing dateStr. */
+export function getMonthGrid(dateStr: string): string[][] {
+  const [y, m] = dateStr.split("-").map(Number);
+  const firstOfMonth = `${y}-${String(m).padStart(2, "0")}-01`;
+  const firstWeek = getWeekDates(firstOfMonth);
+  const lastDayOfMonth = new Date(Date.UTC(y, m, 0)).getUTCDate();
+  const lastOfMonth = `${y}-${String(m).padStart(2, "0")}-${String(lastDayOfMonth).padStart(2, "0")}`;
+  const lastWeek = getWeekDates(lastOfMonth);
+
+  const weeks: string[][] = [];
+  let cursor = firstWeek[0];
+  const end = lastWeek[6];
+  while (cursor <= end) {
+    weeks.push(Array.from({ length: 7 }, (_, i) => addDays(cursor, i)));
+    cursor = addDays(cursor, 7);
+  }
+  return weeks;
+}
