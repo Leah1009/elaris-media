@@ -360,6 +360,7 @@ export type Database = {
           description: string | null
           email: string | null
           id: string
+          instagram_url: string | null
           logo_url: string | null
           min_notice_hours: number
           name: string
@@ -367,6 +368,8 @@ export type Database = {
           owner_profile_id: string
           phone: string | null
           preferred_language: string
+          show_reviews: boolean
+          show_team: boolean
           slug: string
           state: string | null
           status: string
@@ -389,6 +392,7 @@ export type Database = {
           description?: string | null
           email?: string | null
           id?: string
+          instagram_url?: string | null
           logo_url?: string | null
           min_notice_hours?: number
           name: string
@@ -396,6 +400,8 @@ export type Database = {
           owner_profile_id: string
           phone?: string | null
           preferred_language?: string
+          show_reviews?: boolean
+          show_team?: boolean
           slug: string
           state?: string | null
           status?: string
@@ -418,6 +424,7 @@ export type Database = {
           description?: string | null
           email?: string | null
           id?: string
+          instagram_url?: string | null
           logo_url?: string | null
           min_notice_hours?: number
           name?: string
@@ -425,6 +432,8 @@ export type Database = {
           owner_profile_id?: string
           phone?: string | null
           preferred_language?: string
+          show_reviews?: boolean
+          show_team?: boolean
           slug?: string
           state?: string | null
           status?: string

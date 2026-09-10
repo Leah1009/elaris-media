@@ -72,6 +72,14 @@ export default async function PublicBusinessPage({ params }: { params: Promise<{
         <p className="mt-3 text-sm text-ink">
           {business.address_line1}, {business.city}, {business.state} {business.zip}
           {business.phone ? ` · ${business.phone}` : ""}
+          {business.instagram_url ? (
+            <>
+              {" · "}
+              <a href={business.instagram_url} target="_blank" rel="noreferrer" className="text-gold-deep underline underline-offset-2">
+                Instagram
+              </a>
+            </>
+          ) : null}
         </p>
 
         <Link
@@ -100,7 +108,7 @@ export default async function PublicBusinessPage({ params }: { params: Promise<{
         </div>
       </section>
 
-      {staff && staff.length > 0 ? (
+      {business.show_team && staff && staff.length > 0 ? (
         <section className="mt-12">
           <h2 className="font-display text-xl text-charcoal">Our Team</h2>
           <div className="mt-4 flex flex-wrap gap-4">
@@ -130,7 +138,7 @@ export default async function PublicBusinessPage({ params }: { params: Promise<{
         </section>
       ) : null}
 
-      {reviews && reviews.length > 0 ? (
+      {business.show_reviews && reviews && reviews.length > 0 ? (
         <section className="mt-12">
           <h2 className="font-display text-xl text-charcoal">
             Reviews

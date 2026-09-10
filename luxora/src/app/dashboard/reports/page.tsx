@@ -21,14 +21,25 @@ function StatCard({ label, value, sub }: { label: string; value: string; sub?: s
   );
 }
 
+function isValidDateStr(s: string | undefined): s is string {
+  return Boolean(s) && /^\d{4}-\d{2}-\d{2}$/.test(s!);
+}
+
 export default async function ReportsPage({
   searchParams,
 }: {
-  searchParams: Promise<{ period?: string }>;
+  searchParams: Promise<{ period?: string; from?: string; to?: string }>;
 }) {
-  const { period: periodParam } = await searchParams;
+  const { period: periodParam, from, to } = await searchParams;
+  const isCustomRange = isValidDateStr(from) && isValidDateStr(to);
   const period = PERIODS.find((p) => p.key === periodParam) ?? PERIODS[1];
-  const periodStart = period.days ? new Date(new Date().getTime() - period.days * 86_400_000).toISOString() : null;
+
+  const periodStart = isCustomRange
+    ? new Date(`${from}T00:00:00.000Z`).toISOString()
+    : period.days
+      ? new Date(new Date().getTime() - period.days * 86_400_000).toISOString()
+      : null;
+  const periodEnd = isCustomRange ? new Date(`${to}T23:59:59.999Z`).toISOString() : null;
 
   const ctx = await getBusinessContext();
   const supabase = await createClient();
@@ -39,24 +50,28 @@ export default async function ReportsPage({
     .eq("business_id", ctx.business.id)
     .in("status", ["succeeded", "refunded", "partially_refunded"]);
   if (periodStart) paymentsQuery = paymentsQuery.gte("created_at", periodStart);
+  if (periodEnd) paymentsQuery = paymentsQuery.lte("created_at", periodEnd);
 
   let refundsQuery = supabase
     .from("refunds")
     .select("amount_cents, payment_id")
     .eq("business_id", ctx.business.id);
   if (periodStart) refundsQuery = refundsQuery.gte("created_at", periodStart);
+  if (periodEnd) refundsQuery = refundsQuery.lte("created_at", periodEnd);
 
   let appointmentsQuery = supabase
     .from("appointments")
-    .select("id, staff_id, status, start_at, client_id, staff:staff_id(full_name)")
+    .select("id, staff_id, status, start_at, client_id, deposit_paid_cents, staff:staff_id(full_name)")
     .eq("business_id", ctx.business.id);
   if (periodStart) appointmentsQuery = appointmentsQuery.gte("start_at", periodStart);
+  if (periodEnd) appointmentsQuery = appointmentsQuery.lte("start_at", periodEnd);
 
   let newClientsQuery = supabase
     .from("clients")
     .select("id", { count: "exact", head: true })
     .eq("business_id", ctx.business.id);
   if (periodStart) newClientsQuery = newClientsQuery.gte("first_visit_at", periodStart);
+  if (periodEnd) newClientsQuery = newClientsQuery.lte("first_visit_at", periodEnd);
 
   const [{ data: payments }, { data: refunds }, { data: appointments }, { count: newClientCount }] =
     await Promise.all([paymentsQuery, refundsQuery, appointmentsQuery, newClientsQuery]);
@@ -79,6 +94,11 @@ export default async function ReportsPage({
   for (const a of appointments ?? []) {
     statusCounts.set(a.status, (statusCounts.get(a.status) ?? 0) + 1);
   }
+
+  const totalAppointments = appointments?.length ?? 0;
+  const cancelledCount = statusCounts.get("cancelled") ?? 0;
+  const cancellationRate = totalAppointments > 0 ? Math.round((cancelledCount / totalAppointments) * 100) : 0;
+  const depositsCollectedCents = (appointments ?? []).reduce((sum, a) => sum + a.deposit_paid_cents, 0);
 
   const staffRevenue = new Map<string, { name: string; cents: number; count: number }>();
   const appointmentById = new Map((appointments ?? []).map((a) => [a.id, a]));
@@ -109,23 +129,60 @@ export default async function ReportsPage({
   const distinctClientIds = new Set((appointments ?? []).filter((a) => a.status === "completed").map((a) => a.client_id));
   const returningClientCount = Math.max(0, distinctClientIds.size - (newClientCount ?? 0));
 
+  const exportQs = isCustomRange ? `from=${from}&to=${to}` : `period=${period.key}`;
+
   return (
     <div className="flex flex-col gap-8">
-      <div className="flex items-center justify-between">
+      <div className="flex flex-wrap items-center justify-between gap-3">
         <h1 className="font-display text-2xl text-charcoal">Reports</h1>
-        <div className="flex gap-1">
+        <a
+          href={`/api/reports/export?${exportQs}`}
+          className="rounded-sm border border-gold-deep px-4 py-2 text-sm font-medium text-gold-deep transition hover:bg-gold-deep hover:text-white"
+        >
+          Export CSV
+        </a>
+      </div>
+
+      <div className="flex flex-wrap items-center gap-3">
+        <div className="flex flex-wrap gap-1">
           {PERIODS.map((p) => (
             <Link
               key={p.key}
               href={`/dashboard/reports?period=${p.key}`}
               className={`rounded-sm border px-3 py-1.5 text-xs ${
-                p.key === period.key ? "border-gold-deep bg-cream-deep text-charcoal" : "border-border text-charcoal"
+                !isCustomRange && p.key === period.key
+                  ? "border-gold-deep bg-cream-deep text-charcoal"
+                  : "border-border text-charcoal"
               }`}
             >
               {p.label}
             </Link>
           ))}
         </div>
+
+        <form className="flex items-center gap-2 text-sm" action="/dashboard/reports">
+          <input
+            type="date"
+            name="from"
+            defaultValue={isCustomRange ? from : undefined}
+            className="rounded-sm border border-border bg-white px-2.5 py-1.5 text-xs text-charcoal outline-none focus:border-gold-deep"
+          />
+          <span className="text-ink/50">to</span>
+          <input
+            type="date"
+            name="to"
+            defaultValue={isCustomRange ? to : undefined}
+            className="rounded-sm border border-border bg-white px-2.5 py-1.5 text-xs text-charcoal outline-none focus:border-gold-deep"
+          />
+          <button
+            type="submit"
+            className={`rounded-sm border px-3 py-1.5 text-xs font-medium ${
+              isCustomRange ? "border-gold-deep bg-cream-deep text-charcoal" : "border-border text-charcoal"
+            }`}
+          >
+            Custom range
+          </button>
+        </form>
       </div>
 
       <div className="grid grid-cols-2 gap-4 sm:grid-cols-4">
@@ -140,6 +197,13 @@ export default async function ReportsPage({
         <StatCard label="Returning Clients" value={String(returningClientCount)} />
         <StatCard label="Completed" value={String(statusCounts.get("completed") ?? 0)} />
         <StatCard label="No-Shows" value={String(statusCounts.get("no_show") ?? 0)} />
+      </div>
+
+      <div className="grid grid-cols-2 gap-4 sm:grid-cols-4">
+        <StatCard label="Total Appointments" value={String(totalAppointments)} />
+        <StatCard label="Cancellation Rate" value={`${cancellationRate}%`} sub={`${cancelledCount} cancelled`} />
+        <StatCard label="Deposits Collected" value={formatCents(depositsCollectedCents)} />
+        <StatCard label="Pending" value={String(statusCounts.get("pending") ?? 0)} />
       </div>
 
       <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">

@@ -11,6 +11,9 @@ const SettingsSchema = z.object({
   coverImageUrl: z.union([z.url("Enter a valid URL."), z.literal("")]).optional(),
   brandColor: z.union([z.string().regex(/^#[0-9a-fA-F]{6}$/, "Use a hex color like #7C5A3A."), z.literal("")]).optional(),
   websiteTagline: z.string().max(140, "Keep it under 140 characters.").optional(),
+  instagramUrl: z.union([z.url("Enter a valid URL."), z.literal("")]).optional(),
+  showTeam: z.string().optional(),
+  showReviews: z.string().optional(),
 });
 
 export async function updateWebsiteSettings(_prevState: ActionState, formData: FormData): Promise<ActionState> {
@@ -29,6 +32,9 @@ export async function updateWebsiteSettings(_prevState: ActionState, formData: F
       cover_image_url: data.coverImageUrl || null,
       brand_color: data.brandColor || null,
       website_tagline: data.websiteTagline || null,
+      instagram_url: data.instagramUrl || null,
+      show_team: data.showTeam === "on",
+      show_reviews: data.showReviews === "on",
     })
     .eq("id", ctx.business.id);
 
