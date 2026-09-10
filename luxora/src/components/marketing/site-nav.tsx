@@ -6,7 +6,6 @@ import Link from "next/link";
 const LINKS = [
   { href: "#features", label: "Features" },
   { href: "#how-it-works", label: "How It Works" },
-  { href: "#pricing", label: "Pricing" },
   { href: "#about", label: "About" },
 ];
 
@@ -36,7 +35,7 @@ export function SiteNav() {
         scrolled ? "bg-cream/95 shadow-sm backdrop-blur-sm" : "bg-transparent"
       }`}
     >
-      <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-5 sm:px-10">
+      <div className="mx-auto grid max-w-7xl grid-cols-2 items-center px-6 py-5 sm:px-10 md:grid-cols-[1fr_auto_1fr]">
         <Link
           href="/"
           className={`font-display text-sm uppercase tracking-[0.35em] transition-colors ${
@@ -46,7 +45,7 @@ export function SiteNav() {
           Luxore
         </Link>
 
-        <nav aria-label="Primary" className="hidden items-center gap-8 md:flex">
+        <nav aria-label="Primary" className="hidden items-center justify-self-center gap-8 md:flex">
           {LINKS.map((link) => (
             <a
               key={link.href}
@@ -60,7 +59,7 @@ export function SiteNav() {
           ))}
         </nav>
 
-        <div className="hidden items-center gap-5 md:flex">
+        <div className="hidden items-center justify-self-end gap-5 md:flex">
           <Link
             href="/login"
             className={`text-sm font-medium tracking-wide transition-colors ${
@@ -86,7 +85,7 @@ export function SiteNav() {
           onClick={() => setMenuOpen(true)}
           aria-label="Open menu"
           aria-expanded={menuOpen}
-          className={`flex h-9 w-9 flex-col items-center justify-center gap-1.5 md:hidden ${
+          className={`flex h-9 w-9 flex-col items-center justify-center justify-self-end gap-1.5 md:hidden ${
             scrolled ? "text-charcoal" : "text-white"
           }`}
         >

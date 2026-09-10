@@ -1,8 +1,7 @@
 import Link from "next/link";
-import { createClient } from "@/lib/supabase/server";
 import { Reveal } from "@/components/reveal";
 import { SiteNav } from "@/components/marketing/site-nav";
-import { HeroDashboardCard, FullDashboardMock } from "@/components/marketing/dashboard-mock";
+import { FullDashboardMock } from "@/components/marketing/dashboard-mock";
 import {
   BookingsVisual,
   ClientsVisual,
@@ -20,9 +19,7 @@ import {
   WebsiteExamplesMock,
 } from "@/components/marketing/section-mocks";
 import { HARDWARE_CATALOG } from "@/lib/luxora/hardware-catalog";
-import { PhoneTapMock, CardReaderMock, SmartTerminalMock } from "@/components/marketing/hardware-mock";
 import { ReviewsPlaceholder } from "@/components/marketing/reviews-placeholder";
-import { PricingSection } from "@/components/marketing/pricing-section";
 import { Faq } from "@/components/marketing/faq";
 
 const HERO_IMAGE = "https://i.pinimg.com/736x/8d/f5/db/8df5dbceaa157a59d536cf4290773977.jpg";
@@ -39,10 +36,8 @@ const OVERVIEW_FEATURES = [
 const STEPS = [
   { step: "01", title: "Set up your business", body: "Add your services, staff, hours and locations in minutes." },
   { step: "02", title: "Get booked online", body: "Share your Luxore page so clients can book themselves, any time." },
-  { step: "03", title: "Grow with what's built in", body: "Automated reminders, reviews and reports help you run — and grow — the business." },
+  { step: "03", title: "Run and grow your business with Luxore", body: "Automated reminders, reviews and reports help you run — and grow — the business." },
 ];
-
-const HARDWARE_MOCKS = { "tap-to-pay": PhoneTapMock, "card-reader": CardReaderMock, "smart-terminal": SmartTerminalMock };
 
 const FOOTER_GROUPS: { title: string; links: { label: string; href?: string }[] }[] = [
   {
@@ -61,10 +56,10 @@ const FOOTER_GROUPS: { title: string; links: { label: string; href?: string }[] 
     title: "Company",
     links: [
       { label: "About", href: "#about" },
-      { label: "Pricing", href: "#pricing" },
       { label: "Contact" },
       { label: "Support" },
       { label: "Help Center" },
+      { label: "Contact Support" },
     ],
   },
   {
@@ -73,19 +68,7 @@ const FOOTER_GROUPS: { title: string; links: { label: string; href?: string }[] 
   },
 ];
 
-export default async function HomePage() {
-  const supabase = await createClient();
-  const [{ data: plans }, { data: entitlementRows }] = await Promise.all([
-    supabase.from("plans").select("id, name, price_monthly_cents, badge").eq("is_active", true).order("display_order"),
-    supabase.from("plan_entitlements").select("plan_id, key, value_boolean, value_integer, value_text"),
-  ]);
-
-  const entitlementsByPlan = new Map<string, Map<string, { boolean: boolean | null; integer: number | null; text: string | null }>>();
-  for (const row of entitlementRows ?? []) {
-    if (!entitlementsByPlan.has(row.plan_id)) entitlementsByPlan.set(row.plan_id, new Map());
-    entitlementsByPlan.get(row.plan_id)!.set(row.key, { boolean: row.value_boolean, integer: row.value_integer, text: row.value_text });
-  }
-
+export default function HomePage() {
   return (
     <main>
       <SiteNav />
@@ -98,45 +81,33 @@ export default async function HomePage() {
           <div className="absolute inset-0 bg-gradient-to-b from-charcoal/75 via-charcoal/55 to-charcoal/85" />
         </div>
 
-        <div className="relative mx-auto grid w-full max-w-7xl grid-cols-1 items-center gap-14 px-6 py-16 sm:px-10 lg:grid-cols-[1.1fr_1fr]">
-          <div className="flex flex-col items-center text-center lg:items-start lg:text-left">
-            <span className="animate-hero-fade-up font-display text-xs uppercase tracking-[0.4em] text-gold" style={{ animationDelay: "0.1s" }}>
-              The all-in-one platform for beauty businesses
-            </span>
-            <h1 className="animate-hero-fade-up mt-6 font-display text-4xl leading-tight text-white sm:text-6xl" style={{ animationDelay: "0.25s" }}>
-              Built for beauty businesses that expect more.
-            </h1>
-            <p className="animate-hero-fade-up mt-6 max-w-xl text-balance text-base text-white/85 sm:text-lg" style={{ animationDelay: "0.4s" }}>
-              Run your entire beauty business from one beautifully connected platform —
-              bookings, clients, payments, inventory, marketing and your own website.
-            </p>
-            <div className="animate-hero-fade-up mt-10 flex flex-col gap-3 sm:flex-row" style={{ animationDelay: "0.55s" }}>
-              <Link href="/register" className="rounded-sm bg-gold-deep px-8 py-3 text-sm font-medium tracking-wide text-white transition hover:opacity-90">
-                Start Your Free Month
-              </Link>
-              <Link href="/login" className="rounded-sm border border-white/40 px-8 py-3 text-sm font-medium tracking-wide text-white transition hover:border-white hover:bg-white/10">
-                Log In
-              </Link>
-            </div>
-            <p className="animate-hero-fade-up mt-4 text-xs text-white/60" style={{ animationDelay: "0.65s" }}>
-              30 days free. No credit card required.
-            </p>
+        <div className="relative mx-auto flex w-full max-w-3xl flex-col items-center px-6 py-16 text-center sm:px-10">
+          <span className="animate-hero-fade-up font-display text-xs uppercase tracking-[0.4em] text-gold" style={{ animationDelay: "0.1s" }}>
+            The all-in-one platform for beauty businesses
+          </span>
+          <h1 className="animate-hero-fade-up mt-6 font-display text-4xl leading-tight text-white sm:text-6xl" style={{ animationDelay: "0.25s" }}>
+            Built for beauty businesses that expect more.
+          </h1>
+          <p className="animate-hero-fade-up mt-6 max-w-xl text-balance text-base text-white/85 sm:text-lg" style={{ animationDelay: "0.4s" }}>
+            Run your entire beauty business from one beautifully connected platform —
+            bookings, clients, payments, inventory, marketing and your own website.
+          </p>
+          <div className="animate-hero-fade-up mt-10 flex flex-col items-center gap-4" style={{ animationDelay: "0.55s" }}>
+            <Link href="/register" className="rounded-sm bg-gold-deep px-9 py-3.5 text-sm font-medium tracking-wide text-white transition hover:opacity-90">
+              Start Your Free Month
+            </Link>
+            <Link href="/login" className="text-sm font-medium tracking-wide text-white/70 underline-offset-4 transition hover:text-white hover:underline">
+              Log In
+            </Link>
           </div>
-
-          <div className="animate-hero-fade-up hidden justify-self-center lg:block lg:justify-self-end" style={{ animationDelay: "0.5s" }}>
-            <div className="rotate-1 transition-transform duration-500 hover:rotate-0">
-              <HeroDashboardCard />
-            </div>
-          </div>
-        </div>
-
-        <div className="absolute bottom-8 left-1/2 h-9 w-5 -translate-x-1/2 rounded-full border border-white/40">
-          <span className="mx-auto mt-1.5 block h-1.5 w-1 animate-bounce rounded-full bg-white/70" />
+          <p className="animate-hero-fade-up mt-4 text-xs text-white/60" style={{ animationDelay: "0.65s" }}>
+            30 days free. No credit card required.
+          </p>
         </div>
       </section>
 
       {/* MEET LUXORE */}
-      <section className="mx-auto max-w-6xl px-6 py-24 sm:px-10">
+      <section className="mx-auto max-w-7xl px-6 py-24 sm:px-10">
         <Reveal className="text-center">
           <span className="font-display text-xs uppercase tracking-[0.3em] text-gold-deep">Meet Luxore</span>
           <h2 className="mt-3 font-display text-3xl text-charcoal sm:text-5xl">Meet Luxore.</h2>
@@ -160,7 +131,7 @@ export default async function HomePage() {
           <div className="mt-14 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {OVERVIEW_FEATURES.map((f, i) => (
               <Reveal key={f.title} delayMs={i * 80}>
-                <div className="group h-full rounded-md border border-border bg-white p-6 transition duration-300 hover:-translate-y-1 hover:border-gold-deep hover:shadow-lg hover:shadow-charcoal/5">
+                <div className="group h-full rounded-md border border-border bg-white p-6 transition duration-300 hover:border-gold-deep hover:shadow-md hover:shadow-charcoal/5">
                   <f.Visual />
                   <h3 className="mt-4 font-display text-lg text-charcoal">{f.title}</h3>
                   <p className="mt-1.5 text-sm text-ink">{f.body}</p>
@@ -178,13 +149,14 @@ export default async function HomePage() {
             <span className="font-display text-xs uppercase tracking-[0.3em] text-gold-deep">Bookings & Calendar</span>
             <h2 className="mt-3 font-display text-3xl text-charcoal sm:text-4xl">Bookings that work while you don&apos;t.</h2>
             <p className="mt-5 text-sm leading-relaxed text-ink sm:text-base">
-              An hourly calendar built around each staff member&apos;s real schedule — services, availability and
-              buffer time all respected automatically. Clients see real open times and book themselves, any hour
-              of the day.
+              An hourly calendar built around each staff member&apos;s real schedule — availability, service
+              duration, business hours and blocked time all respected automatically. Clients see real open times
+              and book themselves, any hour of the day.
             </p>
             <ul className="mt-5 flex flex-col gap-2 text-sm text-ink">
               <li>— 24/7 online booking, no phone calls required</li>
               <li>— Staff-specific availability and qualified services</li>
+              <li>— Business hours and blocked time built into every slot</li>
               <li>— Full appointment management: edit, reschedule, cancel</li>
             </ul>
           </Reveal>
@@ -218,8 +190,8 @@ export default async function HomePage() {
           <span className="font-display text-xs uppercase tracking-[0.3em] text-gold-deep">Payments</span>
           <h2 className="mt-3 font-display text-3xl text-charcoal sm:text-4xl">Payments, your way.</h2>
           <p className="mx-auto mt-4 max-w-2xl text-sm text-ink sm:text-base">
-            From Tap to Pay on your phone to a complete front-desk setup, Luxore brings appointments, checkout
-            and payments together in one connected experience.
+            From cards and cash today to Tap to Pay and a complete front-desk setup, Luxore brings appointments,
+            checkout and payments together in one connected experience.
           </p>
         </Reveal>
 
@@ -228,29 +200,25 @@ export default async function HomePage() {
         </Reveal>
 
         <div className="mt-20 grid grid-cols-1 gap-10 sm:grid-cols-3">
-          {HARDWARE_CATALOG.map((hw, i) => {
-            const Mock = HARDWARE_MOCKS[hw.key as keyof typeof HARDWARE_MOCKS];
-            return (
-              <Reveal key={hw.key} delayMs={i * 100} className="text-center">
-                <span className="font-display text-3xl text-gold">{hw.index}</span>
-                <Mock />
-                <h3 className="mt-2 font-display text-xl text-charcoal">{hw.headline}</h3>
-                <p className="mt-2 text-sm text-ink">{hw.body}</p>
-                <button
-                  type="button"
-                  disabled
-                  title="Hardware details are coming soon."
-                  className="mt-4 rounded-sm border border-border px-5 py-2 text-xs font-medium tracking-wide text-ink/50"
-                >
-                  {hw.cta}
-                </button>
-              </Reveal>
-            );
-          })}
+          {HARDWARE_CATALOG.map((hw, i) => (
+            <Reveal key={hw.key} delayMs={i * 100} className="text-center">
+              <span className="font-display text-3xl text-gold">{hw.index}</span>
+              <h3 className="mt-3 font-display text-xl text-charcoal">{hw.headline}</h3>
+              <p className="mt-2 text-sm text-ink">{hw.body}</p>
+              <button
+                type="button"
+                disabled
+                title="Hardware details are coming soon."
+                className="mt-4 rounded-sm border border-border px-5 py-2 text-xs font-medium tracking-wide text-ink/50"
+              >
+                {hw.cta}
+              </button>
+            </Reveal>
+          ))}
         </div>
         <p className="mt-10 text-center text-xs text-ink/50">
-          Physical devices shown are Luxore-compatible hardware concepts — exact models, pricing and availability
-          are still being finalized.
+          Hardware options are still being finalized — exact models, pricing and availability will be announced
+          closer to launch.
         </p>
       </section>
 
@@ -317,7 +285,7 @@ export default async function HomePage() {
             <h2 className="mt-3 font-display text-3xl text-white sm:text-4xl">Up and running in one sitting.</h2>
           </Reveal>
 
-          <div className="relative mt-16 grid grid-cols-1 gap-12 sm:grid-cols-3 sm:gap-10">
+          <div className="relative mt-14 grid grid-cols-1 gap-10 sm:grid-cols-3">
             <div className="absolute left-0 right-0 top-5 hidden h-px bg-gradient-to-r from-transparent via-gold/40 to-transparent sm:block" />
             {STEPS.map((s, i) => (
               <Reveal key={s.step} delayMs={i * 150} className="relative text-center sm:text-left">
@@ -339,13 +307,9 @@ export default async function HomePage() {
               Beauty businesses shouldn&apos;t need five different tools to run one business.
             </h2>
             <p className="mt-5 text-sm leading-relaxed text-ink sm:text-base">
-              A booking app for the calendar, a spreadsheet for clients, a separate tool for payments, and a
-              website that never quite matches — Luxore brings bookings, clients, payments, inventory,
-              marketing and your business website into one connected platform instead.
-            </p>
-            <p className="mt-4 text-sm leading-relaxed text-ink sm:text-base">
-              Every feature is built for the day-to-day reality of a salon, spa or studio: real business hours,
-              real deposits, real client histories — not a generic tool with beauty terms bolted on.
+              A booking app for the calendar, a spreadsheet for clients, a separate tool for payments, a
+              website that never quite matches — Luxore replaces all of it with one connected platform, built
+              around the real day-to-day of a salon, spa or studio.
             </p>
           </Reveal>
           <Reveal delayMs={120}>
@@ -369,19 +333,6 @@ export default async function HomePage() {
           </Reveal>
         </div>
       </section>
-
-      {/* PRICING */}
-      {plans && plans.length > 0 ? (
-        <section id="pricing" className="scroll-mt-20 mx-auto max-w-6xl px-6 py-24 sm:px-10">
-          <Reveal className="text-center">
-            <span className="font-display text-xs uppercase tracking-[0.3em] text-gold-deep">Pricing</span>
-            <h2 className="mt-3 font-display text-3xl text-charcoal sm:text-4xl">Simple, transparent pricing.</h2>
-          </Reveal>
-          <div className="mt-14">
-            <PricingSection plans={plans} entitlementsByPlan={entitlementsByPlan} />
-          </div>
-        </section>
-      ) : null}
 
       {/* FAQ */}
       <section className="bg-cream-deep/30 px-6 py-24 sm:px-10">
