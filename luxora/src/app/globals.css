@@ -33,6 +33,17 @@ body {
   color: var(--color-charcoal);
 }
 
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 5.5rem;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
+
 ::selection {
   background: var(--color-gold);
   color: var(--color-white);
