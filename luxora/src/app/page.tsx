@@ -89,7 +89,7 @@ const FEATURE_CATEGORIES: FeatureCategory[] = [
   },
 ];
 
-const BEAUTY_CATEGORIES: { labelKey: TranslationKey; image: string }[] = [
+const BEAUTY_CATEGORIES: { labelKey: TranslationKey; image: string | null }[] = [
   { labelKey: "cat_hair_salons", image: PHOTO_ASSETS.hair },
   { labelKey: "cat_nail_salons", image: PHOTO_ASSETS.nails },
   { labelKey: "cat_lash_brow_studios", image: PHOTO_ASSETS.lashesBrows },
@@ -330,15 +330,23 @@ export default async function HomePage() {
         <div className="mx-auto mt-14 grid max-w-6xl grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
           {BEAUTY_CATEGORIES.map((cat, i) => (
             <Reveal key={cat.labelKey} delayMs={i * 90} className="group relative h-80 overflow-hidden rounded-md sm:h-[26rem]">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                src={cat.image}
-                alt=""
-                className="h-full w-full object-cover transition duration-700 group-hover:scale-105"
-                style={{ objectPosition: "50% 25%" }}
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-charcoal/80 via-charcoal/10 to-transparent" />
-              <p className="absolute bottom-5 left-4 right-4 font-display text-lg text-white">{t(locale, cat.labelKey)}</p>
+              {cat.image ? (
+                <>
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    src={cat.image}
+                    alt=""
+                    className="h-full w-full object-cover transition duration-700 group-hover:scale-105"
+                    style={{ objectPosition: "50% 25%" }}
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-charcoal/80 via-charcoal/10 to-transparent" />
+                  <p className="absolute bottom-5 left-4 right-4 font-display text-lg text-white">{t(locale, cat.labelKey)}</p>
+                </>
+              ) : (
+                <div className="flex h-full w-full flex-col items-center justify-center bg-cream-deep/60 px-6 text-center">
+                  <p className="font-display text-lg text-charcoal">{t(locale, cat.labelKey)}</p>
+                </div>
+              )}
             </Reveal>
           ))}
         </div>
