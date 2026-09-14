@@ -9,7 +9,7 @@ export default async function BusinessProfileSettingsPage() {
   const { data: business } = await supabase
     .from("businesses")
     .select(
-      "name, business_type, business_type_other, description, phone, email, address_line1, city, state, zip, timezone, tax_rate_percent",
+      "name, business_type, business_type_other, description, phone, email, address_line1, city, state, zip, timezone, tax_rate_percent, preferred_language",
     )
     .eq("id", ctx.business.id)
     .single();

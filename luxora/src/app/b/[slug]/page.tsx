@@ -3,14 +3,26 @@ import { notFound } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import { getBookableBusinessBySlug } from "@/lib/luxora/public-booking";
 import { formatCents } from "@/lib/luxora/money";
+import { getBusinessPublicLocale } from "@/lib/luxora/locale";
+import { t, type TranslationKey } from "@/lib/luxora/i18n";
+import { LocaleSwitcher } from "@/components/locale-switcher";
 
-const DAY_LABELS = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+const DAY_KEYS: TranslationKey[] = [
+  "day_sunday",
+  "day_monday",
+  "day_tuesday",
+  "day_wednesday",
+  "day_thursday",
+  "day_friday",
+  "day_saturday",
+];
 
 export default async function PublicBusinessPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
   const business = await getBookableBusinessBySlug(slug);
   if (!business) notFound();
 
+  const locale = await getBusinessPublicLocale(business.public_language_mode);
   const supabase = await createClient();
 
   const [{ data: services }, { data: staff }, { data: location }] = await Promise.all([
@@ -49,6 +61,12 @@ export default async function PublicBusinessPage({ params }: { params: Promise<{
       ) : null}
 
       <div className="mx-auto max-w-2xl px-6 py-16">
+        {business.public_language_mode === "both" ? (
+          <div className="mb-6 flex justify-end">
+            <LocaleSwitcher locale={locale} />
+          </div>
+        ) : null}
+
         <div className="flex items-center gap-3">
           {business.logo_url ? (
             // eslint-disable-next-line @next/next/no-img-element
@@ -60,7 +78,7 @@ export default async function PublicBusinessPage({ params }: { params: Promise<{
           ) : null}
           <div>
             <span className="font-display text-xs uppercase tracking-[0.3em] text-gold-deep">
-              Book with
+              {t(locale, "book_with")}
             </span>
             <h1 className="font-display text-4xl text-charcoal">{business.name}</h1>
           </div>
@@ -87,11 +105,11 @@ export default async function PublicBusinessPage({ params }: { params: Promise<{
           style={business.brand_color ? { backgroundColor: business.brand_color } : undefined}
           className="mt-8 inline-block rounded-sm bg-charcoal px-8 py-3 text-sm font-medium tracking-wide text-white transition hover:opacity-90"
         >
-          Book Now
+          {t(locale, "book_now")}
         </Link>
 
       <section className="mt-12">
-        <h2 className="font-display text-xl text-charcoal">Services</h2>
+        <h2 className="font-display text-xl text-charcoal">{t(locale, "public_services_title")}</h2>
         <div className="mt-4 flex flex-col gap-3">
           {(services ?? []).map((s) => (
             <div key={s.id} className="flex items-center justify-between rounded-sm border border-border bg-white p-4">
@@ -103,14 +121,14 @@ export default async function PublicBusinessPage({ params }: { params: Promise<{
             </div>
           ))}
           {(!services || services.length === 0) ? (
-            <p className="text-sm text-ink">No services published yet.</p>
+            <p className="text-sm text-ink">{t(locale, "no_services_published")}</p>
           ) : null}
         </div>
       </section>
 
       {business.show_team && staff && staff.length > 0 ? (
         <section className="mt-12">
-          <h2 className="font-display text-xl text-charcoal">Our Team</h2>
+          <h2 className="font-display text-xl text-charcoal">{t(locale, "our_team")}</h2>
           <div className="mt-4 flex flex-wrap gap-4">
             {staff.map((s) => (
               <div key={s.id} className="rounded-sm border border-border bg-white px-4 py-3">
@@ -124,13 +142,13 @@ export default async function PublicBusinessPage({ params }: { params: Promise<{
 
       {hours && hours.length > 0 ? (
         <section className="mt-12">
-          <h2 className="font-display text-xl text-charcoal">Hours</h2>
+          <h2 className="font-display text-xl text-charcoal">{t(locale, "hours_title")}</h2>
           <dl className="mt-4 flex flex-col gap-1 text-sm">
             {hours.map((h) => (
               <div key={h.day_of_week} className="flex justify-between border-b border-border py-1.5">
-                <dt className="text-charcoal">{DAY_LABELS[h.day_of_week]}</dt>
+                <dt className="text-charcoal">{t(locale, DAY_KEYS[h.day_of_week])}</dt>
                 <dd className="text-ink">
-                  {h.closed ? "Closed" : `${h.open_time?.slice(0, 5)} – ${h.close_time?.slice(0, 5)}`}
+                  {h.closed ? t(locale, "closed_label") : `${h.open_time?.slice(0, 5)} – ${h.close_time?.slice(0, 5)}`}
                 </dd>
               </div>
             ))}
@@ -141,7 +159,7 @@ export default async function PublicBusinessPage({ params }: { params: Promise<{
       {business.show_reviews && reviews && reviews.length > 0 ? (
         <section className="mt-12">
           <h2 className="font-display text-xl text-charcoal">
-            Reviews
+            {t(locale, "public_reviews_title")}
             {reviewSummary?.average_rating ? (
               <span className="ml-2 text-sm font-normal text-ink/70">
                 {reviewSummary.average_rating} ★ ({reviewSummary.review_count})
@@ -159,7 +177,7 @@ export default async function PublicBusinessPage({ params }: { params: Promise<{
                 {r.comment ? <p className="mt-2 text-sm text-ink">{r.comment}</p> : null}
                 {r.response ? (
                   <p className="mt-2 rounded-sm bg-cream-deep p-2 text-xs text-charcoal">
-                    <span className="font-medium">Response: </span>
+                    <span className="font-medium">{t(locale, "response_label")} </span>
                     {r.response}
                   </p>
                 ) : null}
@@ -169,7 +187,7 @@ export default async function PublicBusinessPage({ params }: { params: Promise<{
         </section>
       ) : null}
 
-        <p className="mt-16 text-center text-xs text-ink/40">Powered by Luxore</p>
+        <p className="mt-16 text-center text-xs text-ink/40">{t(locale, "powered_by_luxore")}</p>
       </div>
     </main>
   );

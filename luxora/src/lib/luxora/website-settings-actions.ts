@@ -14,6 +14,7 @@ const SettingsSchema = z.object({
   instagramUrl: z.union([z.url("Enter a valid URL."), z.literal("")]).optional(),
   showTeam: z.string().optional(),
   showReviews: z.string().optional(),
+  publicLanguageMode: z.enum(["en", "es", "both"]),
 });
 
 export async function updateWebsiteSettings(_prevState: ActionState, formData: FormData): Promise<ActionState> {
@@ -35,6 +36,7 @@ export async function updateWebsiteSettings(_prevState: ActionState, formData: F
       instagram_url: data.instagramUrl || null,
       show_team: data.showTeam === "on",
       show_reviews: data.showReviews === "on",
+      public_language_mode: data.publicLanguageMode,
     })
     .eq("id", ctx.business.id);
 

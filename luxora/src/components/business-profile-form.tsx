@@ -31,10 +31,14 @@ export function BusinessProfileForm({
     zip: string | null;
     timezone: string;
     tax_rate_percent: number;
+    preferred_language: string;
   };
 }) {
   const [state, formAction, pending] = useActionState<ActionState, FormData>(updateBusinessProfile, null);
   const [businessType, setBusinessType] = useState(defaultValues.business_type);
+  const [preferredLanguage, setPreferredLanguage] = useState<"en" | "es">(
+    defaultValues.preferred_language === "es" ? "es" : "en",
+  );
 
   return (
     <form action={formAction} className="flex flex-col gap-5 rounded-sm border border-border bg-white p-6">
@@ -222,6 +226,31 @@ export function BusinessProfileForm({
             defaultValue={defaultValues.tax_rate_percent}
             className="rounded-sm border border-border px-3 py-2 text-sm text-charcoal"
           />
+        </div>
+      </div>
+
+      <div className="flex flex-col gap-1.5">
+        <label className="text-sm font-medium text-charcoal">Dashboard Language / Idioma del panel</label>
+        <input type="hidden" name="preferredLanguage" value={preferredLanguage} />
+        <div className="flex w-fit overflow-hidden rounded-sm border border-border">
+          <button
+            type="button"
+            onClick={() => setPreferredLanguage("en")}
+            className={`px-4 py-2 text-sm font-medium transition ${
+              preferredLanguage === "en" ? "bg-charcoal text-white" : "bg-white text-charcoal hover:bg-cream-deep"
+            }`}
+          >
+            English
+          </button>
+          <button
+            type="button"
+            onClick={() => setPreferredLanguage("es")}
+            className={`px-4 py-2 text-sm font-medium transition ${
+              preferredLanguage === "es" ? "bg-charcoal text-white" : "bg-white text-charcoal hover:bg-cream-deep"
+            }`}
+          >
+            Español
+          </button>
         </div>
       </div>
 

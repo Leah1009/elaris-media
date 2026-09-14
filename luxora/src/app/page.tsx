@@ -21,57 +21,64 @@ import {
 import { HARDWARE_CATALOG } from "@/lib/luxora/hardware-catalog";
 import { ReviewsPlaceholder } from "@/components/marketing/reviews-placeholder";
 import { Faq } from "@/components/marketing/faq";
+import { getPublicLocale } from "@/lib/luxora/locale";
+import { t, type Locale, type TranslationKey } from "@/lib/luxora/i18n";
 
 const HERO_IMAGE = "https://i.pinimg.com/736x/8d/f5/db/8df5dbceaa157a59d536cf4290773977.jpg";
 
-const OVERVIEW_FEATURES = [
-  { title: "Bookings & Calendar", body: "An hourly calendar built around your real business hours, with 24/7 online booking.", Visual: BookingsVisual },
-  { title: "Client Profiles", body: "Every visit, note, form and preference in one place.", Visual: ClientsVisual },
-  { title: "Payments & POS", body: "Deposits, cards and manual payments — one real record of every transaction.", Visual: PaymentsVisual },
-  { title: "Inventory", body: "Track products and retail stock alongside the services that use them.", Visual: InventoryVisual },
-  { title: "Marketing & Automations", body: "Reminders, review requests and loyalty — built in, not bolted on.", Visual: MarketingVisual },
-  { title: "Your Own Website", body: "A branded booking page clients can find, browse and book from.", Visual: WebsiteVisual },
+const OVERVIEW_FEATURES: { titleKey: TranslationKey; bodyKey: TranslationKey; Visual: () => React.JSX.Element }[] = [
+  { titleKey: "feature_bookings_title", bodyKey: "feature_bookings_body", Visual: BookingsVisual },
+  { titleKey: "feature_clients_title", bodyKey: "feature_clients_body", Visual: ClientsVisual },
+  { titleKey: "feature_payments_title", bodyKey: "feature_payments_body", Visual: PaymentsVisual },
+  { titleKey: "feature_inventory_title", bodyKey: "feature_inventory_body", Visual: InventoryVisual },
+  { titleKey: "feature_marketing_title", bodyKey: "feature_marketing_body", Visual: MarketingVisual },
+  { titleKey: "feature_website_title", bodyKey: "feature_website_body", Visual: WebsiteVisual },
 ];
 
-const STEPS = [
-  { step: "01", title: "Set up your business", body: "Add your services, staff, hours and locations in minutes." },
-  { step: "02", title: "Get booked online", body: "Share your Luxore page so clients can book themselves, any time." },
-  { step: "03", title: "Run and grow your business with Luxore", body: "Automated reminders, reviews and reports help you run — and grow — the business." },
+const STEPS: { step: string; titleKey: TranslationKey; bodyKey: TranslationKey }[] = [
+  { step: "01", titleKey: "step1_title", bodyKey: "step1_body" },
+  { step: "02", titleKey: "step2_title", bodyKey: "step2_body" },
+  { step: "03", titleKey: "step3_title", bodyKey: "step3_body" },
 ];
 
-const FOOTER_GROUPS: { title: string; links: { label: string; href?: string }[] }[] = [
-  {
-    title: "Product",
-    links: [
-      { label: "Features", href: "#features" },
-      { label: "Online Booking", href: "#features" },
-      { label: "Clients", href: "#features" },
-      { label: "Payments", href: "#payments" },
-      { label: "Marketing", href: "#features" },
-      { label: "Websites", href: "#features" },
-      { label: "Hardware", href: "#payments" },
-    ],
-  },
-  {
-    title: "Company",
-    links: [
-      { label: "About", href: "#about" },
-      { label: "Contact" },
-      { label: "Support" },
-      { label: "Help Center" },
-      { label: "Contact Support" },
-    ],
-  },
-  {
-    title: "Legal",
-    links: [{ label: "Privacy Policy" }, { label: "Terms of Service" }, { label: "Cookie Preferences" }],
-  },
-];
+function footerGroups(locale: Locale): { title: string; links: { label: string; href?: string }[] }[] {
+  return [
+    {
+      title: t(locale, "footer_product"),
+      links: [
+        { label: t(locale, "nav_features"), href: "#features" },
+        { label: t(locale, "footer_online_booking"), href: "#features" },
+        { label: t(locale, "nav_clients"), href: "#features" },
+        { label: t(locale, "nav_payments"), href: "#payments" },
+        { label: t(locale, "nav_marketing"), href: "#features" },
+        { label: t(locale, "feature_website_title"), href: "#features" },
+        { label: t(locale, "footer_hardware"), href: "#payments" },
+      ],
+    },
+    {
+      title: t(locale, "footer_company"),
+      links: [
+        { label: t(locale, "nav_about"), href: "#about" },
+        { label: t(locale, "footer_contact") },
+        { label: t(locale, "footer_support") },
+        { label: t(locale, "footer_help_center") },
+        { label: t(locale, "footer_contact_support") },
+      ],
+    },
+    {
+      title: t(locale, "footer_legal"),
+      links: [{ label: t(locale, "footer_privacy") }, { label: t(locale, "footer_terms") }, { label: t(locale, "footer_cookies") }],
+    },
+  ];
+}
 
-export default function HomePage() {
+export default async function HomePage() {
+  const locale = await getPublicLocale();
+  const FOOTER_GROUPS = footerGroups(locale);
+
   return (
     <main>
-      <SiteNav />
+      <SiteNav locale={locale} />
 
       {/* HERO */}
       <section className="relative flex min-h-screen items-center overflow-hidden pt-24">
@@ -83,25 +90,24 @@ export default function HomePage() {
 
         <div className="relative mx-auto flex w-full max-w-3xl flex-col items-center px-6 py-16 text-center sm:px-10">
           <span className="animate-hero-fade-up font-display text-xs uppercase tracking-[0.4em] text-gold" style={{ animationDelay: "0.1s" }}>
-            The all-in-one platform for beauty businesses
+            {t(locale, "hero_eyebrow")}
           </span>
           <h1 className="animate-hero-fade-up mt-6 font-display text-4xl leading-tight text-white sm:text-6xl" style={{ animationDelay: "0.25s" }}>
-            Built for beauty businesses that expect more.
+            {t(locale, "hero_headline")}
           </h1>
           <p className="animate-hero-fade-up mt-6 max-w-xl text-balance text-base text-white/85 sm:text-lg" style={{ animationDelay: "0.4s" }}>
-            Run your entire beauty business from one beautifully connected platform —
-            bookings, clients, payments, inventory, marketing and your own website.
+            {t(locale, "hero_subhead")}
           </p>
           <div className="animate-hero-fade-up mt-10 flex flex-col items-center gap-4" style={{ animationDelay: "0.55s" }}>
             <Link href="/register" className="rounded-sm bg-gold-deep px-9 py-3.5 text-sm font-medium tracking-wide text-white transition hover:opacity-90">
-              Start Your Free Month
+              {t(locale, "start_free_month_cta")}
             </Link>
             <Link href="/login" className="text-sm font-medium tracking-wide text-white/70 underline-offset-4 transition hover:text-white hover:underline">
-              Log In
+              {t(locale, "nav_log_in")}
             </Link>
           </div>
           <p className="animate-hero-fade-up mt-4 text-xs text-white/60" style={{ animationDelay: "0.65s" }}>
-            30 days free. No credit card required.
+            {t(locale, "hero_trial_note")}
           </p>
         </div>
       </section>
@@ -109,11 +115,9 @@ export default function HomePage() {
       {/* MEET LUXORE */}
       <section className="mx-auto max-w-7xl px-6 py-24 sm:px-10">
         <Reveal className="text-center">
-          <span className="font-display text-xs uppercase tracking-[0.3em] text-gold-deep">Meet Luxore</span>
-          <h2 className="mt-3 font-display text-3xl text-charcoal sm:text-5xl">Meet Luxore.</h2>
-          <p className="mx-auto mt-4 max-w-xl text-base text-ink">
-            Your entire beauty business. One beautifully connected platform.
-          </p>
+          <span className="font-display text-xs uppercase tracking-[0.3em] text-gold-deep">{t(locale, "meet_eyebrow")}</span>
+          <h2 className="mt-3 font-display text-3xl text-charcoal sm:text-5xl">{t(locale, "meet_title")}</h2>
+          <p className="mx-auto mt-4 max-w-xl text-base text-ink">{t(locale, "meet_subhead")}</p>
         </Reveal>
         <Reveal delayMs={150} className="mt-14">
           <FullDashboardMock />
@@ -124,17 +128,17 @@ export default function HomePage() {
       <section id="features" className="scroll-mt-20 bg-cream-deep/30 px-6 py-24 sm:px-10">
         <div className="mx-auto max-w-6xl">
           <Reveal className="text-center">
-            <span className="font-display text-xs uppercase tracking-[0.3em] text-gold-deep">Everything, connected</span>
-            <h2 className="mt-3 font-display text-3xl text-charcoal sm:text-4xl">One platform, every part of the business.</h2>
+            <span className="font-display text-xs uppercase tracking-[0.3em] text-gold-deep">{t(locale, "features_eyebrow")}</span>
+            <h2 className="mt-3 font-display text-3xl text-charcoal sm:text-4xl">{t(locale, "features_title")}</h2>
           </Reveal>
 
           <div className="mt-14 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {OVERVIEW_FEATURES.map((f, i) => (
-              <Reveal key={f.title} delayMs={i * 80}>
+              <Reveal key={f.titleKey} delayMs={i * 80}>
                 <div className="group h-full rounded-md border border-border bg-white p-6 transition duration-300 hover:border-gold-deep hover:shadow-md hover:shadow-charcoal/5">
                   <f.Visual />
-                  <h3 className="mt-4 font-display text-lg text-charcoal">{f.title}</h3>
-                  <p className="mt-1.5 text-sm text-ink">{f.body}</p>
+                  <h3 className="mt-4 font-display text-lg text-charcoal">{t(locale, f.titleKey)}</h3>
+                  <p className="mt-1.5 text-sm text-ink">{t(locale, f.bodyKey)}</p>
                 </div>
               </Reveal>
             ))}
@@ -146,18 +150,14 @@ export default function HomePage() {
       <section className="mx-auto max-w-6xl px-6 py-24 sm:px-10">
         <div className="grid grid-cols-1 items-center gap-12 lg:grid-cols-2">
           <Reveal>
-            <span className="font-display text-xs uppercase tracking-[0.3em] text-gold-deep">Bookings & Calendar</span>
-            <h2 className="mt-3 font-display text-3xl text-charcoal sm:text-4xl">Bookings that work while you don&apos;t.</h2>
-            <p className="mt-5 text-sm leading-relaxed text-ink sm:text-base">
-              An hourly calendar built around each staff member&apos;s real schedule — availability, service
-              duration, business hours and blocked time all respected automatically. Clients see real open times
-              and book themselves, any hour of the day.
-            </p>
+            <span className="font-display text-xs uppercase tracking-[0.3em] text-gold-deep">{t(locale, "bookings_eyebrow")}</span>
+            <h2 className="mt-3 font-display text-3xl text-charcoal sm:text-4xl">{t(locale, "bookings_title")}</h2>
+            <p className="mt-5 text-sm leading-relaxed text-ink sm:text-base">{t(locale, "bookings_body")}</p>
             <ul className="mt-5 flex flex-col gap-2 text-sm text-ink">
-              <li>— 24/7 online booking, no phone calls required</li>
-              <li>— Staff-specific availability and qualified services</li>
-              <li>— Business hours and blocked time built into every slot</li>
-              <li>— Full appointment management: edit, reschedule, cancel</li>
+              <li>— {t(locale, "bookings_li1")}</li>
+              <li>— {t(locale, "bookings_li2")}</li>
+              <li>— {t(locale, "bookings_li3")}</li>
+              <li>— {t(locale, "bookings_li4")}</li>
             </ul>
           </Reveal>
           <Reveal delayMs={120}>
@@ -173,13 +173,9 @@ export default function HomePage() {
             <ClientProfileMock />
           </Reveal>
           <Reveal delayMs={120} className="order-1 lg:order-2">
-            <span className="font-display text-xs uppercase tracking-[0.3em] text-gold-deep">Clients & Forms</span>
-            <h2 className="mt-3 font-display text-3xl text-charcoal sm:text-4xl">Know every client.</h2>
-            <p className="mt-5 text-sm leading-relaxed text-ink sm:text-base">
-              Visit history, notes, allergies and preferences travel with every client automatically. The New
-              Client form collects what you need up front — and syncs straight into their profile, so nothing
-              gets typed twice.
-            </p>
+            <span className="font-display text-xs uppercase tracking-[0.3em] text-gold-deep">{t(locale, "clients_eyebrow")}</span>
+            <h2 className="mt-3 font-display text-3xl text-charcoal sm:text-4xl">{t(locale, "clients_section_title")}</h2>
+            <p className="mt-5 text-sm leading-relaxed text-ink sm:text-base">{t(locale, "clients_body")}</p>
           </Reveal>
         </div>
       </section>
@@ -187,12 +183,9 @@ export default function HomePage() {
       {/* PAYMENTS + HARDWARE */}
       <section id="payments" className="scroll-mt-20 mx-auto max-w-6xl px-6 py-24 sm:px-10">
         <Reveal className="text-center">
-          <span className="font-display text-xs uppercase tracking-[0.3em] text-gold-deep">Payments</span>
-          <h2 className="mt-3 font-display text-3xl text-charcoal sm:text-4xl">Payments, your way.</h2>
-          <p className="mx-auto mt-4 max-w-2xl text-sm text-ink sm:text-base">
-            From cards and cash today to Tap to Pay and a complete front-desk setup, Luxore brings appointments,
-            checkout and payments together in one connected experience.
-          </p>
+          <span className="font-display text-xs uppercase tracking-[0.3em] text-gold-deep">{t(locale, "payments_eyebrow")}</span>
+          <h2 className="mt-3 font-display text-3xl text-charcoal sm:text-4xl">{t(locale, "payments_title")}</h2>
+          <p className="mx-auto mt-4 max-w-2xl text-sm text-ink sm:text-base">{t(locale, "payments_body")}</p>
         </Reveal>
 
         <Reveal delayMs={120} className="mx-auto mt-14 max-w-sm">
@@ -203,37 +196,29 @@ export default function HomePage() {
           {HARDWARE_CATALOG.map((hw, i) => (
             <Reveal key={hw.key} delayMs={i * 100} className="text-center">
               <span className="font-display text-3xl text-gold">{hw.index}</span>
-              <h3 className="mt-3 font-display text-xl text-charcoal">{hw.headline}</h3>
-              <p className="mt-2 text-sm text-ink">{hw.body}</p>
+              <h3 className="mt-3 font-display text-xl text-charcoal">{t(locale, hw.headlineKey)}</h3>
+              <p className="mt-2 text-sm text-ink">{t(locale, hw.bodyKey)}</p>
               <button
                 type="button"
                 disabled
                 title="Hardware details are coming soon."
                 className="mt-4 rounded-sm border border-border px-5 py-2 text-xs font-medium tracking-wide text-ink/50"
               >
-                {hw.cta}
+                {t(locale, hw.ctaKey)}
               </button>
             </Reveal>
           ))}
         </div>
-        <p className="mt-10 text-center text-xs text-ink/50">
-          Hardware options are still being finalized — exact models, pricing and availability will be announced
-          closer to launch.
-        </p>
+        <p className="mt-10 text-center text-xs text-ink/50">{t(locale, "hardware_note")}</p>
       </section>
 
       {/* INVENTORY */}
       <section className="bg-cream-deep/30 px-6 py-24 sm:px-10">
         <div className="mx-auto grid max-w-6xl grid-cols-1 items-center gap-12 lg:grid-cols-2">
           <Reveal>
-            <span className="font-display text-xs uppercase tracking-[0.3em] text-gold-deep">Inventory</span>
-            <h2 className="mt-3 font-display text-3xl text-charcoal sm:text-4xl">
-              Know what&apos;s selling — and what&apos;s running out.
-            </h2>
-            <p className="mt-5 text-sm leading-relaxed text-ink sm:text-base">
-              Track retail products and the services that use them side by side, with low-stock alerts before
-              you run out mid-appointment.
-            </p>
+            <span className="font-display text-xs uppercase tracking-[0.3em] text-gold-deep">{t(locale, "inventory_eyebrow")}</span>
+            <h2 className="mt-3 font-display text-3xl text-charcoal sm:text-4xl">{t(locale, "inventory_title")}</h2>
+            <p className="mt-5 text-sm leading-relaxed text-ink sm:text-base">{t(locale, "inventory_body")}</p>
           </Reveal>
           <Reveal delayMs={120}>
             <InventoryMock />
@@ -248,13 +233,9 @@ export default function HomePage() {
             <AutomationMock />
           </Reveal>
           <Reveal delayMs={120} className="order-1 lg:order-2">
-            <span className="font-display text-xs uppercase tracking-[0.3em] text-gold-deep">Marketing & Growth</span>
-            <h2 className="mt-3 font-display text-3xl text-charcoal sm:text-4xl">Turn empty appointments into revenue.</h2>
-            <p className="mt-5 text-sm leading-relaxed text-ink sm:text-base">
-              Confirmations, deposit reminders and review requests trigger automatically around every
-              appointment, alongside built-in loyalty points and promo codes. Connect an SMS or email
-              provider and they go out on their own.
-            </p>
+            <span className="font-display text-xs uppercase tracking-[0.3em] text-gold-deep">{t(locale, "marketing_eyebrow")}</span>
+            <h2 className="mt-3 font-display text-3xl text-charcoal sm:text-4xl">{t(locale, "marketing_title")}</h2>
+            <p className="mt-5 text-sm leading-relaxed text-ink sm:text-base">{t(locale, "marketing_body")}</p>
           </Reveal>
         </div>
       </section>
@@ -263,13 +244,9 @@ export default function HomePage() {
       <section className="bg-cream-deep/30 px-6 py-24 sm:px-10">
         <div className="mx-auto max-w-6xl">
           <Reveal className="text-center">
-            <span className="font-display text-xs uppercase tracking-[0.3em] text-gold-deep">Your Own Website</span>
-            <h2 className="mt-3 font-display text-3xl text-charcoal sm:text-4xl">
-              Your business deserves more than a booking link.
-            </h2>
-            <p className="mx-auto mt-4 max-w-xl text-sm text-ink sm:text-base">
-              Every Luxore business gets its own branded page — logo, colors and photos included.
-            </p>
+            <span className="font-display text-xs uppercase tracking-[0.3em] text-gold-deep">{t(locale, "websites_eyebrow")}</span>
+            <h2 className="mt-3 font-display text-3xl text-charcoal sm:text-4xl">{t(locale, "websites_title")}</h2>
+            <p className="mx-auto mt-4 max-w-xl text-sm text-ink sm:text-base">{t(locale, "websites_body")}</p>
           </Reveal>
           <Reveal delayMs={120} className="mt-14">
             <WebsiteExamplesMock />
@@ -281,8 +258,8 @@ export default function HomePage() {
       <section id="how-it-works" className="scroll-mt-20 bg-charcoal py-24 text-cream">
         <div className="mx-auto max-w-5xl px-6 sm:px-10">
           <Reveal className="text-center">
-            <span className="font-display text-xs uppercase tracking-[0.3em] text-gold">How it works</span>
-            <h2 className="mt-3 font-display text-3xl text-white sm:text-4xl">Up and running in one sitting.</h2>
+            <span className="font-display text-xs uppercase tracking-[0.3em] text-gold">{t(locale, "how_it_works_eyebrow")}</span>
+            <h2 className="mt-3 font-display text-3xl text-white sm:text-4xl">{t(locale, "how_it_works_title")}</h2>
           </Reveal>
 
           <div className="relative mt-14 grid grid-cols-1 gap-10 sm:grid-cols-3">
@@ -290,8 +267,8 @@ export default function HomePage() {
             {STEPS.map((s, i) => (
               <Reveal key={s.step} delayMs={i * 150} className="relative text-center sm:text-left">
                 <span className="relative z-10 inline-block bg-charcoal pr-3 font-display text-4xl text-gold">{s.step}</span>
-                <h3 className="mt-4 font-display text-xl text-white">{s.title}</h3>
-                <p className="mt-2 text-sm text-white/70">{s.body}</p>
+                <h3 className="mt-4 font-display text-xl text-white">{t(locale, s.titleKey)}</h3>
+                <p className="mt-2 text-sm text-white/70">{t(locale, s.bodyKey)}</p>
               </Reveal>
             ))}
           </div>
@@ -302,15 +279,9 @@ export default function HomePage() {
       <section id="about" className="scroll-mt-20 mx-auto max-w-6xl px-6 py-24 sm:px-10">
         <div className="grid grid-cols-1 items-center gap-10 sm:grid-cols-2">
           <Reveal>
-            <span className="font-display text-xs uppercase tracking-[0.3em] text-gold-deep">About Luxore</span>
-            <h2 className="mt-3 font-display text-3xl text-charcoal sm:text-4xl">
-              Beauty businesses shouldn&apos;t need five different tools to run one business.
-            </h2>
-            <p className="mt-5 text-sm leading-relaxed text-ink sm:text-base">
-              A booking app for the calendar, a spreadsheet for clients, a separate tool for payments, a
-              website that never quite matches — Luxore replaces all of it with one connected platform, built
-              around the real day-to-day of a salon, spa or studio.
-            </p>
+            <span className="font-display text-xs uppercase tracking-[0.3em] text-gold-deep">{t(locale, "about_eyebrow")}</span>
+            <h2 className="mt-3 font-display text-3xl text-charcoal sm:text-4xl">{t(locale, "about_title")}</h2>
+            <p className="mt-5 text-sm leading-relaxed text-ink sm:text-base">{t(locale, "about_body")}</p>
           </Reveal>
           <Reveal delayMs={120}>
             <div className="overflow-hidden rounded-md border border-border">
@@ -325,11 +296,11 @@ export default function HomePage() {
       <section className="bg-cream-deep/30 px-6 py-24 sm:px-10">
         <div className="mx-auto max-w-5xl">
           <Reveal className="text-center">
-            <span className="font-display text-xs uppercase tracking-[0.3em] text-gold-deep">Success Stories</span>
-            <h2 className="mt-3 font-display text-3xl text-charcoal sm:text-4xl">From real Luxore businesses.</h2>
+            <span className="font-display text-xs uppercase tracking-[0.3em] text-gold-deep">{t(locale, "reviews_eyebrow")}</span>
+            <h2 className="mt-3 font-display text-3xl text-charcoal sm:text-4xl">{t(locale, "reviews_title")}</h2>
           </Reveal>
           <Reveal delayMs={120} className="mt-14">
-            <ReviewsPlaceholder />
+            <ReviewsPlaceholder locale={locale} />
           </Reveal>
         </div>
       </section>
@@ -337,24 +308,24 @@ export default function HomePage() {
       {/* FAQ */}
       <section className="bg-cream-deep/30 px-6 py-24 sm:px-10">
         <Reveal className="text-center">
-          <span className="font-display text-xs uppercase tracking-[0.3em] text-gold-deep">FAQ</span>
-          <h2 className="mt-3 font-display text-3xl text-charcoal sm:text-4xl">Questions, answered.</h2>
+          <span className="font-display text-xs uppercase tracking-[0.3em] text-gold-deep">{t(locale, "faq_eyebrow")}</span>
+          <h2 className="mt-3 font-display text-3xl text-charcoal sm:text-4xl">{t(locale, "faq_title")}</h2>
         </Reveal>
         <div className="mt-14">
-          <Faq />
+          <Faq locale={locale} />
         </div>
       </section>
 
       {/* FINAL CTA */}
       <section className="mx-auto max-w-3xl px-6 py-24 text-center sm:px-10">
         <Reveal>
-          <h2 className="font-display text-3xl text-charcoal sm:text-4xl">Ready to run it beautifully?</h2>
-          <p className="mt-4 text-sm text-ink sm:text-base">30 days free. No credit card required.</p>
+          <h2 className="font-display text-3xl text-charcoal sm:text-4xl">{t(locale, "final_cta_title")}</h2>
+          <p className="mt-4 text-sm text-ink sm:text-base">{t(locale, "hero_trial_note")}</p>
           <Link
             href="/register"
             className="mt-8 inline-block rounded-sm bg-charcoal px-10 py-3.5 text-sm font-medium tracking-wide text-white transition hover:bg-charcoal-soft"
           >
-            Start Your Free Month
+            {t(locale, "start_free_month_cta")}
           </Link>
         </Reveal>
       </section>
@@ -365,9 +336,7 @@ export default function HomePage() {
           <div className="grid grid-cols-2 gap-8 sm:grid-cols-4">
             <div className="col-span-2 sm:col-span-1">
               <span className="font-display text-sm uppercase tracking-[0.3em] text-charcoal">Luxore</span>
-              <p className="mt-3 text-xs leading-relaxed text-ink/60">
-                The all-in-one operating platform for beauty businesses.
-              </p>
+              <p className="mt-3 text-xs leading-relaxed text-ink/60">{t(locale, "footer_tagline")}</p>
             </div>
             {FOOTER_GROUPS.map((group) => (
               <div key={group.title}>
@@ -392,7 +361,9 @@ export default function HomePage() {
           </div>
 
           <div className="mt-12 flex flex-col items-center justify-between gap-4 border-t border-border pt-8 sm:flex-row">
-            <p className="text-xs text-ink/50">© {new Date().getFullYear()} Luxore. All rights reserved.</p>
+            <p className="text-xs text-ink/50">
+              © {new Date().getFullYear()} Luxore. {t(locale, "footer_rights")}
+            </p>
             <div className="flex gap-4 text-xs text-ink/40">
               <span>Instagram</span>
               <span>Facebook</span>

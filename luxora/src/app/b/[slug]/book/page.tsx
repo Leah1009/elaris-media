@@ -2,11 +2,16 @@ import { notFound } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import { getBookableBusinessBySlug } from "@/lib/luxora/public-booking";
 import { BookingWizard, type FormOption } from "@/components/booking-wizard";
+import { getBusinessPublicLocale } from "@/lib/luxora/locale";
+import { t } from "@/lib/luxora/i18n";
+import { LocaleSwitcher } from "@/components/locale-switcher";
 
 export default async function BookPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
   const business = await getBookableBusinessBySlug(slug);
   if (!business) notFound();
+
+  const locale = await getBusinessPublicLocale(business.public_language_mode);
 
   if (!business.online_booking_enabled) {
     return (
@@ -14,10 +19,9 @@ export default async function BookPage({ params }: { params: Promise<{ slug: str
         <span className="font-display text-xs uppercase tracking-[0.3em] text-gold-deep">
           {business.name}
         </span>
-        <h1 className="mt-2 font-display text-3xl text-charcoal">Book an Appointment</h1>
+        <h1 className="mt-2 font-display text-3xl text-charcoal">{t(locale, "book_an_appointment")}</h1>
         <p className="mt-6 text-sm text-ink">
-          Online booking isn&apos;t available right now — please contact {business.name} directly to
-          schedule.
+          {t(locale, "online_booking_unavailable")} {business.name} {t(locale, "online_booking_unavailable_suffix")}
         </p>
       </main>
     );
@@ -46,10 +50,16 @@ export default async function BookPage({ params }: { params: Promise<{ slug: str
 
   return (
     <main className="mx-auto max-w-xl px-6 py-12">
+      {business.public_language_mode === "both" ? (
+        <div className="mb-6 flex justify-end">
+          <LocaleSwitcher locale={locale} />
+        </div>
+      ) : null}
+
       <span className="font-display text-xs uppercase tracking-[0.3em] text-gold-deep">
         {business.name}
       </span>
-      <h1 className="mt-2 font-display text-3xl text-charcoal">Book an Appointment</h1>
+      <h1 className="mt-2 font-display text-3xl text-charcoal">{t(locale, "book_an_appointment")}</h1>
 
       <div className="mt-8">
         <BookingWizard
@@ -59,6 +69,7 @@ export default async function BookPage({ params }: { params: Promise<{ slug: str
           staffServices={staffServices ?? []}
           forms={(forms ?? []) as unknown as FormOption[]}
           bookingWindowDays={business.booking_window_days}
+          locale={locale}
         />
       </div>
     </main>

@@ -430,6 +430,7 @@ export type Database = {
           owner_profile_id: string
           phone: string | null
           preferred_language: string
+          public_language_mode: string
           show_reviews: boolean
           show_team: boolean
           slug: string
@@ -462,6 +463,7 @@ export type Database = {
           owner_profile_id: string
           phone?: string | null
           preferred_language?: string
+          public_language_mode?: string
           show_reviews?: boolean
           show_team?: boolean
           slug: string
@@ -494,6 +496,7 @@ export type Database = {
           owner_profile_id?: string
           phone?: string | null
           preferred_language?: string
+          public_language_mode?: string
           show_reviews?: boolean
           show_team?: boolean
           slug?: string

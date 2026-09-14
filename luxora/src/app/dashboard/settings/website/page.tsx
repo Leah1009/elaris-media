@@ -8,7 +8,7 @@ export default async function WebsiteSettingsPage() {
 
   const { data: business } = await supabase
     .from("businesses")
-    .select("logo_url, cover_image_url, brand_color, website_tagline, instagram_url, show_team, show_reviews")
+    .select("logo_url, cover_image_url, brand_color, website_tagline, instagram_url, show_team, show_reviews, public_language_mode")
     .eq("id", ctx.business.id)
     .single();
 

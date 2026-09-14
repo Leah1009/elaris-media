@@ -1,4 +1,6 @@
-export function ReviewsPlaceholder() {
+import { t, type Locale } from "@/lib/luxora/i18n";
+
+export function ReviewsPlaceholder({ locale }: { locale: Locale }) {
   return (
     <div className="grid grid-cols-1 gap-5 sm:grid-cols-3">
       {[1, 2, 3].map((i) => (
@@ -10,12 +12,10 @@ export function ReviewsPlaceholder() {
           </div>
           <div className="mt-4 h-2 w-full rounded-full bg-charcoal/10" />
           <div className="mt-2 h-2 w-2/3 rounded-full bg-charcoal/10" />
-          <p className="mt-5 text-xs font-medium uppercase tracking-wide text-ink/40">Coming soon</p>
+          <p className="mt-5 text-xs font-medium uppercase tracking-wide text-ink/40">{t(locale, "reviews_coming_soon")}</p>
         </div>
       ))}
-      <p className="col-span-full text-center text-sm text-ink/60">
-        Real reviews from Luxore businesses will appear here once they&apos;re in.
-      </p>
+      <p className="col-span-full text-center text-sm text-ink/60">{t(locale, "reviews_placeholder_note")}</p>
     </div>
   );
 }

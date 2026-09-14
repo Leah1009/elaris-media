@@ -4,6 +4,7 @@ import { useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
 import { formatCents } from "@/lib/luxora/money";
 import { WaitlistJoin } from "@/components/waitlist-join";
+import { t, type Locale } from "@/lib/luxora/i18n";
 
 type ServiceOption = {
   id: string;
@@ -48,6 +49,7 @@ export function BookingWizard({
   staffServices,
   forms,
   bookingWindowDays,
+  locale,
 }: {
   slug: string;
   services: ServiceOption[];
@@ -55,6 +57,7 @@ export function BookingWizard({
   staffServices: StaffServiceRow[];
   forms: FormOption[];
   bookingWindowDays: number;
+  locale: Locale;
 }) {
   const router = useRouter();
   const [step, setStep] = useState<Step>("services");
@@ -173,7 +176,7 @@ export function BookingWizard({
       });
       const data = await res.json();
       if (!res.ok) {
-        setError(data.error ?? "Could not complete booking.");
+        setError(data.error ?? t(locale, "could_not_complete_booking"));
         if (res.status === 409) {
           setStep("time");
           loadSlots(date, selectedStaffId);
@@ -187,7 +190,7 @@ export function BookingWizard({
       });
       router.push(`/b/${slug}/book/confirmed?${params.toString()}`);
     } catch {
-      setError("Something went wrong. Please try again.");
+      setError(t(locale, "something_went_wrong"));
     } finally {
       setSubmitting(false);
     }
@@ -196,7 +199,7 @@ export function BookingWizard({
   if (step === "services") {
     return (
       <div className="flex flex-col gap-5">
-        <h2 className="font-display text-lg text-charcoal">1. Select Service</h2>
+        <h2 className="font-display text-lg text-charcoal">{t(locale, "wiz_step1_title")}</h2>
         <div className="flex flex-col gap-2">
           {services.map((s) => (
             <label key={s.id} className="flex items-center justify-between rounded-sm border border-border bg-white p-3 text-sm">
@@ -223,7 +226,7 @@ export function BookingWizard({
           onClick={() => setStep("staff")}
           className="self-start rounded-sm bg-charcoal px-6 py-2.5 text-sm font-medium text-white transition hover:bg-charcoal-soft disabled:opacity-40"
         >
-          Continue
+          {t(locale, "continue_button")}
         </button>
       </div>
     );
@@ -232,7 +235,7 @@ export function BookingWizard({
   if (step === "staff") {
     return (
       <div className="flex flex-col gap-5">
-        <h2 className="font-display text-lg text-charcoal">2. Select Professional</h2>
+        <h2 className="font-display text-lg text-charcoal">{t(locale, "wiz_step2_title")}</h2>
         <div className="flex flex-col gap-2">
           <label className="flex items-center gap-2 rounded-sm border border-border bg-white p-3 text-sm text-charcoal">
             <input
@@ -242,7 +245,7 @@ export function BookingWizard({
               onChange={() => setSelectedStaffId("any")}
               className="h-4 w-4 accent-gold-deep"
             />
-            Any Available
+            {t(locale, "any_available")}
           </label>
           {eligibleStaff.map((s) => (
             <label key={s.id} className="flex items-center gap-2 rounded-sm border border-border bg-white p-3 text-sm text-charcoal">
@@ -260,7 +263,7 @@ export function BookingWizard({
         </div>
         <div className="flex gap-3">
           <button type="button" onClick={() => setStep("services")} className="rounded-sm border border-border px-5 py-2.5 text-sm text-charcoal">
-            Back
+            {t(locale, "back")}
           </button>
           <button
             type="button"
@@ -270,7 +273,7 @@ export function BookingWizard({
             }}
             className="rounded-sm bg-charcoal px-6 py-2.5 text-sm font-medium text-white hover:bg-charcoal-soft"
           >
-            Continue
+            {t(locale, "continue_button")}
           </button>
         </div>
       </div>
@@ -280,7 +283,7 @@ export function BookingWizard({
   if (step === "date" || step === "time") {
     return (
       <div className="flex flex-col gap-5">
-        <h2 className="font-display text-lg text-charcoal">3. Select Date &amp; Time</h2>
+        <h2 className="font-display text-lg text-charcoal">{t(locale, "wiz_step3_title")}</h2>
         <input
           type="date"
           value={date}
@@ -294,7 +297,7 @@ export function BookingWizard({
         />
 
         {loadingSlots ? (
-          <p className="text-sm text-ink">Loading available times…</p>
+          <p className="text-sm text-ink">{t(locale, "loading_times")}</p>
         ) : slots.length > 0 ? (
           <div className="grid grid-cols-3 gap-2 sm:grid-cols-4">
             {slots.map((slot) => (
@@ -314,14 +317,14 @@ export function BookingWizard({
           </div>
         ) : (
           <div className="rounded-sm border border-border bg-white p-4">
-            <p className="text-sm text-ink">No availability on this date. Try another day, or:</p>
-            <WaitlistJoin slug={slug} serviceIds={selectedServiceIds} />
+            <p className="text-sm text-ink">{t(locale, "no_availability_note")}</p>
+            <WaitlistJoin slug={slug} serviceIds={selectedServiceIds} locale={locale} />
           </div>
         )}
 
         <div className="flex gap-3">
           <button type="button" onClick={() => setStep("staff")} className="rounded-sm border border-border px-5 py-2.5 text-sm text-charcoal">
-            Back
+            {t(locale, "back")}
           </button>
           <button
             type="button"
@@ -329,7 +332,7 @@ export function BookingWizard({
             onClick={() => setStep("info")}
             className="rounded-sm bg-charcoal px-6 py-2.5 text-sm font-medium text-white hover:bg-charcoal-soft disabled:opacity-40"
           >
-            Continue
+            {t(locale, "continue_button")}
           </button>
         </div>
       </div>
@@ -339,15 +342,15 @@ export function BookingWizard({
   if (step === "info") {
     return (
       <div className="flex flex-col gap-5">
-        <h2 className="font-display text-lg text-charcoal">4. Your Information</h2>
+        <h2 className="font-display text-lg text-charcoal">{t(locale, "wiz_step4_title")}</h2>
         <input
-          placeholder="Full Name"
+          placeholder={t(locale, "placeholder_full_name")}
           value={fullName}
           onChange={(e) => setFullName(e.target.value)}
           className="rounded-sm border border-border bg-white px-3.5 py-2.5 text-sm text-charcoal"
         />
         <input
-          placeholder="Phone"
+          placeholder={t(locale, "placeholder_phone")}
           type="tel"
           value={phone}
           onChange={(e) => setPhone(e.target.value)}
@@ -355,7 +358,7 @@ export function BookingWizard({
           className="rounded-sm border border-border bg-white px-3.5 py-2.5 text-sm text-charcoal"
         />
         <input
-          placeholder="Email"
+          placeholder={t(locale, "placeholder_email")}
           type="email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
@@ -363,13 +366,13 @@ export function BookingWizard({
           className="rounded-sm border border-border bg-white px-3.5 py-2.5 text-sm text-charcoal"
         />
 
-        {checkingMatch ? <p className="text-sm text-ink">Checking…</p> : null}
+        {checkingMatch ? <p className="text-sm text-ink">{t(locale, "checking_ellipsis")}</p> : null}
 
         {matchedClient && matchConfirmed === null ? (
           <div className="rounded-sm border border-gold-deep bg-cream-deep p-4">
             <p className="text-sm text-charcoal">
-              Welcome back, {matchedClient.display_name} 👋 <br />
-              We found an existing profile. Is this you?
+              {t(locale, "welcome_back_comma")} {matchedClient.display_name} 👋 <br />
+              {t(locale, "found_existing_profile")}
             </p>
             <div className="mt-3 flex gap-3">
               <button
@@ -377,14 +380,14 @@ export function BookingWizard({
                 onClick={() => setMatchConfirmed(true)}
                 className="rounded-sm bg-charcoal px-4 py-1.5 text-sm text-white"
               >
-                Yes
+                {t(locale, "yes_label")}
               </button>
               <button
                 type="button"
                 onClick={() => setMatchConfirmed(false)}
                 className="rounded-sm border border-border px-4 py-1.5 text-sm text-charcoal"
               >
-                No
+                {t(locale, "no_label")}
               </button>
             </div>
           </div>
@@ -392,7 +395,7 @@ export function BookingWizard({
 
         <div className="flex gap-3">
           <button type="button" onClick={() => setStep("time")} className="rounded-sm border border-border px-5 py-2.5 text-sm text-charcoal">
-            Back
+            {t(locale, "back")}
           </button>
           <button
             type="button"
@@ -400,7 +403,7 @@ export function BookingWizard({
             onClick={() => setStep("review")}
             className="rounded-sm bg-charcoal px-6 py-2.5 text-sm font-medium text-white hover:bg-charcoal-soft disabled:opacity-40"
           >
-            Continue
+            {t(locale, "continue_button")}
           </button>
         </div>
       </div>
@@ -410,20 +413,19 @@ export function BookingWizard({
   if (step === "review") {
     return (
       <div className="flex flex-col gap-5">
-        <h2 className="font-display text-lg text-charcoal">5. Confirm Appointment</h2>
+        <h2 className="font-display text-lg text-charcoal">{t(locale, "wiz_step5_title")}</h2>
 
         <div className="rounded-sm border border-border bg-white p-4 text-sm">
           <p className="text-charcoal">{selectedServices.map((s) => s.name).join(", ")}</p>
           <p className="mt-1 text-ink">
-            {date} at {selectedSlot?.time} · {totalMinutes} min
+            {date} {t(locale, "word_at")} {selectedSlot?.time} · {totalMinutes} min
           </p>
           <p className="mt-1 font-medium text-charcoal">{formatCents(totalPrice)}</p>
         </div>
 
         {anyDepositRequired ? (
           <p className="rounded-sm border border-border bg-cream-deep p-3 text-xs text-charcoal">
-            This service requires a deposit. Online deposit collection isn&apos;t enabled yet — the
-            business will follow up with you directly about it.
+            {t(locale, "deposit_note")}
           </p>
         ) : null}
 
@@ -457,7 +459,7 @@ export function BookingWizard({
                           onChange={(e) => updateAnswer(form.id, field.id, e.target.checked ? "yes" : "")}
                           className="h-4 w-4 accent-gold-deep"
                         />
-                        I agree
+                        {t(locale, "i_agree")}
                       </label>
                     ) : field.field_type === "multiple_choice" ? (
                       <select
@@ -481,7 +483,7 @@ export function BookingWizard({
                       />
                     ) : field.field_type === "signature" ? (
                       <input
-                        placeholder="Type your full name to sign"
+                        placeholder={t(locale, "placeholder_signature")}
                         required={field.required}
                         onChange={(e) => updateAnswer(form.id, field.id, e.target.value)}
                         className="rounded-sm border border-border px-3 py-2 text-sm text-charcoal"
@@ -501,7 +503,7 @@ export function BookingWizard({
         ))}
 
         <textarea
-          placeholder="Notes for the business (optional)"
+          placeholder={t(locale, "placeholder_notes_optional")}
           value={notes}
           onChange={(e) => setNotes(e.target.value)}
           rows={2}
@@ -512,7 +514,7 @@ export function BookingWizard({
 
         <div className="flex gap-3">
           <button type="button" onClick={() => setStep("info")} className="rounded-sm border border-border px-5 py-2.5 text-sm text-charcoal">
-            Back
+            {t(locale, "back")}
           </button>
           <button
             type="button"
@@ -520,7 +522,7 @@ export function BookingWizard({
             onClick={submitBooking}
             className="rounded-sm bg-charcoal px-6 py-2.5 text-sm font-medium text-white hover:bg-charcoal-soft disabled:opacity-60"
           >
-            {submitting ? "Booking…" : "Confirm Appointment"}
+            {submitting ? t(locale, "booking_ellipsis") : t(locale, "confirm_appointment_button")}
           </button>
         </div>
       </div>

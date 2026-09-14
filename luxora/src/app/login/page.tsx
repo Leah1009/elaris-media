@@ -1,59 +1,30 @@
-"use client";
-
-import { useActionState } from "react";
 import Link from "next/link";
-import { login, type ActionState } from "@/lib/luxora/actions";
-import { FormField } from "@/components/form-field";
+import { getPublicLocale } from "@/lib/luxora/locale";
+import { t } from "@/lib/luxora/i18n";
+import { LoginForm } from "@/components/login-form";
+import { LocaleSwitcher } from "@/components/locale-switcher";
 
-export default function LoginPage() {
-  const [state, formAction, pending] = useActionState<ActionState, FormData>(login, null);
+export default async function LoginPage() {
+  const locale = await getPublicLocale();
 
   return (
     <main className="flex min-h-screen items-center justify-center px-6 py-16">
       <div className="w-full max-w-sm">
-        <Link href="/" className="font-display text-sm uppercase tracking-[0.3em] text-gold-deep">
-          Luxore
-        </Link>
-        <h1 className="mt-4 font-display text-3xl text-charcoal">Welcome back</h1>
-        <p className="mt-2 text-sm text-ink">Log in to manage your business.</p>
+        <div className="flex items-center justify-between">
+          <Link href="/" className="font-display text-sm uppercase tracking-[0.3em] text-gold-deep">
+            Luxore
+          </Link>
+          <LocaleSwitcher locale={locale} />
+        </div>
+        <h1 className="mt-4 font-display text-3xl text-charcoal">{t(locale, "welcome_back")}</h1>
+        <p className="mt-2 text-sm text-ink">{t(locale, "login_subtitle")}</p>
 
-        <form action={formAction} className="mt-8 flex flex-col gap-5" noValidate>
-          <FormField
-            label="Email"
-            name="email"
-            type="email"
-            autoComplete="email"
-            required
-            errors={state?.fieldErrors?.email}
-          />
-          <FormField
-            label="Password"
-            name="password"
-            type="password"
-            autoComplete="current-password"
-            required
-            errors={state?.fieldErrors?.password}
-          />
-
-          {state?.error ? (
-            <p role="alert" className="text-sm text-danger">
-              {state.error}
-            </p>
-          ) : null}
-
-          <button
-            type="submit"
-            disabled={pending}
-            className="mt-2 rounded-sm bg-charcoal px-6 py-3 text-sm font-medium tracking-wide text-white transition hover:bg-charcoal-soft disabled:opacity-60"
-          >
-            {pending ? "Logging in…" : "Log In"}
-          </button>
-        </form>
+        <LoginForm locale={locale} />
 
         <p className="mt-6 text-sm text-ink">
-          New to Luxore?{" "}
+          {t(locale, "new_to_luxore")}{" "}
           <Link href="/register" className="font-medium text-gold-deep underline underline-offset-2">
-            Start your free month
+            {t(locale, "start_free_month_cta")}
           </Link>
         </p>
       </div>

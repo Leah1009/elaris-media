@@ -1,8 +1,9 @@
 "use client";
 
 import { useState } from "react";
+import { t, type Locale } from "@/lib/luxora/i18n";
 
-export function WaitlistJoin({ slug, serviceIds }: { slug: string; serviceIds: string[] }) {
+export function WaitlistJoin({ slug, serviceIds, locale }: { slug: string; serviceIds: string[]; locale: Locale }) {
   const [fullName, setFullName] = useState("");
   const [phone, setPhone] = useState("");
   const [submitting, setSubmitting] = useState(false);
@@ -10,7 +11,7 @@ export function WaitlistJoin({ slug, serviceIds }: { slug: string; serviceIds: s
   const [error, setError] = useState<string | null>(null);
 
   if (joined) {
-    return <p className="mt-3 text-sm text-charcoal">You&apos;re on the waitlist — we&apos;ll reach out if a spot opens up.</p>;
+    return <p className="mt-3 text-sm text-charcoal">{t(locale, "waitlist_joined_note")}</p>;
   }
 
   async function submit() {
@@ -24,7 +25,7 @@ export function WaitlistJoin({ slug, serviceIds }: { slug: string; serviceIds: s
         body: JSON.stringify({ fullName, phone, serviceId: serviceIds[0] }),
       });
       if (!res.ok) {
-        setError("Could not join the waitlist. Please try again.");
+        setError(t(locale, "could_not_join_waitlist"));
         return;
       }
       setJoined(true);
@@ -36,13 +37,13 @@ export function WaitlistJoin({ slug, serviceIds }: { slug: string; serviceIds: s
   return (
     <div className="mt-3 flex flex-col gap-2">
       <input
-        placeholder="Full Name"
+        placeholder={t(locale, "placeholder_full_name")}
         value={fullName}
         onChange={(e) => setFullName(e.target.value)}
         className="rounded-sm border border-border px-3 py-2 text-sm text-charcoal"
       />
       <input
-        placeholder="Phone"
+        placeholder={t(locale, "placeholder_phone")}
         type="tel"
         value={phone}
         onChange={(e) => setPhone(e.target.value)}
@@ -55,7 +56,7 @@ export function WaitlistJoin({ slug, serviceIds }: { slug: string; serviceIds: s
         disabled={submitting || !fullName || !phone}
         className="self-start rounded-sm border border-border px-4 py-2 text-sm font-medium text-charcoal hover:border-gold-deep disabled:opacity-50"
       >
-        {submitting ? "Joining…" : "Join Waitlist"}
+        {submitting ? t(locale, "joining_ellipsis") : t(locale, "join_waitlist_button")}
       </button>
     </div>
   );

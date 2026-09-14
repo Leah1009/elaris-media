@@ -2,16 +2,18 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import { t, type Locale } from "@/lib/luxora/i18n";
+import { LocaleSwitcher } from "@/components/locale-switcher";
 
-const LINKS = [
-  { href: "#features", label: "Features" },
-  { href: "#how-it-works", label: "How It Works" },
-  { href: "#about", label: "About" },
-];
-
-export function SiteNav() {
+export function SiteNav({ locale }: { locale: Locale }) {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
+
+  const LINKS = [
+    { href: "#features", label: t(locale, "nav_features") },
+    { href: "#how-it-works", label: t(locale, "nav_how_it_works") },
+    { href: "#about", label: t(locale, "nav_about") },
+  ];
 
   useEffect(() => {
     function onScroll() {
@@ -60,13 +62,14 @@ export function SiteNav() {
         </nav>
 
         <div className="hidden items-center justify-self-end gap-5 md:flex">
+          <LocaleSwitcher locale={locale} dark={!scrolled} />
           <Link
             href="/login"
             className={`text-sm font-medium tracking-wide transition-colors ${
               scrolled ? "text-ink hover:text-gold-deep" : "text-white/90 hover:text-white"
             }`}
           >
-            Log In
+            {t(locale, "nav_log_in")}
           </Link>
           <Link
             href="/register"
@@ -76,7 +79,7 @@ export function SiteNav() {
                 : "bg-gold-deep text-white hover:opacity-90"
             }`}
           >
-            Start Free
+            {t(locale, "nav_start_free")}
           </Link>
         </div>
 
@@ -108,7 +111,10 @@ export function SiteNav() {
               ✕
             </button>
           </div>
-          <nav aria-label="Mobile" className="mt-12 flex flex-col gap-6">
+          <div className="mt-8">
+            <LocaleSwitcher locale={locale} />
+          </div>
+          <nav aria-label="Mobile" className="mt-8 flex flex-col gap-6">
             {LINKS.map((link) => (
               <a
                 key={link.href}
@@ -120,7 +126,7 @@ export function SiteNav() {
               </a>
             ))}
             <Link href="/login" onClick={() => setMenuOpen(false)} className="font-display text-2xl text-charcoal">
-              Log In
+              {t(locale, "nav_log_in")}
             </Link>
           </nav>
           <Link
@@ -128,7 +134,7 @@ export function SiteNav() {
             onClick={() => setMenuOpen(false)}
             className="mt-auto rounded-sm bg-charcoal px-6 py-3.5 text-center text-sm font-medium tracking-wide text-white"
           >
-            Start Your Free Month
+            {t(locale, "start_free_month_cta")}
           </Link>
         </div>
       ) : null}

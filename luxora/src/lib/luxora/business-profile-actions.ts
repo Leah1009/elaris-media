@@ -23,6 +23,7 @@ const ProfileSchema = z
     zip: z.string().min(3, "ZIP is required."),
     timezone: z.string().min(1, "Choose a timezone."),
     taxRatePercent: z.coerce.number().min(0).max(100),
+    preferredLanguage: z.enum(["en", "es"]),
   })
   .refine((data) => data.businessType !== "other" || !!data.businessTypeOther?.trim(), {
     error: "Please describe your business type.",
@@ -53,6 +54,7 @@ export async function updateBusinessProfile(_prevState: ActionState, formData: F
       zip: data.zip,
       timezone: data.timezone,
       tax_rate_percent: data.taxRatePercent,
+      preferred_language: data.preferredLanguage,
     })
     .eq("id", ctx.business.id);
 

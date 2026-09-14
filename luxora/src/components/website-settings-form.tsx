@@ -12,6 +12,7 @@ type Settings = {
   instagram_url: string | null;
   show_team: boolean;
   show_reviews: boolean;
+  public_language_mode: string;
 };
 
 export function WebsiteSettingsForm({
@@ -31,6 +32,11 @@ export function WebsiteSettingsForm({
   const [tagline, setTagline] = useState(settings.website_tagline ?? "");
   const [showTeam, setShowTeam] = useState(settings.show_team);
   const [showReviews, setShowReviews] = useState(settings.show_reviews);
+  const [languageMode, setLanguageMode] = useState<"en" | "es" | "both">(
+    settings.public_language_mode === "es" || settings.public_language_mode === "both"
+      ? (settings.public_language_mode as "es" | "both")
+      : "en",
+  );
 
   return (
     <div className="grid grid-cols-1 gap-6 lg:grid-cols-[1fr_360px]">
@@ -128,6 +134,29 @@ export function WebsiteSettingsForm({
           {state?.fieldErrors?.instagramUrl ? (
             <p className="text-sm text-danger">{state.fieldErrors.instagramUrl[0]}</p>
           ) : null}
+        </div>
+
+        <div className="flex flex-col gap-1.5">
+          <label className="text-sm font-medium text-charcoal">Public Site & Booking Language</label>
+          <input type="hidden" name="publicLanguageMode" value={languageMode} />
+          <div className="flex w-fit overflow-hidden rounded-sm border border-border">
+            {(["en", "es", "both"] as const).map((mode) => (
+              <button
+                key={mode}
+                type="button"
+                onClick={() => setLanguageMode(mode)}
+                className={`px-4 py-2 text-sm font-medium transition ${
+                  languageMode === mode ? "bg-charcoal text-white" : "bg-white text-charcoal hover:bg-cream-deep"
+                }`}
+              >
+                {mode === "en" ? "English" : mode === "es" ? "Español" : "English + Español"}
+              </button>
+            ))}
+          </div>
+          <p className="text-xs text-ink/60">
+            The language your public booking page uses. Choose both to let clients switch between English and
+            Spanish.
+          </p>
         </div>
 
         <fieldset className="flex flex-col gap-2 rounded-sm border border-border p-3.5">
