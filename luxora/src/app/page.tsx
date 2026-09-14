@@ -193,13 +193,19 @@ export default async function HomePage() {
                   <cat.Visual />
                   <h3 className="font-display text-xl text-charcoal">{t(locale, cat.titleKey)}</h3>
                 </div>
-                <ul className="mt-5 grid grid-cols-1 gap-x-6 gap-y-2 text-sm text-ink sm:grid-cols-2">
+                <div className="mt-5 grid grid-cols-1 gap-x-6 sm:grid-cols-2">
                   {cat.items.map((itemKey) => (
-                    <li key={itemKey} className="border-b border-border/70 py-1.5">
-                      {t(locale, itemKey)}
-                    </li>
+                    <details key={itemKey} className="group border-b border-border/70 py-1.5">
+                      <summary className="flex cursor-pointer list-none items-center justify-between gap-2 text-sm text-ink">
+                        {t(locale, itemKey)}
+                        <span className="shrink-0 text-xs text-gold-deep transition-transform group-open:rotate-45">+</span>
+                      </summary>
+                      <p className="mt-1.5 pb-1 text-xs leading-relaxed text-ink/60">
+                        {t(locale, `${itemKey}_desc` as TranslationKey)}
+                      </p>
+                    </details>
                   ))}
-                </ul>
+                </div>
               </Reveal>
             ))}
           </div>

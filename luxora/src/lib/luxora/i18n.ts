@@ -220,6 +220,127 @@ const dictionary = {
   cat_item_multiple_locations: { en: "Multiple Locations", es: "Múltiples ubicaciones" },
   cat_item_business_hours: { en: "Business Hours", es: "Horario del negocio" },
   cat_item_website_branding: { en: "Website & Branding", es: "Sitio web y marca" },
+
+  cat_item_calendar_scheduling_desc: {
+    en: "An hourly calendar built around each staff member's real schedule and business hours.",
+    es: "Un calendario por horas basado en el horario real de cada miembro del personal y del negocio.",
+  },
+  cat_item_online_booking_desc: {
+    en: "Clients see real availability and book themselves, 24/7, from your website.",
+    es: "Los clientes ven disponibilidad real y reservan solos, 24/7, desde tu sitio web.",
+  },
+  cat_item_checkout_pos_desc: {
+    en: "Charge cards, cash or other manual methods right from any appointment.",
+    es: "Cobra con tarjeta, efectivo u otros métodos manuales directo desde cualquier cita.",
+  },
+  cat_item_deposits_desc: {
+    en: "Require a deposit on select services, with reminders before the appointment.",
+    es: "Exige un depósito en servicios seleccionados, con recordatorios antes de la cita.",
+  },
+  cat_item_payments_desc: {
+    en: "One real record of every transaction, tied to the client and appointment.",
+    es: "Un registro real de cada transacción, vinculado al cliente y a la cita.",
+  },
+  cat_item_gift_cards_desc: {
+    en: "Sell gift cards and redeem them at checkout.",
+    es: "Vende tarjetas de regalo y canjéalas al momento de cobrar.",
+  },
+  cat_item_waitlist_desc: {
+    en: "Clients can join a waitlist when their preferred time isn't open.",
+    es: "Los clientes pueden unirse a una lista de espera cuando su horario preferido no está disponible.",
+  },
+  cat_item_client_management_desc: {
+    en: "Every client's contact info, tags and visit history in one place.",
+    es: "La información de contacto, etiquetas e historial de cada cliente en un solo lugar.",
+  },
+  cat_item_client_profiles_desc: {
+    en: "Notes, allergies and preferences travel with every client automatically.",
+    es: "Notas, alergias y preferencias viajan con cada cliente automáticamente.",
+  },
+  cat_item_forms_desc: {
+    en: "Custom intake and consent forms, sent automatically at the right visit.",
+    es: "Formularios de admisión y consentimiento personalizados, enviados automáticamente en la visita correcta.",
+  },
+  cat_item_appointment_history_desc: {
+    en: "See every past and upcoming visit right on a client's profile.",
+    es: "Ve cada visita pasada y próxima directamente en el perfil del cliente.",
+  },
+  cat_item_before_after_desc: {
+    en: "Coming soon — a visual record of results alongside each client's profile.",
+    es: "Próximamente — un registro visual de resultados junto al perfil de cada cliente.",
+  },
+  cat_item_memberships_packages_desc: {
+    en: "Sell recurring memberships and multi-visit packages clients can redeem over time.",
+    es: "Vende membresías recurrentes y paquetes de varias visitas que los clientes pueden canjear con el tiempo.",
+  },
+  cat_item_loyalty_desc: {
+    en: "Clients earn points automatically and redeem them for rewards.",
+    es: "Los clientes ganan puntos automáticamente y los canjean por recompensas.",
+  },
+  cat_item_reviews_desc: {
+    en: "Collect real reviews from clients after their visit.",
+    es: "Recopila reseñas reales de clientes después de su visita.",
+  },
+  cat_item_messages_desc: {
+    en: "A real inbox for client conversations, tied to their profile.",
+    es: "Una bandeja de entrada real para conversaciones con clientes, vinculada a su perfil.",
+  },
+  cat_item_appointment_reminders_desc: {
+    en: "Automatic reminders for appointments that require a deposit.",
+    es: "Recordatorios automáticos para citas que requieren depósito.",
+  },
+  cat_item_automated_flows_desc: {
+    en: "Set rules that trigger messages around completed visits and no-shows.",
+    es: "Configura reglas que activan mensajes según visitas completadas o inasistencias.",
+  },
+  cat_item_campaigns_desc: {
+    en: "Coming soon — reach clients with one-time email or text campaigns.",
+    es: "Próximamente — llega a tus clientes con campañas de correo o texto.",
+  },
+  cat_item_promotions_desc: {
+    en: "Create discount codes clients can redeem when booking.",
+    es: "Crea códigos de descuento que los clientes pueden canjear al reservar.",
+  },
+  cat_item_rebooking_desc: {
+    en: "Coming soon — prompt clients to book their next visit automatically.",
+    es: "Próximamente — invita a los clientes a reservar su próxima visita automáticamente.",
+  },
+  cat_item_birthday_messages_desc: {
+    en: "Coming soon — send an automatic note on each client's birthday.",
+    es: "Próximamente — envía un mensaje automático en el cumpleaños de cada cliente.",
+  },
+  cat_item_client_segmentation_desc: {
+    en: "Coming soon — group clients by visit history, spend or preferences.",
+    es: "Próximamente — agrupa clientes por historial de visitas, gasto o preferencias.",
+  },
+  cat_item_staff_management_desc: {
+    en: "Add every team member with their own schedule, services and permissions.",
+    es: "Agrega a cada miembro del equipo con su propio horario, servicios y permisos.",
+  },
+  cat_item_services_desc: {
+    en: "Manage your service menu, pricing and durations.",
+    es: "Administra tu menú de servicios, precios y duraciones.",
+  },
+  cat_item_inventory_retail_desc: {
+    en: "Track retail products and stock alongside the services that use them.",
+    es: "Controla productos de venta y existencias junto a los servicios que los usan.",
+  },
+  cat_item_reports_desc: {
+    en: "Real revenue, appointment and client reports for your business.",
+    es: "Reportes reales de ingresos, citas y clientes para tu negocio.",
+  },
+  cat_item_multiple_locations_desc: {
+    en: "Run more than one location, each with its own hours and staff.",
+    es: "Administra más de una ubicación, cada una con su propio horario y personal.",
+  },
+  cat_item_business_hours_desc: {
+    en: "Set real operating hours per location — they drive booking and scheduling.",
+    es: "Define el horario real de operación por ubicación — impulsa las reservas y la agenda.",
+  },
+  cat_item_website_branding_desc: {
+    en: "Your own branded booking page with logo, colors and photos.",
+    es: "Tu propia página de reservas con tu marca — logo, colores y fotos.",
+  },
   feature_bookings_title: { en: "Bookings & Calendar", es: "Reservas y calendario" },
   feature_bookings_body: {
     en: "An hourly calendar built around your real business hours, with 24/7 online booking.",
