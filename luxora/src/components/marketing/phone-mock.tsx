@@ -1,35 +1,36 @@
+import { t, type Locale } from "@/lib/luxora/i18n";
+
 /**
- * A realistic phone frame around a static replica of the real online
- * booking wizard's time-selection step (see booking-wizard.tsx) — same
- * heading, same slot-button classes, same "Continue" button. No generic
- * black rounded rectangle.
+ * A large, realistic smartphone frame (thin bezel, dynamic-island notch,
+ * correct screen-to-body ratio) around a static replica of the real online
+ * booking wizard — same headings and slot-button classes as
+ * booking-wizard.tsx. Deliberately life-size rather than a small decorative
+ * rectangle: the product itself is meant to be legible.
  */
 const SLOTS = ["9:00 AM", "10:30 AM", "1:00 PM", "3:15 PM", "4:00 PM", "5:30 PM"];
 
-export function PhoneMock() {
+export function PhoneMock({ locale }: { locale: Locale }) {
   return (
-    <div className="mx-auto w-64 sm:w-72">
-      <div className="relative rounded-[2.75rem] border-[3px] border-charcoal/90 bg-charcoal p-2 shadow-2xl shadow-charcoal/25">
-        <div className="absolute left-1/2 top-2.5 h-5 w-24 -translate-x-1/2 rounded-full bg-charcoal" />
-        <div className="absolute -left-[3px] top-24 h-8 w-[3px] rounded-l-full bg-charcoal/90" />
-        <div className="absolute -right-[3px] top-20 h-12 w-[3px] rounded-r-full bg-charcoal/90" />
-
-        <div className="overflow-hidden rounded-[2.25rem] bg-cream">
-          <div className="bg-charcoal px-5 pb-4 pt-9 text-center">
-            <span className="font-display text-[9px] uppercase tracking-[0.3em] text-gold">Book with</span>
-            <p className="font-display text-base text-white">Studio Example</p>
+    <div className="relative mx-auto w-[300px] sm:w-[360px]">
+      <div className="relative rounded-[3rem] bg-charcoal p-[10px] shadow-[0_35px_60px_-15px_rgba(27,24,21,0.45)]">
+        <div className="absolute inset-0 rounded-[3rem] ring-1 ring-white/10" />
+        <div className="overflow-hidden rounded-[2.4rem] bg-cream">
+          <div className="relative bg-charcoal px-6 pb-5 pt-8 text-center">
+            <div className="absolute left-1/2 top-2.5 h-6 w-28 -translate-x-1/2 rounded-full bg-black" />
+            <span className="font-display text-[10px] uppercase tracking-[0.3em] text-gold">{t(locale, "book_with")}</span>
+            <p className="mt-0.5 font-display text-lg text-white">Studio Example</p>
           </div>
 
-          <div className="flex flex-col gap-3 p-4">
-            <p className="font-display text-sm text-charcoal">3. Select Date &amp; Time</p>
-            <div className="w-fit rounded-sm border border-border bg-white px-3 py-2 text-xs text-charcoal">
+          <div className="flex flex-col gap-4 p-5">
+            <p className="font-display text-base text-charcoal">{t(locale, "wiz_step3_title")}</p>
+            <div className="w-fit rounded-sm border border-border bg-white px-3.5 py-2.5 text-sm text-charcoal">
               Tomorrow
             </div>
-            <div className="grid grid-cols-2 gap-1.5">
+            <div className="grid grid-cols-2 gap-2">
               {SLOTS.map((slot, i) => (
                 <span
                   key={slot}
-                  className={`rounded-sm border px-2.5 py-2 text-center text-[11px] ${
+                  className={`rounded-sm border px-3 py-2.5 text-center text-sm ${
                     i === 1 ? "border-gold-deep bg-cream-deep text-charcoal" : "border-border bg-white text-charcoal"
                   }`}
                 >
@@ -37,12 +38,15 @@ export function PhoneMock() {
                 </span>
               ))}
             </div>
-            <span className="mt-1 rounded-sm bg-charcoal px-4 py-2.5 text-center text-xs font-medium text-white">
-              Continue
+            <span className="mt-2 rounded-sm bg-charcoal px-4 py-3 text-center text-sm font-medium text-white">
+              {t(locale, "continue_button")}
             </span>
           </div>
         </div>
       </div>
+      <div className="absolute -left-[11px] top-28 h-10 w-[3px] rounded-l-full bg-charcoal/80" />
+      <div className="absolute -left-[11px] top-44 h-16 w-[3px] rounded-l-full bg-charcoal/80" />
+      <div className="absolute -right-[11px] top-36 h-20 w-[3px] rounded-r-full bg-charcoal/80" />
     </div>
   );
 }

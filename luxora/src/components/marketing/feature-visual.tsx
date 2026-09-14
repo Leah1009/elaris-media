@@ -69,6 +69,19 @@ export function MarketingVisual() {
   );
 }
 
+export function ManagementVisual() {
+  return (
+    <IconWrap>
+      <svg width="20" height="20" viewBox="0 0 24 24" {...strokeProps}>
+        <rect x="3" y="4" width="8" height="8" rx="1" />
+        <rect x="13" y="4" width="8" height="8" rx="1" />
+        <rect x="3" y="14" width="8" height="6" rx="1" />
+        <rect x="13" y="14" width="8" height="6" rx="1" />
+      </svg>
+    </IconWrap>
+  );
+}
+
 export function WebsiteVisual() {
   return (
     <IconWrap>

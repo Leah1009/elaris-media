@@ -179,7 +179,47 @@ const dictionary = {
 
   // Everything, connected
   features_eyebrow: { en: "Everything, connected", es: "Todo, conectado" },
-  features_title: { en: "One platform, every part of the business.", es: "Una plataforma, cada parte del negocio." },
+  features_title: { en: "Everything your beauty business needs.", es: "Todo lo que necesita tu negocio de belleza." },
+  features_subhead: { en: "One beautifully connected platform.", es: "Una plataforma bella y conectada." },
+
+  cat_scheduling_payments: { en: "Scheduling & Payments", es: "Agenda y pagos" },
+  cat_clients_relationships: { en: "Clients & Relationships", es: "Clientes y relaciones" },
+  cat_marketing_communication: { en: "Marketing & Communication", es: "Marketing y comunicación" },
+  cat_business_management: { en: "Business Management", es: "Gestión del negocio" },
+
+  cat_item_calendar_scheduling: { en: "Calendar & Scheduling", es: "Calendario y agenda" },
+  cat_item_online_booking: { en: "Online Booking", es: "Reservas en línea" },
+  cat_item_checkout_pos: { en: "Checkout / POS", es: "Cobro / Caja" },
+  cat_item_deposits: { en: "Deposits", es: "Depósitos" },
+  cat_item_payments: { en: "Payments", es: "Pagos" },
+  cat_item_gift_cards: { en: "Gift Cards", es: "Tarjetas de regalo" },
+  cat_item_waitlist: { en: "Waitlist", es: "Lista de espera" },
+
+  cat_item_client_management: { en: "Client Management", es: "Gestión de clientes" },
+  cat_item_client_profiles: { en: "Client Profiles", es: "Perfiles de clientes" },
+  cat_item_forms: { en: "Forms", es: "Formularios" },
+  cat_item_appointment_history: { en: "Appointment History", es: "Historial de citas" },
+  cat_item_before_after: { en: "Before & After Photos", es: "Fotos de antes y después" },
+  cat_item_memberships_packages: { en: "Memberships & Packages", es: "Membresías y paquetes" },
+  cat_item_loyalty: { en: "Loyalty", es: "Fidelidad" },
+  cat_item_reviews: { en: "Reviews", es: "Reseñas" },
+
+  cat_item_messages: { en: "Messages", es: "Mensajes" },
+  cat_item_appointment_reminders: { en: "Appointment Reminders", es: "Recordatorios de citas" },
+  cat_item_automated_flows: { en: "Automated Flows", es: "Flujos automatizados" },
+  cat_item_campaigns: { en: "Campaigns", es: "Campañas" },
+  cat_item_promotions: { en: "Promotions", es: "Promociones" },
+  cat_item_rebooking: { en: "Rebooking", es: "Reprogramación" },
+  cat_item_birthday_messages: { en: "Birthday Messages", es: "Mensajes de cumpleaños" },
+  cat_item_client_segmentation: { en: "Client Segmentation", es: "Segmentación de clientes" },
+
+  cat_item_staff_management: { en: "Staff Management", es: "Gestión de personal" },
+  cat_item_services: { en: "Services", es: "Servicios" },
+  cat_item_inventory_retail: { en: "Inventory & Retail", es: "Inventario y venta al público" },
+  cat_item_reports: { en: "Reports", es: "Reportes" },
+  cat_item_multiple_locations: { en: "Multiple Locations", es: "Múltiples ubicaciones" },
+  cat_item_business_hours: { en: "Business Hours", es: "Horario del negocio" },
+  cat_item_website_branding: { en: "Website & Branding", es: "Sitio web y marca" },
   feature_bookings_title: { en: "Bookings & Calendar", es: "Reservas y calendario" },
   feature_bookings_body: {
     en: "An hourly calendar built around your real business hours, with 24/7 online booking.",
@@ -316,45 +356,90 @@ const dictionary = {
   // FAQ
   faq_eyebrow: { en: "FAQ", es: "Preguntas frecuentes" },
   faq_title: { en: "Questions, answered.", es: "Preguntas, respondidas." },
-  faq_q1: { en: "Is there really a free trial?", es: "¿De verdad hay una prueba gratis?" },
+  faq_q1: { en: "What types of beauty businesses can use Luxore?", es: "¿Qué tipos de negocios de belleza pueden usar Luxore?" },
   faq_a1: {
-    en: "Yes — 30 days free, no credit card required to sign up. You can explore the full dashboard before deciding on a plan.",
-    es: "Sí — 30 días gratis, sin necesidad de tarjeta de crédito para registrarte. Puedes explorar todo el panel antes de decidir un plan.",
+    en: "Hair salons, nail salons, lash and brow studios, makeup and beauty studios, beauty suites and full-service salons all run on Luxore.",
+    es: "Salones de cabello, salones de uñas, estudios de pestañas y cejas, estudios de maquillaje y belleza, suites de belleza y salones de servicio completo — todos funcionan con Luxore.",
   },
-  faq_q2: { en: "Can my clients book online at any time?", es: "¿Mis clientes pueden reservar en línea a cualquier hora?" },
+  faq_q2: { en: "Can my clients book online?", es: "¿Mis clientes pueden reservar en línea?" },
   faq_a2: {
-    en: "Yes. Once online booking is turned on, clients can see real availability based on your staff, services and business hours, and book 24/7.",
-    es: "Sí. Una vez activadas las reservas en línea, los clientes ven disponibilidad real según tu personal, servicios y horario, y pueden reservar 24/7.",
+    en: "Yes. Clients see real availability based on your staff, services and business hours, and can book 24/7 from your own Luxore website.",
+    es: "Sí. Los clientes ven disponibilidad real según tu personal, servicios y horario, y pueden reservar 24/7 desde tu propio sitio web de Luxore.",
   },
-  faq_q3: { en: "Do I need special hardware to accept payments?", es: "¿Necesito hardware especial para aceptar pagos?" },
+  faq_q3: { en: "Can I manage multiple staff members?", es: "¿Puedo administrar varios miembros del personal?" },
   faq_a3: {
-    en: "No. You can accept cards through a secure checkout link today, plus cash and other manual methods. Tap to Pay and a dedicated card reader are coming soon.",
-    es: "No. Hoy puedes aceptar tarjetas mediante un enlace de cobro seguro, además de efectivo y otros métodos manuales. Tap to Pay y un lector de tarjetas dedicado llegarán pronto.",
+    en: "Yes. Each staff member has their own schedule, services and permissions — Luxore works for a solo chair or a growing team.",
+    es: "Sí. Cada miembro del personal tiene su propio horario, servicios y permisos — Luxore funciona para una silla individual o un equipo en crecimiento.",
   },
-  faq_q4: { en: "Can I customize my booking page?", es: "¿Puedo personalizar mi página de reservas?" },
+  faq_q4: { en: "Does Luxore support multiple locations?", es: "¿Luxore admite múltiples ubicaciones?" },
   faq_a4: {
-    en: "Yes — your logo, cover image, brand color, tagline and which sections appear (like Team or Reviews) are all configurable from Settings → Website.",
-    es: "Sí — tu logo, imagen de portada, color de marca, eslogan y qué secciones aparecen (como Equipo o Reseñas) son configurables desde Configuración → Sitio web.",
+    en: "Yes. Each location can have its own hours, staff and services under the same business account.",
+    es: "Sí. Cada ubicación puede tener su propio horario, personal y servicios bajo la misma cuenta de negocio.",
   },
-  faq_q5: { en: "What happens when my trial ends?", es: "¿Qué pasa cuando termina mi prueba gratis?" },
+  faq_q5: { en: "Can I import my existing clients?", es: "¿Puedo importar mis clientes existentes?" },
   faq_a5: {
-    en: "You'll be prompted to choose a plan to keep using your dashboard. Your business data stays safe and waiting either way.",
-    es: "Se te pedirá elegir un plan para seguir usando tu panel. La información de tu negocio permanece segura de cualquier forma.",
+    en: "Yes — import from a CSV file, your phone contacts, or add clients manually, with duplicates detected automatically.",
+    es: "Sí — impórtalos desde un archivo CSV, tus contactos telefónicos, o agrégalos manualmente, con detección automática de duplicados.",
   },
-  faq_q6: { en: "Is my client data kept separate from other businesses?", es: "¿Los datos de mis clientes están separados de otros negocios?" },
+  faq_q6: { en: "Can I use Luxore in English and Spanish?", es: "¿Puedo usar Luxore en inglés y en español?" },
   faq_a6: {
-    en: "Yes. Every business's data is isolated at the database level — no other Luxore business can ever see your clients, appointments or reports.",
-    es: "Sí. Los datos de cada negocio están aislados a nivel de base de datos — ningún otro negocio en Luxore puede ver tus clientes, citas o reportes.",
+    en: "Yes. Your dashboard and your public booking page can each be set to English, Spanish, or both — clients can switch languages themselves.",
+    es: "Sí. Tu panel y tu página pública de reservas pueden configurarse en inglés, español, o ambos — los clientes pueden cambiar de idioma ellos mismos.",
+  },
+  faq_q7: { en: "Can I accept payments?", es: "¿Puedo aceptar pagos?" },
+  faq_a7: {
+    en: "Yes — cards, cash and other manual methods are supported today at checkout, with more payment options on the way.",
+    es: "Sí — hoy se admiten tarjetas, efectivo y otros métodos manuales en el cobro, con más opciones de pago en camino.",
+  },
+  faq_q8: { en: "Does Luxore include a website for my business?", es: "¿Luxore incluye un sitio web para mi negocio?" },
+  faq_a8: {
+    en: "Yes. Every Luxore business gets its own branded booking page — logo, colors and photos included.",
+    es: "Sí. Cada negocio en Luxore obtiene su propia página de reservas con su marca — logo, colores y fotos incluidos.",
+  },
+  faq_q9: { en: "What happens after my free month?", es: "¿Qué pasa después de mi mes gratis?" },
+  faq_a9: {
+    en: "You'll choose the Luxore plan that fits your business to keep going. Your data stays safe and waiting either way.",
+    es: "Elegirás el plan de Luxore que se ajuste a tu negocio para continuar. Tu información permanece segura de cualquier forma.",
+  },
+
+  // Made for every beauty business
+  made_for_beauty_eyebrow: { en: "Made for every beauty business", es: "Hecho para cada negocio de belleza" },
+  made_for_beauty_title: { en: "Made for beauty. Built for business.", es: "Hecho para la belleza. Construido para el negocio." },
+  cat_hair_salons: { en: "Hair Salons", es: "Salones de cabello" },
+  cat_nail_salons: { en: "Nail Salons", es: "Salones de uñas" },
+  cat_lash_brow_studios: { en: "Lash & Brow Studios", es: "Estudios de pestañas y cejas" },
+  cat_makeup_studios: { en: "Makeup & Beauty Studios", es: "Estudios de maquillaje y belleza" },
+  made_for_beauty_note: {
+    en: "Beauty suites and full-service salons run on Luxore too.",
+    es: "Los suites de belleza y los salones de servicio completo también funcionan con Luxore.",
+  },
+
+  // Team
+  team_eyebrow: { en: "Team", es: "Equipo" },
+  team_title: { en: "Run it together.", es: "Adminístralo en equipo." },
+  team_body: {
+    en: "Add every stylist, technician and front-desk teammate, each with their own schedule, services and permissions. Luxore grows from a solo chair to a full team without switching tools.",
+    es: "Agrega a cada estilista, técnico y compañero de recepción, cada uno con su propio horario, servicios y permisos. Luxore crece desde una silla individual hasta un equipo completo sin cambiar de herramienta.",
+  },
+
+  // 30-Day Free Trial banner
+  trial_banner_eyebrow: { en: "30-Day Free Trial", es: "30 días de prueba gratis" },
+  trial_banner_title: { en: "Try the whole platform. On us.", es: "Prueba toda la plataforma. Por nuestra cuenta." },
+  trial_banner_body: {
+    en: "Set up your business, add your team and start taking bookings — free for 30 days, no credit card required.",
+    es: "Configura tu negocio, agrega a tu equipo y empieza a recibir reservas — gratis durante 30 días, sin tarjeta de crédito.",
   },
 
   // Final CTA
-  final_cta_title: { en: "Ready to run it beautifully?", es: "¿Listo para administrarlo con estilo?" },
+  final_cta_title: { en: "Your business deserves more than a booking app.", es: "Tu negocio merece más que una simple app de reservas." },
+  final_cta_subtitle: { en: "Run it with Luxore.", es: "Adminístralo con Luxore." },
 
   // Footer
   footer_tagline: { en: "The all-in-one operating platform for beauty businesses.", es: "La plataforma operativa todo en uno para negocios de belleza." },
   footer_product: { en: "Product", es: "Producto" },
   footer_company: { en: "Company", es: "Empresa" },
   footer_legal: { en: "Legal", es: "Legal" },
+  footer_language: { en: "Language", es: "Idioma" },
   footer_online_booking: { en: "Online Booking", es: "Reservas en línea" },
   footer_hardware: { en: "Hardware", es: "Hardware" },
   footer_contact: { en: "Contact", es: "Contacto" },

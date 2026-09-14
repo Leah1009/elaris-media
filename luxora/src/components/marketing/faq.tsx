@@ -7,6 +7,9 @@ const FAQ_KEYS: { q: TranslationKey; a: TranslationKey }[] = [
   { q: "faq_q4", a: "faq_a4" },
   { q: "faq_q5", a: "faq_a5" },
   { q: "faq_q6", a: "faq_a6" },
+  { q: "faq_q7", a: "faq_a7" },
+  { q: "faq_q8", a: "faq_a8" },
+  { q: "faq_q9", a: "faq_a9" },
 ];
 
 export function Faq({ locale }: { locale: Locale }) {
