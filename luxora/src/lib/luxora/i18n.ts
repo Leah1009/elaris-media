@@ -352,6 +352,7 @@ const dictionary = {
     en: "Real reviews from Luxore businesses will appear here once they're in.",
     es: "Reseñas reales de negocios en Luxore aparecerán aquí una vez que las tengamos.",
   },
+  leave_a_review_cta: { en: "Leave a Review", es: "Dejar una reseña" },
 
   // FAQ
   faq_eyebrow: { en: "FAQ", es: "Preguntas frecuentes" },

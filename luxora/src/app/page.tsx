@@ -3,7 +3,6 @@ import { Reveal } from "@/components/reveal";
 import { SiteNav } from "@/components/marketing/site-nav";
 import { FullDashboardMock } from "@/components/marketing/dashboard-mock";
 import { BookingsVisual, ClientsVisual, MarketingVisual, ManagementVisual } from "@/components/marketing/feature-visual";
-import { PhoneMock } from "@/components/marketing/phone-mock";
 import {
   ClientProfileMock,
   CheckoutMock,
@@ -208,23 +207,18 @@ export default async function HomePage() {
       </section>
 
       {/* 04 — SCHEDULING & PAYMENTS */}
-      <section className="mx-auto max-w-6xl px-6 py-24 sm:px-10">
-        <div className="grid grid-cols-1 items-center gap-12 lg:grid-cols-2">
-          <Reveal>
-            <span className="font-display text-xs uppercase tracking-[0.3em] text-gold-deep">{t(locale, "bookings_eyebrow")}</span>
-            <h2 className="mt-3 font-display text-3xl text-charcoal sm:text-4xl">{t(locale, "bookings_title")}</h2>
-            <p className="mt-5 text-sm leading-relaxed text-ink sm:text-base">{t(locale, "bookings_body")}</p>
-            <ul className="mt-5 flex flex-col gap-2 text-sm text-ink">
-              <li>— {t(locale, "bookings_li1")}</li>
-              <li>— {t(locale, "bookings_li2")}</li>
-              <li>— {t(locale, "bookings_li3")}</li>
-              <li>— {t(locale, "bookings_li4")}</li>
-            </ul>
-          </Reveal>
-          <Reveal delayMs={120}>
-            <PhoneMock locale={locale} />
-          </Reveal>
-        </div>
+      <section className="mx-auto max-w-3xl px-6 py-24 text-center sm:px-10">
+        <Reveal>
+          <span className="font-display text-xs uppercase tracking-[0.3em] text-gold-deep">{t(locale, "bookings_eyebrow")}</span>
+          <h2 className="mt-3 font-display text-3xl text-charcoal sm:text-4xl">{t(locale, "bookings_title")}</h2>
+          <p className="mx-auto mt-5 max-w-xl text-sm leading-relaxed text-ink sm:text-base">{t(locale, "bookings_body")}</p>
+          <ul className="mx-auto mt-5 flex w-fit flex-col gap-2 text-left text-sm text-ink">
+            <li>— {t(locale, "bookings_li1")}</li>
+            <li>— {t(locale, "bookings_li2")}</li>
+            <li>— {t(locale, "bookings_li3")}</li>
+            <li>— {t(locale, "bookings_li4")}</li>
+          </ul>
+        </Reveal>
       </section>
 
       <section id="payments" className="scroll-mt-20 bg-cream-deep/30 px-6 py-24 sm:px-10">

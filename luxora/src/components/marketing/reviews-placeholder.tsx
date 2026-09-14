@@ -16,6 +16,14 @@ export function ReviewsPlaceholder({ locale }: { locale: Locale }) {
         </div>
       ))}
       <p className="col-span-full text-center text-sm text-ink/60">{t(locale, "reviews_placeholder_note")}</p>
+      <div className="col-span-full flex justify-center">
+        <a
+          href="#"
+          className="rounded-sm border border-border px-6 py-2.5 text-sm font-medium text-charcoal transition hover:border-gold-deep"
+        >
+          {t(locale, "leave_a_review_cta")}
+        </a>
+      </div>
     </div>
   );
 }
