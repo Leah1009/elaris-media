@@ -142,7 +142,7 @@ export default async function HomePage() {
         </div>
 
         <div className="relative mx-auto flex w-full max-w-3xl flex-col items-center px-6 py-16 text-center sm:px-10">
-          <span className="animate-hero-fade-up font-display text-xs uppercase tracking-[0.4em] text-gold" style={{ animationDelay: "0.1s" }}>
+          <span className="animate-hero-fade-up font-display text-xs uppercase tracking-[0.4em] text-white" style={{ animationDelay: "0.1s" }}>
             {t(locale, "hero_eyebrow")}
           </span>
           <h1 className="animate-hero-fade-up mt-6 font-display text-4xl leading-tight text-white sm:text-6xl" style={{ animationDelay: "0.25s" }}>

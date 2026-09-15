@@ -159,6 +159,12 @@ const dictionary = {
   nav_how_it_works: { en: "How It Works", es: "Cómo funciona" },
   nav_about: { en: "About", es: "Acerca de" },
   start_free_month_cta: { en: "Start Your Free Month", es: "Comienza tu mes gratis" },
+  book_a_demo_cta: { en: "Book a Demo", es: "Agendar una demo" },
+  demo_page_title: { en: "Let's talk.", es: "Hablemos." },
+  demo_page_subtitle: {
+    en: "Tell us about your business and we'll set up a time to walk you through Luxore.",
+    es: "Cuéntanos sobre tu negocio y coordinaremos un horario para mostrarte Luxore.",
+  },
 
   // Hero
   hero_eyebrow: { en: "The all-in-one platform for beauty businesses", es: "La plataforma todo en uno para negocios de belleza" },
@@ -474,6 +480,160 @@ const dictionary = {
     es: "Reseñas reales de negocios en Luxore aparecerán aquí una vez que las tengamos.",
   },
   leave_a_review_cta: { en: "Leave a Review", es: "Dejar una reseña" },
+
+  // About (extended copy per owner brief)
+  about_title_v2: { en: "Built for the business behind the beauty.", es: "Creado para el negocio detrás de la belleza." },
+  about_body_v2_p1: {
+    en: "Beauty professionals shouldn't need five different platforms to manage one business.",
+    es: "Los profesionales de la belleza no deberían necesitar cinco plataformas diferentes para administrar un solo negocio.",
+  },
+  about_body_v2_p2: {
+    en: "Luxore brings bookings, clients, staff, payments, inventory, marketing, communications, reports and your online presence into one beautifully connected platform.",
+    es: "Luxore conecta citas, clientes, equipo, pagos, inventario, marketing, comunicaciones, reportes y presencia online en una sola plataforma.",
+  },
+  about_body_v2_p3: {
+    en: "Our goal is simple: give beauty businesses the technology they need to operate more efficiently, create better client experiences and grow with confidence.",
+    es: "Nuestro objetivo es simple: darle a los negocios de belleza la tecnología que necesitan para operar de manera más eficiente, ofrecer mejores experiencias a sus clientes y crecer con confianza.",
+  },
+
+  // Contact page
+  contact_page_title: { en: "Let's talk.", es: "Hablemos." },
+  contact_page_subtitle: {
+    en: "Have a question about Luxore? Send us a message and our team will get back to you.",
+    es: "¿Tienes alguna pregunta sobre Luxore? Envíanos un mensaje y nuestro equipo se pondrá en contacto contigo.",
+  },
+  field_first_name: { en: "First Name", es: "Nombre" },
+  field_last_name: { en: "Last Name", es: "Apellido" },
+  field_business_name_optional: { en: "Business Name (optional)", es: "Nombre del negocio (opcional)" },
+  field_phone_optional: { en: "Phone (optional)", es: "Teléfono (opcional)" },
+  field_reason_for_contact: { en: "Reason for Contact", es: "Motivo de contacto" },
+  field_message: { en: "Message", es: "Mensaje" },
+  reason_sales: { en: "Sales / I'm interested in Luxore", es: "Ventas / Me interesa Luxore" },
+  reason_existing_customer: { en: "Existing Customer Support", es: "Soporte para clientes existentes" },
+  reason_billing: { en: "Billing & Subscription", es: "Facturación y suscripción" },
+  reason_payments: { en: "Payments", es: "Pagos" },
+  reason_partnership: { en: "Partnership", es: "Alianza" },
+  reason_privacy: { en: "Privacy Request", es: "Solicitud de privacidad" },
+  reason_other: { en: "Other", es: "Otro" },
+  send_message_button: { en: "Send Message", es: "Enviar mensaje" },
+  sending_ellipsis: { en: "Sending…", es: "Enviando…" },
+  contact_thank_you: {
+    en: "Thank you. We've received your message and will get back to you soon.",
+    es: "Gracias. Hemos recibido tu mensaje y nos pondremos en contacto contigo pronto.",
+  },
+  contact_rate_limited: {
+    en: "You've sent a few messages already — please wait a bit before sending another.",
+    es: "Ya enviaste varios mensajes — espera un momento antes de enviar otro.",
+  },
+  generic_form_error: { en: "Something went wrong. Please try again.", es: "Algo salió mal. Inténtalo de nuevo." },
+
+  // Support landing
+  support_page_title: { en: "How can we help?", es: "¿Cómo podemos ayudarte?" },
+  support_page_subtitle: {
+    en: "Find answers or contact the Luxore support team.",
+    es: "Encuentra respuestas o comunícate con el equipo de soporte de Luxore.",
+  },
+  support_option_help_center: { en: "Help Center", es: "Centro de Ayuda" },
+  support_option_help_center_desc: { en: "Browse answers to common questions.", es: "Encuentra respuestas a preguntas frecuentes." },
+  support_option_contact_support: { en: "Contact Support", es: "Contactar Soporte" },
+  support_option_contact_support_desc: {
+    en: "Need help with your Luxore account? Send our team a message.",
+    es: "¿Necesitas ayuda con tu cuenta de Luxore? Envíanos un mensaje.",
+  },
+  support_option_account: { en: "Account & Login", es: "Cuenta e Inicio de Sesión" },
+  support_option_account_desc: { en: "Help accessing your Luxore account.", es: "Ayuda para acceder a tu cuenta de Luxore." },
+  support_option_billing: { en: "Billing & Subscription", es: "Facturación y Suscripción" },
+  support_option_billing_desc: {
+    en: "Questions about your subscription or billing.",
+    es: "Preguntas sobre tu suscripción o facturación.",
+  },
+  support_option_payments: { en: "Payments", es: "Pagos" },
+  support_option_payments_desc: {
+    en: "Help with payments, deposits or checkout.",
+    es: "Ayuda con pagos, depósitos o cobro.",
+  },
+  support_option_booking: { en: "Booking & Calendar", es: "Reservas y Calendario" },
+  support_option_booking_desc: {
+    en: "Help with appointments, availability and scheduling.",
+    es: "Ayuda con citas, disponibilidad y agenda.",
+  },
+  support_option_clients: { en: "Clients & Forms", es: "Clientes y Formularios" },
+  support_option_clients_desc: { en: "Help managing clients and forms.", es: "Ayuda para administrar clientes y formularios." },
+
+  // Help Center
+  help_center_title: { en: "Help Center", es: "Centro de Ayuda" },
+  help_center_subtitle: { en: "Find answers to common questions.", es: "Encuentra respuestas a preguntas frecuentes." },
+  help_search_placeholder: { en: "Search help articles…", es: "Buscar artículos de ayuda…" },
+  help_no_results: { en: "No articles match your search.", es: "Ningún artículo coincide con tu búsqueda." },
+  help_cat_getting_started: { en: "Getting Started", es: "Primeros pasos" },
+  help_cat_booking_calendar: { en: "Booking & Calendar", es: "Reservas y calendario" },
+  help_cat_clients: { en: "Clients", es: "Clientes" },
+  help_cat_payments: { en: "Payments", es: "Pagos" },
+  help_cat_business_management: { en: "Business Management", es: "Gestión del negocio" },
+  help_cat_website_booking: { en: "Website & Online Booking", es: "Sitio web y reservas en línea" },
+  help_cat_account: { en: "Account", es: "Cuenta" },
+
+  // Contact Support (/support/contact)
+  contact_support_title: { en: "Contact Support", es: "Contactar Soporte" },
+  contact_support_subtitle: {
+    en: "Need help with your Luxore account? Send our team a message.",
+    es: "¿Necesitas ayuda con tu cuenta de Luxore? Envíanos un mensaje.",
+  },
+  field_category: { en: "Category", es: "Categoría" },
+  field_subject: { en: "Subject", es: "Asunto" },
+  category_account_login: { en: "Account & Login", es: "Cuenta e inicio de sesión" },
+  category_booking_calendar: { en: "Booking & Calendar", es: "Reservas y calendario" },
+  category_clients: { en: "Clients", es: "Clientes" },
+  category_payments: { en: "Payments", es: "Pagos" },
+  category_subscription_billing: { en: "Subscription & Billing", es: "Suscripción y facturación" },
+  category_website: { en: "Website", es: "Sitio web" },
+  category_inventory: { en: "Inventory", es: "Inventario" },
+  category_marketing: { en: "Marketing", es: "Marketing" },
+  category_technical: { en: "Technical Issue", es: "Problema técnico" },
+  category_other: { en: "Other", es: "Otro" },
+  support_ticket_thank_you: {
+    en: "Thank you. Your support request has been received — we'll follow up by email.",
+    es: "Gracias. Recibimos tu solicitud de soporte — te contactaremos por correo.",
+  },
+
+  // Privacy / Terms
+  privacy_policy_title: { en: "Privacy Policy", es: "Política de Privacidad" },
+  terms_of_service_title: { en: "Terms of Service", es: "Términos de Servicio" },
+  legal_last_updated: { en: "Last updated", es: "Última actualización" },
+  legal_review_notice: {
+    en: "Sections marked \"Pending legal review\" contain placeholder values that must be finalized by Luxore's legal counsel before this policy governs live use of the platform.",
+    es: "Las secciones marcadas \"Pendiente de revisión legal\" contienen valores provisionales que deben ser finalizados por el equipo legal de Luxore antes de que esta política rija el uso real de la plataforma.",
+  },
+  pending_legal_review: { en: "Pending legal review", es: "Pendiente de revisión legal" },
+
+  // Cookie preferences
+  cookie_modal_title: { en: "Cookie Preferences", es: "Preferencias de cookies" },
+  cookie_modal_intro: {
+    en: "We use cookies to run Luxore and, where enabled, to understand how the site is used. Choose what you're comfortable with.",
+    es: "Usamos cookies para operar Luxore y, cuando está habilitado, para entender cómo se usa el sitio. Elige lo que prefieras.",
+  },
+  cookie_necessary: { en: "Necessary", es: "Necesarias" },
+  cookie_necessary_desc: {
+    en: "Required for login, security and core site functionality. Always on.",
+    es: "Necesarias para iniciar sesión, seguridad y el funcionamiento básico del sitio. Siempre activas.",
+  },
+  cookie_always_on: { en: "Always On", es: "Siempre activas" },
+  cookie_analytics: { en: "Analytics", es: "Analíticas" },
+  cookie_analytics_desc: {
+    en: "Helps us understand how visitors use the site so we can improve it.",
+    es: "Nos ayuda a entender cómo los visitantes usan el sitio para poder mejorarlo.",
+  },
+  cookie_preferences_cat: { en: "Preferences", es: "Preferencias" },
+  cookie_preferences_desc: { en: "Remembers choices like your selected language.", es: "Recuerda elecciones como tu idioma seleccionado." },
+  cookie_marketing: { en: "Marketing", es: "Marketing" },
+  cookie_marketing_desc: {
+    en: "Not currently used by Luxore. Reserved for future use.",
+    es: "Actualmente no se usa en Luxore. Reservado para uso futuro.",
+  },
+  cookie_save_preferences: { en: "Save Preferences", es: "Guardar preferencias" },
+  cookie_accept_all: { en: "Accept All", es: "Aceptar todas" },
+  cookie_reject_nonessential: { en: "Reject Non-Essential", es: "Rechazar no esenciales" },
+  footer_language_full: { en: "Language", es: "Idioma" },
 
   // FAQ
   faq_eyebrow: { en: "FAQ", es: "Preguntas frecuentes" },

@@ -40,7 +40,7 @@ export function SiteNav({ locale }: { locale: Locale }) {
       <div className="mx-auto grid max-w-7xl grid-cols-2 items-center px-6 py-5 sm:px-10 md:grid-cols-[1fr_auto_1fr]">
         <Link
           href="/"
-          className={`font-display text-sm uppercase tracking-[0.35em] transition-colors ${
+          className={`font-display text-lg uppercase tracking-[0.35em] transition-colors sm:text-xl ${
             scrolled ? "text-charcoal" : "text-white"
           }`}
         >
@@ -70,6 +70,16 @@ export function SiteNav({ locale }: { locale: Locale }) {
             }`}
           >
             {t(locale, "nav_log_in")}
+          </Link>
+          <Link
+            href="/contact?reason=demo"
+            className={`rounded-sm border px-4 py-2 text-sm font-medium tracking-wide transition ${
+              scrolled
+                ? "border-border text-charcoal hover:border-gold-deep"
+                : "border-white/40 text-white hover:border-white"
+            }`}
+          >
+            {t(locale, "book_a_demo_cta")}
           </Link>
           <Link
             href="/register"
@@ -127,6 +137,9 @@ export function SiteNav({ locale }: { locale: Locale }) {
             ))}
             <Link href="/login" onClick={() => setMenuOpen(false)} className="font-display text-2xl text-charcoal">
               {t(locale, "nav_log_in")}
+            </Link>
+            <Link href="/contact?reason=demo" onClick={() => setMenuOpen(false)} className="font-display text-2xl text-charcoal">
+              {t(locale, "book_a_demo_cta")}
             </Link>
           </nav>
           <Link
