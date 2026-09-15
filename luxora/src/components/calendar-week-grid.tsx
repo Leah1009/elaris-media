@@ -1,7 +1,7 @@
 "use client";
 
 import { useMemo, useRef, useState } from "react";
-import { formatInTimeZone } from "@/lib/luxora/timezone";
+import { formatInTimeZone, dateStrInTimeZone } from "@/lib/luxora/timezone";
 import { deleteAppointmentBlock } from "@/lib/luxora/appointment-blocks-actions";
 import { AppointmentDetailModal } from "@/components/appointment-detail-modal";
 import {
@@ -89,10 +89,7 @@ export function CalendarWeekGrid({
     const map = new Map<string, (CalendarAppointment & { startMin: number; endMin: number })[]>();
     for (const day of weekDates) map.set(day, []);
     for (const a of appointments) {
-      const dayKey = formatInTimeZone(new Date(a.startAt), timezone, { year: "numeric", month: "2-digit", day: "2-digit" })
-        .split("/")
-        .reverse()
-        .join("-");
+      const dayKey = dateStrInTimeZone(new Date(a.startAt), timezone);
       const list = map.get(dayKey);
       if (list) {
         list.push({ ...a, startMin: minutesOfDayInTz(a.startAt, timezone), endMin: minutesOfDayInTz(a.endAt, timezone) });
@@ -105,10 +102,7 @@ export function CalendarWeekGrid({
     const map = new Map<string, (CalendarBlock & { startMin: number; endMin: number })[]>();
     for (const day of weekDates) map.set(day, []);
     for (const b of blocks) {
-      const dayKey = formatInTimeZone(new Date(b.startAt), timezone, { year: "numeric", month: "2-digit", day: "2-digit" })
-        .split("/")
-        .reverse()
-        .join("-");
+      const dayKey = dateStrInTimeZone(new Date(b.startAt), timezone);
       const list = map.get(dayKey);
       if (list) {
         list.push({ ...b, startMin: minutesOfDayInTz(b.startAt, timezone), endMin: minutesOfDayInTz(b.endAt, timezone) });
