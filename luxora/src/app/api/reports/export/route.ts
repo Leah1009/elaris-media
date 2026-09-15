@@ -30,6 +30,7 @@ export async function GET(request: Request) {
   const period = url.searchParams.get("period");
   const from = url.searchParams.get("from");
   const to = url.searchParams.get("to");
+  const locationId = url.searchParams.get("location");
   const isCustomRange = isValidDateStr(from) && isValidDateStr(to);
 
   const periodStart = isCustomRange
@@ -41,19 +42,29 @@ export async function GET(request: Request) {
 
   let query = supabase
     .from("payments")
-    .select("created_at, method, status, total_cents, deposit_applied_cents, notes, client:client_id(full_name)")
+    .select("created_at, method, status, total_cents, deposit_applied_cents, notes, appointment_id, client:client_id(full_name)")
     .eq("business_id", businessId)
     .order("created_at", { ascending: true });
   if (periodStart) query = query.gte("created_at", periodStart);
   if (periodEnd) query = query.lte("created_at", periodEnd);
 
-  const { data: payments, error } = await query;
+  const { data: paymentsRaw, error } = await query;
   if (error) {
     return new Response("Could not generate export.", { status: 500 });
   }
 
+  let payments = paymentsRaw ?? [];
+  if (locationId) {
+    let apptQuery = supabase.from("appointments").select("id").eq("business_id", businessId).eq("location_id", locationId);
+    if (periodStart) apptQuery = apptQuery.gte("start_at", periodStart);
+    if (periodEnd) apptQuery = apptQuery.lte("start_at", periodEnd);
+    const { data: locationAppointments } = await apptQuery;
+    const allowed = new Set((locationAppointments ?? []).map((a) => a.id));
+    payments = payments.filter((p) => p.appointment_id && allowed.has(p.appointment_id));
+  }
+
   const header = ["Date", "Client", "Method", "Status", "Amount", "Deposit Applied", "Notes"];
-  const rows = (payments ?? []).map((p) => [
+  const rows = payments.map((p) => [
     new Date(p.created_at).toISOString().slice(0, 10),
     (p.client as unknown as { full_name: string } | null)?.full_name ?? "",
     p.method,
