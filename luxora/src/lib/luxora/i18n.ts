@@ -835,6 +835,33 @@ const dictionary = {
   response_label: { en: "Response:", es: "Respuesta:" },
   powered_by_luxore: { en: "Powered by Luxore", es: "Desarrollado por Luxore" },
 
+  // Online Booking settings page
+  online_booking_subtitle: {
+    en: "Control how clients can book appointments online.",
+    es: "Controla cómo los clientes pueden reservar citas en línea.",
+  },
+  online_booking_view_page: { en: "View Booking Page", es: "Ver Página de Reservas" },
+  online_booking_status_title: { en: "Online Booking Status", es: "Estado de Reservas en Línea" },
+  online_booking_status_toggle: { en: "Accept online bookings", es: "Aceptar reservas en línea" },
+  online_booking_status_desc: {
+    en: "Allow clients to book available appointments through your Luxore website and booking page.",
+    es: "Permite que los clientes reserven citas disponibles a través de tu sitio Luxore y página de reservas.",
+  },
+  online_booking_status_on: { en: "Status: Accepting bookings", es: "Estado: Aceptando reservas" },
+  online_booking_status_off: { en: "Status: Not accepting bookings", es: "Estado: No se aceptan reservas" },
+  online_booking_rules_title: { en: "Booking Rules", es: "Reglas de Reserva" },
+  online_booking_window_label: { en: "How far ahead can clients book?", es: "¿Con cuánta anticipación pueden reservar?" },
+  online_booking_notice_label: { en: "Minimum notice before an appointment", es: "Aviso mínimo antes de una cita" },
+  online_booking_buffer_label: { en: "Buffer between appointments", es: "Margen entre citas" },
+  unit_days: { en: "Days", es: "Días" },
+  unit_hours: { en: "Hours", es: "Horas" },
+  unit_minutes: { en: "Minutes", es: "Minutos" },
+  online_booking_link_title: { en: "Your Booking Link", es: "Tu Enlace de Reservas" },
+  online_booking_link_desc: { en: "Your clients can book online at:", es: "Tus clientes pueden reservar en línea en:" },
+  copy_link: { en: "Copy Link", es: "Copiar Enlace" },
+  link_copied: { en: "Copied!", es: "¡Copiado!" },
+  saving_ellipsis: { en: "Saving…", es: "Guardando…" },
+
   // Website templates — shared across Minimal Luxury / Modern Dark / Soft Beauty
   web_book_appointment: { en: "Book Appointment", es: "Reservar Cita" },
   web_book_short: { en: "Book", es: "Reservar" },
