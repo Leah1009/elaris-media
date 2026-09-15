@@ -3,6 +3,7 @@
 import { revalidatePath } from "next/cache";
 import { z } from "zod";
 import { createClient } from "@/lib/supabase/server";
+import { qualifyReferralForBusiness } from "@/lib/luxora/referrals";
 import type { ActionState } from "@/lib/luxora/actions";
 
 export async function setBusinessStatus(formData: FormData): Promise<void> {
@@ -54,6 +55,12 @@ export async function updateSubscription(_prevState: ActionState, formData: Form
   const data = parsed.data;
   const supabase = await createClient();
 
+  const { data: before } = await supabase
+    .from("subscriptions")
+    .select("status")
+    .eq("business_id", data.businessId)
+    .maybeSingle();
+
   const { error } = await supabase.rpc("admin_update_subscription", {
     p_business_id: data.businessId,
     p_plan_id: data.planId,
@@ -61,7 +68,12 @@ export async function updateSubscription(_prevState: ActionState, formData: Form
   });
   if (error) return { error: error.message };
 
+  if (data.status === "active" && before?.status !== "active") {
+    await qualifyReferralForBusiness(supabase, data.businessId);
+  }
+
   revalidatePath(`/admin/businesses/${data.businessId}`);
+  revalidatePath("/admin/referrals");
   return null;
 }
 

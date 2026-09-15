@@ -15,6 +15,7 @@ export type PendingBusiness = {
   description: string | null;
   slug: string;
   preferred_language: "en" | "es";
+  referral_code: string | null;
 };
 
 /**
@@ -67,7 +68,62 @@ export async function completeBusinessRegistrationIfNeeded(
 
   if (businessId) {
     await supabase.from("businesses").update({ preferred_language: pending.preferred_language }).eq("id", businessId);
+    if (pending.referral_code) {
+      await attributeReferral(supabase, businessId, pending.referral_code, pending.email, pending.phone);
+    }
   }
 
   return { businessId, justCreated: true };
+}
+
+/**
+ * Records referral attribution server-side at the moment the referred
+ * business is created — never trusts a cookie/query-param alone as the
+ * authoritative relationship. Rejects (silently, without blocking
+ * registration) an obvious self-referral: the same contact email or phone
+ * used for both businesses. Qualification into an actual reward only
+ * happens later, when a platform admin activates the subscription (see
+ * updateSubscription in platform-admin-actions.ts) — never at signup.
+ */
+async function attributeReferral(
+  supabase: SupabaseClient<Database>,
+  referredBusinessId: string,
+  referralCode: string,
+  referredEmail: string,
+  referredPhone: string,
+): Promise<void> {
+  const { data: settings } = await supabase.from("referral_program_settings").select("program_active, reward_amount_cents, reward_type").eq("id", true).maybeSingle();
+  if (!settings?.program_active) return;
+
+  const { data: referrer } = await supabase
+    .from("businesses")
+    .select("id, email, phone")
+    .eq("referral_code", referralCode)
+    .maybeSingle();
+  if (!referrer || referrer.id === referredBusinessId) return;
+
+  const isSelfReferral =
+    (referrer.email && referrer.email.toLowerCase() === referredEmail.toLowerCase()) ||
+    (referrer.phone && referrer.phone === referredPhone);
+  if (isSelfReferral) return;
+
+  const { data: referral } = await supabase
+    .from("referrals")
+    .insert({
+      referrer_business_id: referrer.id,
+      referred_business_id: referredBusinessId,
+      referral_code: referralCode,
+      status: "trialing",
+    })
+    .select("id")
+    .maybeSingle();
+  if (!referral) return;
+
+  await supabase.from("referral_rewards").insert({
+    referral_id: referral.id,
+    referrer_business_id: referrer.id,
+    amount_cents: settings.reward_amount_cents,
+    reward_type: settings.reward_type,
+    status: "pending",
+  });
 }

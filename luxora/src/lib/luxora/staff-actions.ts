@@ -5,6 +5,7 @@ import { redirect } from "next/navigation";
 import { z } from "zod";
 import { createClient } from "@/lib/supabase/server";
 import { getBusinessContext } from "@/lib/luxora/business-context";
+import { getEntitlement } from "@/lib/luxora/entitlements";
 import type { ActionState } from "@/lib/luxora/actions";
 
 const StaffSchema = z.object({
@@ -21,12 +22,25 @@ function getMultiValues(formData: FormData, key: string): string[] {
 
 export async function createStaff(_prevState: ActionState, formData: FormData): Promise<ActionState> {
   const ctx = await getBusinessContext();
+  const supabase = await createClient();
+
+  const { count } = await supabase
+    .from("staff")
+    .select("id", { count: "exact", head: true })
+    .eq("business_id", ctx.business.id);
+
+  const limit = await getEntitlement(ctx.business.id, "staff_limit");
+  if (limit?.type === "integer" && typeof limit.value === "number" && (count ?? 0) >= limit.value) {
+    return {
+      error: `Your plan includes up to ${limit.value} staff member${limit.value === 1 ? "" : "s"}. Upgrade your plan to add more team members.`,
+    };
+  }
+
   const parsed = StaffSchema.safeParse(Object.fromEntries(formData.entries()));
   if (!parsed.success) {
     return { fieldErrors: z.flattenError(parsed.error).fieldErrors as Record<string, string[]> };
   }
   const data = parsed.data;
-  const supabase = await createClient();
 
   const { data: staff, error } = await supabase
     .from("staff")

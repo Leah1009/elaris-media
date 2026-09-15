@@ -32,6 +32,7 @@ const RegisterSchema = z
     email: z.email("Enter a valid login email."),
     password: z.string().min(8, "Password must be at least 8 characters."),
     confirmPassword: z.string(),
+    referralCode: z.string().optional(),
   })
   .refine((data) => data.password === data.confirmPassword, {
     error: "Passwords do not match.",
@@ -69,6 +70,7 @@ export async function registerBusiness(
     description: data.description || null,
     slug: `${slugify(data.businessName)}-${randomSlugSuffix()}`,
     preferred_language: data.preferredLanguage,
+    referral_code: data.referralCode?.trim() || null,
   };
 
   const { data: signUpData, error: signUpError } = await supabase.auth.signUp({

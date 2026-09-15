@@ -5,6 +5,7 @@ import { DashboardNav } from "@/components/dashboard-nav";
 import { MobileNavDrawer } from "@/components/mobile-nav-drawer";
 import { LocationQuickSwitch } from "@/components/location-quick-switch";
 import { BackButton } from "@/components/back-button";
+import { TrialBanner } from "@/components/trial-banner";
 import { logout } from "@/lib/luxora/actions";
 import { t } from "@/lib/luxora/i18n";
 
@@ -81,18 +82,7 @@ export default async function DashboardLayout({ children }: { children: React.Re
         </div>
       </header>
 
-      {showTrialBanner ? (
-        <div
-          className={`border-b px-4 py-2 text-center text-sm sm:px-6 ${
-            trialUrgent ? "border-danger/30 bg-danger/5 text-danger" : "border-border bg-cream-deep text-charcoal"
-          }`}
-        >
-          {remaining} {t(lang, remaining === 1 ? "day_remaining" : "days_remaining")}{" "}
-          <Link href="/dashboard/settings/subscription" className="font-medium underline underline-offset-2">
-            {t(lang, "view_plans")}
-          </Link>
-        </div>
-      ) : null}
+      {showTrialBanner ? <TrialBanner lang={lang} remaining={remaining} trialUrgent={trialUrgent} /> : null}
 
       <div className="md:grid md:grid-cols-[240px_1fr]">
         <MobileNavDrawer lang={lang} />

@@ -5,8 +5,9 @@ import { RegisterForm } from "@/components/register-form";
 import { LocaleSwitcher } from "@/components/locale-switcher";
 import { BackButton } from "@/components/back-button";
 
-export default async function RegisterPage() {
+export default async function RegisterPage({ searchParams }: { searchParams: Promise<{ ref?: string }> }) {
   const locale = await getPublicLocale();
+  const { ref } = await searchParams;
 
   return (
     <main className="flex min-h-screen items-center justify-center px-6 py-16">
@@ -21,7 +22,7 @@ export default async function RegisterPage() {
         <h1 className="mt-4 font-display text-3xl text-charcoal">{t(locale, "register_title")}</h1>
         <p className="mt-2 text-sm text-ink">{t(locale, "hero_trial_note")}</p>
 
-        <RegisterForm locale={locale} />
+        <RegisterForm locale={locale} referralCode={ref} />
       </div>
     </main>
   );

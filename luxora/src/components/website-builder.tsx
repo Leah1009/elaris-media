@@ -46,14 +46,18 @@ const THUMBNAIL: Record<WebsiteTemplate, ReactNode> = {
   ),
 };
 
+const INCLUDED_IN_ALL_PLANS: WebsiteTemplate = "minimal_luxury";
+
 export function WebsiteBuilder({
   slug,
   currentTemplate,
   imagesByTemplate,
+  allTemplatesUnlocked,
 }: {
   slug: string;
   currentTemplate: WebsiteTemplate;
   imagesByTemplate: Record<WebsiteTemplate, Record<string, string>>;
+  allTemplatesUnlocked: boolean;
 }) {
   const [previewTemplate, setPreviewTemplate] = useState<WebsiteTemplate>(currentTemplate);
   const [device, setDevice] = useState<keyof typeof DEVICES>("desktop");
@@ -75,40 +79,57 @@ export function WebsiteBuilder({
           All three render your real business data — only the structure and layout differ.
         </p>
         <div className="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-3">
-          {WEBSITE_TEMPLATES.map((t) => (
-            <button
-              key={t.key}
-              type="button"
-              onClick={() => setPreviewTemplate(t.key)}
-              className={`flex flex-col overflow-hidden rounded-sm border-2 text-left transition ${
-                previewTemplate === t.key ? "border-gold-deep" : "border-border hover:border-gold-deep/50"
-              }`}
-            >
-              <div className="h-24 w-full">{THUMBNAIL[t.key]}</div>
-              <div className="flex flex-col gap-1 bg-white p-3">
-                <div className="flex items-center justify-between">
-                  <span className="text-sm font-medium text-charcoal">{t.name}</span>
-                  {currentTemplate === t.key ? (
-                    <span className="rounded-full bg-cream-deep px-2 py-0.5 text-[10px] font-medium uppercase tracking-wide text-gold-deep">
-                      Live
-                    </span>
-                  ) : null}
+          {WEBSITE_TEMPLATES.map((t) => {
+            const locked = !allTemplatesUnlocked && t.key !== INCLUDED_IN_ALL_PLANS;
+            return (
+              <button
+                key={t.key}
+                type="button"
+                onClick={() => setPreviewTemplate(t.key)}
+                className={`relative flex flex-col overflow-hidden rounded-sm border-2 text-left transition ${
+                  previewTemplate === t.key ? "border-gold-deep" : "border-border hover:border-gold-deep/50"
+                }`}
+              >
+                <div className={`h-24 w-full ${locked ? "opacity-50" : ""}`}>{THUMBNAIL[t.key]}</div>
+                <div className="flex flex-col gap-1 bg-white p-3">
+                  <div className="flex items-center justify-between">
+                    <span className="text-sm font-medium text-charcoal">{t.name}</span>
+                    {currentTemplate === t.key ? (
+                      <span className="rounded-full bg-cream-deep px-2 py-0.5 text-[10px] font-medium uppercase tracking-wide text-gold-deep">
+                        Live
+                      </span>
+                    ) : locked ? (
+                      <span className="rounded-full bg-gold/10 px-2 py-0.5 text-[10px] font-medium uppercase tracking-wide text-gold-deep">
+                        Upgrade to unlock
+                      </span>
+                    ) : null}
+                  </div>
+                  <p className="text-xs text-ink/60">{t.description}</p>
                 </div>
-                <p className="text-xs text-ink/60">{t.description}</p>
-              </div>
-            </button>
-          ))}
+              </button>
+            );
+          })}
         </div>
         {previewTemplate !== currentTemplate ? (
-          <form action={setWebsiteTemplate} className="mt-4">
-            <input type="hidden" name="template" value={previewTemplate} />
-            <button
-              type="submit"
-              className="rounded-sm bg-charcoal px-5 py-2.5 text-sm font-medium tracking-wide text-white transition hover:bg-charcoal-soft"
-            >
-              Use {WEBSITE_TEMPLATES.find((t) => t.key === previewTemplate)?.name}
-            </button>
-          </form>
+          !allTemplatesUnlocked && previewTemplate !== INCLUDED_IN_ALL_PLANS ? (
+            <p className="mt-4 text-sm text-ink/70">
+              {WEBSITE_TEMPLATES.find((t) => t.key === previewTemplate)?.name} is available on Pro and Business.{" "}
+              <a href="/dashboard/settings/subscription" className="font-medium text-gold-deep underline underline-offset-2">
+                Upgrade your plan
+              </a>{" "}
+              to use it.
+            </p>
+          ) : (
+            <form action={setWebsiteTemplate} className="mt-4">
+              <input type="hidden" name="template" value={previewTemplate} />
+              <button
+                type="submit"
+                className="rounded-sm bg-charcoal px-5 py-2.5 text-sm font-medium tracking-wide text-white transition hover:bg-charcoal-soft"
+              >
+                Use {WEBSITE_TEMPLATES.find((t) => t.key === previewTemplate)?.name}
+              </button>
+            </form>
+          )
         ) : null}
       </section>
 

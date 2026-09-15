@@ -7,6 +7,7 @@ import { formatCents } from "@/lib/luxora/money";
 import { t, type Locale, type TranslationKey } from "@/lib/luxora/i18n";
 import { QuickActionsPanel } from "@/components/quick-actions-panel";
 import { RevenueChart, type RevenueDay } from "@/components/revenue-chart";
+import { ReferralCard } from "@/components/referral-card";
 
 const STATUS_LABEL_KEYS: Record<string, TranslationKey> = {
   pending: "status_pending",
@@ -342,6 +343,12 @@ export default async function DashboardPage({
     .sort((a, b) => new Date(b.at).getTime() - new Date(a.at).getTime())
     .slice(0, 8);
 
+  const { data: referralSettings } = await supabase
+    .from("referral_program_settings")
+    .select("program_active, reward_amount_cents")
+    .eq("id", true)
+    .maybeSingle();
+
   return (
     <div className="flex flex-col gap-8">
       <div className="flex flex-wrap items-start justify-between gap-4">
@@ -514,6 +521,10 @@ export default async function DashboardPage({
           )}
         </div>
       </div>
+
+      {referralSettings?.program_active ? (
+        <ReferralCard locale={lang} rewardAmountCents={referralSettings.reward_amount_cents} />
+      ) : null}
     </div>
   );
 }

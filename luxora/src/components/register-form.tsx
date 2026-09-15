@@ -7,7 +7,7 @@ import { FormField } from "@/components/form-field";
 import { BUSINESS_TYPES, US_STATES } from "@/lib/luxora/business-types";
 import { t, type Locale } from "@/lib/luxora/i18n";
 
-export function RegisterForm({ locale }: { locale: Locale }) {
+export function RegisterForm({ locale, referralCode }: { locale: Locale; referralCode?: string }) {
   const [state, formAction, pending] = useActionState<ActionState, FormData>(
     registerBusiness,
     null,
@@ -42,6 +42,7 @@ export function RegisterForm({ locale }: { locale: Locale }) {
       </ol>
 
       <form action={formAction} className="mt-6 flex flex-col gap-5" noValidate>
+        {referralCode ? <input type="hidden" name="referralCode" value={referralCode} /> : null}
         <fieldset hidden={step !== 1} className="flex flex-col gap-5">
           <div className="flex flex-col gap-1.5">
             <label className="text-sm font-medium text-charcoal">

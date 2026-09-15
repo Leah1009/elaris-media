@@ -432,6 +432,7 @@ export type Database = {
           phone: string | null
           preferred_language: string
           public_language_mode: string
+          referral_code: string
           show_reviews: boolean
           show_team: boolean
           slug: string
@@ -467,6 +468,7 @@ export type Database = {
           phone?: string | null
           preferred_language?: string
           public_language_mode?: string
+          referral_code?: string
           show_reviews?: boolean
           show_team?: boolean
           slug: string
@@ -502,6 +504,7 @@ export type Database = {
           phone?: string | null
           preferred_language?: string
           public_language_mode?: string
+          referral_code?: string
           show_reviews?: boolean
           show_team?: boolean
           slug?: string
@@ -520,6 +523,135 @@ export type Database = {
             columns: ["owner_profile_id"]
             isOneToOne: false
             referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      referral_program_settings: {
+        Row: {
+          id: boolean
+          program_active: boolean
+          reward_amount_cents: number
+          reward_type: string
+          updated_at: string
+        }
+        Insert: {
+          id?: boolean
+          program_active?: boolean
+          reward_amount_cents?: number
+          reward_type?: string
+          updated_at?: string
+        }
+        Update: {
+          id?: boolean
+          program_active?: boolean
+          reward_amount_cents?: number
+          reward_type?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      referrals: {
+        Row: {
+          id: string
+          referrer_business_id: string
+          referred_business_id: string | null
+          referral_code: string
+          status: string
+          rejected_reason: string | null
+          created_at: string
+          qualified_at: string | null
+        }
+        Insert: {
+          id?: string
+          referrer_business_id: string
+          referred_business_id?: string | null
+          referral_code: string
+          status?: string
+          rejected_reason?: string | null
+          created_at?: string
+          qualified_at?: string | null
+        }
+        Update: {
+          id?: string
+          referrer_business_id?: string
+          referred_business_id?: string | null
+          referral_code?: string
+          status?: string
+          rejected_reason?: string | null
+          created_at?: string
+          qualified_at?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "referrals_referrer_business_id_fkey"
+            columns: ["referrer_business_id"]
+            isOneToOne: false
+            referencedRelation: "businesses"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "referrals_referred_business_id_fkey"
+            columns: ["referred_business_id"]
+            isOneToOne: true
+            referencedRelation: "businesses"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      referral_rewards: {
+        Row: {
+          id: string
+          referral_id: string
+          referrer_business_id: string
+          amount_cents: number
+          reward_type: string
+          status: string
+          qualified_at: string | null
+          issued_at: string | null
+          notes: string | null
+          created_at: string
+          updated_at: string
+        }
+        Insert: {
+          id?: string
+          referral_id: string
+          referrer_business_id: string
+          amount_cents: number
+          reward_type: string
+          status?: string
+          qualified_at?: string | null
+          issued_at?: string | null
+          notes?: string | null
+          created_at?: string
+          updated_at?: string
+        }
+        Update: {
+          id?: string
+          referral_id?: string
+          referrer_business_id?: string
+          amount_cents?: number
+          reward_type?: string
+          status?: string
+          qualified_at?: string | null
+          issued_at?: string | null
+          notes?: string | null
+          created_at?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "referral_rewards_referral_id_fkey"
+            columns: ["referral_id"]
+            isOneToOne: true
+            referencedRelation: "referrals"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "referral_rewards_referrer_business_id_fkey"
+            columns: ["referrer_business_id"]
+            isOneToOne: false
+            referencedRelation: "businesses"
             referencedColumns: ["id"]
           },
         ]

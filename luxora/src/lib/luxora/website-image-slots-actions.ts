@@ -5,12 +5,17 @@ import { z } from "zod";
 import { createClient } from "@/lib/supabase/server";
 import { getBusinessContext } from "@/lib/luxora/business-context";
 import { uploadBusinessImage } from "@/lib/luxora/business-media";
+import { getEntitlement } from "@/lib/luxora/entitlements";
 import type { ActionState } from "@/lib/luxora/actions";
 import type { SupabaseClient } from "@supabase/supabase-js";
 import type { Database } from "@/lib/types/database";
 
 const TEMPLATES = ["minimal_luxury", "modern_dark", "soft_beauty"] as const;
 export type WebsiteTemplate = (typeof TEMPLATES)[number];
+
+// The one template every plan can use — Starter is limited to this until
+// upgrading unlocks the rest, per the `feature_all_templates` entitlement.
+const DEFAULT_INCLUDED_TEMPLATE: WebsiteTemplate = "minimal_luxury";
 
 const SlotSchema = z.object({
   template: z.enum(TEMPLATES),
@@ -71,6 +76,11 @@ export async function setWebsiteTemplate(formData: FormData): Promise<void> {
   const ctx = await getBusinessContext();
   const template = String(formData.get("template"));
   if (!TEMPLATES.includes(template as WebsiteTemplate)) return;
+
+  if (template !== DEFAULT_INCLUDED_TEMPLATE) {
+    const allTemplates = await getEntitlement(ctx.business.id, "feature_all_templates");
+    if (!allTemplates?.value) return;
+  }
 
   const supabase = await createClient();
   await supabase.from("businesses").update({ website_template: template }).eq("id", ctx.business.id);
