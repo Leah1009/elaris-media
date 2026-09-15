@@ -19,6 +19,7 @@ export function CheckoutForm({
   products,
   taxRatePercent,
   cardEnabled,
+  enabledManualMethods,
   loyaltyEnabled,
   loyaltyPointValueCents,
   loyaltyMinRedeemPoints,
@@ -30,11 +31,13 @@ export function CheckoutForm({
   products: { id: string; name: string; retail_price_cents: number; quantity_on_hand: number }[];
   taxRatePercent: number;
   cardEnabled: boolean;
+  enabledManualMethods: string[];
   loyaltyEnabled: boolean;
   loyaltyPointValueCents: number;
   loyaltyMinRedeemPoints: number;
   loyaltyBalance: number;
 }) {
+  const activeManualMethods = MANUAL_METHODS.filter((m) => enabledManualMethods.includes(m));
   const [manualState, manualAction, manualPending] = useActionState<ActionState, FormData>(
     recordManualPayment,
     null,
@@ -45,7 +48,7 @@ export function CheckoutForm({
   );
   const [discount, setDiscount] = useState("0");
   const [tip, setTip] = useState("0");
-  const [method, setMethod] = useState<string>("cash");
+  const [method, setMethod] = useState<string>(enabledManualMethods[0] ?? "cash");
   const [productQty, setProductQty] = useState<Record<string, number>>({});
   const [giftCardCode, setGiftCardCode] = useState("");
   const [giftCardAmount, setGiftCardAmount] = useState("0");
@@ -237,7 +240,7 @@ export function CheckoutForm({
       <div className="rounded-sm border border-border bg-white p-5">
         <p className="text-sm font-medium text-charcoal">Payment Method</p>
         <div className="mt-3 grid grid-cols-2 gap-2">
-          {MANUAL_METHODS.map((m) => (
+          {activeManualMethods.map((m) => (
             <button
               key={m}
               type="button"

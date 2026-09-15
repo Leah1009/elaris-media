@@ -19,6 +19,7 @@ export type BusinessContext = {
     city: string | null;
     state: string | null;
     website_template: string;
+    enabled_manual_methods: string[];
   };
   access: {
     subscriptionStatus: string;
@@ -60,7 +61,7 @@ export const getBusinessContext = cache(async (): Promise<BusinessContext> => {
   const { data: business } = await supabase
     .from("businesses")
     .select(
-      "id, name, slug, business_type, timezone, tax_rate_percent, preferred_language, logo_url, city, state, website_template",
+      "id, name, slug, business_type, timezone, tax_rate_percent, preferred_language, logo_url, city, state, website_template, enabled_manual_methods",
     )
     .eq("id", membership.business_id)
     .maybeSingle();

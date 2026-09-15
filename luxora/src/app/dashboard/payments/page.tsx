@@ -1,90 +1,164 @@
+import Link from "next/link";
+import type { SupabaseClient } from "@supabase/supabase-js";
+import type { Database } from "@/lib/types/database";
 import { createClient } from "@/lib/supabase/server";
-import { getBusinessContext } from "@/lib/luxora/business-context";
-import { formatCents } from "@/lib/luxora/money";
-import { METHOD_LABELS } from "@/lib/luxora/payments";
-import { RefundForm } from "@/components/refund-form";
+import { getBusinessContext, getActiveLocations } from "@/lib/luxora/business-context";
+import { isStripeConfigured } from "@/lib/luxora/stripe";
+import { refreshStripeAccountStatus } from "@/lib/luxora/stripe-actions";
+import { t, type Locale } from "@/lib/luxora/i18n";
+import {
+  getPaymentAccountStatus,
+  getPaymentSummary,
+  getTransactions,
+  getPayoutsData,
+  type PaymentAccountStatus,
+  type TransactionFilters,
+} from "@/lib/luxora/payments-data";
+import { PaymentsOverviewTab } from "@/components/payments/overview-tab";
+import { TransactionsTab } from "@/components/payments/transactions-tab";
+import { PaymentMethodsTab } from "@/components/payments/methods-tab";
+import { PayoutsTab } from "@/components/payments/payouts-tab";
+import { HardwareTab } from "@/components/payments/hardware-tab";
 
-const STATUS_STYLES: Record<string, string> = {
-  succeeded: "bg-cream-deep text-charcoal",
-  pending: "border border-border text-ink/60",
-  failed: "border border-danger text-danger",
-  refunded: "border border-border text-ink/40 line-through",
-  partially_refunded: "border border-gold-deep text-gold-deep",
-};
+const TABS = ["overview", "transactions", "methods", "payouts", "hardware"] as const;
+type Tab = (typeof TABS)[number];
 
-export default async function PaymentsPage() {
+type SearchParams = { tab?: string; period?: string; from?: string; to?: string; method?: string; status?: string };
+
+function resolveTransactionFilters(sp: SearchParams): TransactionFilters {
+  const isCustom = Boolean(sp.from && sp.to && /^\d{4}-\d{2}-\d{2}$/.test(sp.from) && /^\d{4}-\d{2}-\d{2}$/.test(sp.to));
+  if (isCustom) {
+    return {
+      periodStart: new Date(`${sp.from}T00:00:00.000Z`).toISOString(),
+      periodEnd: new Date(`${sp.to}T23:59:59.999Z`).toISOString(),
+      method: sp.method || null,
+      status: sp.status || null,
+    };
+  }
+  const days: Record<string, number> = { today: 1, "7": 7, "30": 30 };
+  const key = sp.period && days[sp.period] ? sp.period : "30";
+  return {
+    periodStart: new Date(Date.now() - days[key] * 86_400_000).toISOString(),
+    periodEnd: null,
+    method: sp.method || null,
+    status: sp.status || null,
+  };
+}
+
+async function renderOverview(
+  supabase: SupabaseClient<Database>,
+  businessId: string,
+  timezone: string,
+  locale: Locale,
+  accountStatus: PaymentAccountStatus,
+) {
+  const [summary, recentTransactions] = await Promise.all([
+    getPaymentSummary(supabase, businessId, timezone),
+    getTransactions(supabase, businessId, { periodStart: null, periodEnd: null, method: null, status: null }, 8),
+  ]);
+  return <PaymentsOverviewTab locale={locale} accountStatus={accountStatus} summary={summary} recentTransactions={recentTransactions} />;
+}
+
+async function renderTransactions(supabase: SupabaseClient<Database>, businessId: string, locale: Locale, sp: SearchParams) {
+  const filters = resolveTransactionFilters(sp);
+  const transactions = await getTransactions(supabase, businessId, filters, 200);
+  const isCustom = Boolean(sp.from && sp.to);
+  return (
+    <TransactionsTab
+      locale={locale}
+      transactions={transactions}
+      currentFilter={isCustom ? "custom" : sp.period || "30"}
+      currentMethod={sp.method || null}
+      currentStatus={sp.status || null}
+      isCustomRange={isCustom}
+      from={sp.from || null}
+      to={sp.to || null}
+    />
+  );
+}
+
+async function renderPayouts(supabase: SupabaseClient<Database>, businessId: string, locale: Locale) {
+  const payouts = await getPayoutsData(supabase, businessId);
+  return <PayoutsTab locale={locale} payouts={payouts} />;
+}
+
+async function renderHardware(supabase: SupabaseClient<Database>, businessId: string, locale: Locale) {
+  const [{ data: products }, locations, { data: devicesRaw }] = await Promise.all([
+    supabase.from("hardware_products_public").select("id, name, description, image_url, device_type, selling_price_cents"),
+    getActiveLocations(businessId),
+    supabase
+      .from("business_devices")
+      .select("id, label, device_type, status, location:location_id(name)")
+      .eq("business_id", businessId),
+  ]);
+
+  const toProduct = (row: NonNullable<typeof products>[number]) => ({
+    id: row.id!,
+    name: row.name!,
+    description: row.description,
+    imageUrl: row.image_url,
+    sellingPriceCents: row.selling_price_cents,
+  });
+
+  const cardReaders = (products ?? []).filter((p) => p.device_type === "card_reader").map(toProduct);
+  const smartTerminals = (products ?? []).filter((p) => p.device_type === "smart_terminal").map(toProduct);
+
+  const devices = (devicesRaw ?? []).map((d) => ({
+    id: d.id,
+    label: d.label,
+    deviceType: d.device_type,
+    locationName: (d.location as unknown as { name: string } | null)?.name ?? null,
+    status: d.status,
+  }));
+
+  return <HardwareTab locale={locale} cardReaders={cardReaders} smartTerminals={smartTerminals} locations={locations} devices={devices} />;
+}
+
+export default async function PaymentsPage({ searchParams }: { searchParams: Promise<SearchParams> }) {
+  const sp = await searchParams;
   const ctx = await getBusinessContext();
   const supabase = await createClient();
+  const locale: Locale = ctx.business.preferred_language;
+  const tab: Tab = TABS.includes(sp.tab as Tab) ? (sp.tab as Tab) : "overview";
 
-  const { data: payments } = await supabase
-    .from("payments")
-    .select("id, created_at, method, status, total_cents, tip_cents, client:client_id(full_name)")
-    .eq("business_id", ctx.business.id)
-    .order("created_at", { ascending: false })
-    .limit(100);
-
-  const paymentIds = (payments ?? []).map((p) => p.id);
-  const { data: refundRows } = paymentIds.length
-    ? await supabase.from("refunds").select("payment_id, reason").in("payment_id", paymentIds)
-    : { data: [] };
-  const reasonByPayment = new Map((refundRows ?? []).map((r) => [r.payment_id, r.reason]));
-
-  const totalCollected = (payments ?? [])
-    .filter((p) => p.status === "succeeded" || p.status === "partially_refunded")
-    .reduce((sum, p) => sum + p.total_cents, 0);
+  if (isStripeConfigured()) {
+    await refreshStripeAccountStatus();
+  }
+  const accountStatus = await getPaymentAccountStatus(supabase, ctx.business.id);
 
   return (
     <div className="flex flex-col gap-6">
       <div>
-        <h1 className="font-display text-2xl text-charcoal">Payments</h1>
-        <p className="mt-1 text-sm text-ink">{formatCents(totalCollected)} collected (last 100 payments)</p>
+        <h1 className="font-display text-2xl text-charcoal">{t(locale, "nav_payments")}</h1>
+        <p className="mt-1 text-sm text-ink/70">{t(locale, "payments_subtitle")}</p>
       </div>
 
-      {payments && payments.length > 0 ? (
-        <div className="overflow-x-auto rounded-sm border border-border bg-white">
-          <table className="w-full min-w-[640px] text-left text-sm">
-            <thead>
-              <tr className="border-b border-border text-xs uppercase tracking-wide text-ink/60">
-                <th className="px-4 py-3">Date</th>
-                <th className="px-4 py-3">Client</th>
-                <th className="px-4 py-3">Method</th>
-                <th className="px-4 py-3">Total</th>
-                <th className="px-4 py-3">Status</th>
-                <th className="px-4 py-3" />
-              </tr>
-            </thead>
-            <tbody>
-              {payments.map((p) => (
-                <tr key={p.id} className="border-b border-border last:border-0">
-                  <td className="px-4 py-3 text-ink">{new Date(p.created_at).toLocaleDateString()}</td>
-                  <td className="px-4 py-3 text-charcoal">
-                    {(p.client as unknown as { full_name: string } | null)?.full_name ?? "—"}
-                  </td>
-                  <td className="px-4 py-3 text-ink">{METHOD_LABELS[p.method] ?? p.method}</td>
-                  <td className="px-4 py-3 text-charcoal">{formatCents(p.total_cents)}</td>
-                  <td className="px-4 py-3">
-                    <span
-                      className={`rounded-full px-2 py-0.5 text-xs ${STATUS_STYLES[p.status] ?? ""}`}
-                      title={reasonByPayment.get(p.id) ? `Refund reason: ${reasonByPayment.get(p.id)}` : undefined}
-                    >
-                      {p.status.replace("_", " ")}
-                    </span>
-                  </td>
-                  <td className="px-4 py-3 text-right">
-                    {p.status === "succeeded" ? (
-                      <RefundForm paymentId={p.id} method={p.method} totalCents={p.total_cents} />
-                    ) : null}
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-      ) : (
-        <p className="rounded-sm border border-border bg-white p-6 text-sm text-ink">
-          No payments recorded yet. Payments appear here after checkout.
-        </p>
-      )}
+      <div className="flex gap-1 overflow-x-auto border-b border-border">
+        {TABS.map((tb) => (
+          <Link
+            key={tb}
+            href={`/dashboard/payments?tab=${tb}`}
+            className={`shrink-0 border-b-2 px-4 py-2.5 text-sm font-medium transition ${
+              tab === tb ? "border-gold-deep text-charcoal" : "border-transparent text-ink/60 hover:text-charcoal"
+            }`}
+          >
+            {t(locale, `pay_tab_${tb}` as Parameters<typeof t>[1])}
+          </Link>
+        ))}
+      </div>
+
+      {tab === "overview" ? await renderOverview(supabase, ctx.business.id, ctx.business.timezone, locale, accountStatus) : null}
+      {tab === "transactions" ? await renderTransactions(supabase, ctx.business.id, locale, sp) : null}
+      {tab === "methods" ? (
+        <PaymentMethodsTab
+          locale={locale}
+          accountStatus={accountStatus}
+          enabledManualMethods={ctx.business.enabled_manual_methods}
+          hasRegisteredDevice={false}
+        />
+      ) : null}
+      {tab === "payouts" ? await renderPayouts(supabase, ctx.business.id, locale) : null}
+      {tab === "hardware" ? await renderHardware(supabase, ctx.business.id, locale) : null}
     </div>
   );
 }

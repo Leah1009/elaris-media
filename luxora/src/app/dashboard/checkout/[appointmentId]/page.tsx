@@ -65,6 +65,7 @@ export default async function CheckoutPage({ params }: { params: Promise<{ appoi
           products={products ?? []}
           taxRatePercent={Number(ctx.business.tax_rate_percent ?? 0)}
           cardEnabled={connectedAccount?.charges_enabled ?? false}
+          enabledManualMethods={ctx.business.enabled_manual_methods}
           loyaltyEnabled={loyaltyProgram?.enabled ?? false}
           loyaltyPointValueCents={loyaltyProgram?.point_value_cents ?? 1}
           loyaltyMinRedeemPoints={loyaltyProgram?.min_redeem_points ?? 0}

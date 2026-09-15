@@ -68,7 +68,6 @@ const GROUPS: NavGroup[] = [
     links: [
       { key: "nav_business_profile", href: "/dashboard/settings/business-profile" },
       { key: "nav_locations", href: "/dashboard/settings/locations" },
-      { key: "nav_payment_settings", href: "/dashboard/settings/payments" },
       { key: "nav_subscription", href: "/dashboard/settings/subscription" },
     ],
   },

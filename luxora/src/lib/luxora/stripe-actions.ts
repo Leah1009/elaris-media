@@ -55,12 +55,38 @@ export async function startStripeOnboarding(): Promise<StripeActionState> {
 
   const accountLink = await stripe.accountLinks.create({
     account: accountId,
-    refresh_url: `${appUrl}/dashboard/settings/payments`,
-    return_url: `${appUrl}/dashboard/settings/payments`,
+    refresh_url: `${appUrl}/dashboard/payments?tab=methods`,
+    return_url: `${appUrl}/dashboard/payments?tab=methods`,
     type: "account_onboarding",
   });
 
   redirect(accountLink.url);
+}
+
+/**
+ * Sends the owner to Stripe's own hosted Express dashboard to manage bank
+ * details, payout schedule, or tax info — Luxore never builds a custom form
+ * for any of that.
+ */
+export async function openStripeAccountManagement(): Promise<StripeActionState> {
+  if (!isStripeConfigured()) {
+    return { error: "Stripe is not connected to Luxore yet." };
+  }
+
+  const ctx = await getBusinessContext();
+  const supabase = await createClient();
+  const stripe = getStripeClient();
+
+  const { data: connected } = await supabase
+    .from("stripe_connected_accounts")
+    .select("stripe_account_id")
+    .eq("business_id", ctx.business.id)
+    .maybeSingle();
+
+  if (!connected) return { error: "Stripe is not connected yet." };
+
+  const loginLink = await stripe.accounts.createLoginLink(connected.stripe_account_id);
+  redirect(loginLink.url);
 }
 
 /**

@@ -7,7 +7,6 @@ const SETTINGS_LINKS: { labelKey: TranslationKey; descKey: TranslationKey; href:
   { labelKey: "settings_locations_hours", descKey: "settings_locations_hours_desc", href: "/dashboard/settings/locations" },
   { labelKey: "settings_online_booking", descKey: "settings_online_booking_desc", href: "/dashboard/settings/online-booking" },
   { labelKey: "settings_website", descKey: "settings_website_desc", href: "/dashboard/settings/website" },
-  { labelKey: "settings_payments", descKey: "settings_payments_desc", href: "/dashboard/settings/payments" },
   { labelKey: "settings_subscription", descKey: "settings_subscription_desc", href: "/dashboard/settings/subscription" },
 ];
 

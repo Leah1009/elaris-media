@@ -1,10 +1,11 @@
-export const MANUAL_METHODS = ["cash", "zelle", "cash_app", "other"] as const;
+export const MANUAL_METHODS = ["cash", "zelle", "cash_app", "paypal", "other"] as const;
 export const CARD_METHODS = ["card", "terminal", "tap_to_pay"] as const;
 
 export const METHOD_LABELS: Record<string, string> = {
   cash: "Cash",
   zelle: "Zelle",
   cash_app: "Cash App",
+  paypal: "PayPal",
   other: "Other",
   card: "Card (online)",
   terminal: "Terminal",

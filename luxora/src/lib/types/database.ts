@@ -421,6 +421,7 @@ export type Database = {
           created_at: string
           description: string | null
           email: string | null
+          enabled_manual_methods: string[]
           id: string
           instagram_url: string | null
           logo_url: string | null
@@ -455,6 +456,7 @@ export type Database = {
           created_at?: string
           description?: string | null
           email?: string | null
+          enabled_manual_methods?: string[]
           id?: string
           instagram_url?: string | null
           logo_url?: string | null
@@ -489,6 +491,7 @@ export type Database = {
           created_at?: string
           description?: string | null
           email?: string | null
+          enabled_manual_methods?: string[]
           id?: string
           instagram_url?: string | null
           logo_url?: string | null
@@ -517,6 +520,188 @@ export type Database = {
             columns: ["owner_profile_id"]
             isOneToOne: false
             referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      hardware_products: {
+        Row: {
+          id: string
+          provider: string
+          provider_product_id: string | null
+          name: string
+          description: string | null
+          image_url: string | null
+          device_type: string
+          selling_price_cents: number | null
+          internal_cost_cents: number | null
+          active: boolean
+          display_order: number
+          created_at: string
+          updated_at: string
+        }
+        Insert: {
+          id?: string
+          provider?: string
+          provider_product_id?: string | null
+          name: string
+          description?: string | null
+          image_url?: string | null
+          device_type: string
+          selling_price_cents?: number | null
+          internal_cost_cents?: number | null
+          active?: boolean
+          display_order?: number
+          created_at?: string
+          updated_at?: string
+        }
+        Update: {
+          id?: string
+          provider?: string
+          provider_product_id?: string | null
+          name?: string
+          description?: string | null
+          image_url?: string | null
+          device_type?: string
+          selling_price_cents?: number | null
+          internal_cost_cents?: number | null
+          active?: boolean
+          display_order?: number
+          created_at?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      hardware_orders: {
+        Row: {
+          id: string
+          business_id: string
+          hardware_product_id: string
+          quantity: number
+          location_id: string | null
+          shipping_name: string
+          shipping_address_line1: string
+          shipping_address_line2: string | null
+          shipping_city: string
+          shipping_state: string
+          shipping_zip: string
+          shipping_phone: string | null
+          unit_price_cents: number
+          subtotal_cents: number
+          shipping_cents: number
+          tax_cents: number
+          total_cents: number
+          status: string
+          notes: string | null
+          created_at: string
+          updated_at: string
+        }
+        Insert: {
+          id?: string
+          business_id: string
+          hardware_product_id: string
+          quantity?: number
+          location_id?: string | null
+          shipping_name: string
+          shipping_address_line1: string
+          shipping_address_line2?: string | null
+          shipping_city: string
+          shipping_state: string
+          shipping_zip: string
+          shipping_phone?: string | null
+          unit_price_cents: number
+          subtotal_cents: number
+          shipping_cents?: number
+          tax_cents?: number
+          total_cents: number
+          status?: string
+          notes?: string | null
+          created_at?: string
+          updated_at?: string
+        }
+        Update: {
+          id?: string
+          business_id?: string
+          hardware_product_id?: string
+          quantity?: number
+          location_id?: string | null
+          shipping_name?: string
+          shipping_address_line1?: string
+          shipping_address_line2?: string | null
+          shipping_city?: string
+          shipping_state?: string
+          shipping_zip?: string
+          shipping_phone?: string | null
+          unit_price_cents?: number
+          subtotal_cents?: number
+          shipping_cents?: number
+          tax_cents?: number
+          total_cents?: number
+          status?: string
+          notes?: string | null
+          created_at?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "hardware_orders_business_id_fkey"
+            columns: ["business_id"]
+            isOneToOne: false
+            referencedRelation: "businesses"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "hardware_orders_hardware_product_id_fkey"
+            columns: ["hardware_product_id"]
+            isOneToOne: false
+            referencedRelation: "hardware_products"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      business_devices: {
+        Row: {
+          id: string
+          business_id: string
+          location_id: string | null
+          hardware_order_id: string | null
+          label: string
+          device_type: string
+          provider_device_id: string | null
+          status: string
+          created_at: string
+          updated_at: string
+        }
+        Insert: {
+          id?: string
+          business_id: string
+          location_id?: string | null
+          hardware_order_id?: string | null
+          label: string
+          device_type: string
+          provider_device_id?: string | null
+          status?: string
+          created_at?: string
+          updated_at?: string
+        }
+        Update: {
+          id?: string
+          business_id?: string
+          location_id?: string | null
+          hardware_order_id?: string | null
+          label?: string
+          device_type?: string
+          provider_device_id?: string | null
+          status?: string
+          created_at?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "business_devices_business_id_fkey"
+            columns: ["business_id"]
+            isOneToOne: false
+            referencedRelation: "businesses"
             referencedColumns: ["id"]
           },
         ]
@@ -3059,6 +3244,20 @@ export type Database = {
           is_locked: boolean | null
           subscription_status: string | null
           trial_ends_at: string | null
+        }
+        Relationships: []
+      }
+      hardware_products_public: {
+        Row: {
+          id: string | null
+          provider: string | null
+          name: string | null
+          description: string | null
+          image_url: string | null
+          device_type: string | null
+          selling_price_cents: number | null
+          active: boolean | null
+          display_order: number | null
         }
         Relationships: []
       }
