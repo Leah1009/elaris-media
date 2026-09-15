@@ -834,6 +834,67 @@ const dictionary = {
   public_reviews_title: { en: "Reviews", es: "Reseñas" },
   response_label: { en: "Response:", es: "Respuesta:" },
   powered_by_luxore: { en: "Powered by Luxore", es: "Desarrollado por Luxore" },
+
+  // Website templates — shared across Minimal Luxury / Modern Dark / Soft Beauty
+  web_book_appointment: { en: "Book Appointment", es: "Reservar Cita" },
+  web_book_short: { en: "Book", es: "Reservar" },
+  web_book_arrow: { en: "Book →", es: "Reservar →" },
+  web_view_services: { en: "View Services", es: "Ver Servicios" },
+  web_services_nav: { en: "Services", es: "Servicios" },
+  web_team_nav: { en: "Team", es: "Equipo" },
+  web_gallery_nav: { en: "Gallery", es: "Galería" },
+  web_reviews_nav: { en: "Reviews", es: "Reseñas" },
+  web_visit_us: { en: "Visit Us", es: "Visítanos" },
+  web_hours_location: { en: "Hours & Location", es: "Horario y Ubicación" },
+  web_min: { en: "min", es: "min" },
+  web_response_label: { en: "Response:", es: "Respuesta:" },
+
+  // Minimal Luxury
+  web_ml_hero_fallback: { en: "Timeless beauty, thoughtfully delivered", es: "Belleza atemporal, con dedicación" },
+  web_ml_about_eyebrow: { en: "About Us", es: "Sobre Nosotros" },
+  web_ml_about_title: { en: "A studio built around you", es: "Un estudio pensado para ti" },
+  web_ml_about_fallback: {
+    en: "{name} brings together experienced professionals and a calm, considered space — every visit is paced around what you actually need.",
+    es: "{name} reúne a profesionales con experiencia en un espacio tranquilo y cuidado — cada visita se ajusta a lo que realmente necesitas.",
+  },
+  web_ml_featured_eyebrow: { en: "Featured", es: "Destacado" },
+  web_ml_featured_title: { en: "Signature Services", es: "Servicios Insignia" },
+  web_ml_team_title: { en: "Meet the artists", es: "Conoce al equipo" },
+  web_ml_gallery_eyebrow: { en: "Gallery", es: "Galería" },
+  web_ml_gallery_title: { en: "A look inside", es: "Un vistazo por dentro" },
+  web_ml_reviews_title: { en: "Client Love", es: "Nuestros Clientes" },
+  web_ml_cta_title: { en: "Ready for your next appointment?", es: "¿Lista para tu próxima cita?" },
+
+  // Modern Dark
+  web_md_hero_fallback: { en: "Beauty, redefined after dark", es: "Belleza, redefinida al anochecer" },
+  web_md_statement: {
+    en: "We don't follow trends — we set the standard for modern beauty, one appointment at a time.",
+    es: "No seguimos tendencias — marcamos el estándar de la belleza moderna, cita a cita.",
+  },
+  web_md_services_eyebrow: { en: "Services", es: "Servicios" },
+  web_md_team_eyebrow: { en: "Our Team", es: "Nuestro Equipo" },
+  web_md_gallery_eyebrow: { en: "Gallery", es: "Galería" },
+  web_md_reviews_eyebrow: { en: "Reviews", es: "Reseñas" },
+  web_md_visit_eyebrow: { en: "Visit", es: "Visítanos" },
+  web_md_cta_title: { en: "Book Your Appointment", es: "Reserva Tu Cita" },
+  web_md_book_now: { en: "Book Now", es: "Reservar Ahora" },
+  web_md_great_experience: { en: "Great experience.", es: "Excelente experiencia." },
+
+  // Soft Beauty
+  web_sb_hero_fallback: { en: "Soft beauty, warmly done", es: "Belleza suave, con calidez" },
+  web_sb_offer_title: { en: "What We Offer", es: "Lo Que Ofrecemos" },
+  web_sb_story_eyebrow: { en: "Our Story", es: "Nuestra Historia" },
+  web_sb_story_title: { en: "Rooted in care, made for you", es: "Con cariño, pensado para ti" },
+  web_sb_story_fallback: {
+    en: "{name} started with a simple idea — beauty appointments should feel unhurried, personal, and genuinely enjoyable.",
+    es: "{name} nació de una idea simple — las citas de belleza deben sentirse tranquilas, personales y realmente placenteras.",
+  },
+  web_sb_popular_title: { en: "Popular Services", es: "Servicios Populares" },
+  web_sb_team_title: { en: "Meet Our Team", es: "Conoce a Nuestro Equipo" },
+  web_sb_gallery_title: { en: "Social Moments", es: "Momentos" },
+  web_sb_reviews_title: { en: "Loved By Our Clients", es: "Amado Por Nuestros Clientes" },
+  web_sb_cta_title: { en: "Come as you are, leave glowing", es: "Ven como eres, sal radiante" },
+
   day_sunday: { en: "Sunday", es: "Domingo" },
   day_monday: { en: "Monday", es: "Lunes" },
   day_tuesday: { en: "Tuesday", es: "Martes" },
@@ -961,6 +1022,8 @@ const dictionary = {
 
 export type TranslationKey = keyof typeof dictionary;
 
-export function t(locale: Locale, key: TranslationKey): string {
-  return dictionary[key][locale] ?? dictionary[key].en;
+export function t(locale: Locale, key: TranslationKey, vars?: Record<string, string>): string {
+  const text: string = dictionary[key][locale] ?? dictionary[key].en;
+  if (!vars) return text;
+  return Object.entries(vars).reduce((acc: string, [name, value]) => acc.replaceAll(`{${name}}`, value), text);
 }

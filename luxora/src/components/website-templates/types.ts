@@ -1,4 +1,5 @@
 import type { WebsiteRenderData } from "@/lib/luxora/website-data";
+import type { Locale } from "@/lib/luxora/i18n";
 
 export type WebsiteBusiness = {
   id: string;
@@ -23,6 +24,7 @@ export type WebsiteTemplateProps = {
   data: WebsiteRenderData;
   images: Record<string, string>;
   devMode: boolean;
+  locale?: Locale;
 };
 
 export type ImageSlotSpec = {
