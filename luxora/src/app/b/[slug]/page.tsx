@@ -190,7 +190,7 @@ export default async function PublicBusinessPage({ params }: { params: Promise<{
       ) : null}
 
       {business.show_reviews && reviews && reviews.length > 0 ? (
-        <section className="mt-12">
+        <section id="reviews" className="mt-12">
           <h2 className="font-display text-xl text-charcoal">
             {t(locale, "public_reviews_title")}
             {reviewSummary?.average_rating ? (

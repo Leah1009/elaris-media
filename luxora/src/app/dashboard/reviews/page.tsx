@@ -2,11 +2,14 @@ import { createClient } from "@/lib/supabase/server";
 import { getBusinessContext } from "@/lib/luxora/business-context";
 import { getAppUrl } from "@/lib/luxora/app-url";
 import { requestReview, respondToReview, setReviewVisibility } from "@/lib/luxora/reviews-actions";
+import { ReviewQrButton } from "@/components/review-qr-button";
+import { DeleteReviewForm } from "@/components/delete-review-form";
 
 export default async function ReviewsPage() {
   const ctx = await getBusinessContext();
   const supabase = await createClient();
   const appUrl = await getAppUrl();
+  const reviewsUrl = `${appUrl}/b/${ctx.business.slug}#reviews`;
 
   const [{ data: reviews }, { data: pendingAppointments }, { data: summary }] = await Promise.all([
     supabase
@@ -38,16 +41,19 @@ export default async function ReviewsPage() {
 
   return (
     <div className="flex flex-col gap-8">
-      <div>
-        <h1 className="font-display text-2xl text-charcoal">Reviews</h1>
-        {averageRating ? (
-          <p className="mt-1 text-sm text-ink">
-            {averageRating} ★ average from {publishedRatings.length} published review
-            {publishedRatings.length === 1 ? "" : "s"}
-          </p>
-        ) : (
-          <p className="mt-1 text-sm text-ink/60">No published reviews yet.</p>
-        )}
+      <div className="flex items-start justify-between gap-4">
+        <div>
+          <h1 className="font-display text-2xl text-charcoal">Reviews</h1>
+          {averageRating ? (
+            <p className="mt-1 text-sm text-ink">
+              {averageRating} ★ average from {publishedRatings.length} published review
+              {publishedRatings.length === 1 ? "" : "s"}
+            </p>
+          ) : (
+            <p className="mt-1 text-sm text-ink/60">No published reviews yet.</p>
+          )}
+        </div>
+        <ReviewQrButton url={reviewsUrl} />
       </div>
 
       <section className="flex flex-col gap-3">
@@ -116,17 +122,20 @@ export default async function ReviewsPage() {
                   <span className="text-ink/30">{"★".repeat(5 - review.rating)}</span>
                   <span className="ml-2 text-sm text-charcoal">{review.client?.full_name ?? "Client"}</span>
                 </div>
-                <form action={setReviewVisibility}>
-                  <input type="hidden" name="reviewId" value={review.id} />
-                  <input
-                    type="hidden"
-                    name="status"
-                    value={review.status === "published" ? "hidden" : "published"}
-                  />
-                  <button type="submit" className="text-xs text-ink/60 underline underline-offset-2">
-                    {review.status === "published" ? "Hide" : "Publish"}
-                  </button>
-                </form>
+                <div className="flex items-center gap-3">
+                  <form action={setReviewVisibility}>
+                    <input type="hidden" name="reviewId" value={review.id} />
+                    <input
+                      type="hidden"
+                      name="status"
+                      value={review.status === "published" ? "hidden" : "published"}
+                    />
+                    <button type="submit" className="text-xs text-ink/60 underline underline-offset-2">
+                      {review.status === "published" ? "Hide" : "Publish"}
+                    </button>
+                  </form>
+                  <DeleteReviewForm reviewId={review.id} />
+                </div>
               </div>
               {review.comment ? <p className="mt-2 text-sm text-ink">{review.comment}</p> : null}
               <p className="mt-1 text-xs text-ink/50">{new Date(review.created_at).toLocaleDateString()}</p>

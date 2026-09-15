@@ -56,6 +56,16 @@ export async function respondToReview(formData: FormData): Promise<void> {
   revalidatePath("/dashboard/reviews");
 }
 
+export async function deleteReview(formData: FormData): Promise<void> {
+  const ctx = await getBusinessContext();
+  const reviewId = String(formData.get("reviewId"));
+  const supabase = await createClient();
+
+  await supabase.from("reviews").delete().eq("id", reviewId).eq("business_id", ctx.business.id);
+
+  revalidatePath("/dashboard/reviews");
+}
+
 export async function setReviewVisibility(formData: FormData): Promise<void> {
   const ctx = await getBusinessContext();
   const reviewId = String(formData.get("reviewId"));
