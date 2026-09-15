@@ -27,6 +27,12 @@ export default async function ClientDetailPage({ params }: { params: Promise<{ i
     .select("client_tags(name)")
     .eq("client_id", id);
 
+  const { data: loyaltyBalance } = await supabase
+    .from("client_loyalty_points")
+    .select("points_balance")
+    .eq("client_id", id)
+    .maybeSingle();
+
   const { data: appointments } = await supabase
     .from("appointments")
     .select("id, start_at, status, staff:staff_id(full_name)")
@@ -95,7 +101,7 @@ export default async function ClientDetailPage({ params }: { params: Promise<{ i
         </Link>
       </div>
 
-      <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-4">
         <div className="rounded-sm border border-border bg-white p-5">
           <p className="text-xs uppercase tracking-wide text-ink/60">Total Visits</p>
           <p className="mt-1 font-display text-2xl text-charcoal">{client.total_visits}</p>
@@ -111,6 +117,10 @@ export default async function ClientDetailPage({ params }: { params: Promise<{ i
           <p className="mt-1 font-display text-2xl text-charcoal">
             {client.last_visit_at ? new Date(client.last_visit_at).toLocaleDateString() : "—"}
           </p>
+        </div>
+        <div className="rounded-sm border border-border bg-white p-5">
+          <p className="text-xs uppercase tracking-wide text-ink/60">Loyalty Points</p>
+          <p className="mt-1 font-display text-2xl text-charcoal">{loyaltyBalance?.points_balance ?? 0}</p>
         </div>
       </div>
 
