@@ -440,6 +440,7 @@ export type Database = {
           timezone: string
           updated_at: string
           website_tagline: string | null
+          website_template: string
           zip: string | null
         }
         Insert: {
@@ -473,6 +474,7 @@ export type Database = {
           timezone?: string
           updated_at?: string
           website_tagline?: string | null
+          website_template?: string
           zip?: string | null
         }
         Update: {
@@ -506,6 +508,7 @@ export type Database = {
           timezone?: string
           updated_at?: string
           website_tagline?: string | null
+          website_template?: string
           zip?: string | null
         }
         Relationships: [
@@ -514,6 +517,44 @@ export type Database = {
             columns: ["owner_profile_id"]
             isOneToOne: false
             referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      website_image_slots: {
+        Row: {
+          business_id: string
+          created_at: string
+          id: string
+          image_url: string | null
+          slot_key: string
+          template: string
+          updated_at: string
+        }
+        Insert: {
+          business_id: string
+          created_at?: string
+          id?: string
+          image_url?: string | null
+          slot_key: string
+          template: string
+          updated_at?: string
+        }
+        Update: {
+          business_id?: string
+          created_at?: string
+          id?: string
+          image_url?: string | null
+          slot_key?: string
+          template?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "website_image_slots_business_id_fkey"
+            columns: ["business_id"]
+            isOneToOne: false
+            referencedRelation: "businesses"
             referencedColumns: ["id"]
           },
         ]

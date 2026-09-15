@@ -18,11 +18,9 @@ type Settings = {
 export function WebsiteSettingsForm({
   settings,
   slug,
-  businessName,
 }: {
   settings: Settings;
   slug: string;
-  businessName: string;
 }) {
   const [state, formAction, pending] = useActionState<ActionState, FormData>(updateWebsiteSettings, null);
 
@@ -39,7 +37,7 @@ export function WebsiteSettingsForm({
   );
 
   return (
-    <div className="grid grid-cols-1 gap-6 lg:grid-cols-[1fr_360px]">
+    <div className="max-w-xl">
       <form action={formAction} className="flex flex-col gap-5 rounded-sm border border-border bg-white p-6">
         <p className="text-xs text-ink/60">
           No file upload yet — paste the URL of an image you&apos;ve already hosted elsewhere.
@@ -197,45 +195,6 @@ export function WebsiteSettingsForm({
           View your public page →
         </a>
       </form>
-
-      <div className="lg:sticky lg:top-6 lg:self-start">
-        <p className="mb-2 text-xs font-medium uppercase tracking-wide text-ink/50">Live Preview</p>
-        <div className="overflow-hidden rounded-sm border border-border bg-white shadow-sm">
-          {coverImageUrl ? (
-            // eslint-disable-next-line @next/next/no-img-element
-            <img src={coverImageUrl} alt="" className="h-28 w-full object-cover" />
-          ) : (
-            <div className="h-28 w-full bg-cream-deep" />
-          )}
-          <div className="p-4">
-            <div className="flex items-center gap-2">
-              {logoUrl ? (
-                // eslint-disable-next-line @next/next/no-img-element
-                <img src={logoUrl} alt="" className="h-9 w-9 rounded-full border border-border object-cover" />
-              ) : null}
-              <div>
-                <p className="font-display text-[10px] uppercase tracking-[0.25em] text-gold-deep">Book with</p>
-                <p className="font-display text-lg leading-tight text-charcoal">{businessName}</p>
-              </div>
-            </div>
-            {tagline ? <p className="mt-1 text-xs italic text-ink/70">{tagline}</p> : null}
-            <span
-              style={{ backgroundColor: /^#[0-9a-fA-F]{6}$/.test(brandColor) ? brandColor : "#3a2f28" }}
-              className="mt-3 inline-block rounded-sm px-4 py-1.5 text-xs font-medium tracking-wide text-white"
-            >
-              Book Now
-            </span>
-            <div className="mt-3 flex flex-wrap gap-1.5 text-[11px] text-ink/50">
-              <span className="rounded-full border border-border px-2 py-0.5">Services</span>
-              {showTeam ? <span className="rounded-full border border-border px-2 py-0.5">Team</span> : null}
-              {showReviews ? <span className="rounded-full border border-border px-2 py-0.5">Reviews</span> : null}
-            </div>
-          </div>
-        </div>
-        <p className="mt-2 text-[11px] text-ink/50">
-          This preview reflects your unsaved changes above. Services, staff and hours come from their own pages.
-        </p>
-      </div>
     </div>
   );
 }
