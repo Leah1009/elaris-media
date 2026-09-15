@@ -46,7 +46,7 @@ export default async function NewAppointmentPage({
             services={services}
             staff={staff}
             locations={locations ?? []}
-            defaultDate={date ?? todayDateStr()}
+            defaultDate={date ?? todayDateStr(ctx.business.timezone)}
             defaultValues={{ time, staffId, locationId }}
           />
         </div>

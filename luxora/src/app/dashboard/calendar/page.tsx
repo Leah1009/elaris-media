@@ -28,9 +28,9 @@ export default async function CalendarPage({
   const ctx = await getBusinessContext();
   const lang = ctx.business.preferred_language;
   const view: View = viewParam === "day" || viewParam === "month" ? viewParam : "week";
-  const anchor = date ?? todayDateStr();
   const tz = ctx.business.timezone;
-  const today = todayDateStr();
+  const today = todayDateStr(tz);
+  const anchor = date ?? today;
 
   const supabase = await createClient();
 

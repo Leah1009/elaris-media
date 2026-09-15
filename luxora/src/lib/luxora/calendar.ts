@@ -1,3 +1,5 @@
+import { dateStrInTimeZone } from "@/lib/luxora/timezone";
+
 export function addDays(dateStr: string, days: number): string {
   const [y, m, d] = dateStr.split("-").map(Number);
   const date = new Date(Date.UTC(y, m - 1, d));
@@ -15,8 +17,15 @@ export function getWeekDates(dateStr: string): string[] {
   return Array.from({ length: 7 }, (_, i) => addDays(monday, i));
 }
 
-export function todayDateStr(): string {
-  return new Date().toISOString().slice(0, 10);
+/**
+ * "Today" as the business's own clock sees it, not UTC — a business west
+ * of UTC can still be "yesterday" locally after UTC has already ticked
+ * over, which used to point the calendar's default view, "Today" button,
+ * and month/day highlighting at the wrong day (and, right at a month or
+ * year boundary, the wrong month or year).
+ */
+export function todayDateStr(timeZone: string): string {
+  return dateStrInTimeZone(new Date(), timeZone);
 }
 
 export function weekdayLabel(dateStr: string): string {
