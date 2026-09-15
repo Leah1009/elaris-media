@@ -7,7 +7,9 @@ import type { ActionState } from "@/lib/luxora/actions";
 export function CreateMessageTemplateForm() {
   const [state, formAction, pending] = useActionState<ActionState, FormData>(createMessageTemplate, null);
   const [channel, setChannel] = useState<"sms" | "email" | "whatsapp">("sms");
-  const [type, setType] = useState("appointment_reminder");
+  const [type, setType] = useState<
+    "appointment_reminder" | "appointment_confirmation" | "review_request" | "promotion" | "marketing" | "custom"
+  >("appointment_reminder");
 
   return (
     <form action={formAction} className="flex flex-col gap-4 rounded-sm border border-border bg-white p-6">
@@ -27,12 +29,13 @@ export function CreateMessageTemplateForm() {
             id="type"
             name="type"
             value={type}
-            onChange={(e) => setType(e.target.value)}
+            onChange={(e) => setType(e.target.value as typeof type)}
             className="rounded-sm border border-border px-3 py-2 text-sm text-charcoal"
           >
             <option value="appointment_reminder">Appointment reminder</option>
             <option value="appointment_confirmation">Appointment confirmation</option>
             <option value="review_request">Review request</option>
+            <option value="promotion">Promotion</option>
             <option value="marketing">Marketing</option>
             <option value="custom">Custom</option>
           </select>
@@ -64,7 +67,7 @@ export function CreateMessageTemplateForm() {
         </div>
       ) : null}
 
-      {type === "marketing" ? (
+      {type === "marketing" || type === "promotion" ? (
         <div className="flex flex-col gap-1.5">
           <label htmlFor="image" className="text-sm font-medium text-charcoal">
             Image (optional)

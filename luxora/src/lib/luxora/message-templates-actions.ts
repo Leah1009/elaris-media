@@ -10,7 +10,7 @@ import type { ActionState } from "@/lib/luxora/actions";
 
 const TemplateSchema = z.object({
   name: z.string().min(1, "Name is required."),
-  type: z.enum(["appointment_reminder", "appointment_confirmation", "review_request", "marketing", "custom"]),
+  type: z.enum(["appointment_reminder", "appointment_confirmation", "review_request", "marketing", "promotion", "custom"]),
   channel: z.enum(["sms", "email", "whatsapp"]),
   subject: z.string().optional(),
   body: z.string().min(1, "Message body is required."),
@@ -31,7 +31,7 @@ export async function createMessageTemplate(_prevState: ActionState, formData: F
   const { url: imageUrl, error: imageError } = await uploadBusinessImage(
     supabase,
     ctx.business.id,
-    data.type === "marketing" && imageFile instanceof File ? imageFile : null,
+    (data.type === "marketing" || data.type === "promotion") && imageFile instanceof File ? imageFile : null,
   );
   if (imageError) return { fieldErrors: { image: [imageError] } };
 
