@@ -31,7 +31,6 @@ const GROUPS: NavGroup[] = [
     id: "money",
     titleKey: "nav_money",
     links: [
-      { key: "nav_checkout", href: "/dashboard/calendar" },
       { key: "nav_payments", href: "/dashboard/payments" },
       { key: "nav_gift_cards", href: "/dashboard/gift-cards" },
       { key: "nav_memberships", href: "/dashboard/memberships" },
