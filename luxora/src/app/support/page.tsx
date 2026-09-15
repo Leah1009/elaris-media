@@ -2,6 +2,7 @@ import Link from "next/link";
 import { getPublicLocale } from "@/lib/luxora/locale";
 import { t, type TranslationKey } from "@/lib/luxora/i18n";
 import { SiteFooter } from "@/components/marketing/site-footer";
+import { BackButton } from "@/components/back-button";
 
 const OPTIONS: { titleKey: TranslationKey; descKey: TranslationKey; href: string }[] = [
   { titleKey: "support_option_help_center", descKey: "support_option_help_center_desc", href: "/help" },
@@ -19,6 +20,7 @@ export default async function SupportPage() {
   return (
     <>
       <main className="mx-auto max-w-3xl px-6 py-20 sm:px-10">
+        <BackButton lang={locale} />
         <Link href="/" className="font-display text-sm uppercase tracking-[0.3em] text-gold-deep">
           Luxore
         </Link>

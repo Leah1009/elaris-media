@@ -3,6 +3,7 @@ import { getPublicLocale } from "@/lib/luxora/locale";
 import { t } from "@/lib/luxora/i18n";
 import { HelpCenter } from "@/components/help-center";
 import { SiteFooter } from "@/components/marketing/site-footer";
+import { BackButton } from "@/components/back-button";
 
 export default async function HelpPage() {
   const locale = await getPublicLocale();
@@ -10,6 +11,7 @@ export default async function HelpPage() {
   return (
     <>
       <main className="mx-auto max-w-3xl px-6 py-20 sm:px-10">
+        <BackButton lang={locale} />
         <Link href="/" className="font-display text-sm uppercase tracking-[0.3em] text-gold-deep">
           Luxore
         </Link>

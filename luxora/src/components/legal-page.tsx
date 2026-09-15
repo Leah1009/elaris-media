@@ -3,6 +3,7 @@ import type { LegalSection } from "@/lib/luxora/privacy-content";
 import { LEGAL_CONFIG } from "@/lib/luxora/legal-config";
 import { t, type Locale } from "@/lib/luxora/i18n";
 import { SiteFooter } from "@/components/marketing/site-footer";
+import { BackButton } from "@/components/back-button";
 
 export function LegalPage({
   locale,
@@ -18,6 +19,7 @@ export function LegalPage({
   return (
     <>
       <main className="mx-auto max-w-3xl px-6 py-20 sm:px-10">
+        <BackButton lang={locale} />
         <Link href="/" className="font-display text-sm uppercase tracking-[0.3em] text-gold-deep">
           Luxore
         </Link>

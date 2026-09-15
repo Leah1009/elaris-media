@@ -1,8 +1,15 @@
 import Link from "next/link";
+import { getPublicLocale } from "@/lib/luxora/locale";
+import { BackButton } from "@/components/back-button";
 
-export default function CheckEmailPage() {
+export default async function CheckEmailPage() {
+  const locale = await getPublicLocale();
+
   return (
     <main className="flex min-h-screen flex-col items-center justify-center px-6 py-16 text-center">
+      <div className="self-start">
+        <BackButton lang={locale} />
+      </div>
       <span className="font-display text-sm uppercase tracking-[0.3em] text-gold-deep">Luxore</span>
       <h1 className="mt-4 font-display text-3xl text-charcoal">Check your email</h1>
       <p className="mt-3 max-w-sm text-sm text-ink">
