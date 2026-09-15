@@ -10,6 +10,7 @@ export type ActionState = {
   error?: string;
   fieldErrors?: Record<string, string[]>;
   success?: boolean;
+  message?: string;
 } | null;
 
 const businessTypeValues = BUSINESS_TYPES.map((t) => t.value) as [string, ...string[]];
