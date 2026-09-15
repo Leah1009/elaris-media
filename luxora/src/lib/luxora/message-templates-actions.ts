@@ -10,7 +10,7 @@ import type { ActionState } from "@/lib/luxora/actions";
 const TemplateSchema = z.object({
   name: z.string().min(1, "Name is required."),
   type: z.enum(["appointment_reminder", "appointment_confirmation", "review_request", "marketing", "custom"]),
-  channel: z.enum(["sms", "email"]),
+  channel: z.enum(["sms", "email", "whatsapp"]),
   subject: z.string().optional(),
   body: z.string().min(1, "Message body is required."),
 });

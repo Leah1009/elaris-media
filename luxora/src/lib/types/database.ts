@@ -1673,6 +1673,7 @@ export type Database = {
           channel: string
           client_id: string | null
           created_at: string
+          direction: string
           error: string | null
           id: string
           provider_message_id: string | null
@@ -1689,6 +1690,7 @@ export type Database = {
           channel: string
           client_id?: string | null
           created_at?: string
+          direction?: string
           error?: string | null
           id?: string
           provider_message_id?: string | null
@@ -1705,6 +1707,7 @@ export type Database = {
           channel?: string
           client_id?: string | null
           created_at?: string
+          direction?: string
           error?: string | null
           id?: string
           provider_message_id?: string | null

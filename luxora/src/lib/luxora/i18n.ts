@@ -124,6 +124,23 @@ const dictionary = {
 
   // Messages
   messages_title: { en: "Messages", es: "Mensajes" },
+  messages_no_provider_note: {
+    en: "No SMS, WhatsApp or email provider is connected — these are the messages the system has attempted to send (deposit reminders, review requests, automations). Once a provider is connected, you can reply to clients right here.",
+    es: "No hay un proveedor de SMS, WhatsApp o correo conectado — estos son los mensajes que el sistema ha intentado enviar (recordatorios de depósito, solicitudes de reseña, automatizaciones). Una vez que conectes un proveedor, podrás responder a los clientes desde aquí.",
+  },
+  messages_no_threads: { en: "No conversations yet.", es: "Aún no hay conversaciones." },
+  messages_select_conversation: { en: "Select a conversation to view messages.", es: "Selecciona una conversación para ver los mensajes." },
+  messages_composer_placeholder: { en: "Type a message…", es: "Escribe un mensaje…" },
+  messages_composer_disabled_note: {
+    en: "Connect WhatsApp, SMS, or email to send messages from here.",
+    es: "Conecta WhatsApp, SMS o correo para enviar mensajes desde aquí.",
+  },
+  messages_send_button: { en: "Send", es: "Enviar" },
+  messages_sending: { en: "Sending…", es: "Enviando…" },
+  message_status_sent: { en: "Sent", es: "Enviado" },
+  message_status_failed: { en: "Failed", es: "Fallido" },
+  message_status_skipped_no_consent: { en: "Skipped — no consent", es: "Omitido — sin consentimiento" },
+  message_status_provider_not_configured: { en: "Not sent — no provider connected", es: "No enviado — sin proveedor conectado" },
 
   // Settings
   settings_title: { en: "Settings", es: "Configuración" },

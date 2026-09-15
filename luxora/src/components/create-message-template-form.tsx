@@ -6,7 +6,7 @@ import type { ActionState } from "@/lib/luxora/actions";
 
 export function CreateMessageTemplateForm() {
   const [state, formAction, pending] = useActionState<ActionState, FormData>(createMessageTemplate, null);
-  const [channel, setChannel] = useState<"sms" | "email">("sms");
+  const [channel, setChannel] = useState<"sms" | "email" | "whatsapp">("sms");
 
   return (
     <form action={formAction} className="flex flex-col gap-4 rounded-sm border border-border bg-white p-6">
@@ -38,11 +38,12 @@ export function CreateMessageTemplateForm() {
             id="channel"
             name="channel"
             value={channel}
-            onChange={(e) => setChannel(e.target.value as "sms" | "email")}
+            onChange={(e) => setChannel(e.target.value as "sms" | "email" | "whatsapp")}
             className="rounded-sm border border-border px-3 py-2 text-sm text-charcoal"
           >
             <option value="sms">SMS</option>
             <option value="email">Email</option>
+            <option value="whatsapp">WhatsApp</option>
           </select>
         </div>
       </div>

@@ -21,18 +21,33 @@ export function isEmailConfigured(): boolean {
   return Boolean(process.env.EMAIL_API_KEY && process.env.EMAIL_FROM_ADDRESS);
 }
 
+/**
+ * No WhatsApp Business provider is wired up either — same shape of
+ * blocker as SMS: needs a Meta/Twilio WhatsApp Business account the
+ * business owner sets up, not something togglable from code.
+ */
+export function isWhatsappConfigured(): boolean {
+  return Boolean(process.env.WHATSAPP_ACCESS_TOKEN && process.env.WHATSAPP_PHONE_NUMBER_ID);
+}
+
 type SendMessageInput = {
   businessId: string;
   clientId: string;
   appointmentId?: string | null;
   automationRuleId?: string | null;
-  channel: "sms" | "email";
+  channel: "sms" | "email" | "whatsapp";
   templateId?: string | null;
   toAddress: string | null;
   subject?: string | null;
   body: string;
   consentGiven: boolean;
 };
+
+function isChannelConfigured(channel: "sms" | "email" | "whatsapp"): boolean {
+  if (channel === "sms") return isSmsConfigured();
+  if (channel === "whatsapp") return isWhatsappConfigured();
+  return isEmailConfigured();
+}
 
 /**
  * The single choke point every message send goes through — manual
@@ -46,7 +61,7 @@ export async function sendMessage(
   supabase: SupabaseClient<Database>,
   input: SendMessageInput,
 ): Promise<{ status: "sent" | "failed" | "skipped_no_consent" | "provider_not_configured" }> {
-  const configured = input.channel === "sms" ? isSmsConfigured() : isEmailConfigured();
+  const configured = isChannelConfigured(input.channel);
 
   let status: "sent" | "failed" | "skipped_no_consent" | "provider_not_configured";
   let error: string | null = null;
