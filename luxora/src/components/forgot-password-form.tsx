@@ -1,13 +1,17 @@
 "use client";
 
-import Link from "next/link";
 import { useActionState } from "react";
-import { login, type ActionState } from "@/lib/luxora/actions";
+import { requestPasswordReset } from "@/lib/luxora/password-actions";
+import type { ActionState } from "@/lib/luxora/actions";
 import { FormField } from "@/components/form-field";
 import { t, type Locale } from "@/lib/luxora/i18n";
 
-export function LoginForm({ locale }: { locale: Locale }) {
-  const [state, formAction, pending] = useActionState<ActionState, FormData>(login, null);
+export function ForgotPasswordForm({ locale }: { locale: Locale }) {
+  const [state, formAction, pending] = useActionState<ActionState, FormData>(requestPasswordReset, null);
+
+  if (state?.success) {
+    return <p className="mt-8 text-sm text-charcoal">{t(locale, "forgot_password_success")}</p>;
+  }
 
   return (
     <form action={formAction} className="mt-8 flex flex-col gap-5" noValidate>
@@ -19,22 +23,6 @@ export function LoginForm({ locale }: { locale: Locale }) {
         required
         errors={state?.fieldErrors?.email}
       />
-      <div className="flex flex-col gap-1.5">
-        <FormField
-          label={t(locale, "field_password")}
-          name="password"
-          type="password"
-          autoComplete="current-password"
-          required
-          errors={state?.fieldErrors?.password}
-        />
-        <Link
-          href="/forgot-password"
-          className="self-end text-xs font-medium text-gold-deep underline underline-offset-2"
-        >
-          {t(locale, "forgot_password_link")}
-        </Link>
-      </div>
 
       {state?.error ? (
         <p role="alert" className="text-sm text-danger">
@@ -47,7 +35,7 @@ export function LoginForm({ locale }: { locale: Locale }) {
         disabled={pending}
         className="mt-2 rounded-sm bg-charcoal px-6 py-3 text-sm font-medium tracking-wide text-white transition hover:bg-charcoal-soft disabled:opacity-60"
       >
-        {pending ? t(locale, "logging_in") : t(locale, "log_in_button")}
+        {pending ? t(locale, "forgot_password_sending") : t(locale, "forgot_password_button")}
       </button>
     </form>
   );

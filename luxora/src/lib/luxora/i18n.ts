@@ -741,6 +741,35 @@ const dictionary = {
   log_in_button: { en: "Log In", es: "Iniciar sesión" },
   logging_in: { en: "Logging in…", es: "Iniciando sesión…" },
   new_to_luxore: { en: "New to Luxore?", es: "¿Nuevo en Luxore?" },
+  forgot_password_link: { en: "Forgot your password?", es: "¿Olvidaste tu contraseña?" },
+
+  // Auth: Forgot / Reset Password
+  forgot_password_title: { en: "Reset your password", es: "Restablece tu contraseña" },
+  forgot_password_subtitle: {
+    en: "Enter your email and we'll send you a link to reset your password.",
+    es: "Ingresa tu correo y te enviaremos un enlace para restablecer tu contraseña.",
+  },
+  forgot_password_button: { en: "Send Reset Link", es: "Enviar enlace" },
+  forgot_password_sending: { en: "Sending…", es: "Enviando…" },
+  forgot_password_success: {
+    en: "If an account exists for that email, we've sent a link to reset your password.",
+    es: "Si existe una cuenta con ese correo, te hemos enviado un enlace para restablecer tu contraseña.",
+  },
+  forgot_password_expired: {
+    en: "That reset link is invalid or has expired. Please request a new one.",
+    es: "Ese enlace de restablecimiento no es válido o ha expirado. Solicita uno nuevo.",
+  },
+  back_to_login: { en: "Back to Log In", es: "Volver a iniciar sesión" },
+  field_new_password: { en: "New Password", es: "Nueva contraseña" },
+  reset_password_title: { en: "Set a new password", es: "Establece una nueva contraseña" },
+  reset_password_subtitle: { en: "Choose a new password for your account.", es: "Elige una nueva contraseña para tu cuenta." },
+  reset_password_button: { en: "Update Password", es: "Actualizar contraseña" },
+  reset_password_updating: { en: "Updating…", es: "Actualizando…" },
+  reset_password_invalid_title: { en: "Link expired", es: "Enlace expirado" },
+  reset_password_invalid_body: {
+    en: "This password reset link is invalid or has expired.",
+    es: "Este enlace para restablecer la contraseña no es válido o ha expirado.",
+  },
 
   // Auth: Register
   register_title: { en: "Start your free month", es: "Comienza tu mes gratis" },

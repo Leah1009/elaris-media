@@ -9,6 +9,7 @@ import { BUSINESS_TYPES, slugify, randomSlugSuffix } from "@/lib/luxora/business
 export type ActionState = {
   error?: string;
   fieldErrors?: Record<string, string[]>;
+  success?: boolean;
 } | null;
 
 const businessTypeValues = BUSINESS_TYPES.map((t) => t.value) as [string, ...string[]];
