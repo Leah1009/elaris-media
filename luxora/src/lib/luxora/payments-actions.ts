@@ -234,7 +234,7 @@ export async function recordManualPayment(_prevState: ActionState, formData: For
 const RefundSchema = z.object({
   paymentId: z.uuid(),
   amount: z.string().min(1),
-  reason: z.string().optional(),
+  reason: z.string().trim().min(1, "A reason is required for refunds."),
 });
 
 export async function refundManualPayment(_prevState: ActionState, formData: FormData): Promise<ActionState> {

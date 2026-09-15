@@ -12,6 +12,7 @@ export function RefundForm({ paymentId, method, totalCents }: { paymentId: strin
   const [state, formAction, pending] = useActionState<ActionState, FormData>(action, null);
   const [open, setOpen] = useState(false);
   const [amount, setAmount] = useState((totalCents / 100).toFixed(2));
+  const [reason, setReason] = useState("");
 
   if (!open) {
     return (
@@ -22,23 +23,35 @@ export function RefundForm({ paymentId, method, totalCents }: { paymentId: strin
   }
 
   return (
-    <form action={formAction} className="flex items-center gap-2">
+    <form action={formAction} className="flex flex-col gap-1.5">
       <input type="hidden" name="paymentId" value={paymentId} />
-      <input
-        type="number"
-        name="amount"
-        step="0.01"
-        min="0.01"
-        max={(totalCents / 100).toFixed(2)}
-        value={amount}
-        onChange={(e) => setAmount(e.target.value)}
-        className="w-20 rounded-sm border border-border px-1.5 py-0.5 text-xs"
-      />
-      <button type="submit" disabled={pending} className="text-xs font-medium text-danger">
-        {pending ? "…" : "Confirm"}
-      </button>
+      <div className="flex items-center gap-2">
+        <input
+          type="number"
+          name="amount"
+          step="0.01"
+          min="0.01"
+          max={(totalCents / 100).toFixed(2)}
+          value={amount}
+          onChange={(e) => setAmount(e.target.value)}
+          className="w-20 rounded-sm border border-border px-1.5 py-0.5 text-xs"
+        />
+        <input
+          type="text"
+          name="reason"
+          required
+          placeholder="Reason for refund"
+          value={reason}
+          onChange={(e) => setReason(e.target.value)}
+          className="w-40 rounded-sm border border-border px-1.5 py-0.5 text-xs"
+        />
+        <button type="submit" disabled={pending} className="text-xs font-medium text-danger">
+          {pending ? "…" : "Confirm"}
+        </button>
+        <span className="text-xs text-ink/40">of {formatCents(totalCents)}</span>
+      </div>
       {state?.error ? <span className="text-xs text-danger">{state.error}</span> : null}
-      <span className="text-xs text-ink/40">of {formatCents(totalCents)}</span>
+      {state?.fieldErrors?.reason ? <span className="text-xs text-danger">{state.fieldErrors.reason[0]}</span> : null}
     </form>
   );
 }

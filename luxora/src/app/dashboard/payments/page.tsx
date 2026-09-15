@@ -23,6 +23,12 @@ export default async function PaymentsPage() {
     .order("created_at", { ascending: false })
     .limit(100);
 
+  const paymentIds = (payments ?? []).map((p) => p.id);
+  const { data: refundRows } = paymentIds.length
+    ? await supabase.from("refunds").select("payment_id, reason").in("payment_id", paymentIds)
+    : { data: [] };
+  const reasonByPayment = new Map((refundRows ?? []).map((r) => [r.payment_id, r.reason]));
+
   const totalCollected = (payments ?? [])
     .filter((p) => p.status === "succeeded" || p.status === "partially_refunded")
     .reduce((sum, p) => sum + p.total_cents, 0);
@@ -57,7 +63,10 @@ export default async function PaymentsPage() {
                   <td className="px-4 py-3 text-ink">{METHOD_LABELS[p.method] ?? p.method}</td>
                   <td className="px-4 py-3 text-charcoal">{formatCents(p.total_cents)}</td>
                   <td className="px-4 py-3">
-                    <span className={`rounded-full px-2 py-0.5 text-xs ${STATUS_STYLES[p.status] ?? ""}`}>
+                    <span
+                      className={`rounded-full px-2 py-0.5 text-xs ${STATUS_STYLES[p.status] ?? ""}`}
+                      title={reasonByPayment.get(p.id) ? `Refund reason: ${reasonByPayment.get(p.id)}` : undefined}
+                    >
                       {p.status.replace("_", " ")}
                     </span>
                   </td>

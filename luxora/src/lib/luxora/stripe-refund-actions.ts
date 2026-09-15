@@ -11,7 +11,7 @@ import type { ActionState } from "@/lib/luxora/actions";
 const RefundSchema = z.object({
   paymentId: z.uuid(),
   amount: z.string().min(1),
-  reason: z.string().optional(),
+  reason: z.string().trim().min(1, "A reason is required for refunds."),
 });
 
 export async function refundCardPayment(_prevState: ActionState, formData: FormData): Promise<ActionState> {
