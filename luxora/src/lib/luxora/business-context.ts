@@ -15,6 +15,9 @@ export type BusinessContext = {
     timezone: string;
     tax_rate_percent: number;
     preferred_language: "en" | "es";
+    logo_url: string | null;
+    city: string | null;
+    state: string | null;
   };
   access: {
     subscriptionStatus: string;
@@ -55,7 +58,7 @@ export const getBusinessContext = cache(async (): Promise<BusinessContext> => {
 
   const { data: business } = await supabase
     .from("businesses")
-    .select("id, name, slug, business_type, timezone, tax_rate_percent, preferred_language")
+    .select("id, name, slug, business_type, timezone, tax_rate_percent, preferred_language, logo_url, city, state")
     .eq("id", membership.business_id)
     .maybeSingle();
 
@@ -102,6 +105,24 @@ export async function getBusinessIdForCurrentUser(): Promise<string | null> {
 
   return membership?.business_id ?? null;
 }
+
+export type ActiveLocation = { id: string; name: string; city: string | null; state: string | null; is_primary: boolean };
+
+/**
+ * Wrapped in cache() so the dashboard layout (header identity/location
+ * switcher) and the dashboard page (Quick Actions' Block Time modal) share
+ * one query per request instead of two.
+ */
+export const getActiveLocations = cache(async (businessId: string): Promise<ActiveLocation[]> => {
+  const supabase = await createClient();
+  const { data } = await supabase
+    .from("locations")
+    .select("id, name, city, state, is_primary")
+    .eq("business_id", businessId)
+    .eq("active", true)
+    .order("is_primary", { ascending: false });
+  return data ?? [];
+});
 
 export function daysRemaining(trialEndsAt: string | null): number {
   if (!trialEndsAt) return 0;
