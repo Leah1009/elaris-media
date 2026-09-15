@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { Reveal } from "@/components/reveal";
 import { SiteNav } from "@/components/marketing/site-nav";
+import { SiteFooter } from "@/components/marketing/site-footer";
 import { FullDashboardMock } from "@/components/marketing/dashboard-mock";
 import { BookingsVisual, ClientsVisual, MarketingVisual, ManagementVisual } from "@/components/marketing/feature-visual";
 import {
@@ -14,7 +15,7 @@ import { HARDWARE_CATALOG } from "@/lib/luxora/hardware-catalog";
 import { ReviewsPlaceholder } from "@/components/marketing/reviews-placeholder";
 import { Faq } from "@/components/marketing/faq";
 import { getPublicLocale } from "@/lib/luxora/locale";
-import { t, type Locale, type TranslationKey } from "@/lib/luxora/i18n";
+import { t, type TranslationKey } from "@/lib/luxora/i18n";
 import { PHOTO_ASSETS } from "@/lib/luxora/photo-assets";
 
 const HERO_IMAGE = PHOTO_ASSETS.hero;
@@ -95,39 +96,8 @@ const BEAUTY_CATEGORIES: { labelKey: TranslationKey; image: string | null }[] = 
   { labelKey: "cat_makeup_studios", image: PHOTO_ASSETS.makeup },
 ];
 
-function footerGroups(locale: Locale): { title: string; links: { label: string; href?: string }[] }[] {
-  return [
-    {
-      title: t(locale, "footer_product"),
-      links: [
-        { label: t(locale, "nav_features"), href: "#features" },
-        { label: t(locale, "footer_online_booking"), href: "#features" },
-        { label: t(locale, "nav_clients"), href: "#features" },
-        { label: t(locale, "nav_payments"), href: "#payments" },
-        { label: t(locale, "nav_marketing"), href: "#features" },
-        { label: t(locale, "feature_website_title"), href: "#features" },
-      ],
-    },
-    {
-      title: t(locale, "footer_company"),
-      links: [
-        { label: t(locale, "nav_about"), href: "#about" },
-        { label: t(locale, "footer_contact") },
-        { label: t(locale, "footer_support") },
-        { label: t(locale, "footer_help_center") },
-        { label: t(locale, "footer_contact_support") },
-      ],
-    },
-    {
-      title: t(locale, "footer_legal"),
-      links: [{ label: t(locale, "footer_privacy") }, { label: t(locale, "footer_terms") }, { label: t(locale, "footer_cookies") }],
-    },
-  ];
-}
-
 export default async function HomePage() {
   const locale = await getPublicLocale();
-  const FOOTER_GROUPS = footerGroups(locale);
 
   return (
     <main>
@@ -213,7 +183,7 @@ export default async function HomePage() {
       </section>
 
       {/* 04 — SCHEDULING & PAYMENTS */}
-      <section className="mx-auto max-w-3xl px-6 py-24 text-center sm:px-10">
+      <section id="online-booking" className="scroll-mt-20 mx-auto max-w-3xl px-6 py-24 text-center sm:px-10">
         <Reveal>
           <span className="font-display text-xs uppercase tracking-[0.3em] text-gold-deep">{t(locale, "bookings_eyebrow")}</span>
           <h2 className="mt-3 font-display text-3xl text-charcoal sm:text-4xl">{t(locale, "bookings_title")}</h2>
@@ -266,7 +236,7 @@ export default async function HomePage() {
       </section>
 
       {/* 05 — CLIENTS & RELATIONSHIPS */}
-      <section className="px-6 py-24 sm:px-10">
+      <section id="clients" className="scroll-mt-20 px-6 py-24 sm:px-10">
         <div className="mx-auto grid max-w-6xl grid-cols-1 items-center gap-12 lg:grid-cols-2">
           <Reveal className="order-2 lg:order-1">
             <ClientProfileMock />
@@ -280,7 +250,7 @@ export default async function HomePage() {
       </section>
 
       {/* 06 — MARKETING & COMMUNICATION */}
-      <section className="bg-cream-deep/30 px-6 py-24 sm:px-10">
+      <section id="marketing" className="scroll-mt-20 bg-cream-deep/30 px-6 py-24 sm:px-10">
         <div className="mx-auto grid max-w-6xl grid-cols-1 items-center gap-12 lg:grid-cols-2">
           <Reveal className="order-2 lg:order-1">
             <AutomationMock />
@@ -307,7 +277,7 @@ export default async function HomePage() {
         </div>
       </section>
 
-      <section className="bg-cream-deep/30 px-6 py-24 sm:px-10">
+      <section id="website" className="scroll-mt-20 bg-cream-deep/30 px-6 py-24 sm:px-10">
         <div className="mx-auto max-w-6xl">
           <Reveal className="text-center">
             <span className="font-display text-xs uppercase tracking-[0.3em] text-gold-deep">{t(locale, "websites_eyebrow")}</span>
@@ -460,54 +430,7 @@ export default async function HomePage() {
         </Reveal>
       </section>
 
-      {/* 16 — FOOTER */}
-      <footer className="border-t border-border px-6 py-16 sm:px-10">
-        <div className="mx-auto max-w-6xl">
-          <div className="grid grid-cols-2 gap-8 sm:grid-cols-4">
-            <div className="col-span-2 sm:col-span-1">
-              <span className="font-display text-sm uppercase tracking-[0.3em] text-charcoal">Luxore</span>
-              <p className="mt-3 text-xs leading-relaxed text-ink/60">{t(locale, "footer_tagline")}</p>
-            </div>
-            {FOOTER_GROUPS.map((group) => (
-              <div key={group.title}>
-                <p className="text-xs font-medium uppercase tracking-wide text-ink/40">{group.title}</p>
-                <ul className="mt-3 flex flex-col gap-2">
-                  {group.links.map((link) =>
-                    link.href ? (
-                      <li key={link.label}>
-                        <a href={link.href} className="text-sm text-ink/70 transition hover:text-gold-deep">
-                          {link.label}
-                        </a>
-                      </li>
-                    ) : (
-                      <li key={link.label} className="text-sm text-ink/40">
-                        {link.label}
-                      </li>
-                    ),
-                  )}
-                </ul>
-              </div>
-            ))}
-          </div>
-
-          <div className="mt-12 flex flex-col items-center justify-between gap-4 border-t border-border pt-8 sm:flex-row">
-            <p className="text-xs text-ink/50">
-              © {new Date().getFullYear()} Luxore. {t(locale, "footer_rights")}
-            </p>
-            <div className="flex items-center gap-6 text-xs text-ink/40">
-              <div className="flex gap-4">
-                <span>Instagram</span>
-                <span>Facebook</span>
-                <span>TikTok</span>
-              </div>
-              <span className="flex items-center gap-1.5">
-                <span>{t(locale, "footer_language")}:</span>
-                <span className="font-medium text-ink/60">EN / ES</span>
-              </span>
-            </div>
-          </div>
-        </div>
-      </footer>
+      <SiteFooter locale={locale} />
     </main>
   );
 }

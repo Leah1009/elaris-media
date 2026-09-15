@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { getPublicLocale } from "@/lib/luxora/locale";
 import { t, type TranslationKey } from "@/lib/luxora/i18n";
+import { SiteFooter } from "@/components/marketing/site-footer";
 
 const OPTIONS: { titleKey: TranslationKey; descKey: TranslationKey; href: string }[] = [
   { titleKey: "support_option_help_center", descKey: "support_option_help_center_desc", href: "/help" },
@@ -16,25 +17,28 @@ export default async function SupportPage() {
   const locale = await getPublicLocale();
 
   return (
-    <main className="mx-auto max-w-3xl px-6 py-20 sm:px-10">
-      <Link href="/" className="font-display text-sm uppercase tracking-[0.3em] text-gold-deep">
-        Luxore
-      </Link>
-      <h1 className="mt-6 font-display text-4xl text-charcoal">{t(locale, "support_page_title")}</h1>
-      <p className="mt-3 text-sm text-ink sm:text-base">{t(locale, "support_page_subtitle")}</p>
+    <>
+      <main className="mx-auto max-w-3xl px-6 py-20 sm:px-10">
+        <Link href="/" className="font-display text-sm uppercase tracking-[0.3em] text-gold-deep">
+          Luxore
+        </Link>
+        <h1 className="mt-6 font-display text-4xl text-charcoal">{t(locale, "support_page_title")}</h1>
+        <p className="mt-3 text-sm text-ink sm:text-base">{t(locale, "support_page_subtitle")}</p>
 
-      <div className="mt-10 grid grid-cols-1 gap-4 sm:grid-cols-2">
-        {OPTIONS.map((opt) => (
-          <Link
-            key={opt.href + opt.titleKey}
-            href={opt.href}
-            className="rounded-sm border border-border bg-white p-5 transition hover:border-gold-deep"
-          >
-            <p className="font-display text-lg text-charcoal">{t(locale, opt.titleKey)}</p>
-            <p className="mt-1.5 text-sm text-ink/70">{t(locale, opt.descKey)}</p>
-          </Link>
-        ))}
-      </div>
-    </main>
+        <div className="mt-10 grid grid-cols-1 gap-4 sm:grid-cols-2">
+          {OPTIONS.map((opt) => (
+            <Link
+              key={opt.href + opt.titleKey}
+              href={opt.href}
+              className="rounded-sm border border-border bg-white p-5 transition hover:border-gold-deep"
+            >
+              <p className="font-display text-lg text-charcoal">{t(locale, opt.titleKey)}</p>
+              <p className="mt-1.5 text-sm text-ink/70">{t(locale, opt.descKey)}</p>
+            </Link>
+          ))}
+        </div>
+      </main>
+      <SiteFooter locale={locale} />
+    </>
   );
 }
