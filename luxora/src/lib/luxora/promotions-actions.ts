@@ -5,6 +5,7 @@ import { redirect } from "next/navigation";
 import { z } from "zod";
 import { createClient } from "@/lib/supabase/server";
 import { getBusinessContext } from "@/lib/luxora/business-context";
+import { uploadBusinessImage } from "@/lib/luxora/business-media";
 import type { ActionState } from "@/lib/luxora/actions";
 import type { SupabaseClient } from "@supabase/supabase-js";
 import type { Database } from "@/lib/types/database";
@@ -22,7 +23,9 @@ const PromotionSchema = z.object({
 
 export async function createPromotion(_prevState: ActionState, formData: FormData): Promise<ActionState> {
   const ctx = await getBusinessContext();
-  const parsed = PromotionSchema.safeParse(Object.fromEntries(formData.entries()));
+  const rest = Object.fromEntries(formData.entries());
+  delete rest.image;
+  const parsed = PromotionSchema.safeParse(rest);
   if (!parsed.success) {
     return { fieldErrors: z.flattenError(parsed.error).fieldErrors as Record<string, string[]> };
   }
@@ -31,6 +34,14 @@ export async function createPromotion(_prevState: ActionState, formData: FormDat
     return { fieldErrors: { discountValue: ["A percentage discount can't exceed 100."] } };
   }
   const supabase = await createClient();
+
+  const imageFile = formData.get("image");
+  const { url: imageUrl, error: imageError } = await uploadBusinessImage(
+    supabase,
+    ctx.business.id,
+    imageFile instanceof File ? imageFile : null,
+  );
+  if (imageError) return { fieldErrors: { image: [imageError] } };
 
   const { error } = await supabase.from("promotions").insert({
     business_id: ctx.business.id,
@@ -42,6 +53,7 @@ export async function createPromotion(_prevState: ActionState, formData: FormDat
     per_client_limit: data.perClientLimit ? Number(data.perClientLimit) : null,
     valid_from: data.validFrom || null,
     valid_to: data.validTo || null,
+    image_url: imageUrl,
   });
 
   if (error) {

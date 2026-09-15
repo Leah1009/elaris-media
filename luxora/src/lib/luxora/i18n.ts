@@ -823,6 +823,9 @@ const dictionary = {
   // Public business page (/b/[slug])
   book_with: { en: "Book with", es: "Reserva con" },
   book_now: { en: "Book Now", es: "Reservar ahora" },
+  public_promotions_title: { en: "Current Promotions", es: "Promociones actuales" },
+  public_promo_off: { en: "off", es: "de descuento" },
+  public_promo_valid_until: { en: "Valid until", es: "Válido hasta" },
   public_services_title: { en: "Services", es: "Servicios" },
   no_services_published: { en: "No services published yet.", es: "Aún no hay servicios publicados." },
   our_team: { en: "Our Team", es: "Nuestro equipo" },

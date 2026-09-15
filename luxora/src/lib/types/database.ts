@@ -1769,6 +1769,7 @@ export type Database = {
           channel: string
           created_at: string
           id: string
+          image_url: string | null
           name: string
           subject: string | null
           type: string
@@ -1781,6 +1782,7 @@ export type Database = {
           channel: string
           created_at?: string
           id?: string
+          image_url?: string | null
           name: string
           subject?: string | null
           type: string
@@ -1793,6 +1795,7 @@ export type Database = {
           channel?: string
           created_at?: string
           id?: string
+          image_url?: string | null
           name?: string
           subject?: string | null
           type?: string
@@ -2269,6 +2272,7 @@ export type Database = {
           discount_type: string
           discount_value: number
           id: string
+          image_url: string | null
           max_uses: number | null
           per_client_limit: number | null
           updated_at: string
@@ -2285,6 +2289,7 @@ export type Database = {
           discount_type: string
           discount_value: number
           id?: string
+          image_url?: string | null
           max_uses?: number | null
           per_client_limit?: number | null
           updated_at?: string
@@ -2301,6 +2306,7 @@ export type Database = {
           discount_type?: string
           discount_value?: number
           id?: string
+          image_url?: string | null
           max_uses?: number | null
           per_client_limit?: number | null
           updated_at?: string

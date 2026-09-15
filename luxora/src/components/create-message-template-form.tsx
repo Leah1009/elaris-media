@@ -7,6 +7,7 @@ import type { ActionState } from "@/lib/luxora/actions";
 export function CreateMessageTemplateForm() {
   const [state, formAction, pending] = useActionState<ActionState, FormData>(createMessageTemplate, null);
   const [channel, setChannel] = useState<"sms" | "email" | "whatsapp">("sms");
+  const [type, setType] = useState("appointment_reminder");
 
   return (
     <form action={formAction} className="flex flex-col gap-4 rounded-sm border border-border bg-white p-6">
@@ -22,7 +23,13 @@ export function CreateMessageTemplateForm() {
           <label htmlFor="type" className="text-sm font-medium text-charcoal">
             Type
           </label>
-          <select id="type" name="type" defaultValue="appointment_reminder" className="rounded-sm border border-border px-3 py-2 text-sm text-charcoal">
+          <select
+            id="type"
+            name="type"
+            value={type}
+            onChange={(e) => setType(e.target.value)}
+            className="rounded-sm border border-border px-3 py-2 text-sm text-charcoal"
+          >
             <option value="appointment_reminder">Appointment reminder</option>
             <option value="appointment_confirmation">Appointment confirmation</option>
             <option value="review_request">Review request</option>
@@ -54,6 +61,23 @@ export function CreateMessageTemplateForm() {
             Subject
           </label>
           <input id="subject" name="subject" className="rounded-sm border border-border px-3 py-2 text-sm text-charcoal" />
+        </div>
+      ) : null}
+
+      {type === "marketing" ? (
+        <div className="flex flex-col gap-1.5">
+          <label htmlFor="image" className="text-sm font-medium text-charcoal">
+            Image (optional)
+          </label>
+          <input
+            id="image"
+            name="image"
+            type="file"
+            accept="image/png,image/jpeg,image/webp,image/gif"
+            className="text-sm text-ink file:mr-3 file:rounded-sm file:border file:border-border file:bg-cream-deep file:px-3 file:py-1.5 file:text-xs file:font-medium file:text-charcoal"
+          />
+          <p className="text-xs text-ink/50">Attached when sent via MMS or WhatsApp. PNG, JPEG, WEBP, or GIF, up to 5MB.</p>
+          {state?.fieldErrors?.image ? <p className="text-sm text-danger">{state.fieldErrors.image[0]}</p> : null}
         </div>
       ) : null}
 

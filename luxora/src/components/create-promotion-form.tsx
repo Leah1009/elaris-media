@@ -101,6 +101,21 @@ export function CreatePromotionForm() {
         </div>
       </div>
 
+      <div className="flex flex-col gap-1.5">
+        <label htmlFor="image" className="text-sm font-medium text-charcoal">
+          Promo image (optional)
+        </label>
+        <input
+          id="image"
+          name="image"
+          type="file"
+          accept="image/png,image/jpeg,image/webp,image/gif"
+          className="text-sm text-ink file:mr-3 file:rounded-sm file:border file:border-border file:bg-cream-deep file:px-3 file:py-1.5 file:text-xs file:font-medium file:text-charcoal"
+        />
+        <p className="text-xs text-ink/50">Shown on your public booking page and in marketing messages. PNG, JPEG, WEBP, or GIF, up to 5MB.</p>
+        {state?.fieldErrors?.image ? <p className="text-sm text-danger">{state.fieldErrors.image[0]}</p> : null}
+      </div>
+
       {state?.error ? <p className="text-sm text-danger">{state.error}</p> : null}
 
       <button

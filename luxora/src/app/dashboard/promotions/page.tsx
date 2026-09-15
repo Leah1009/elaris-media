@@ -9,7 +9,7 @@ export default async function PromotionsPage() {
 
   const { data: promotions } = await supabase
     .from("promotions")
-    .select("id, code, description, discount_type, discount_value, max_uses, uses_count, per_client_limit, active, valid_from, valid_to")
+    .select("id, code, description, discount_type, discount_value, max_uses, uses_count, per_client_limit, active, valid_from, valid_to, image_url")
     .eq("business_id", ctx.business.id)
     .order("created_at", { ascending: false });
 

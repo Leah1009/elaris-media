@@ -25,7 +25,7 @@ export default async function PublicBusinessPage({ params }: { params: Promise<{
   const locale = await getBusinessPublicLocale(business.public_language_mode);
   const supabase = await createClient();
 
-  const [{ data: services }, { data: staff }, { data: location }] = await Promise.all([
+  const [{ data: services }, { data: staff }, { data: location }, { data: promotions }] = await Promise.all([
     supabase
       .from("services")
       .select("id, name, category, description, duration_minutes, price_cents")
@@ -34,6 +34,11 @@ export default async function PublicBusinessPage({ params }: { params: Promise<{
       .order("name"),
     supabase.from("staff").select("id, full_name, title").eq("business_id", business.id).eq("active", true).order("full_name"),
     supabase.from("locations").select("id").eq("business_id", business.id).eq("is_primary", true).maybeSingle(),
+    supabase
+      .from("promotions")
+      .select("id, code, description, discount_type, discount_value, valid_to, image_url")
+      .eq("business_id", business.id)
+      .order("created_at", { ascending: false }),
   ]);
 
   const { data: hours } = location
@@ -107,6 +112,34 @@ export default async function PublicBusinessPage({ params }: { params: Promise<{
         >
           {t(locale, "book_now")}
         </Link>
+
+      {promotions && promotions.length > 0 ? (
+        <section className="mt-12">
+          <h2 className="font-display text-xl text-charcoal">{t(locale, "public_promotions_title")}</h2>
+          <div className="mt-4 grid grid-cols-1 gap-3 sm:grid-cols-2">
+            {promotions.map((promo) => (
+              <div key={promo.id} className="overflow-hidden rounded-sm border border-border bg-white">
+                {promo.image_url ? (
+                  // eslint-disable-next-line @next/next/no-img-element
+                  <img src={promo.image_url} alt="" className="h-32 w-full object-cover" />
+                ) : null}
+                <div className="p-4">
+                  <p className="font-mono text-sm font-medium text-gold-deep">{promo.code}</p>
+                  <p className="mt-1 text-charcoal">
+                    {promo.discount_type === "percent" ? `${promo.discount_value}% ${t(locale, "public_promo_off")}` : `$${promo.discount_value} ${t(locale, "public_promo_off")}`}
+                  </p>
+                  {promo.description ? <p className="mt-1 text-sm text-ink">{promo.description}</p> : null}
+                  {promo.valid_to ? (
+                    <p className="mt-2 text-xs text-ink/50">
+                      {t(locale, "public_promo_valid_until")} {new Date(promo.valid_to).toLocaleDateString()}
+                    </p>
+                  ) : null}
+                </div>
+              </div>
+            ))}
+          </div>
+        </section>
+      ) : null}
 
       <section className="mt-12">
         <h2 className="font-display text-xl text-charcoal">{t(locale, "public_services_title")}</h2>
