@@ -154,7 +154,7 @@ export function WebsiteBuilder({
         <div className="mt-4 flex justify-center overflow-hidden rounded-sm border border-border bg-cream-deep p-4">
           <div style={{ width: dims.width * scale, height: dims.height * scale, overflow: "hidden" }} className="rounded-sm border border-border bg-white shadow-sm">
             <iframe
-              src={`/dashboard/settings/website/preview?template=${previewTemplate}`}
+              src={`/website-preview?template=${previewTemplate}`}
               style={{
                 width: dims.width,
                 height: dims.height,

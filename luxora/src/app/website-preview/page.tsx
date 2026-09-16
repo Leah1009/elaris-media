@@ -6,10 +6,12 @@ import { getWebsiteTemplate } from "@/components/website-templates/registry";
 import type { WebsiteTemplate } from "@/lib/luxora/website-image-slots-actions";
 
 /**
- * Authenticated, dashboard-only render of a template — this is where owners
- * review structure and upload placeholder images. It intentionally never
- * runs through /b/[slug]: that route is what real visitors see, and must
- * never expose devMode's labeled placeholders.
+ * Authenticated bare render of a template, deliberately kept OUTSIDE the
+ * /dashboard route tree so the iframe preview shows only the template
+ * itself — never wrapped in dashboard nav/trial banner, since that isn't
+ * what real visitors see. It intentionally never runs through /b/[slug]
+ * either: that route is what clients actually see, and must never expose
+ * devMode's labeled placeholders.
  */
 export default async function WebsitePreviewPage({
   searchParams,
