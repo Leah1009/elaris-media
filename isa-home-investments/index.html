@@ -1,0 +1,1579 @@
+<!DOCTYPE html>
+<html lang="en" id="htmlRoot">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Isa Home Investments | Construction &amp; Home Remodeling</title>
+<meta name="description" content="Professional construction, remodeling and home improvement services. Transform your home with Isa Home Investments.">
+<meta name="keywords" content="home remodeling, construction company, kitchen remodeling, bathroom remodeling, home renovations, South Florida construction, Isa Home Investments">
+<meta name="robots" content="index, follow">
+<!-- Update canonical/OG urls once the live domain is confirmed -->
+<link rel="canonical" href="https://www.isahomeus.com/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Isa Home Investments">
+<meta property="og:title" content="Isa Home Investments | Construction & Home Remodeling">
+<meta property="og:description" content="Professional construction, remodeling and home improvement services. Transform your home with Isa Home Investments.">
+<meta property="og:url" content="https://www.isahomeus.com/">
+<meta name="theme-color" content="#12161C">
+
+<!--
+  LOGO PLACEHOLDER
+  =================
+  There is no logo file yet. Once "Isa Home Investments" sends their logo:
+  1) Save it (svg or png, transparent background) as /isa-home-investments/logo.png
+  2) Replace every ".logo-word" block below with: <img src="logo.png" alt="Isa Home Investments" class="logo-img">
+  Two spots use it: the header (#siteHeader .logo) and the footer (.footer-brand .logo).
+  Once the real logo colors are known, the palette in :root can be adjusted to match.
+-->
+
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='10' fill='%2312161C'/%3E%3Cpath d='M32 14 14 28v22h12V36h12v14h12V28Z' fill='%23BE6A37'/%3E%3C/svg%3E">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;800;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+/* ============================================================
+   ISA HOME INVESTMENTS — root design tokens
+   ============================================================ */
+:root{
+  --ink:#12161C;          /* primary dark - charcoal navy */
+  --ink-2:#1B212B;        /* secondary dark panel */
+  --ink-soft:#2A323E;
+  --paper:#F6F3EC;        /* warm sand background */
+  --paper-2:#EFEAE0;      /* deeper sand for alt sections */
+  --white:#FFFFFF;
+  --copper:#BE6A37;       /* signature accent */
+  --copper-light:#D98B54;
+  --copper-deep:#9C5327;
+  --steel:#4A5568;        /* cool secondary text */
+  --text:#1C2127;
+  --text-soft:#5B6472;
+  --text-on-dark:#EDEAE3;
+  --text-on-dark-soft:#A7ADB8;
+  --line:rgba(18,22,28,0.12);
+  --line-dark:rgba(237,234,227,0.14);
+  --shadow:0 20px 50px -20px rgba(18,22,28,0.35);
+  --radius:6px;
+  --maxw:1280px;
+}
+*{box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+html,body{margin:0;padding:0;}
+body{
+  font-family:'Inter',sans-serif;
+  color:var(--text);
+  background:var(--paper);
+  -webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+}
+img{max-width:100%;display:block;}
+a{color:inherit;text-decoration:none;}
+ul{list-style:none;margin:0;padding:0;}
+button{font-family:inherit;cursor:pointer;border:none;background:none;color:inherit;}
+h1,h2,h3,h4{font-family:'Archivo',sans-serif;margin:0;line-height:1.08;color:var(--ink);letter-spacing:-0.01em;}
+p{margin:0;}
+.container{max-width:var(--maxw);margin:0 auto;padding:0 32px;}
+section{position:relative;}
+.eyebrow{
+  font-family:'Archivo',sans-serif;font-size:12px;font-weight:700;letter-spacing:0.24em;
+  text-transform:uppercase;color:var(--copper);display:inline-flex;align-items:center;gap:10px;margin-bottom:16px;
+}
+.eyebrow::before{content:'';width:26px;height:2px;background:var(--copper);display:inline-block;}
+.section-head{max-width:680px;margin-bottom:52px;}
+.section-head.center{margin-left:auto;margin-right:auto;text-align:center;}
+.section-head h2{font-size:clamp(28px,4vw,44px);font-weight:800;}
+.section-head p{margin-top:16px;font-size:16px;line-height:1.7;color:var(--text-soft);}
+.section-pad{padding:110px 0;}
+@media (max-width:768px){.section-pad{padding:72px 0;}}
+
+/* ---- Buttons ---- */
+.btn{
+  display:inline-flex;align-items:center;gap:10px;padding:16px 30px;
+  font-family:'Archivo',sans-serif;font-size:12.5px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;
+  border-radius:2px;transition:transform .28s cubic-bezier(.2,.8,.2,1), box-shadow .28s ease, background .28s ease, color .28s ease, border-color .28s ease;
+  white-space:nowrap;
+}
+.btn svg{width:15px;height:15px;transition:transform .28s ease;}
+.btn:hover svg{transform:translateX(3px);}
+.btn-primary{background:var(--copper);color:var(--white);box-shadow:0 14px 30px -12px rgba(190,106,55,0.55);}
+.btn-primary:hover{background:var(--copper-deep);transform:translateY(-2px);box-shadow:0 18px 36px -12px rgba(190,106,55,0.65);}
+.btn-dark{background:var(--ink);color:var(--white);}
+.btn-dark:hover{background:var(--ink-soft);transform:translateY(-2px);}
+.btn-outline{background:transparent;border:1.5px solid rgba(255,255,255,0.55);color:var(--white);}
+.btn-outline:hover{background:rgba(255,255,255,0.12);border-color:var(--white);transform:translateY(-2px);}
+.btn-outline-dark{background:transparent;border:1.5px solid var(--ink);color:var(--ink);}
+.btn-outline-dark:hover{background:var(--ink);color:var(--white);transform:translateY(-2px);}
+.btn-block{width:100%;justify-content:center;}
+.btn[disabled]{opacity:0.55;cursor:not-allowed;transform:none !important;}
+
+/* ---- Reveal animation ---- */
+.reveal{opacity:0;transform:translateY(26px);transition:opacity .8s cubic-bezier(.2,.7,.2,1), transform .8s cubic-bezier(.2,.7,.2,1);}
+.reveal.in{opacity:1;transform:translateY(0);}
+.reveal-delay-1{transition-delay:.1s;}
+.reveal-delay-2{transition-delay:.2s;}
+.reveal-delay-3{transition-delay:.3s;}
+.reveal-delay-4{transition-delay:.4s;}
+@media (prefers-reduced-motion: reduce){
+  .reveal{opacity:1 !important;transform:none !important;transition:none !important;}
+  html{scroll-behavior:auto;}
+}
+
+/* ---- Media placeholders (swap for real photos later) ---- */
+.media-ph{
+  position:relative;overflow:hidden;background:
+    linear-gradient(135deg,var(--ink) 0%,#232A34 55%,var(--ink-soft) 100%);
+  color:var(--text-on-dark);
+}
+.media-ph::before{
+  content:'';position:absolute;inset:0;opacity:0.5;
+  background-image:
+    linear-gradient(rgba(255,255,255,0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.05) 1px, transparent 1px);
+  background-size:28px 28px;
+}
+.media-ph::after{
+  content:'';position:absolute;inset:0;
+  background:radial-gradient(circle at 30% 20%, rgba(190,106,55,0.30), transparent 55%);
+}
+.media-ph .ph-icon{
+  position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
+  width:34%;max-width:76px;opacity:0.85;z-index:1;color:var(--copper-light);
+}
+.media-ph .ph-icon svg{width:100%;height:100%;}
+.media-ph .ph-tag{
+  position:absolute;left:14px;bottom:14px;z-index:2;
+  font-family:'Archivo',sans-serif;font-size:9.5px;letter-spacing:0.14em;text-transform:uppercase;
+  color:var(--text-on-dark-soft);background:rgba(18,22,28,0.55);border:1px solid var(--line-dark);
+  padding:5px 10px;border-radius:20px;backdrop-filter:blur(4px);
+}
+.media-ph.tone-2{background:linear-gradient(135deg,#1B212B 0%,#2A323E 55%,#12161C 100%);}
+.media-ph.tone-3::after{background:radial-gradient(circle at 75% 75%, rgba(190,106,55,0.28), transparent 55%);}
+
+/* ============================================================
+   HEADER / NAV
+   ============================================================ */
+#siteHeader{
+  position:fixed;top:0;left:0;right:0;z-index:200;
+  padding:22px 0;transition:padding .3s ease, background .3s ease, box-shadow .3s ease;
+}
+#siteHeader .container{display:flex;align-items:center;justify-content:space-between;gap:24px;}
+#siteHeader.scrolled{padding:13px 0;background:rgba(246,243,236,0.92);backdrop-filter:blur(10px);box-shadow:0 8px 30px -20px rgba(18,22,28,0.4);border-bottom:1px solid var(--line);}
+.logo-word{font-family:'Archivo',sans-serif;font-weight:800;font-size:19px;letter-spacing:0.01em;color:var(--white);white-space:nowrap;transition:color .3s ease;}
+.logo-word b{color:var(--copper-light);font-weight:900;}
+.logo-word span{display:block;font-family:'Archivo',sans-serif;font-weight:600;font-size:9px;letter-spacing:0.26em;text-transform:uppercase;color:rgba(255,255,255,0.65);margin-top:2px;}
+#siteHeader.scrolled .logo-word{color:var(--ink);}
+#siteHeader.scrolled .logo-word b{color:var(--copper);}
+#siteHeader.scrolled .logo-word span{color:var(--text-soft);}
+nav.primary-nav ul{display:flex;align-items:center;gap:34px;}
+nav.primary-nav ul li a{
+  font-family:'Archivo',sans-serif;font-size:12px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;
+  color:rgba(255,255,255,0.9);position:relative;padding-bottom:5px;transition:color .3s ease;
+}
+#siteHeader.scrolled nav.primary-nav ul li a{color:var(--text);}
+nav.primary-nav ul li a::after{content:'';position:absolute;left:0;bottom:0;width:0;height:2px;background:var(--copper);transition:width .3s ease;}
+nav.primary-nav ul li a:hover::after,nav.primary-nav ul li a.active::after{width:100%;}
+.header-actions{display:flex;align-items:center;gap:18px;}
+.hamburger{display:none;flex-direction:column;justify-content:center;gap:5px;width:28px;height:22px;z-index:210;}
+.hamburger span{display:block;width:100%;height:2px;background:var(--white);transition:transform .3s ease, opacity .3s ease, background .3s ease;}
+#siteHeader.scrolled .hamburger span{background:var(--ink);}
+.hamburger.active span{background:var(--ink) !important;}
+.hamburger.active span:nth-child(1){transform:translateY(7px) rotate(45deg);}
+.hamburger.active span:nth-child(2){opacity:0;}
+.hamburger.active span:nth-child(3){transform:translateY(-7px) rotate(-45deg);}
+
+.mobile-menu{
+  position:fixed;inset:0;top:0;background:var(--ink);z-index:199;
+  display:flex;flex-direction:column;justify-content:center;padding:32px;
+  opacity:0;pointer-events:none;transform:translateY(-14px);transition:opacity .35s ease, transform .35s ease;
+}
+.mobile-menu.open{opacity:1;pointer-events:auto;transform:translateY(0);}
+.mobile-menu ul{display:flex;flex-direction:column;gap:6px;}
+.mobile-menu ul li a{
+  display:block;padding:16px 4px;font-family:'Archivo',sans-serif;font-size:26px;font-weight:700;color:var(--white);
+  border-bottom:1px solid var(--line-dark);
+}
+.mobile-menu .btn{margin-top:26px;}
+.mobile-menu-foot{margin-top:34px;font-size:13px;color:var(--text-on-dark-soft);}
+.mobile-menu-foot a{color:var(--copper-light);}
+
+@media (max-width:960px){
+  nav.primary-nav{display:none;}
+  .header-actions .btn-primary{display:none;}
+  .hamburger{display:flex;}
+}
+
+/* ============================================================
+   HERO
+   ============================================================ */
+.hero{
+  min-height:100vh;display:flex;align-items:center;position:relative;
+  background:linear-gradient(180deg,rgba(18,22,28,0.55),rgba(18,22,28,0.82) 60%,var(--ink) 100%),
+    linear-gradient(135deg,#1B212B 0%,#12161C 60%,#232A34 100%);
+  color:var(--white);overflow:hidden;padding:150px 0 90px;
+}
+.hero::before{
+  content:'';position:absolute;inset:0;opacity:0.55;
+  background-image:linear-gradient(rgba(255,255,255,0.045) 1px, transparent 1px),linear-gradient(90deg, rgba(255,255,255,0.045) 1px, transparent 1px);
+  background-size:46px 46px;mask-image:linear-gradient(180deg, rgba(0,0,0,0.9), transparent 78%);
+}
+.hero::after{content:'';position:absolute;right:-8%;top:12%;width:56%;height:80%;
+  background:radial-gradient(ellipse at center, rgba(190,106,55,0.22), transparent 60%);pointer-events:none;}
+.hero .container{position:relative;z-index:2;display:grid;grid-template-columns:1.15fr 0.85fr;gap:60px;align-items:end;}
+.hero-copy{max-width:640px;}
+html.js .hero-copy>*{opacity:0;transform:translateY(18px);animation:heroIn .8s cubic-bezier(.2,.7,.2,1) forwards;}
+html.js .hero-copy>*:nth-child(1){animation-delay:.05s;}
+html.js .hero-copy>*:nth-child(2){animation-delay:.18s;}
+html.js .hero-copy>*:nth-child(3){animation-delay:.30s;}
+html.js .hero-copy>*:nth-child(4){animation-delay:.42s;}
+@keyframes heroIn{to{opacity:1;transform:translateY(0);}}
+.hero-eyebrow{
+  display:inline-flex;align-items:center;gap:10px;font-family:'Archivo',sans-serif;font-size:12px;font-weight:700;
+  letter-spacing:0.22em;text-transform:uppercase;color:var(--copper-light);margin-bottom:26px;
+}
+.hero-eyebrow::before{content:'';width:26px;height:2px;background:var(--copper-light);}
+.hero h1{font-size:clamp(38px,5.6vw,74px);font-weight:900;color:var(--white);letter-spacing:-0.015em;}
+.hero h1 em{font-style:normal;color:var(--copper-light);}
+.hero-sub{margin-top:26px;font-size:17px;line-height:1.75;color:var(--text-on-dark-soft);max-width:520px;}
+.hero-btns{margin-top:38px;display:flex;flex-wrap:wrap;gap:16px;}
+.hero-pills{margin-top:52px;display:flex;flex-wrap:wrap;gap:12px 28px;}
+.hero-pills span{
+  display:inline-flex;align-items:center;gap:9px;font-family:'Archivo',sans-serif;font-size:11.5px;font-weight:600;
+  letter-spacing:0.06em;text-transform:uppercase;color:var(--text-on-dark-soft);
+}
+.hero-pills span::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--copper);flex-shrink:0;}
+.hero-panel{position:relative;}
+.hero-panel .media-ph{border-radius:8px;aspect-ratio:4/5;box-shadow:0 40px 80px -30px rgba(0,0,0,0.6);border:1px solid rgba(255,255,255,0.08);}
+.hero-panel .float-card{
+  position:absolute;left:-34px;bottom:34px;background:var(--white);color:var(--ink);border-radius:6px;
+  padding:20px 24px;box-shadow:var(--shadow);display:flex;align-items:center;gap:14px;max-width:250px;
+}
+.hero-panel .float-card .fc-icon{width:38px;height:38px;flex-shrink:0;border-radius:50%;background:var(--paper-2);display:flex;align-items:center;justify-content:center;color:var(--copper);}
+.hero-panel .float-card .fc-icon svg{width:18px;height:18px;}
+.hero-panel .float-card b{display:block;font-family:'Archivo',sans-serif;font-size:13px;font-weight:800;}
+.hero-panel .float-card small{font-size:11.5px;color:var(--text-soft);}
+.scroll-cue{
+  position:absolute;bottom:26px;left:50%;transform:translateX(-50%);z-index:2;
+  display:flex;flex-direction:column;align-items:center;gap:8px;
+  font-family:'Archivo',sans-serif;font-size:10px;letter-spacing:0.22em;text-transform:uppercase;color:var(--text-on-dark-soft);
+}
+.scroll-cue .line{width:1px;height:34px;background:linear-gradient(var(--copper-light),transparent);animation:bob 2s ease-in-out infinite;}
+@keyframes bob{0%,100%{transform:translateY(0);opacity:.6;}50%{transform:translateY(8px);opacity:1;}}
+
+@media (max-width:1080px){
+  .hero .container{grid-template-columns:1fr;}
+  .hero-panel{display:none;}
+}
+@media (max-width:600px){
+  .hero{padding:130px 0 80px;}
+  .hero-btns .btn{flex:1 1 auto;justify-content:center;}
+}
+
+/* ============================================================
+   INTRO
+   ============================================================ */
+.intro{background:var(--paper);}
+.intro .container{display:grid;grid-template-columns:0.9fr 1.1fr;gap:70px;align-items:center;}
+.intro-visual{position:relative;}
+.intro-visual .media-ph{border-radius:8px;aspect-ratio:1/1.05;}
+.intro-visual .badge-card{
+  position:absolute;right:-28px;bottom:-28px;background:var(--ink);color:var(--white);border-radius:6px;
+  padding:24px 26px;max-width:230px;box-shadow:var(--shadow);
+}
+.intro-visual .badge-card b{font-family:'Archivo',sans-serif;font-size:15px;font-weight:800;display:block;margin-bottom:6px;color:var(--copper-light);}
+.intro-visual .badge-card span{font-size:12.5px;color:var(--text-on-dark-soft);line-height:1.5;}
+.intro-copy h2{font-size:clamp(28px,4vw,42px);font-weight:800;margin-bottom:22px;}
+.intro-copy p{font-size:16.5px;line-height:1.8;color:var(--text-soft);margin-bottom:30px;}
+.intro-badges{display:flex;flex-wrap:wrap;gap:14px;margin-bottom:34px;}
+.intro-badges span{
+  font-family:'Archivo',sans-serif;font-size:11.5px;font-weight:700;letter-spacing:0.05em;text-transform:uppercase;
+  border:1px solid var(--line);padding:9px 16px;border-radius:30px;color:var(--steel);
+}
+@media (max-width:900px){
+  .intro .container{grid-template-columns:1fr;gap:50px;}
+  .intro-visual .badge-card{position:static;margin-top:-40px;margin-left:auto;width:fit-content;}
+}
+
+/* ============================================================
+   SERVICES — editorial grid
+   ============================================================ */
+.services{background:var(--paper-2);}
+.services-grid{
+  display:grid;grid-template-columns:repeat(4,1fr);grid-auto-rows:230px;gap:18px;
+}
+.svc-card{
+  position:relative;grid-column:span 1;grid-row:span 1;border-radius:8px;overflow:hidden;
+  transition:transform .45s cubic-bezier(.2,.8,.2,1);
+}
+.svc-card.big{grid-column:span 2;grid-row:span 2;}
+.svc-card.wide{grid-column:span 2;}
+.svc-card .media-ph{position:absolute;inset:0;border-radius:8px;}
+.svc-card .media-ph .ph-icon{transition:transform .5s cubic-bezier(.2,.8,.2,1);}
+.svc-card:hover .media-ph .ph-icon{transform:translate(-50%,-58%) scale(1.08);}
+.svc-card .svc-overlay{
+  position:absolute;inset:0;z-index:2;display:flex;flex-direction:column;justify-content:flex-end;
+  padding:22px 24px;background:linear-gradient(0deg, rgba(18,22,28,0.92) 0%, rgba(18,22,28,0.35) 55%, transparent 85%);
+}
+.svc-card h3{color:var(--white);font-size:19px;font-weight:800;margin-bottom:6px;transition:transform .35s ease;}
+.svc-card.big h3{font-size:25px;}
+.svc-card p{color:var(--text-on-dark-soft);font-size:13.5px;line-height:1.55;max-height:0;opacity:0;overflow:hidden;transition:max-height .4s ease, opacity .35s ease, margin-top .4s ease;}
+.svc-card:hover p{max-height:80px;opacity:1;margin-top:8px;}
+.svc-card:hover h3{transform:translateY(-2px);}
+.svc-more{
+  display:inline-flex;align-items:center;gap:7px;margin-top:14px;color:var(--copper-light);
+  font-family:'Archivo',sans-serif;font-size:11px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;
+}
+.svc-more svg{width:13px;height:13px;transition:transform .3s ease;}
+.svc-card:hover .svc-more svg{transform:translateX(4px);}
+.svc-card:hover{transform:translateY(-4px);}
+
+@media (max-width:960px){
+  .services-grid{grid-template-columns:repeat(2,1fr);grid-auto-rows:220px;}
+  .svc-card.big{grid-column:span 2;grid-row:span 1;}
+}
+@media (max-width:560px){
+  .services-grid{grid-template-columns:1fr;grid-auto-rows:210px;}
+  .svc-card.big,.svc-card.wide{grid-column:span 1;}
+}
+
+/* ============================================================
+   WHY CHOOSE US
+   ============================================================ */
+.why{background:var(--ink);color:var(--white);}
+.why .section-head h2,.why .section-head p{color:var(--white);}
+.why .section-head p{color:var(--text-on-dark-soft);}
+.why .eyebrow{color:var(--copper-light);}
+.why-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line-dark);border:1px solid var(--line-dark);border-radius:8px;overflow:hidden;}
+.why-item{background:var(--ink);padding:38px 34px;transition:background .3s ease;}
+.why-item:hover{background:var(--ink-2);}
+.why-item .wi-icon{width:44px;height:44px;border-radius:50%;background:rgba(190,106,55,0.15);color:var(--copper-light);display:flex;align-items:center;justify-content:center;margin-bottom:20px;}
+.why-item .wi-icon svg{width:21px;height:21px;}
+.why-item h3{color:var(--white);font-size:17px;font-weight:700;margin-bottom:9px;}
+.why-item p{color:var(--text-on-dark-soft);font-size:14px;line-height:1.6;}
+@media (max-width:900px){.why-grid{grid-template-columns:repeat(2,1fr);}}
+@media (max-width:600px){.why-grid{grid-template-columns:1fr;}}
+
+/* ============================================================
+   PROJECTS
+   ============================================================ */
+.projects{background:var(--paper);}
+.filter-bar{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:40px;}
+.filter-btn{
+  padding:10px 20px;border:1px solid var(--line);border-radius:30px;font-family:'Archivo',sans-serif;font-size:12px;
+  font-weight:700;letter-spacing:0.05em;text-transform:uppercase;color:var(--steel);transition:all .25s ease;
+}
+.filter-btn:hover{border-color:var(--copper);color:var(--copper);}
+.filter-btn.active{background:var(--ink);border-color:var(--ink);color:var(--white);}
+.projects-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;}
+.proj-card{position:relative;border-radius:8px;overflow:hidden;cursor:pointer;aspect-ratio:4/3.1;transition:opacity .35s ease, transform .35s ease;}
+.proj-card.hide{display:none;}
+.proj-card .media-ph{position:absolute;inset:0;}
+.proj-card .media-ph .ph-icon{transition:transform .5s ease;}
+.proj-card:hover .media-ph .ph-icon{transform:translate(-50%,-50%) scale(1.12);}
+.proj-overlay{
+  position:absolute;inset:0;z-index:2;display:flex;flex-direction:column;justify-content:flex-end;padding:20px;
+  background:linear-gradient(0deg, rgba(18,22,28,0.88), transparent 65%);
+}
+.proj-overlay .p-cat{font-family:'Archivo',sans-serif;font-size:10px;letter-spacing:0.14em;text-transform:uppercase;color:var(--copper-light);margin-bottom:5px;}
+.proj-overlay h4{color:var(--white);font-size:16.5px;font-weight:700;}
+.proj-expand{
+  position:absolute;top:14px;right:14px;z-index:3;width:34px;height:34px;border-radius:50%;
+  background:rgba(18,22,28,0.55);border:1px solid var(--line-dark);color:var(--white);display:flex;align-items:center;
+  justify-content:center;opacity:0;transform:scale(0.8);transition:all .3s ease;backdrop-filter:blur(4px);
+}
+.proj-expand svg{width:15px;height:15px;}
+.proj-card:hover .proj-expand{opacity:1;transform:scale(1);}
+.proj-card:hover{transform:translateY(-4px);}
+
+@media (max-width:900px){.projects-grid{grid-template-columns:repeat(2,1fr);}}
+@media (max-width:560px){.projects-grid{grid-template-columns:1fr;}}
+
+/* Before/After */
+.ba-heading{margin:64px 0 30px;display:flex;align-items:baseline;justify-content:space-between;flex-wrap:wrap;gap:12px;}
+.ba-heading h3{font-size:22px;font-weight:800;}
+.ba-heading span{color:var(--text-soft);font-size:14px;}
+.ba-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;}
+.ba-card{border-radius:8px;overflow:hidden;box-shadow:0 20px 40px -26px rgba(18,22,28,0.4);}
+.ba-slider{position:relative;aspect-ratio:4/3;overflow:hidden;user-select:none;}
+.ba-slider .ba-media{position:absolute;inset:0;}
+.ba-slider .ba-after{clip-path:inset(0 50% 0 0);}
+.ba-slider .ba-label{position:absolute;top:12px;z-index:3;font-family:'Archivo',sans-serif;font-size:10px;font-weight:800;letter-spacing:0.1em;text-transform:uppercase;background:rgba(18,22,28,0.65);color:var(--white);padding:5px 11px;border-radius:20px;}
+.ba-slider .ba-label.before{left:12px;}
+.ba-slider .ba-label.after{right:12px;}
+.ba-slider input[type=range]{
+  position:absolute;inset:0;width:100%;height:100%;margin:0;opacity:0;cursor:ew-resize;z-index:5;
+  -webkit-appearance:none;appearance:none;
+}
+.ba-handle{
+  position:absolute;top:0;bottom:0;left:50%;width:0;z-index:4;pointer-events:none;
+  border-left:2px solid var(--white);transform:translateX(-1px);
+}
+.ba-handle::after{
+  content:'';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:38px;height:38px;
+  border-radius:50%;background:var(--white);box-shadow:0 6px 16px -4px rgba(0,0,0,0.4);
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2312161C' stroke-width='2'%3E%3Cpath d='M8 7 4 12l4 5M16 7l4 5-4 5'/%3E%3C/svg%3E");
+  background-repeat:no-repeat;background-position:center;
+}
+.ba-caption{padding:16px 18px;background:var(--white);}
+.ba-caption h4{font-size:15px;font-weight:700;margin-bottom:3px;}
+.ba-caption span{font-size:12.5px;color:var(--text-soft);}
+@media (max-width:900px){.ba-grid{grid-template-columns:1fr;}}
+
+/* Lightbox */
+.lightbox{position:fixed;inset:0;z-index:500;background:rgba(18,22,28,0.94);display:flex;align-items:center;justify-content:center;padding:30px;opacity:0;pointer-events:none;transition:opacity .3s ease;}
+.lightbox.open{opacity:1;pointer-events:auto;}
+.lightbox-inner{max-width:820px;width:100%;}
+.lightbox-inner .media-ph{aspect-ratio:16/10;border-radius:8px;}
+.lightbox-caption{margin-top:18px;color:var(--white);text-align:center;}
+.lightbox-caption h4{color:var(--white);font-size:18px;margin-bottom:4px;}
+.lightbox-caption span{color:var(--text-on-dark-soft);font-size:13.5px;}
+.lightbox-close{position:absolute;top:24px;right:28px;width:44px;height:44px;border-radius:50%;border:1px solid var(--line-dark);color:var(--white);display:flex;align-items:center;justify-content:center;transition:background .25s ease;}
+.lightbox-close:hover{background:rgba(255,255,255,0.1);}
+.lightbox-close svg{width:18px;height:18px;}
+
+/* ============================================================
+   ABOUT
+   ============================================================ */
+.about{background:var(--paper-2);}
+.about .container{display:grid;grid-template-columns:0.82fr 1.18fr;gap:74px;align-items:center;}
+.about-photo{position:relative;}
+.about-photo .frame{position:relative;aspect-ratio:3/3.7;border-radius:8px;overflow:hidden;}
+.about-photo .frame::before{content:'';position:absolute;inset:0;border:2px solid var(--copper);border-radius:8px;transform:translate(16px,16px);z-index:-1;}
+.about-photo .frame-corner{position:absolute;width:46px;height:46px;border:3px solid var(--copper);z-index:3;}
+.about-photo .frame-corner.tl{top:-14px;left:-14px;border-right:none;border-bottom:none;}
+.about-photo .frame-corner.br{bottom:-14px;right:-14px;border-left:none;border-top:none;}
+.about-copy h2{font-size:clamp(28px,4vw,42px);font-weight:800;margin-bottom:22px;}
+.about-copy p{font-size:16px;line-height:1.8;color:var(--text-soft);margin-bottom:18px;}
+.about-mini{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:36px;}
+.about-mini div{border-top:2px solid var(--copper);padding-top:14px;}
+.about-mini h4{font-family:'Archivo',sans-serif;font-size:13.5px;font-weight:800;text-transform:uppercase;letter-spacing:0.03em;margin-bottom:7px;}
+.about-mini p{font-size:13.5px;line-height:1.6;margin:0;}
+@media (max-width:960px){
+  .about .container{grid-template-columns:1fr;gap:50px;}
+  .about-photo{max-width:340px;margin:0 auto;}
+  .about-mini{grid-template-columns:1fr;}
+}
+
+/* ============================================================
+   FINANCING
+   ============================================================ */
+.financing{background:var(--ink);color:var(--white);overflow:hidden;position:relative;}
+.financing::before{content:'';position:absolute;left:-10%;top:-20%;width:60%;height:120%;background:radial-gradient(ellipse at center, rgba(190,106,55,0.18), transparent 60%);}
+.financing .container{position:relative;z-index:1;display:grid;grid-template-columns:1.1fr 0.9fr;gap:60px;align-items:center;}
+.financing h2{color:var(--white);font-size:clamp(28px,4vw,42px);font-weight:800;margin-bottom:22px;}
+.financing p{color:var(--text-on-dark-soft);font-size:16px;line-height:1.8;margin-bottom:18px;}
+.financing .fin-disclaimer{
+  font-size:12.5px;line-height:1.7;color:rgba(237,234,227,0.55);border-left:2px solid var(--copper);padding-left:16px;margin-top:26px;margin-bottom:30px;
+}
+.fin-points{display:flex;flex-direction:column;gap:22px;}
+.fin-point{display:flex;gap:16px;align-items:flex-start;background:var(--ink-2);border:1px solid var(--line-dark);border-radius:8px;padding:22px 24px;}
+.fin-point .fp-icon{width:38px;height:38px;border-radius:50%;background:rgba(190,106,55,0.18);color:var(--copper-light);display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.fin-point .fp-icon svg{width:18px;height:18px;}
+.fin-point h4{color:var(--white);font-size:15px;font-weight:700;margin-bottom:5px;}
+.fin-point p{margin:0;color:var(--text-on-dark-soft);font-size:13.5px;line-height:1.55;}
+@media (max-width:900px){.financing .container{grid-template-columns:1fr;gap:44px;}}
+
+/* ============================================================
+   PROCESS
+   ============================================================ */
+.process{background:var(--paper);}
+.process-track{position:relative;}
+.process-line{position:absolute;top:26px;left:0;right:0;height:2px;background:var(--line);z-index:0;}
+.process-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:18px;position:relative;z-index:1;}
+.proc-step{position:relative;padding-top:0;}
+.proc-num{
+  width:54px;height:54px;border-radius:50%;background:var(--ink);color:var(--white);display:flex;align-items:center;
+  justify-content:center;font-family:'Archivo',sans-serif;font-weight:800;font-size:17px;margin-bottom:22px;position:relative;z-index:2;
+  border:4px solid var(--paper);transition:background .3s ease, transform .3s ease;
+}
+.proc-step:hover .proc-num{background:var(--copper);transform:scale(1.06);}
+.proc-ghost{position:absolute;top:-34px;left:0;font-family:'Archivo',sans-serif;font-size:56px;font-weight:900;color:var(--line);z-index:0;}
+.proc-step h3{font-size:16px;font-weight:700;margin-bottom:8px;position:relative;}
+.proc-step p{font-size:13.5px;line-height:1.6;color:var(--text-soft);position:relative;}
+@media (max-width:960px){
+  .process-line{display:none;}
+  .process-grid{grid-template-columns:1fr;gap:0;}
+  .proc-step{padding-left:30px;border-left:2px solid var(--line);padding-bottom:36px;}
+  .proc-step:last-child{padding-bottom:0;}
+  .proc-num{width:44px;height:44px;font-size:15px;margin-left:-23px;border-width:4px;}
+  .proc-ghost{display:none;}
+}
+
+/* ============================================================
+   CTA
+   ============================================================ */
+.cta-band{
+  background:linear-gradient(120deg,var(--copper-deep),var(--copper) 60%,var(--copper-light));
+  color:var(--white);padding:90px 0;text-align:center;position:relative;overflow:hidden;
+}
+.cta-band::before{content:'';position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,0.07) 1px, transparent 1px),linear-gradient(90deg, rgba(255,255,255,0.07) 1px, transparent 1px);background-size:40px 40px;}
+.cta-band .container{position:relative;z-index:1;max-width:760px;}
+.cta-band h2{color:var(--white);font-size:clamp(28px,4.4vw,46px);font-weight:900;margin-bottom:18px;}
+.cta-band p{color:rgba(255,255,255,0.9);font-size:17px;line-height:1.7;margin-bottom:34px;}
+.cta-band .btn-outline{border-color:rgba(255,255,255,0.7);}
+
+/* ============================================================
+   CONTACT
+   ============================================================ */
+.contact{background:var(--paper-2);}
+.contact .container{display:grid;grid-template-columns:0.82fr 1.18fr;gap:60px;align-items:start;}
+.contact-info{position:sticky;top:110px;}
+.contact-info h3{font-size:15px;font-weight:800;text-transform:uppercase;letter-spacing:0.06em;margin-bottom:20px;}
+.info-row{display:flex;gap:16px;align-items:flex-start;padding:18px 0;border-top:1px solid var(--line);}
+.info-row:first-of-type{border-top:none;}
+.info-row .ir-icon{width:38px;height:38px;border-radius:50%;background:var(--white);color:var(--copper);display:flex;align-items:center;justify-content:center;flex-shrink:0;box-shadow:0 8px 18px -12px rgba(18,22,28,0.3);}
+.info-row .ir-icon svg{width:17px;height:17px;}
+.info-row b{display:block;font-family:'Archivo',sans-serif;font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-soft);margin-bottom:4px;}
+.info-row a,.info-row span.val{font-size:15px;font-weight:600;color:var(--ink);}
+.info-row a:hover{color:var(--copper);}
+.social-row{display:flex;gap:10px;margin-top:22px;}
+.social-row .soc{
+  width:40px;height:40px;border-radius:50%;background:var(--white);display:flex;align-items:center;justify-content:center;
+  color:var(--steel);box-shadow:0 8px 18px -12px rgba(18,22,28,0.3);position:relative;cursor:default;
+}
+.social-row .soc svg{width:17px;height:17px;}
+.social-row .soc::after{
+  content:attr(data-tip);position:absolute;bottom:calc(100% + 8px);left:50%;transform:translateX(-50%);
+  background:var(--ink);color:var(--white);font-size:11px;padding:5px 10px;border-radius:4px;white-space:nowrap;
+  opacity:0;pointer-events:none;transition:opacity .2s ease;
+}
+.social-row .soc:hover::after{opacity:1;}
+
+.form-card{background:var(--white);border-radius:10px;padding:44px;box-shadow:var(--shadow);}
+.form-card h3{font-size:24px;font-weight:800;margin-bottom:8px;}
+.form-card>p.lead{color:var(--text-soft);font-size:14.5px;margin-bottom:30px;}
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px 22px;}
+.form-field{display:flex;flex-direction:column;gap:8px;}
+.form-field.full{grid-column:1/-1;}
+.form-field label{font-family:'Archivo',sans-serif;font-size:11.5px;font-weight:700;letter-spacing:0.05em;text-transform:uppercase;color:var(--text-soft);}
+.form-field label .req{color:var(--copper);}
+.form-field input,.form-field select,.form-field textarea{
+  border:1.5px solid var(--line);border-radius:5px;padding:13px 14px;font-family:'Inter',sans-serif;font-size:14.5px;color:var(--text);
+  background:var(--paper);transition:border-color .2s ease, box-shadow .2s ease;width:100%;
+}
+.form-field textarea{resize:vertical;min-height:110px;}
+.form-field input:focus,.form-field select:focus,.form-field textarea:focus{
+  outline:none;border-color:var(--copper);box-shadow:0 0 0 3px rgba(190,106,55,0.15);background:var(--white);
+}
+.form-field.invalid input,.form-field.invalid select,.form-field.invalid textarea{border-color:#C0392B;background:#FDF3F2;}
+.form-field .err-msg{display:none;font-size:12px;color:#C0392B;}
+.form-field.invalid .err-msg{display:block;}
+.radio-row{display:flex;flex-wrap:wrap;gap:10px;}
+.radio-chip{
+  border:1.5px solid var(--line);border-radius:30px;padding:9px 16px;font-size:13px;font-weight:600;
+  display:flex;align-items:center;gap:8px;cursor:pointer;transition:all .2s ease;background:var(--paper);
+}
+.radio-chip input{accent-color:var(--copper);}
+.radio-chip:hover{border-color:var(--copper);}
+.radio-chip.checked{border-color:var(--copper);background:rgba(190,106,55,0.08);color:var(--copper-deep);}
+.form-actions{margin-top:8px;display:flex;align-items:center;gap:18px;flex-wrap:wrap;}
+.form-note{font-size:12px;color:var(--text-soft);}
+.hp-field{position:absolute;left:-9999px;top:-9999px;opacity:0;height:0;width:0;}
+.form-success{display:none;text-align:center;padding:40px 10px;}
+.form-success.show{display:block;}
+.form-success .fs-icon{width:64px;height:64px;border-radius:50%;background:rgba(190,106,55,0.12);color:var(--copper);display:flex;align-items:center;justify-content:center;margin:0 auto 20px;}
+.form-success .fs-icon svg{width:30px;height:30px;}
+.form-success h3{font-size:22px;margin-bottom:10px;}
+.form-success p{color:var(--text-soft);font-size:15px;line-height:1.7;max-width:420px;margin:0 auto 6px;}
+.form-success .fs-fallback{font-size:13px;color:var(--text-soft);margin-top:14px;}
+.form-success .fs-fallback a{color:var(--copper);font-weight:600;}
+.form-body.hidden{display:none;}
+
+@media (max-width:960px){
+  .contact .container{grid-template-columns:1fr;gap:40px;}
+  .contact-info{position:static;}
+}
+@media (max-width:600px){
+  .form-card{padding:28px 22px;}
+  .form-grid{grid-template-columns:1fr;}
+}
+
+/* ============================================================
+   FOOTER
+   ============================================================ */
+footer{background:var(--ink);color:var(--text-on-dark-soft);padding:80px 0 0;}
+.footer-grid{display:grid;grid-template-columns:1.4fr 0.8fr 0.8fr 1fr;gap:40px;padding-bottom:56px;border-bottom:1px solid var(--line-dark);}
+.footer-brand p{margin-top:18px;font-size:14px;line-height:1.7;max-width:280px;color:var(--text-on-dark-soft);}
+footer h4{color:var(--white);font-family:'Archivo',sans-serif;font-size:13px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;margin-bottom:20px;}
+footer .footer-links li{margin-bottom:12px;}
+footer .footer-links a{font-size:14.5px;transition:color .2s ease;}
+footer .footer-links a:hover{color:var(--copper-light);}
+.footer-social{display:flex;gap:10px;margin-top:18px;}
+.footer-social .soc{width:36px;height:36px;border-radius:50%;border:1px solid var(--line-dark);display:flex;align-items:center;justify-content:center;color:var(--text-on-dark-soft);}
+.footer-social .soc svg{width:15px;height:15px;}
+.footer-bottom{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:14px;padding:26px 0;font-size:13px;}
+.footer-bottom .legal-links{display:flex;gap:22px;}
+.footer-bottom .legal-links button{font-size:13px;color:var(--text-on-dark-soft);transition:color .2s ease;}
+.footer-bottom .legal-links button:hover{color:var(--copper-light);}
+@media (max-width:900px){.footer-grid{grid-template-columns:1fr 1fr;}}
+@media (max-width:560px){.footer-grid{grid-template-columns:1fr;}.footer-bottom{flex-direction:column;align-items:flex-start;}}
+
+/* ---- Legal modal ---- */
+.legal-modal{position:fixed;inset:0;z-index:600;background:rgba(18,22,28,0.7);display:flex;align-items:center;justify-content:center;padding:24px;opacity:0;pointer-events:none;transition:opacity .3s ease;}
+.legal-modal.open{opacity:1;pointer-events:auto;}
+.legal-modal-box{background:var(--white);border-radius:10px;max-width:560px;width:100%;padding:38px;position:relative;max-height:80vh;overflow-y:auto;}
+.legal-modal-box h3{font-size:20px;margin-bottom:14px;}
+.legal-modal-box p{font-size:14.5px;line-height:1.7;color:var(--text-soft);margin-bottom:12px;}
+.legal-modal-close{position:absolute;top:18px;right:18px;width:34px;height:34px;border-radius:50%;background:var(--paper);display:flex;align-items:center;justify-content:center;}
+.legal-modal-close svg{width:15px;height:15px;}
+
+/* Skip link */
+.skip-link{position:absolute;left:-9999px;top:0;background:var(--copper);color:#fff;padding:12px 18px;z-index:999;font-family:'Archivo',sans-serif;font-weight:700;}
+.skip-link:focus{left:12px;top:12px;}
+</style>
+</head>
+<body>
+<a href="#main" class="skip-link">Skip to content</a>
+
+<!-- ============================================================
+     HEADER
+     ============================================================ -->
+<header id="siteHeader">
+  <div class="container">
+    <a href="#home" class="logo-word" aria-label="Isa Home Investments — Home">
+      <b>ISA</b> HOME INVESTMENTS
+      <span>Construction &amp; Remodeling</span>
+    </a>
+    <nav class="primary-nav" aria-label="Primary">
+      <ul>
+        <li><a href="#home" class="nav-link">Home</a></li>
+        <li><a href="#about" class="nav-link">About Us</a></li>
+        <li><a href="#services" class="nav-link">Services</a></li>
+        <li><a href="#projects" class="nav-link">Projects</a></li>
+        <li><a href="#financing" class="nav-link">Financing</a></li>
+        <li><a href="#contact" class="nav-link">Contact</a></li>
+      </ul>
+    </nav>
+    <div class="header-actions">
+      <a href="#contact" class="btn btn-primary">Get a Free Estimate
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+      </a>
+      <button class="hamburger" id="hamburgerBtn" aria-label="Open menu" aria-expanded="false" aria-controls="mobileMenu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<div class="mobile-menu" id="mobileMenu">
+  <nav aria-label="Mobile">
+    <ul>
+      <li><a href="#home" class="nav-link">Home</a></li>
+      <li><a href="#about" class="nav-link">About Us</a></li>
+      <li><a href="#services" class="nav-link">Services</a></li>
+      <li><a href="#projects" class="nav-link">Projects</a></li>
+      <li><a href="#financing" class="nav-link">Financing</a></li>
+      <li><a href="#contact" class="nav-link">Contact</a></li>
+    </ul>
+  </nav>
+  <a href="#contact" class="btn btn-primary btn-block nav-link">Get a Free Estimate</a>
+  <div class="mobile-menu-foot">Email us at <a href="mailto:info@isahomeus.com">info@isahomeus.com</a></div>
+</div>
+
+<main id="main">
+<!-- ============================================================
+     HERO
+     ============================================================ -->
+<section class="hero" id="home">
+  <div class="container">
+    <div class="hero-copy">
+      <span class="hero-eyebrow">South Florida Construction &amp; Remodeling</span>
+      <h1>Building Better Spaces.<br>Building Better <em>Homes.</em></h1>
+      <p class="hero-sub">From renovations to complete transformations, Isa Home Investments helps bring your vision to life with quality workmanship and a professional approach from start to finish.</p>
+      <div class="hero-btns">
+        <a href="#contact" class="btn btn-primary">Get a Free Estimate
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </a>
+        <a href="#services" class="btn btn-outline">Our Services</a>
+      </div>
+      <div class="hero-pills">
+        <span>Residential Construction</span>
+        <span>Remodeling</span>
+        <span>Renovations</span>
+        <span>Home Improvements</span>
+      </div>
+    </div>
+    <div class="hero-panel reveal">
+      <div class="media-ph tone-2" role="img" aria-label="Placeholder — modern home renovation photo">
+        <div class="ph-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M3 11.5 12 4l9 7.5"/><path d="M5 10v9.5a1 1 0 0 0 1 1h4v-6h4v6h4a1 1 0 0 0 1-1V10"/></svg>
+        </div>
+        <span class="ph-tag">Photo placeholder — real project photo coming soon</span>
+      </div>
+      <div class="float-card">
+        <div class="fc-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20 6 9 17l-5-5"/></svg>
+        </div>
+        <div>
+          <b>Professional Process</b>
+          <small>Estimate to final walkthrough</small>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="scroll-cue"><span>Scroll</span><span class="line"></span></div>
+</section>
+
+<!-- ============================================================
+     INTRO
+     ============================================================ -->
+<section class="intro section-pad" id="about-intro">
+  <div class="container">
+    <div class="intro-visual reveal">
+      <div class="media-ph" role="img" aria-label="Placeholder — construction team at work">
+        <div class="ph-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M12 3 4 8v3l8-5 8 5V8Z"/><path d="M6 11v9h12v-9"/><path d="M10 20v-5h4v5"/></svg>
+        </div>
+        <span class="ph-tag">Photo placeholder</span>
+      </div>
+      <div class="badge-card">
+        <b>Client-Centered Process</b>
+        <span>Every project starts with listening to what you actually need.</span>
+      </div>
+    </div>
+    <div class="intro-copy reveal reveal-delay-1">
+      <span class="eyebrow">Who We Are</span>
+      <h2>Your Vision. Our Expertise.</h2>
+      <p>At Isa Home Investments, we help homeowners transform their properties through professional construction, renovation and remodeling services. From the initial consultation to the final details, our goal is to deliver functional, beautiful spaces built around our clients' needs.</p>
+      <div class="intro-badges">
+        <span>Residential Focus</span>
+        <span>Clear Communication</span>
+        <span>Detail-Driven Craftsmanship</span>
+      </div>
+      <a href="#about" class="btn btn-outline-dark">About Isa Home Investments
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     SERVICES
+     ============================================================ -->
+<section class="services section-pad" id="services">
+  <div class="container">
+    <div class="section-head reveal">
+      <span class="eyebrow">What We Do</span>
+      <h2>Services Built Around Your Home</h2>
+      <p>From full remodels to targeted improvements, our team manages every phase of your project with the same level of care and professionalism.</p>
+    </div>
+
+    <div class="services-grid" id="servicesGrid">
+      <!-- Big feature card -->
+      <article class="svc-card big reveal" data-project-type="Home Remodeling">
+        <div class="media-ph">
+          <div class="ph-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M3 11.5 12 4l9 7.5"/><path d="M5 10v9.5a1 1 0 0 0 1 1h4v-6h4v6h4a1 1 0 0 0 1-1V10"/></svg></div>
+        </div>
+        <div class="svc-overlay">
+          <h3>Home Remodeling</h3>
+          <p>Full-scale remodeling that reimagines your home's layout, function and finishes from the ground up.</p>
+          <button class="svc-more" data-svc="Home Remodeling">Learn More
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </button>
+        </div>
+      </article>
+
+      <article class="svc-card reveal" data-project-type="Kitchen Remodeling">
+        <div class="media-ph tone-2"><div class="ph-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><rect x="4" y="8" width="16" height="10" rx="1.5"/><circle cx="8" cy="13" r="1.3" fill="currentColor" stroke="none"/><circle cx="12" cy="13" r="1.3" fill="currentColor" stroke="none"/><circle cx="16" cy="13" r="1.3" fill="currentColor" stroke="none"/></svg></div></div>
+        <div class="svc-overlay">
+          <h3>Kitchen Remodeling</h3>
+          <p>Modern, functional kitchens designed around how you actually cook and live.</p>
+          <button class="svc-more" data-svc="Kitchen Remodeling">Learn More<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
+        </div>
+      </article>
+
+      <article class="svc-card reveal" data-project-type="Bathroom Remodeling">
+        <div class="media-ph tone-3"><div class="ph-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M4 12h16v3a3 3 0 0 1-3 3H7a3 3 0 0 1-3-3Z"/><path d="M6 12V6a2 2 0 0 1 2-2"/><path d="M4 18v2M18 18v2"/></svg></div></div>
+        <div class="svc-overlay">
+          <h3>Bathroom Remodeling</h3>
+          <p>Spa-inspired, practical bathroom renovations built to last.</p>
+          <button class="svc-more" data-svc="Bathroom Remodeling">Learn More<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
+        </div>
+      </article>
+
+      <article class="svc-card wide reveal" data-project-type="Flooring">
+        <div class="media-ph"><div class="ph-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M3 9h18M3 15h18M3 9v10h18V9M3 9 8 4h13l-5 5"/></svg></div></div>
+        <div class="svc-overlay">
+          <h3>Flooring</h3>
+          <p>Tile, hardwood, laminate and more — installed with precision.</p>
+          <button class="svc-more" data-svc="Flooring">Learn More<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
+        </div>
+      </article>
+
+      <article class="svc-card reveal" data-project-type="Painting">
+        <div class="media-ph tone-2"><div class="ph-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><rect x="3" y="5" width="7" height="5" rx="1"/><path d="M6.5 10v3"/><rect x="4" y="13" width="5" height="7" rx="1"/></svg></div></div>
+        <div class="svc-overlay">
+          <h3>Painting</h3>
+          <p>Interior and exterior painting with a clean, lasting finish.</p>
+          <button class="svc-more" data-svc="Painting">Learn More<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
+        </div>
+      </article>
+
+      <article class="svc-card reveal" data-project-type="Roofing">
+        <div class="media-ph tone-3"><div class="ph-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M3 12 12 5l9 7"/><path d="M6 11v8h12v-8"/><path d="M10 9v2M14 9v2"/></svg></div></div>
+        <div class="svc-overlay">
+          <h3>Roofing</h3>
+          <p>Reliable roof repairs and replacements to protect your home.</p>
+          <button class="svc-more" data-svc="Roofing">Learn More<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
+        </div>
+      </article>
+
+      <article class="svc-card reveal" data-project-type="Interior Renovations">
+        <div class="media-ph"><div class="ph-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M4 20 15 9l3 3L7 23Z"/><path d="M13 6l5 5"/><path d="M3 21h4"/></svg></div></div>
+        <div class="svc-overlay">
+          <h3>Interior Renovations</h3>
+          <p>Reworking interior spaces for better flow and everyday living.</p>
+          <button class="svc-more" data-svc="Interior Renovations">Learn More<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
+        </div>
+      </article>
+
+      <article class="svc-card wide reveal" data-project-type="Exterior Improvements">
+        <div class="media-ph tone-2"><div class="ph-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M3 11 12 4l9 7"/><path d="M5 10v9.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V10"/><path d="M9 20v-5h6v5"/></svg></div></div>
+        <div class="svc-overlay">
+          <h3>Exterior Improvements</h3>
+          <p>Siding, facades and outdoor upgrades that boost curb appeal.</p>
+          <button class="svc-more" data-svc="Exterior Improvements">Learn More<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
+        </div>
+      </article>
+
+      <article class="svc-card reveal" data-project-type="General Construction">
+        <div class="media-ph tone-3"><div class="ph-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M4 20a8 4 0 0 1 16 0"/><path d="M6 20v-3a6 3 0 0 1 12 0v3"/></svg></div></div>
+        <div class="svc-overlay">
+          <h3>General Construction</h3>
+          <p>End-to-end construction management for residential projects.</p>
+          <button class="svc-more" data-svc="General Construction">Learn More<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
+        </div>
+      </article>
+
+      <article class="svc-card reveal" data-project-type="Home Improvements">
+        <div class="media-ph"><div class="ph-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M14.7 6.3a4 4 0 0 0-5.4 5.4L4 17l3 3 5.3-5.3a4 4 0 0 0 5.4-5.4l-2.3 2.3-2-2Z"/></svg></div></div>
+        <div class="svc-overlay">
+          <h3>Home Improvements</h3>
+          <p>Smaller upgrades and repairs that add lasting value.</p>
+          <button class="svc-more" data-svc="Home Improvements">Learn More<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     WHY CHOOSE US
+     ============================================================ -->
+<section class="why section-pad">
+  <div class="container">
+    <div class="section-head center reveal">
+      <span class="eyebrow">Why Isa Home Investments</span>
+      <h2>Why Homeowners Choose Isa Home Investments</h2>
+      <p>We combine professional project management with genuine care for the outcome of every home we work on.</p>
+    </div>
+    <div class="why-grid">
+      <div class="why-item reveal">
+        <div class="wi-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 3 4 6v6c0 5 3.5 8 8 9 4.5-1 8-4 8-9V6Z"/><path d="m9 12 2 2 4-4"/></svg></div>
+        <h3>Quality Workmanship</h3>
+        <p>Every project is executed with care, precision and respect for your home.</p>
+      </div>
+      <div class="why-item reveal reveal-delay-1">
+        <div class="wi-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M21 12a8 8 0 1 1-3.5-6.6"/><path d="M21 4v6h-6"/></svg></div>
+        <h3>Reliable Communication</h3>
+        <p>You'll always know the status of your project — no guessing games.</p>
+      </div>
+      <div class="why-item reveal reveal-delay-2">
+        <div class="wi-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="5" y="4" width="14" height="17" rx="2"/><path d="M9 3h6v3H9zM8 11h8M8 15h5"/></svg></div>
+        <h3>Professional Project Management</h3>
+        <p>Every phase is planned, tracked and coordinated from start to finish.</p>
+      </div>
+      <div class="why-item reveal">
+        <div class="wi-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="11" cy="11" r="6"/><path d="m20 20-4-4"/></svg></div>
+        <h3>Attention to Detail</h3>
+        <p>The small decisions matter — we treat them that way.</p>
+      </div>
+      <div class="why-item reveal reveal-delay-1">
+        <div class="wi-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M9 3v4M15 3v4M4 8h16M6 8v11a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V8"/><path d="M9 13h6M9 17h4"/></svg></div>
+        <h3>Customized Solutions</h3>
+        <p>Every home and every client is different — your plan is built for you.</p>
+      </div>
+      <div class="why-item reveal reveal-delay-2">
+        <div class="wi-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="9"/><path d="M9 9h.01M15 15h.01M15 9 9 15"/></svg></div>
+        <h3>Financing Options Available</h3>
+        <p>We can help connect you with third-party financing options for your project.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     PROJECTS
+     ============================================================ -->
+<section class="projects section-pad" id="projects">
+  <div class="container">
+    <div class="section-head reveal">
+      <span class="eyebrow">Our Work</span>
+      <h2>Our Work Speaks for Itself</h2>
+      <p>A look at the type of residential projects we take on — from full renovations to focused room remodels. Real project photography will replace these placeholders as jobs are completed.</p>
+    </div>
+
+    <div class="filter-bar reveal" id="filterBar">
+      <button class="filter-btn active" data-filter="all">All</button>
+      <button class="filter-btn" data-filter="interior">Interior</button>
+      <button class="filter-btn" data-filter="exterior">Exterior</button>
+      <button class="filter-btn" data-filter="kitchen">Kitchen</button>
+      <button class="filter-btn" data-filter="bathroom">Bathroom</button>
+      <button class="filter-btn" data-filter="renovation">Renovations</button>
+    </div>
+
+    <div class="projects-grid" id="projectsGrid">
+      <!-- Each card: data-category holds space separated filter tags -->
+      <article class="proj-card reveal" data-category="kitchen interior renovation" data-title="Kitchen Remodel" data-cat-label="Kitchen">
+        <div class="media-ph"><div class="ph-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><rect x="4" y="8" width="16" height="10" rx="1.5"/><circle cx="8" cy="13" r="1.3" fill="currentColor" stroke="none"/><circle cx="12" cy="13" r="1.3" fill="currentColor" stroke="none"/><circle cx="16" cy="13" r="1.3" fill="currentColor" stroke="none"/></svg></div></div>
+        <div class="proj-overlay"><span class="p-cat">Kitchen</span><h4>Kitchen Remodel</h4></div>
+        <div class="proj-expand"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></div>
+      </article>
+
+      <article class="proj-card reveal" data-category="bathroom interior renovation" data-title="Bathroom Remodel" data-cat-label="Bathroom">
+        <div class="media-ph tone-3"><div class="ph-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M4 12h16v3a3 3 0 0 1-3 3H7a3 3 0 0 1-3-3Z"/><path d="M6 12V6a2 2 0 0 1 2-2"/></svg></div></div>
+        <div class="proj-overlay"><span class="p-cat">Bathroom</span><h4>Bathroom Remodel</h4></div>
+        <div class="proj-expand"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></div>
+      </article>
+
+      <article class="proj-card reveal" data-category="exterior renovation" data-title="Exterior Facade Upgrade" data-cat-label="Exterior">
+        <div class="media-ph tone-2"><div class="ph-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M3 11 12 4l9 7"/><path d="M5 10v9.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V10"/></svg></div></div>
+        <div class="proj-overlay"><span class="p-cat">Exterior</span><h4>Exterior Facade Upgrade</h4></div>
+        <div class="proj-expand"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></div>
+      </article>
+
+      <article class="proj-card reveal" data-category="interior renovation" data-title="Open-Concept Living Renovation" data-cat-label="Interior">
+        <div class="media-ph"><div class="ph-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M4 20 15 9l3 3L7 23Z"/><path d="M13 6l5 5"/></svg></div></div>
+        <div class="proj-overlay"><span class="p-cat">Interior</span><h4>Open-Concept Living Renovation</h4></div>
+        <div class="proj-expand"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></div>
+      </article>
+
+      <article class="proj-card reveal" data-category="exterior" data-title="Roof Replacement" data-cat-label="Exterior">
+        <div class="media-ph tone-3"><div class="ph-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M3 12 12 5l9 7"/><path d="M6 11v8h12v-8"/></svg></div></div>
+        <div class="proj-overlay"><span class="p-cat">Exterior</span><h4>Roof Replacement</h4></div>
+        <div class="proj-expand"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></div>
+      </article>
+
+      <article class="proj-card reveal" data-category="kitchen interior" data-title="Custom Cabinetry Install" data-cat-label="Kitchen">
+        <div class="media-ph tone-2"><div class="ph-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M3 4h18v16H3ZM12 4v16"/></svg></div></div>
+        <div class="proj-overlay"><span class="p-cat">Kitchen</span><h4>Custom Cabinetry Install</h4></div>
+        <div class="proj-expand"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></div>
+      </article>
+    </div>
+
+    <!-- Before & After comparisons -->
+    <div class="ba-heading reveal">
+      <h3>Before &amp; After</h3>
+      <span>Drag the slider to compare</span>
+    </div>
+    <div class="ba-grid">
+      <div class="ba-card reveal">
+        <div class="ba-slider" data-ba>
+          <div class="ba-media media-ph tone-2"><div class="ph-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><rect x="4" y="8" width="16" height="10" rx="1.5"/></svg></div><span class="ph-tag">Before</span></div>
+          <div class="ba-media ba-after media-ph"><div class="ph-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><rect x="4" y="8" width="16" height="10" rx="1.5"/><circle cx="8" cy="13" r="1.3" fill="currentColor" stroke="none"/><circle cx="12" cy="13" r="1.3" fill="currentColor" stroke="none"/><circle cx="16" cy="13" r="1.3" fill="currentColor" stroke="none"/></svg></div><span class="ph-tag">After</span></div>
+          <div class="ba-label before">Before</div>
+          <div class="ba-label after">After</div>
+          <div class="ba-handle"></div>
+          <input type="range" min="0" max="100" value="50" aria-label="Drag to compare before and after">
+        </div>
+        <div class="ba-caption"><h4>Kitchen Transformation</h4><span>Full remodel — cabinets, counters &amp; layout</span></div>
+      </div>
+      <div class="ba-card reveal reveal-delay-1">
+        <div class="ba-slider" data-ba>
+          <div class="ba-media media-ph tone-3"><div class="ph-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M4 12h16v3a3 3 0 0 1-3 3H7a3 3 0 0 1-3-3Z"/></svg></div><span class="ph-tag">Before</span></div>
+          <div class="ba-media ba-after media-ph"><div class="ph-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M4 12h16v3a3 3 0 0 1-3 3H7a3 3 0 0 1-3-3Z"/><path d="M6 12V6a2 2 0 0 1 2-2"/></svg></div><span class="ph-tag">After</span></div>
+          <div class="ba-label before">Before</div>
+          <div class="ba-label after">After</div>
+          <div class="ba-handle"></div>
+          <input type="range" min="0" max="100" value="50" aria-label="Drag to compare before and after">
+        </div>
+        <div class="ba-caption"><h4>Bathroom Renovation</h4><span>New vanity, tile &amp; fixtures</span></div>
+      </div>
+      <div class="ba-card reveal reveal-delay-2">
+        <div class="ba-slider" data-ba>
+          <div class="ba-media media-ph"><div class="ph-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M3 11 12 4l9 7"/></svg></div><span class="ph-tag">Before</span></div>
+          <div class="ba-media ba-after media-ph tone-2"><div class="ph-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M3 11 12 4l9 7"/><path d="M5 10v9.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V10"/></svg></div><span class="ph-tag">After</span></div>
+          <div class="ba-label before">Before</div>
+          <div class="ba-label after">After</div>
+          <div class="ba-handle"></div>
+          <input type="range" min="0" max="100" value="50" aria-label="Drag to compare before and after">
+        </div>
+        <div class="ba-caption"><h4>Exterior Update</h4><span>Facade, paint &amp; entry improvements</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     ABOUT
+     ============================================================ -->
+<section class="about section-pad" id="about">
+  <div class="container">
+    <div class="about-photo reveal">
+      <div class="frame-corner tl"></div>
+      <div class="frame-corner br"></div>
+      <!--
+        OWNER PHOTO PLACEHOLDER
+        Replace the .media-ph div below with:
+        <img src="owner.jpg" alt="[Owner Name], founder of Isa Home Investments" style="width:100%;height:100%;object-fit:cover;">
+      -->
+      <div class="frame media-ph tone-2" role="img" aria-label="Placeholder — photo of the owner of Isa Home Investments">
+        <div class="ph-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4.4 3.6-7 8-7s8 2.6 8 7"/></svg></div>
+        <span class="ph-tag">Owner photo coming soon</span>
+      </div>
+    </div>
+    <div class="about-copy reveal reveal-delay-1">
+      <span class="eyebrow">About Isa Home Investments</span>
+      <h2>Building With Purpose</h2>
+      <p>Isa Home Investments was created with a commitment to helping homeowners improve, renovate and transform their properties with professionalism, transparency and attention to detail.</p>
+      <p>Every project is approached with the same objective: understand the client's vision, provide practical solutions and deliver work that adds value to their home.</p>
+      <div class="about-mini">
+        <div>
+          <h4>Our Mission</h4>
+          <p>Deliver reliable, high-quality construction and remodeling for every homeowner we work with.</p>
+        </div>
+        <div>
+          <h4>Our Commitment</h4>
+          <p>Clear communication, honest timelines and respect for your home throughout the project.</p>
+        </div>
+        <div>
+          <h4>Our Approach</h4>
+          <p>Listen first, plan carefully, then build with precision and care.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     FINANCING
+     ============================================================ -->
+<section class="financing section-pad" id="financing">
+  <div class="container">
+    <div class="reveal">
+      <span class="eyebrow">Financing</span>
+      <h2>Financing Your Project</h2>
+      <p>Your renovation doesn't always have to wait. Isa Home Investments can help connect customers with third-party financing companies that specialize in home improvement and construction financing.</p>
+      <p class="fin-disclaimer">Financing options are provided by independent, third-party financing companies and are subject to their individual approval requirements, terms and conditions. Isa Home Investments does not provide financing directly and does not guarantee approval.</p>
+      <a href="#contact" class="btn btn-primary" id="exploreFinancingBtn">Explore Financing Options
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+      </a>
+    </div>
+    <div class="fin-points reveal reveal-delay-1">
+      <div class="fin-point">
+        <div class="fp-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M5 12h14M12 5v14"/></svg></div>
+        <div><h4>No Obligation to Start</h4><p>Exploring financing options doesn't commit you to anything.</p></div>
+      </div>
+      <div class="fin-point">
+        <div class="fp-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M17 20h5v-1a5 5 0 0 0-9-3M9 20H4v-1a5 5 0 0 1 9-3m-4-3a3 3 0 1 0 0-6 3 3 0 0 0 0 6Zm7 0a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z"/></svg></div>
+        <div><h4>Independent, Specialized Lenders</h4><p>We connect you with companies focused on home improvement financing.</p></div>
+      </div>
+      <div class="fin-point">
+        <div class="fp-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M4 6h16v12H4Z"/><path d="M4 10h16"/></svg></div>
+        <div><h4>Simple Inquiry Process</h4><p>Tell us you're interested and we'll point you in the right direction.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     PROCESS
+     ============================================================ -->
+<section class="process section-pad">
+  <div class="container">
+    <div class="section-head reveal">
+      <span class="eyebrow">How It Works</span>
+      <h2>From Idea to Completion</h2>
+      <p>A clear, structured process so you always know what happens next.</p>
+    </div>
+    <div class="process-track">
+      <div class="process-line"></div>
+      <div class="process-grid">
+        <div class="proc-step reveal"><span class="proc-ghost">01</span><div class="proc-num">1</div><h3>Consultation</h3><p>Tell us about your project.</p></div>
+        <div class="proc-step reveal reveal-delay-1"><span class="proc-ghost">02</span><div class="proc-num">2</div><h3>Project Evaluation</h3><p>We review the scope, goals and requirements.</p></div>
+        <div class="proc-step reveal reveal-delay-2"><span class="proc-ghost">03</span><div class="proc-num">3</div><h3>Estimate</h3><p>Receive a clear project estimate.</p></div>
+        <div class="proc-step reveal"><span class="proc-ghost">04</span><div class="proc-num">4</div><h3>Planning</h3><p>We coordinate the project details.</p></div>
+        <div class="proc-step reveal reveal-delay-1"><span class="proc-ghost">05</span><div class="proc-num">5</div><h3>Construction</h3><p>Our team brings the project to life.</p></div>
+        <div class="proc-step reveal reveal-delay-2"><span class="proc-ghost">06</span><div class="proc-num">6</div><h3>Final Walkthrough</h3><p>We review the completed work with you.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     CTA
+     ============================================================ -->
+<section class="cta-band">
+  <div class="container reveal">
+    <h2>Ready to Transform Your Home?</h2>
+    <p>Tell us about your project and let Isa Home Investments help you take the next step.</p>
+    <a href="#contact" class="btn btn-outline">Request Your Free Estimate
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+    </a>
+  </div>
+</section>
+
+<!-- ============================================================
+     CONTACT
+     ============================================================ -->
+<section class="contact section-pad" id="contact">
+  <div class="container">
+    <div class="contact-info reveal">
+      <span class="eyebrow">Get In Touch</span>
+      <h2 style="font-size:clamp(24px,3vw,32px);font-weight:800;margin-bottom:26px;">Request Your Free Estimate</h2>
+      <div class="info-row">
+        <div class="ir-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M4 4h16v16H4z"/><path d="m4 6 8 7 8-7"/></svg></div>
+        <div><b>Email</b><a href="mailto:info@isahomeus.com">info@isahomeus.com</a></div>
+      </div>
+      <!-- Phone number intentionally omitted until Isa Home Investments provides one. Add a matching .info-row here once available. -->
+      <div class="info-row">
+        <div class="ir-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M12 21s-7-6-7-11a7 7 0 0 1 14 0c0 5-7 11-7 11Z"/><circle cx="12" cy="10" r="2.4"/></svg></div>
+        <div><b>Service Area</b><span class="val">South Florida</span></div>
+      </div>
+      <h3 style="margin-top:26px;">Follow Us</h3>
+      <div class="social-row">
+        <span class="soc" data-tip="Coming soon" aria-label="Instagram — coming soon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg></span>
+        <span class="soc" data-tip="Coming soon" aria-label="Facebook — coming soon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M14 9h3V6h-3a3 3 0 0 0-3 3v2H9v3h2v6h3v-6h3l1-3h-4V9a1 1 0 0 1 1-1Z"/></svg></span>
+      </div>
+    </div>
+
+    <div class="form-card reveal reveal-delay-1">
+      <div class="form-body" id="formBody">
+        <h3>Request My Estimate</h3>
+        <p class="lead">Fields marked <span style="color:var(--copper);">*</span> are required. We'll get back to you shortly.</p>
+        <form id="estimateForm" novalidate>
+          <!-- Honeypot (spam trap, hidden from real users) -->
+          <div class="hp-field"><label>Company Website</label><input type="text" name="company_website" tabindex="-1" autocomplete="off"></div>
+          <!-- FormSubmit.co config: replace ajax target above / see script for details -->
+          <input type="hidden" name="_subject" value="New Project Request — Isa Home Investments">
+
+          <div class="form-grid">
+            <div class="form-field">
+              <label>First Name <span class="req">*</span></label>
+              <input type="text" name="firstName" required>
+              <span class="err-msg">Please enter your first name.</span>
+            </div>
+            <div class="form-field">
+              <label>Last Name <span class="req">*</span></label>
+              <input type="text" name="lastName" required>
+              <span class="err-msg">Please enter your last name.</span>
+            </div>
+            <div class="form-field">
+              <label>Email <span class="req">*</span></label>
+              <input type="email" name="email" required>
+              <span class="err-msg">Please enter a valid email address.</span>
+            </div>
+            <div class="form-field">
+              <label>Phone Number <span class="req">*</span></label>
+              <input type="tel" name="phone" required placeholder="(555) 555-5555">
+              <span class="err-msg">Please enter a valid phone number.</span>
+            </div>
+            <div class="form-field">
+              <label>Project Address <span class="req">*</span></label>
+              <input type="text" name="projectAddress" required>
+              <span class="err-msg">Please enter the project address.</span>
+            </div>
+            <div class="form-field">
+              <label>City <span class="req">*</span></label>
+              <input type="text" name="city" required>
+              <span class="err-msg">Please enter a city.</span>
+            </div>
+            <div class="form-field">
+              <label>Project Type <span class="req">*</span></label>
+              <select name="projectType" id="projectTypeSelect" required>
+                <option value="">Select a project type</option>
+                <option>Home Remodeling</option>
+                <option>Kitchen Remodeling</option>
+                <option>Bathroom Remodeling</option>
+                <option>Flooring</option>
+                <option>Painting</option>
+                <option>Roofing</option>
+                <option>Interior Renovations</option>
+                <option>Exterior Improvements</option>
+                <option>General Construction</option>
+                <option>Home Improvements</option>
+                <option>Other</option>
+              </select>
+              <span class="err-msg">Please select a project type.</span>
+            </div>
+            <div class="form-field">
+              <label>Estimated Budget</label>
+              <select name="budget">
+                <option value="">Not sure yet</option>
+                <option>Under $10,000</option>
+                <option>$10,000 – $25,000</option>
+                <option>$25,000 – $50,000</option>
+                <option>$50,000 – $100,000</option>
+                <option>$100,000+</option>
+              </select>
+            </div>
+            <div class="form-field full">
+              <label>Project Description <span class="req">*</span></label>
+              <textarea name="description" required placeholder="Tell us a bit about what you'd like to do..."></textarea>
+              <span class="err-msg">Please describe your project.</span>
+            </div>
+            <div class="form-field">
+              <label>Desired Start Date</label>
+              <input type="date" name="startDate">
+            </div>
+            <div class="form-field">
+              <label>Preferred Contact Method <span class="req">*</span></label>
+              <div class="radio-row" data-radiogroup="contactMethod">
+                <label class="radio-chip"><input type="radio" name="contactMethod" value="Phone" required> Phone</label>
+                <label class="radio-chip"><input type="radio" name="contactMethod" value="Text"> Text</label>
+                <label class="radio-chip"><input type="radio" name="contactMethod" value="Email"> Email</label>
+              </div>
+              <span class="err-msg" id="contactMethodErr">Please choose a preferred contact method.</span>
+            </div>
+            <div class="form-field full">
+              <label>Interested in Financing? <span class="req">*</span></label>
+              <div class="radio-row" data-radiogroup="financing">
+                <label class="radio-chip"><input type="radio" name="financing" value="Yes" required> Yes</label>
+                <label class="radio-chip"><input type="radio" name="financing" value="No"> No</label>
+                <label class="radio-chip"><input type="radio" name="financing" value="I would like more information"> I would like more information</label>
+              </div>
+              <span class="err-msg" id="financingErr">Please let us know your interest in financing.</span>
+            </div>
+          </div>
+
+          <div class="form-actions">
+            <button type="submit" class="btn btn-primary" id="submitEstimateBtn">Request My Estimate
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+            </button>
+            <span class="form-note">Or email us directly at <a href="mailto:info@isahomeus.com" style="color:var(--copper);font-weight:600;">info@isahomeus.com</a></span>
+          </div>
+        </form>
+      </div>
+
+      <div class="form-success" id="formSuccess">
+        <div class="fs-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg></div>
+        <h3>Thank you!</h3>
+        <p>Your project request has been received. The Isa Home Investments team will contact you soon.</p>
+        <p class="fs-fallback">Didn't hear from us right away? Email <a href="mailto:info@isahomeus.com">info@isahomeus.com</a> directly.</p>
+      </div>
+    </div>
+  </div>
+</section>
+</main>
+
+<!-- ============================================================
+     FOOTER
+     ============================================================ -->
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="#home" class="logo-word nav-link">
+          <b>ISA</b> HOME INVESTMENTS
+          <span>Construction &amp; Remodeling</span>
+        </a>
+        <p>Professional construction, renovation and remodeling services for homeowners — from the first consultation to the final walkthrough.</p>
+        <div class="footer-social">
+          <span class="soc" title="Instagram — coming soon" aria-label="Instagram — coming soon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/></svg></span>
+          <span class="soc" title="Facebook — coming soon" aria-label="Facebook — coming soon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M14 9h3V6h-3a3 3 0 0 0-3 3v2H9v3h2v6h3v-6h3l1-3h-4V9a1 1 0 0 1 1-1Z"/></svg></span>
+        </div>
+      </div>
+      <div>
+        <h4>Quick Links</h4>
+        <ul class="footer-links">
+          <li><a href="#home" class="nav-link">Home</a></li>
+          <li><a href="#about" class="nav-link">About</a></li>
+          <li><a href="#services" class="nav-link">Services</a></li>
+          <li><a href="#projects" class="nav-link">Projects</a></li>
+          <li><a href="#financing" class="nav-link">Financing</a></li>
+          <li><a href="#contact" class="nav-link">Contact</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Services</h4>
+        <ul class="footer-links">
+          <li><a href="#services" class="nav-link">Home Remodeling</a></li>
+          <li><a href="#services" class="nav-link">Kitchen Remodeling</a></li>
+          <li><a href="#services" class="nav-link">Bathroom Remodeling</a></li>
+          <li><a href="#services" class="nav-link">General Construction</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Contact</h4>
+        <ul class="footer-links">
+          <li><a href="mailto:info@isahomeus.com">info@isahomeus.com</a></li>
+          <li><span>South Florida</span></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span id="copyrightText">© 2026 Isa Home Investments. All Rights Reserved.</span>
+      <div class="legal-links">
+        <button type="button" data-legal="privacy">Privacy Policy</button>
+        <button type="button" data-legal="terms">Terms &amp; Conditions</button>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- Lightbox -->
+<div class="lightbox" id="lightbox">
+  <button class="lightbox-close" id="lightboxClose" aria-label="Close">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 6l12 12M18 6 6 18"/></svg>
+  </button>
+  <div class="lightbox-inner">
+    <div class="media-ph" id="lightboxMedia" role="img" aria-label="Project photo placeholder"></div>
+    <div class="lightbox-caption">
+      <h4 id="lightboxTitle"></h4>
+      <span id="lightboxCat"></span>
+    </div>
+  </div>
+</div>
+
+<!-- Legal modal -->
+<div class="legal-modal" id="legalModal">
+  <div class="legal-modal-box">
+    <button class="legal-modal-close" id="legalModalClose" aria-label="Close"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 6l12 12M18 6 6 18"/></svg></button>
+    <h3 id="legalModalTitle">Privacy Policy</h3>
+    <div id="legalModalBody"></div>
+  </div>
+</div>
+
+<script>
+document.documentElement.classList.add('js');
+
+/* ---------- Header scroll state ---------- */
+const header = document.getElementById('siteHeader');
+function onScroll(){
+  header.classList.toggle('scrolled', window.scrollY > 40);
+}
+onScroll();
+window.addEventListener('scroll', onScroll, {passive:true});
+
+/* ---------- Mobile menu ---------- */
+const hamburger = document.getElementById('hamburgerBtn');
+const mobileMenu = document.getElementById('mobileMenu');
+function closeMobileMenu(){
+  hamburger.classList.remove('active');
+  mobileMenu.classList.remove('open');
+  hamburger.setAttribute('aria-expanded','false');
+  document.body.style.overflow='';
+}
+hamburger.addEventListener('click', () => {
+  const open = mobileMenu.classList.toggle('open');
+  hamburger.classList.toggle('active', open);
+  hamburger.setAttribute('aria-expanded', open ? 'true':'false');
+  document.body.style.overflow = open ? 'hidden':'';
+});
+document.querySelectorAll('.nav-link').forEach(a => a.addEventListener('click', closeMobileMenu));
+
+/* ---------- Smooth scroll active-link highlight ---------- */
+const sections = ['home','about-intro','services','projects','about','financing','contact']
+  .map(id => document.getElementById(id)).filter(Boolean);
+const navLinks = document.querySelectorAll('nav.primary-nav .nav-link');
+const sectionToNav = {'home':'#home','about-intro':'#home','services':'#services','projects':'#projects','about':'#about','financing':'#financing','contact':'#contact'};
+if ('IntersectionObserver' in window){
+  const spy = new IntersectionObserver((entries)=>{
+    entries.forEach(entry=>{
+      if(entry.isIntersecting){
+        const href = sectionToNav[entry.target.id];
+        navLinks.forEach(l=>l.classList.toggle('active', l.getAttribute('href')===href));
+      }
+    });
+  }, {rootMargin:'-45% 0px -50% 0px'});
+  sections.forEach(s=>spy.observe(s));
+}
+
+/* ---------- Scroll reveal ---------- */
+const revealEls = document.querySelectorAll('.reveal');
+if ('IntersectionObserver' in window){
+  const ro = new IntersectionObserver((entries)=>{
+    entries.forEach(entry=>{
+      if(entry.isIntersecting){ entry.target.classList.add('in'); ro.unobserve(entry.target); }
+    });
+  }, {threshold:0.12});
+  revealEls.forEach(el=>ro.observe(el));
+} else {
+  revealEls.forEach(el=>el.classList.add('in'));
+}
+
+/* ---------- Services "Learn More" -> scroll to contact + preselect project type ---------- */
+document.querySelectorAll('.svc-more').forEach(btn=>{
+  btn.addEventListener('click', () => {
+    const svc = btn.getAttribute('data-svc');
+    const select = document.getElementById('projectTypeSelect');
+    if(select){
+      const match = Array.from(select.options).find(o => o.value === svc);
+      if(match) select.value = svc;
+    }
+    document.getElementById('contact').scrollIntoView({behavior:'smooth'});
+  });
+});
+
+/* ---------- Explore Financing -> preselect financing = Yes ---------- */
+document.getElementById('exploreFinancingBtn').addEventListener('click', (e) => {
+  const yesRadio = document.querySelector('input[name="financing"][value="Yes"]');
+  if(yesRadio){ yesRadio.checked = true; yesRadio.closest('.radio-chip').classList.add('checked'); }
+});
+
+/* ---------- Radio chip visual state ---------- */
+document.querySelectorAll('.radio-chip input[type=radio]').forEach(input=>{
+  input.addEventListener('change', () => {
+    const group = input.name;
+    document.querySelectorAll(`input[name="${group}"]`).forEach(i=>{
+      i.closest('.radio-chip').classList.toggle('checked', i.checked);
+    });
+  });
+});
+
+/* ---------- Projects filter ---------- */
+const filterBtns = document.querySelectorAll('.filter-btn');
+const projCards = document.querySelectorAll('.proj-card');
+filterBtns.forEach(btn=>{
+  btn.addEventListener('click', () => {
+    filterBtns.forEach(b=>b.classList.remove('active'));
+    btn.classList.add('active');
+    const f = btn.getAttribute('data-filter');
+    projCards.forEach(card=>{
+      const cats = card.getAttribute('data-category').split(' ');
+      card.classList.toggle('hide', f!=='all' && !cats.includes(f));
+    });
+  });
+});
+
+/* ---------- Lightbox ---------- */
+const lightbox = document.getElementById('lightbox');
+const lightboxMedia = document.getElementById('lightboxMedia');
+const lightboxTitle = document.getElementById('lightboxTitle');
+const lightboxCat = document.getElementById('lightboxCat');
+projCards.forEach(card=>{
+  card.addEventListener('click', () => {
+    lightboxMedia.innerHTML = card.querySelector('.media-ph').innerHTML;
+    lightboxMedia.className = 'media-ph ' + (card.querySelector('.media-ph').classList.contains('tone-2') ? 'tone-2' : card.querySelector('.media-ph').classList.contains('tone-3') ? 'tone-3' : '');
+    lightboxTitle.textContent = card.getAttribute('data-title');
+    lightboxCat.textContent = card.getAttribute('data-cat-label');
+    lightbox.classList.add('open');
+    document.body.style.overflow='hidden';
+  });
+});
+function closeLightbox(){ lightbox.classList.remove('open'); document.body.style.overflow=''; }
+document.getElementById('lightboxClose').addEventListener('click', closeLightbox);
+lightbox.addEventListener('click', (e)=>{ if(e.target===lightbox) closeLightbox(); });
+document.addEventListener('keydown', (e)=>{ if(e.key==='Escape'){ closeLightbox(); closeLegalModal(); } });
+
+/* ---------- Before / After sliders ---------- */
+document.querySelectorAll('[data-ba]').forEach(slider=>{
+  const after = slider.querySelector('.ba-after');
+  const handle = slider.querySelector('.ba-handle');
+  const range = slider.querySelector('input[type=range]');
+  function update(val){
+    after.style.clipPath = `inset(0 ${100-val}% 0 0)`;
+    handle.style.left = val + '%';
+  }
+  update(50);
+  range.addEventListener('input', ()=>update(range.value));
+});
+
+/* ---------- Contact form validation + submission ---------- */
+const form = document.getElementById('estimateForm');
+const formBody = document.getElementById('formBody');
+const formSuccess = document.getElementById('formSuccess');
+const submitBtn = document.getElementById('submitEstimateBtn');
+
+function setFieldError(field, hasError){
+  const wrap = field.closest('.form-field');
+  if(wrap) wrap.classList.toggle('invalid', hasError);
+}
+
+function validateForm(){
+  let valid = true;
+  form.querySelectorAll('input[required], select[required], textarea[required]').forEach(field=>{
+    if(field.type==='radio') return;
+    const val = field.value.trim();
+    let ok = val.length > 0;
+    if(field.type==='email' && ok){ ok = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val); }
+    if(field.type==='tel' && ok){ ok = val.replace(/[^0-9]/g,'').length >= 7; }
+    setFieldError(field, !ok);
+    if(!ok) valid = false;
+  });
+  const contactChosen = !!form.querySelector('input[name="contactMethod"]:checked');
+  document.getElementById('contactMethodErr').style.display = contactChosen ? 'none' : 'block';
+  if(!contactChosen) valid = false;
+  const financingChosen = !!form.querySelector('input[name="financing"]:checked');
+  document.getElementById('financingErr').style.display = financingChosen ? 'none' : 'block';
+  if(!financingChosen) valid = false;
+  return valid;
+}
+
+form.addEventListener('submit', async (e) => {
+  e.preventDefault();
+
+  // Honeypot check — silently drop bot submissions
+  const honeypot = form.querySelector('input[name="company_website"]');
+  if(honeypot && honeypot.value){ return; }
+
+  if(!validateForm()){
+    const firstInvalid = form.querySelector('.form-field.invalid input, .form-field.invalid select, .form-field.invalid textarea');
+    if(firstInvalid) firstInvalid.focus();
+    return;
+  }
+
+  submitBtn.setAttribute('disabled','disabled');
+  submitBtn.textContent = 'Sending…';
+
+  const fd = new FormData(form);
+  const financing = fd.get('financing') || 'No';
+  fd.set('_subject', `New Project Request — ${fd.get('firstName')} ${fd.get('lastName')} — FINANCING INTEREST: ${financing.toUpperCase()}`);
+  fd.append('FINANCING_INTEREST_FLAG', `FINANCING INTEREST: ${financing.toUpperCase()}`);
+
+  /*
+    Email delivery via FormSubmit.co (no backend required for a static site).
+    IMPORTANT: the first submission triggers a one-time confirmation email to
+    info@isahomeus.com — it must be approved once before messages start
+    arriving in the inbox. If this project later gets a real backend/CRM,
+    swap this fetch call for that endpoint.
+  */
+  try{
+    await fetch('https://formsubmit.co/ajax/info@isahomeus.com', {
+      method:'POST',
+      headers:{ 'Accept':'application/json' },
+      body: fd
+    });
+  }catch(err){
+    // Network/service issue — user still gets the confirmation + mailto fallback below.
+  }
+
+  formBody.classList.add('hidden');
+  formSuccess.classList.add('show');
+  formSuccess.scrollIntoView({behavior:'smooth', block:'center'});
+});
+
+/* ---------- Legal modal ---------- */
+const legalModal = document.getElementById('legalModal');
+const legalModalTitle = document.getElementById('legalModalTitle');
+const legalModalBody = document.getElementById('legalModalBody');
+const legalContent = {
+  privacy: {
+    title:'Privacy Policy',
+    body:`<p>Isa Home Investments respects your privacy. Information submitted through this website (such as your name, contact details and project information) is used only to respond to your inquiry and provide requested services.</p>
+          <p>A full, detailed Privacy Policy for Isa Home Investments is currently being prepared and will be published here. For questions about your information, contact us at <a href="mailto:info@isahomeus.com" style="color:var(--copper);">info@isahomeus.com</a>.</p>`
+  },
+  terms: {
+    title:'Terms & Conditions',
+    body:`<p>These Terms &amp; Conditions govern the use of the Isa Home Investments website. By using this site, you agree to use it only for lawful purposes.</p>
+          <p>Full Terms &amp; Conditions for Isa Home Investments are currently being prepared and will be published here. For questions, contact us at <a href="mailto:info@isahomeus.com" style="color:var(--copper);">info@isahomeus.com</a>.</p>`
+  }
+};
+document.querySelectorAll('[data-legal]').forEach(btn=>{
+  btn.addEventListener('click', () => {
+    const data = legalContent[btn.getAttribute('data-legal')];
+    legalModalTitle.textContent = data.title;
+    legalModalBody.innerHTML = data.body;
+    legalModal.classList.add('open');
+    document.body.style.overflow='hidden';
+  });
+});
+function closeLegalModal(){ legalModal.classList.remove('open'); document.body.style.overflow=''; }
+document.getElementById('legalModalClose').addEventListener('click', closeLegalModal);
+legalModal.addEventListener('click', (e)=>{ if(e.target===legalModal) closeLegalModal(); });
+
+/* ---------- Dynamic copyright year ---------- */
+document.getElementById('copyrightText').textContent = `© ${new Date().getFullYear()} Isa Home Investments. All Rights Reserved.`;
+</script>
+</body>
+</html>
