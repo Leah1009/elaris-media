@@ -297,6 +297,7 @@ html.js .hero-copy>*:nth-child(4){animation-delay:.42s;}
 .intro-visual{position:relative;min-width:0;}
 .intro-copy{min-width:0;}
 .intro-visual .media-ph{border-radius:8px;aspect-ratio:1/1.05;}
+.intro-visual .media-ph.has-photo img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center center;display:block;}
 .intro-visual .badge-card{
   position:absolute;right:-28px;bottom:-28px;background:var(--ink);color:var(--white);border-radius:6px;
   padding:24px 26px;max-width:230px;box-shadow:var(--shadow);
@@ -736,11 +737,8 @@ footer .footer-links a:hover{color:var(--copper-light);}
 <section class="intro section-pad" id="about-intro">
   <div class="container">
     <div class="intro-visual reveal">
-      <div class="media-ph" role="img" aria-label="Placeholder — construction team at work">
-        <div class="ph-icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M12 3 4 8v3l8-5 8 5V8Z"/><path d="M6 11v9h12v-9"/><path d="M10 20v-5h4v5"/></svg>
-        </div>
-        <span class="ph-tag" data-i18n="common.photoPlaceholder">Photo placeholder</span>
+      <div class="media-ph has-photo">
+        <img src="assets/about-intro.jpg" alt="Isa Home Investments — modern waterfront living room and kitchen renovation">
       </div>
       <div class="badge-card">
         <b data-i18n="intro.badgeTitle">Client-Centered Process</b>
