@@ -168,12 +168,10 @@ section{position:relative;}
 .logo-mark-badge{width:42px;height:42px;flex-shrink:0;border-radius:9px;overflow:hidden;background:#000;box-shadow:0 0 0 1px rgba(255,255,255,0.16),0 6px 16px -8px rgba(0,0,0,0.5);transition:box-shadow .3s ease;}
 .logo-mark-badge img{width:100%;height:100%;object-fit:cover;display:block;}
 #siteHeader.scrolled .logo-mark-badge{box-shadow:0 0 0 1px rgba(0,0,0,0.12),0 6px 16px -8px rgba(0,0,0,0.25);}
-.logo-word{font-family:'Archivo',sans-serif;font-weight:800;font-size:19px;letter-spacing:0.01em;color:var(--white);white-space:nowrap;transition:color .3s ease;}
-.logo-word b{color:var(--copper-light);font-weight:900;}
-.logo-word span{display:block;font-family:'Archivo',sans-serif;font-weight:600;font-size:9px;letter-spacing:0.26em;text-transform:uppercase;color:rgba(255,255,255,0.65);margin-top:2px;}
-#siteHeader.scrolled .logo-word{color:var(--ink);}
-#siteHeader.scrolled .logo-word b{color:var(--copper);}
-#siteHeader.scrolled .logo-word span{color:var(--text-soft);}
+.logo-mark-full{width:54px;height:54px;border-radius:11px;}
+.logo-tagline{font-family:'Archivo',sans-serif;font-weight:600;font-size:10.5px;letter-spacing:0.22em;text-transform:uppercase;color:rgba(255,255,255,0.72);white-space:nowrap;transition:color .3s ease;}
+#siteHeader.scrolled .logo-tagline{color:var(--text-soft);}
+@media (max-width:480px){.logo-tagline{display:none;}}
 nav.primary-nav ul{display:flex;align-items:center;gap:34px;}
 nav.primary-nav ul li a{
   font-family:'Archivo',sans-serif;font-size:12px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;
@@ -304,45 +302,33 @@ html.js .hero-copy>*:nth-child(4){animation-delay:.42s;}
 }
 
 /* ============================================================
-   SERVICES — editorial grid
+   SERVICES — elegant typographic list (no imagery)
    ============================================================ */
 .services{background:var(--paper-2);}
-.services-grid{
-  display:grid;grid-template-columns:repeat(4,1fr);grid-auto-rows:230px;gap:18px;
+.services-list{border-top:1px solid var(--line);}
+.svc-row{
+  display:grid;grid-template-columns:64px 1fr 22px;column-gap:28px;row-gap:6px;align-items:center;
+  padding:30px 4px;border-bottom:1px solid var(--line);text-decoration:none;cursor:pointer;
+  transition:padding-left .35s cubic-bezier(.2,.8,.2,1), background .35s ease;
 }
-.svc-card{
-  position:relative;grid-column:span 1;grid-row:span 1;border-radius:8px;overflow:hidden;
-  transition:transform .45s cubic-bezier(.2,.8,.2,1);
+.svc-row:hover{padding-left:16px;background:rgba(0,0,0,0.025);}
+.svc-index{
+  grid-column:1;grid-row:1/3;
+  font-family:'Playfair Display',serif;font-style:italic;font-weight:600;font-size:20px;color:var(--steel);
+  align-self:center;
 }
-.svc-card.big{grid-column:span 2;grid-row:span 2;}
-.svc-card.wide{grid-column:span 2;}
-.svc-card .media-ph{position:absolute;inset:0;border-radius:8px;}
-.svc-card .media-ph .ph-icon{transition:transform .5s cubic-bezier(.2,.8,.2,1);}
-.svc-card:hover .media-ph .ph-icon{transform:translate(-50%,-58%) scale(1.08);}
-.svc-card .svc-overlay{
-  position:absolute;inset:0;z-index:2;display:flex;flex-direction:column;justify-content:flex-end;
-  padding:22px 24px;background:linear-gradient(0deg, rgba(0,0,0,0.92) 0%, rgba(0,0,0,0.35) 55%, transparent 85%);
-}
-.svc-card h3{color:var(--white);font-size:19px;font-weight:800;margin-bottom:6px;transition:transform .35s ease;}
-.svc-card.big h3{font-size:25px;}
-.svc-card p{color:var(--text-on-dark-soft);font-size:13.5px;line-height:1.55;max-height:0;opacity:0;overflow:hidden;transition:max-height .4s ease, opacity .35s ease, margin-top .4s ease;}
-.svc-card:hover p{max-height:80px;opacity:1;margin-top:8px;}
-.svc-card:hover h3{transform:translateY(-2px);}
-.svc-more{
-  display:inline-flex;align-items:center;gap:7px;margin-top:14px;color:var(--copper-light);
-  font-family:'Archivo',sans-serif;font-size:11px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;
-}
-.svc-more svg{width:13px;height:13px;transition:transform .3s ease;}
-.svc-card:hover .svc-more svg{transform:translateX(4px);}
-.svc-card:hover{transform:translateY(-4px);}
+.svc-name{grid-column:2;grid-row:1;font-family:'Archivo',sans-serif;font-weight:800;font-size:22px;color:var(--ink);letter-spacing:-0.01em;transition:transform .3s ease;}
+.svc-row:hover .svc-name{transform:translateX(2px);}
+.svc-desc{grid-column:2;grid-row:2;font-size:14.5px;line-height:1.6;color:var(--text-soft);max-width:640px;}
+.svc-arrow{grid-column:3;grid-row:1/3;color:var(--ink);opacity:0;transform:translateX(-8px);transition:opacity .3s ease, transform .3s ease;}
+.svc-row:hover .svc-arrow{opacity:1;transform:translateX(0);}
+.svc-arrow svg{width:18px;height:18px;}
 
-@media (max-width:960px){
-  .services-grid{grid-template-columns:repeat(2,1fr);grid-auto-rows:220px;}
-  .svc-card.big{grid-column:span 2;grid-row:span 1;}
-}
-@media (max-width:560px){
-  .services-grid{grid-template-columns:1fr;grid-auto-rows:210px;}
-  .svc-card.big,.svc-card.wide{grid-column:span 1;}
+@media (max-width:700px){
+  .svc-row{grid-template-columns:40px 1fr 20px;column-gap:16px;padding:24px 4px;}
+  .svc-index{font-size:16px;}
+  .svc-name{font-size:18px;}
+  .svc-desc{font-size:13.5px;}
 }
 
 /* ============================================================
@@ -644,11 +630,8 @@ footer .footer-links a:hover{color:var(--copper-light);}
 <header id="siteHeader">
   <div class="container">
     <a href="#home" class="logo-lockup" aria-label="Isa Home Investments — Home">
-      <span class="logo-mark-badge"><img src="assets/logo-mark.jpg" alt=""></span>
-      <span class="logo-word">
-        <b>ISA</b> HOME INVESTMENTS
-        <span>Construction &amp; Remodeling</span>
-      </span>
+      <span class="logo-mark-badge logo-mark-full"><img src="assets/logo.jpg" alt="Isa Home Investments"></span>
+      <span class="logo-tagline">Construction &amp; Remodeling</span>
     </a>
     <nav class="primary-nav" aria-label="Primary">
       <ul>
@@ -774,101 +757,67 @@ footer .footer-links a:hover{color:var(--copper-light);}
       <p>From full remodels to targeted improvements, our team manages every phase of your project with the same level of care and professionalism.</p>
     </div>
 
-    <div class="services-grid" id="servicesGrid">
-      <!-- Big feature card -->
-      <article class="svc-card big reveal" data-project-type="Home Remodeling">
-        <div class="media-ph">
-          <div class="ph-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M3 11.5 12 4l9 7.5"/><path d="M5 10v9.5a1 1 0 0 0 1 1h4v-6h4v6h4a1 1 0 0 0 1-1V10"/></svg></div>
-        </div>
-        <div class="svc-overlay">
-          <h3>Home Remodeling</h3>
-          <p>Full-scale remodeling that reimagines your home's layout, function and finishes from the ground up.</p>
-          <button class="svc-more" data-svc="Home Remodeling">Learn More
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
-          </button>
-        </div>
-      </article>
-
-      <article class="svc-card reveal" data-project-type="Kitchen Remodeling">
-        <div class="media-ph tone-2"><div class="ph-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><rect x="4" y="8" width="16" height="10" rx="1.5"/><circle cx="8" cy="13" r="1.3" fill="currentColor" stroke="none"/><circle cx="12" cy="13" r="1.3" fill="currentColor" stroke="none"/><circle cx="16" cy="13" r="1.3" fill="currentColor" stroke="none"/></svg></div></div>
-        <div class="svc-overlay">
-          <h3>Kitchen Remodeling</h3>
-          <p>Modern, functional kitchens designed around how you actually cook and live.</p>
-          <button class="svc-more" data-svc="Kitchen Remodeling">Learn More<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
-        </div>
-      </article>
-
-      <article class="svc-card reveal" data-project-type="Bathroom Remodeling">
-        <div class="media-ph tone-3"><div class="ph-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M4 12h16v3a3 3 0 0 1-3 3H7a3 3 0 0 1-3-3Z"/><path d="M6 12V6a2 2 0 0 1 2-2"/><path d="M4 18v2M18 18v2"/></svg></div></div>
-        <div class="svc-overlay">
-          <h3>Bathroom Remodeling</h3>
-          <p>Spa-inspired, practical bathroom renovations built to last.</p>
-          <button class="svc-more" data-svc="Bathroom Remodeling">Learn More<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
-        </div>
-      </article>
-
-      <article class="svc-card wide reveal" data-project-type="Flooring">
-        <div class="media-ph"><div class="ph-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M3 9h18M3 15h18M3 9v10h18V9M3 9 8 4h13l-5 5"/></svg></div></div>
-        <div class="svc-overlay">
-          <h3>Flooring</h3>
-          <p>Tile, hardwood, laminate and more — installed with precision.</p>
-          <button class="svc-more" data-svc="Flooring">Learn More<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
-        </div>
-      </article>
-
-      <article class="svc-card reveal" data-project-type="Painting">
-        <div class="media-ph tone-2"><div class="ph-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><rect x="3" y="5" width="7" height="5" rx="1"/><path d="M6.5 10v3"/><rect x="4" y="13" width="5" height="7" rx="1"/></svg></div></div>
-        <div class="svc-overlay">
-          <h3>Painting</h3>
-          <p>Interior and exterior painting with a clean, lasting finish.</p>
-          <button class="svc-more" data-svc="Painting">Learn More<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
-        </div>
-      </article>
-
-      <article class="svc-card reveal" data-project-type="Roofing">
-        <div class="media-ph tone-3"><div class="ph-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M3 12 12 5l9 7"/><path d="M6 11v8h12v-8"/><path d="M10 9v2M14 9v2"/></svg></div></div>
-        <div class="svc-overlay">
-          <h3>Roofing</h3>
-          <p>Reliable roof repairs and replacements to protect your home.</p>
-          <button class="svc-more" data-svc="Roofing">Learn More<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
-        </div>
-      </article>
-
-      <article class="svc-card reveal" data-project-type="Interior Renovations">
-        <div class="media-ph"><div class="ph-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M4 20 15 9l3 3L7 23Z"/><path d="M13 6l5 5"/><path d="M3 21h4"/></svg></div></div>
-        <div class="svc-overlay">
-          <h3>Interior Renovations</h3>
-          <p>Reworking interior spaces for better flow and everyday living.</p>
-          <button class="svc-more" data-svc="Interior Renovations">Learn More<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
-        </div>
-      </article>
-
-      <article class="svc-card wide reveal" data-project-type="Exterior Improvements">
-        <div class="media-ph tone-2"><div class="ph-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M3 11 12 4l9 7"/><path d="M5 10v9.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V10"/><path d="M9 20v-5h6v5"/></svg></div></div>
-        <div class="svc-overlay">
-          <h3>Exterior Improvements</h3>
-          <p>Siding, facades and outdoor upgrades that boost curb appeal.</p>
-          <button class="svc-more" data-svc="Exterior Improvements">Learn More<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
-        </div>
-      </article>
-
-      <article class="svc-card reveal" data-project-type="General Construction">
-        <div class="media-ph tone-3"><div class="ph-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M4 20a8 4 0 0 1 16 0"/><path d="M6 20v-3a6 3 0 0 1 12 0v3"/></svg></div></div>
-        <div class="svc-overlay">
-          <h3>General Construction</h3>
-          <p>End-to-end construction management for residential projects.</p>
-          <button class="svc-more" data-svc="General Construction">Learn More<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
-        </div>
-      </article>
-
-      <article class="svc-card reveal" data-project-type="Home Improvements">
-        <div class="media-ph"><div class="ph-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M14.7 6.3a4 4 0 0 0-5.4 5.4L4 17l3 3 5.3-5.3a4 4 0 0 0 5.4-5.4l-2.3 2.3-2-2Z"/></svg></div></div>
-        <div class="svc-overlay">
-          <h3>Home Improvements</h3>
-          <p>Smaller upgrades and repairs that add lasting value.</p>
-          <button class="svc-more" data-svc="Home Improvements">Learn More<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
-        </div>
-      </article>
+    <div class="services-list reveal" id="servicesGrid">
+      <a href="#contact" class="svc-row svc-more" data-svc="Home Remodeling">
+        <span class="svc-index">01</span>
+        <span class="svc-name">Home Remodeling</span>
+        <span class="svc-desc">Full-scale remodeling that reimagines your home's layout, function and finishes from the ground up.</span>
+        <span class="svc-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+      </a>
+      <a href="#contact" class="svc-row svc-more" data-svc="Kitchen Remodeling">
+        <span class="svc-index">02</span>
+        <span class="svc-name">Kitchen Remodeling</span>
+        <span class="svc-desc">Modern, functional kitchens designed around how you actually cook and live.</span>
+        <span class="svc-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+      </a>
+      <a href="#contact" class="svc-row svc-more" data-svc="Bathroom Remodeling">
+        <span class="svc-index">03</span>
+        <span class="svc-name">Bathroom Remodeling</span>
+        <span class="svc-desc">Spa-inspired, practical bathroom renovations built to last.</span>
+        <span class="svc-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+      </a>
+      <a href="#contact" class="svc-row svc-more" data-svc="Flooring">
+        <span class="svc-index">04</span>
+        <span class="svc-name">Flooring</span>
+        <span class="svc-desc">Tile, hardwood, laminate and more — installed with precision.</span>
+        <span class="svc-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+      </a>
+      <a href="#contact" class="svc-row svc-more" data-svc="Painting">
+        <span class="svc-index">05</span>
+        <span class="svc-name">Painting</span>
+        <span class="svc-desc">Interior and exterior painting with a clean, lasting finish.</span>
+        <span class="svc-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+      </a>
+      <a href="#contact" class="svc-row svc-more" data-svc="Roofing">
+        <span class="svc-index">06</span>
+        <span class="svc-name">Roofing</span>
+        <span class="svc-desc">Reliable roof repairs and replacements to protect your home.</span>
+        <span class="svc-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+      </a>
+      <a href="#contact" class="svc-row svc-more" data-svc="Interior Renovations">
+        <span class="svc-index">07</span>
+        <span class="svc-name">Interior Renovations</span>
+        <span class="svc-desc">Reworking interior spaces for better flow and everyday living.</span>
+        <span class="svc-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+      </a>
+      <a href="#contact" class="svc-row svc-more" data-svc="Exterior Improvements">
+        <span class="svc-index">08</span>
+        <span class="svc-name">Exterior Improvements</span>
+        <span class="svc-desc">Siding, facades and outdoor upgrades that boost curb appeal.</span>
+        <span class="svc-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+      </a>
+      <a href="#contact" class="svc-row svc-more" data-svc="General Construction">
+        <span class="svc-index">09</span>
+        <span class="svc-name">General Construction</span>
+        <span class="svc-desc">End-to-end construction management for residential projects.</span>
+        <span class="svc-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+      </a>
+      <a href="#contact" class="svc-row svc-more" data-svc="Home Improvements">
+        <span class="svc-index">10</span>
+        <span class="svc-name">Home Improvements</span>
+        <span class="svc-desc">Smaller upgrades and repairs that add lasting value.</span>
+        <span class="svc-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+      </a>
     </div>
   </div>
 </section>
