@@ -168,10 +168,21 @@ section{position:relative;}
 .logo-mark-badge{width:42px;height:42px;flex-shrink:0;border-radius:9px;overflow:hidden;background:#000;box-shadow:0 0 0 1px rgba(255,255,255,0.16),0 6px 16px -8px rgba(0,0,0,0.5);transition:box-shadow .3s ease;}
 .logo-mark-badge img{width:100%;height:100%;object-fit:cover;display:block;}
 #siteHeader.scrolled .logo-mark-badge{box-shadow:0 0 0 1px rgba(0,0,0,0.12),0 6px 16px -8px rgba(0,0,0,0.25);}
-.logo-mark-full{width:54px;height:54px;border-radius:11px;}
-.logo-tagline{font-family:'Archivo',sans-serif;font-weight:600;font-size:10.5px;letter-spacing:0.22em;text-transform:uppercase;color:rgba(255,255,255,0.72);white-space:nowrap;transition:color .3s ease;}
-#siteHeader.scrolled .logo-tagline{color:var(--text-soft);}
-@media (max-width:480px){.logo-tagline{display:none;}}
+.logo-mark-full{width:68px;height:68px;border-radius:13px;transition:width .3s ease, height .3s ease;}
+#siteHeader.scrolled .logo-mark-full{width:56px;height:56px;}
+@media (max-width:480px){
+  .logo-mark-full{width:50px;height:50px;border-radius:10px;}
+  #siteHeader.scrolled .logo-mark-full{width:44px;height:44px;}
+}
+.lang-switch{display:flex;align-items:center;gap:7px;font-family:'Archivo',sans-serif;font-size:12px;font-weight:700;letter-spacing:0.06em;}
+.lang-btn{color:rgba(255,255,255,0.5);transition:color .25s ease;padding:2px 1px;}
+.lang-btn.active{color:var(--white);}
+.lang-btn:hover{color:var(--white);}
+.lang-sep{color:rgba(255,255,255,0.28);font-size:11px;}
+#siteHeader.scrolled .lang-btn{color:var(--text-soft);}
+#siteHeader.scrolled .lang-btn.active{color:var(--ink);}
+#siteHeader.scrolled .lang-sep{color:var(--line);}
+.btn-sm{padding:11px 20px;font-size:10.5px;}
 nav.primary-nav ul{display:flex;align-items:center;gap:34px;}
 nav.primary-nav ul li a{
   font-family:'Archivo',sans-serif;font-size:12px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;
@@ -201,13 +212,18 @@ nav.primary-nav ul li a:hover::after,nav.primary-nav ul li a.active::after{width
   border-bottom:1px solid var(--line-dark);
 }
 .mobile-menu .btn{margin-top:26px;}
-.mobile-menu-foot{margin-top:34px;font-size:13px;color:var(--text-on-dark-soft);}
+.mobile-menu .lang-switch{margin-top:30px;font-size:15px;}
+.mobile-menu .lang-switch .lang-sep{font-size:13px;}
+.mobile-menu-foot{margin-top:22px;font-size:13px;color:var(--text-on-dark-soft);}
 .mobile-menu-foot a{color:var(--copper-light);}
 
-@media (max-width:960px){
+@media (max-width:1140px){
   nav.primary-nav{display:none;}
   .header-actions .btn-primary{display:none;}
   .hamburger{display:flex;}
+}
+@media (max-width:360px){
+  .lang-switch{font-size:11px;}
 }
 
 /* ============================================================
@@ -215,19 +231,37 @@ nav.primary-nav ul li a:hover::after,nav.primary-nav ul li a.active::after{width
    ============================================================ */
 .hero{
   min-height:100vh;display:flex;align-items:center;position:relative;
-  background:linear-gradient(180deg,rgba(0,0,0,0.55),rgba(0,0,0,0.82) 60%,var(--ink) 100%),
-    linear-gradient(135deg,#171717 0%,#0A0A0A 60%,#1F1F1F 100%);
-  color:var(--white);overflow:hidden;padding:150px 0 90px;
+  background:var(--ink);color:var(--white);overflow:hidden;padding:150px 0 90px;
 }
 .hero::before{
-  content:'';position:absolute;inset:0;opacity:0.55;
+  content:'';position:absolute;inset:0;opacity:0.55;z-index:0;
   background-image:linear-gradient(rgba(255,255,255,0.045) 1px, transparent 1px),linear-gradient(90deg, rgba(255,255,255,0.045) 1px, transparent 1px);
-  background-size:46px 46px;mask-image:linear-gradient(180deg, rgba(0,0,0,0.9), transparent 78%);
+  background-size:46px 46px;
 }
-.hero::after{content:'';position:absolute;right:-8%;top:12%;width:56%;height:80%;
-  background:radial-gradient(ellipse at center, rgba(255,255,255,0.09), transparent 60%);pointer-events:none;}
-.hero .container{position:relative;z-index:2;display:grid;grid-template-columns:1.15fr 0.85fr;gap:60px;align-items:end;}
-.hero-copy{max-width:640px;}
+/* ---- Right-side architectural visual (40-50% of hero width) ---- */
+.hero-visual{position:absolute;inset:0 0 0 auto;top:0;right:0;bottom:0;width:46%;overflow:hidden;z-index:1;}
+.hero-visual-media{
+  position:absolute;inset:-8% -6%;
+  background:linear-gradient(150deg,#1c1c1c 0%,#0A0A0A 55%,#232323 100%);
+  will-change:transform;
+}
+.hero-arch{position:absolute;inset:0;width:100%;height:100%;color:rgba(255,255,255,0.5);}
+.hero-visual::before{ /* blend left edge into the hero background */
+  content:'';position:absolute;inset:0;z-index:2;
+  background:linear-gradient(90deg, var(--ink) 0%, rgba(10,10,10,0.7) 14%, rgba(10,10,10,0) 46%);
+}
+.hero-visual::after{ /* blend bottom edge */
+  content:'';position:absolute;inset:0;z-index:2;
+  background:linear-gradient(0deg, var(--ink) 0%, rgba(10,10,10,0) 32%);
+}
+.hero-visual-tag{
+  position:absolute;left:20px;bottom:20px;z-index:3;
+  font-family:'Archivo',sans-serif;font-size:9.5px;letter-spacing:0.14em;text-transform:uppercase;
+  color:var(--text-on-dark-soft);background:rgba(0,0,0,0.55);border:1px solid var(--line-dark);
+  padding:5px 10px;border-radius:20px;backdrop-filter:blur(4px);
+}
+.hero .container{position:relative;z-index:3;}
+.hero-copy{max-width:560px;}
 html.js .hero-copy>*{opacity:0;transform:translateY(18px);animation:heroIn .8s cubic-bezier(.2,.7,.2,1) forwards;}
 html.js .hero-copy>*:nth-child(1){animation-delay:.05s;}
 html.js .hero-copy>*:nth-child(2){animation-delay:.18s;}
@@ -239,37 +273,18 @@ html.js .hero-copy>*:nth-child(4){animation-delay:.42s;}
   letter-spacing:0.22em;text-transform:uppercase;color:var(--copper-light);margin-bottom:26px;
 }
 .hero-eyebrow::before{content:'';width:26px;height:2px;background:var(--copper-light);}
-.hero h1{font-size:clamp(38px,5.6vw,74px);font-weight:900;color:var(--white);letter-spacing:-0.015em;}
+.hero h1{font-size:clamp(42px,6.4vw,84px);font-weight:900;color:var(--white);letter-spacing:-0.02em;}
 .hero h1 em{font-style:italic;font-weight:600;color:var(--copper-light);}
-.hero-sub{margin-top:26px;font-size:17px;line-height:1.75;color:var(--text-on-dark-soft);max-width:520px;}
+.hero-sub{margin-top:24px;font-size:17px;line-height:1.7;color:var(--text-on-dark-soft);max-width:440px;}
 .hero-btns{margin-top:38px;display:flex;flex-wrap:wrap;gap:16px;}
-.hero-pills{margin-top:52px;display:flex;flex-wrap:wrap;gap:12px 28px;}
-.hero-pills span{
-  display:inline-flex;align-items:center;gap:9px;font-family:'Archivo',sans-serif;font-size:11.5px;font-weight:600;
-  letter-spacing:0.06em;text-transform:uppercase;color:var(--text-on-dark-soft);
-}
-.hero-pills span::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--copper);flex-shrink:0;}
-.hero-panel{position:relative;}
-.hero-panel .media-ph{border-radius:8px;aspect-ratio:4/5;box-shadow:0 40px 80px -30px rgba(0,0,0,0.6);border:1px solid rgba(255,255,255,0.08);}
-.hero-panel .float-card{
-  position:absolute;left:-34px;bottom:34px;background:var(--white);color:var(--ink);border-radius:6px;
-  padding:20px 24px;box-shadow:var(--shadow);display:flex;align-items:center;gap:14px;max-width:250px;
-}
-.hero-panel .float-card .fc-icon{width:38px;height:38px;flex-shrink:0;border-radius:50%;background:var(--paper-2);display:flex;align-items:center;justify-content:center;color:var(--copper);}
-.hero-panel .float-card .fc-icon svg{width:18px;height:18px;}
-.hero-panel .float-card b{display:block;font-family:'Archivo',sans-serif;font-size:13px;font-weight:800;}
-.hero-panel .float-card small{font-size:11.5px;color:var(--text-soft);}
-.scroll-cue{
-  position:absolute;bottom:26px;left:50%;transform:translateX(-50%);z-index:2;
-  display:flex;flex-direction:column;align-items:center;gap:8px;
-  font-family:'Archivo',sans-serif;font-size:10px;letter-spacing:0.22em;text-transform:uppercase;color:var(--text-on-dark-soft);
-}
-.scroll-cue .line{width:1px;height:34px;background:linear-gradient(var(--copper-light),transparent);animation:bob 2s ease-in-out infinite;}
-@keyframes bob{0%,100%{transform:translateY(0);opacity:.6;}50%{transform:translateY(8px);opacity:1;}}
 
 @media (max-width:1080px){
-  .hero .container{grid-template-columns:1fr;}
-  .hero-panel{display:none;}
+  .hero-visual{width:40%;}
+  .hero h1{font-size:clamp(38px,7vw,64px);}
+}
+@media (max-width:760px){
+  .hero-visual{display:none;}
+  .hero-copy{max-width:100%;}
 }
 @media (max-width:600px){
   .hero{padding:130px 0 80px;}
@@ -631,20 +646,24 @@ footer .footer-links a:hover{color:var(--copper-light);}
   <div class="container">
     <a href="#home" class="logo-lockup" aria-label="Isa Home Investments — Home">
       <span class="logo-mark-badge logo-mark-full"><img src="assets/logo.jpg" alt="Isa Home Investments"></span>
-      <span class="logo-tagline">Construction &amp; Remodeling</span>
     </a>
     <nav class="primary-nav" aria-label="Primary">
       <ul>
-        <li><a href="#home" class="nav-link">Home</a></li>
-        <li><a href="#about" class="nav-link">About Us</a></li>
-        <li><a href="#services" class="nav-link">Services</a></li>
-        <li><a href="#projects" class="nav-link">Projects</a></li>
-        <li><a href="#financing" class="nav-link">Financing</a></li>
-        <li><a href="#contact" class="nav-link">Contact</a></li>
+        <li><a href="#home" class="nav-link" data-i18n="nav.home">Home</a></li>
+        <li><a href="#about" class="nav-link" data-i18n="nav.about">About Us</a></li>
+        <li><a href="#services" class="nav-link" data-i18n="nav.services">Services</a></li>
+        <li><a href="#projects" class="nav-link" data-i18n="nav.projects">Projects</a></li>
+        <li><a href="#financing" class="nav-link" data-i18n="nav.financing">Financing</a></li>
+        <li><a href="#contact" class="nav-link" data-i18n="nav.contact">Contact</a></li>
       </ul>
     </nav>
     <div class="header-actions">
-      <a href="#contact" class="btn btn-primary">Get a Free Estimate
+      <div class="lang-switch" role="group" aria-label="Language">
+        <button type="button" class="lang-btn active" data-lang="en">EN</button>
+        <span class="lang-sep">|</span>
+        <button type="button" class="lang-btn" data-lang="es">ES</button>
+      </div>
+      <a href="#contact" class="btn btn-primary btn-sm"><span data-i18n="nav.cta">Get a Free Estimate</span>
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
       </a>
       <button class="hamburger" id="hamburgerBtn" aria-label="Open menu" aria-expanded="false" aria-controls="mobileMenu">
@@ -657,16 +676,21 @@ footer .footer-links a:hover{color:var(--copper-light);}
 <div class="mobile-menu" id="mobileMenu">
   <nav aria-label="Mobile">
     <ul>
-      <li><a href="#home" class="nav-link">Home</a></li>
-      <li><a href="#about" class="nav-link">About Us</a></li>
-      <li><a href="#services" class="nav-link">Services</a></li>
-      <li><a href="#projects" class="nav-link">Projects</a></li>
-      <li><a href="#financing" class="nav-link">Financing</a></li>
-      <li><a href="#contact" class="nav-link">Contact</a></li>
+      <li><a href="#home" class="nav-link" data-i18n="nav.home">Home</a></li>
+      <li><a href="#about" class="nav-link" data-i18n="nav.about">About Us</a></li>
+      <li><a href="#services" class="nav-link" data-i18n="nav.services">Services</a></li>
+      <li><a href="#projects" class="nav-link" data-i18n="nav.projects">Projects</a></li>
+      <li><a href="#financing" class="nav-link" data-i18n="nav.financing">Financing</a></li>
+      <li><a href="#contact" class="nav-link" data-i18n="nav.contact">Contact</a></li>
     </ul>
   </nav>
-  <a href="#contact" class="btn btn-primary btn-block nav-link">Get a Free Estimate</a>
-  <div class="mobile-menu-foot">Email us at <a href="mailto:info@isahomeus.com">info@isahomeus.com</a></div>
+  <a href="#contact" class="btn btn-primary btn-block nav-link" data-i18n="nav.cta">Get a Free Estimate</a>
+  <div class="lang-switch" role="group" aria-label="Language">
+    <button type="button" class="lang-btn active" data-lang="en">EN</button>
+    <span class="lang-sep">|</span>
+    <button type="button" class="lang-btn" data-lang="es">ES</button>
+  </div>
+  <div class="mobile-menu-foot" data-i18n-html="nav.emailUs">Email us at <a href="mailto:info@isahomeus.com">info@isahomeus.com</a></div>
 </div>
 
 <main id="main">
@@ -674,43 +698,43 @@ footer .footer-links a:hover{color:var(--copper-light);}
      HERO
      ============================================================ -->
 <section class="hero" id="home">
+  <div class="hero-visual" id="heroVisual" aria-hidden="true">
+    <div class="hero-visual-media" id="heroVisualMedia">
+      <svg class="hero-arch" viewBox="0 0 420 560" preserveAspectRatio="xMidYMid slice" fill="none" stroke="currentColor" stroke-width="1.1">
+        <line x1="30" y1="486" x2="404" y2="486"/>
+        <rect x="70" y="266" width="290" height="220"/>
+        <rect x="118" y="156" width="214" height="112"/>
+        <line x1="100" y1="156" x2="350" y2="156"/>
+        <rect x="96" y="306" width="150" height="104"/>
+        <line x1="134" y1="306" x2="134" y2="410"/>
+        <line x1="172" y1="306" x2="172" y2="410"/>
+        <line x1="210" y1="306" x2="210" y2="410"/>
+        <line x1="96" y1="358" x2="246" y2="358"/>
+        <rect x="278" y="392" width="46" height="94"/>
+        <line x1="278" y1="440" x2="324" y2="440"/>
+        <line x1="140" y1="180" x2="140" y2="266" stroke-opacity="0.55"/>
+        <line x1="200" y1="180" x2="200" y2="266" stroke-opacity="0.55"/>
+        <line x1="260" y1="180" x2="260" y2="266" stroke-opacity="0.55"/>
+        <line x1="310" y1="180" x2="310" y2="266" stroke-opacity="0.55"/>
+        <path d="M382 156v330" stroke-opacity="0.35" stroke-dasharray="2 6"/>
+        <path d="M375 156h14M375 486h14" stroke-opacity="0.35"/>
+      </svg>
+    </div>
+    <span class="hero-visual-tag" data-i18n="hero.photoTag">Photo placeholder — real project photography coming soon</span>
+  </div>
   <div class="container">
     <div class="hero-copy">
-      <span class="hero-eyebrow">South Florida Construction &amp; Remodeling</span>
-      <h1>Building Better Spaces.<br>Building Better <em>Homes.</em></h1>
-      <p class="hero-sub">From renovations to complete transformations, Isa Home Investments helps bring your vision to life with quality workmanship and a professional approach from start to finish.</p>
+      <span class="hero-eyebrow" data-i18n="hero.eyebrow">South Florida &bull; Construction &amp; Remodeling</span>
+      <h1 data-i18n-html="hero.headline">We Build.<br>You Live <em>Better.</em></h1>
+      <p class="hero-sub" data-i18n="hero.sub">Construction and remodeling designed around your vision, built with precision.</p>
       <div class="hero-btns">
-        <a href="#contact" class="btn btn-primary">Get a Free Estimate
+        <a href="#contact" class="btn btn-primary"><span data-i18n="hero.ctaEstimate">Get a Free Estimate</span>
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
         </a>
-        <a href="#services" class="btn btn-outline">Our Services</a>
-      </div>
-      <div class="hero-pills">
-        <span>Residential Construction</span>
-        <span>Remodeling</span>
-        <span>Renovations</span>
-        <span>Home Improvements</span>
-      </div>
-    </div>
-    <div class="hero-panel reveal">
-      <div class="media-ph tone-2" role="img" aria-label="Placeholder — modern home renovation photo">
-        <div class="ph-icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M3 11.5 12 4l9 7.5"/><path d="M5 10v9.5a1 1 0 0 0 1 1h4v-6h4v6h4a1 1 0 0 0 1-1V10"/></svg>
-        </div>
-        <span class="ph-tag">Photo placeholder — real project photo coming soon</span>
-      </div>
-      <div class="float-card">
-        <div class="fc-icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20 6 9 17l-5-5"/></svg>
-        </div>
-        <div>
-          <b>Professional Process</b>
-          <small>Estimate to final walkthrough</small>
-        </div>
+        <a href="#projects" class="btn btn-outline" data-i18n="hero.ctaProjects">View Our Projects</a>
       </div>
     </div>
   </div>
-  <div class="scroll-cue"><span>Scroll</span><span class="line"></span></div>
 </section>
 
 <!-- ============================================================
@@ -723,23 +747,23 @@ footer .footer-links a:hover{color:var(--copper-light);}
         <div class="ph-icon">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M12 3 4 8v3l8-5 8 5V8Z"/><path d="M6 11v9h12v-9"/><path d="M10 20v-5h4v5"/></svg>
         </div>
-        <span class="ph-tag">Photo placeholder</span>
+        <span class="ph-tag" data-i18n="common.photoPlaceholder">Photo placeholder</span>
       </div>
       <div class="badge-card">
-        <b>Client-Centered Process</b>
-        <span>Every project starts with listening to what you actually need.</span>
+        <b data-i18n="intro.badgeTitle">Client-Centered Process</b>
+        <span data-i18n="intro.badgeText">Every project starts with listening to what you actually need.</span>
       </div>
     </div>
     <div class="intro-copy reveal reveal-delay-1">
-      <span class="eyebrow">Who We Are</span>
-      <h2>Your Vision. Our Expertise.</h2>
-      <p>At Isa Home Investments, we help homeowners transform their properties through professional construction, renovation and remodeling services. From the initial consultation to the final details, our goal is to deliver functional, beautiful spaces built around our clients' needs.</p>
+      <span class="eyebrow" data-i18n="intro.eyebrow">Who We Are</span>
+      <h2 data-i18n="intro.title">Your Vision. Our Expertise.</h2>
+      <p data-i18n="intro.body">At Isa Home Investments, we help homeowners transform their properties through professional construction, renovation and remodeling services. From the initial consultation to the final details, our goal is to deliver functional, beautiful spaces built around our clients' needs.</p>
       <div class="intro-badges">
-        <span>Residential Focus</span>
-        <span>Clear Communication</span>
-        <span>Detail-Driven Craftsmanship</span>
+        <span data-i18n="intro.badge1">Residential Focus</span>
+        <span data-i18n="intro.badge2">Clear Communication</span>
+        <span data-i18n="intro.badge3">Detail-Driven Craftsmanship</span>
       </div>
-      <a href="#about" class="btn btn-outline-dark">About Isa Home Investments
+      <a href="#about" class="btn btn-outline-dark"><span data-i18n="intro.cta">About Isa Home Investments</span>
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
       </a>
     </div>
@@ -752,70 +776,70 @@ footer .footer-links a:hover{color:var(--copper-light);}
 <section class="services section-pad" id="services">
   <div class="container">
     <div class="section-head reveal">
-      <span class="eyebrow">What We Do</span>
-      <h2>Services Built Around Your Home</h2>
-      <p>From full remodels to targeted improvements, our team manages every phase of your project with the same level of care and professionalism.</p>
+      <span class="eyebrow" data-i18n="services.eyebrow">What We Do</span>
+      <h2 data-i18n="services.title">Services Built Around Your Home</h2>
+      <p data-i18n="services.body">From full remodels to targeted improvements, our team manages every phase of your project with the same level of care and professionalism.</p>
     </div>
 
     <div class="services-list reveal" id="servicesGrid">
       <a href="#contact" class="svc-row svc-more" data-svc="Home Remodeling">
         <span class="svc-index">01</span>
-        <span class="svc-name">Home Remodeling</span>
-        <span class="svc-desc">Full-scale remodeling that reimagines your home's layout, function and finishes from the ground up.</span>
+        <span class="svc-name" data-i18n="services.item1.name">Home Remodeling</span>
+        <span class="svc-desc" data-i18n="services.item1.desc">Full-scale remodeling that reimagines your home's layout, function and finishes from the ground up.</span>
         <span class="svc-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
       </a>
       <a href="#contact" class="svc-row svc-more" data-svc="Kitchen Remodeling">
         <span class="svc-index">02</span>
-        <span class="svc-name">Kitchen Remodeling</span>
-        <span class="svc-desc">Modern, functional kitchens designed around how you actually cook and live.</span>
+        <span class="svc-name" data-i18n="services.item2.name">Kitchen Remodeling</span>
+        <span class="svc-desc" data-i18n="services.item2.desc">Modern, functional kitchens designed around how you actually cook and live.</span>
         <span class="svc-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
       </a>
       <a href="#contact" class="svc-row svc-more" data-svc="Bathroom Remodeling">
         <span class="svc-index">03</span>
-        <span class="svc-name">Bathroom Remodeling</span>
-        <span class="svc-desc">Spa-inspired, practical bathroom renovations built to last.</span>
+        <span class="svc-name" data-i18n="services.item3.name">Bathroom Remodeling</span>
+        <span class="svc-desc" data-i18n="services.item3.desc">Spa-inspired, practical bathroom renovations built to last.</span>
         <span class="svc-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
       </a>
       <a href="#contact" class="svc-row svc-more" data-svc="Flooring">
         <span class="svc-index">04</span>
-        <span class="svc-name">Flooring</span>
-        <span class="svc-desc">Tile, hardwood, laminate and more — installed with precision.</span>
+        <span class="svc-name" data-i18n="services.item4.name">Flooring</span>
+        <span class="svc-desc" data-i18n="services.item4.desc">Tile, hardwood, laminate and more — installed with precision.</span>
         <span class="svc-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
       </a>
       <a href="#contact" class="svc-row svc-more" data-svc="Painting">
         <span class="svc-index">05</span>
-        <span class="svc-name">Painting</span>
-        <span class="svc-desc">Interior and exterior painting with a clean, lasting finish.</span>
+        <span class="svc-name" data-i18n="services.item5.name">Painting</span>
+        <span class="svc-desc" data-i18n="services.item5.desc">Interior and exterior painting with a clean, lasting finish.</span>
         <span class="svc-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
       </a>
       <a href="#contact" class="svc-row svc-more" data-svc="Roofing">
         <span class="svc-index">06</span>
-        <span class="svc-name">Roofing</span>
-        <span class="svc-desc">Reliable roof repairs and replacements to protect your home.</span>
+        <span class="svc-name" data-i18n="services.item6.name">Roofing</span>
+        <span class="svc-desc" data-i18n="services.item6.desc">Reliable roof repairs and replacements to protect your home.</span>
         <span class="svc-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
       </a>
       <a href="#contact" class="svc-row svc-more" data-svc="Interior Renovations">
         <span class="svc-index">07</span>
-        <span class="svc-name">Interior Renovations</span>
-        <span class="svc-desc">Reworking interior spaces for better flow and everyday living.</span>
+        <span class="svc-name" data-i18n="services.item7.name">Interior Renovations</span>
+        <span class="svc-desc" data-i18n="services.item7.desc">Reworking interior spaces for better flow and everyday living.</span>
         <span class="svc-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
       </a>
       <a href="#contact" class="svc-row svc-more" data-svc="Exterior Improvements">
         <span class="svc-index">08</span>
-        <span class="svc-name">Exterior Improvements</span>
-        <span class="svc-desc">Siding, facades and outdoor upgrades that boost curb appeal.</span>
+        <span class="svc-name" data-i18n="services.item8.name">Exterior Improvements</span>
+        <span class="svc-desc" data-i18n="services.item8.desc">Siding, facades and outdoor upgrades that boost curb appeal.</span>
         <span class="svc-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
       </a>
       <a href="#contact" class="svc-row svc-more" data-svc="General Construction">
         <span class="svc-index">09</span>
-        <span class="svc-name">General Construction</span>
-        <span class="svc-desc">End-to-end construction management for residential projects.</span>
+        <span class="svc-name" data-i18n="services.item9.name">General Construction</span>
+        <span class="svc-desc" data-i18n="services.item9.desc">End-to-end construction management for residential projects.</span>
         <span class="svc-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
       </a>
       <a href="#contact" class="svc-row svc-more" data-svc="Home Improvements">
         <span class="svc-index">10</span>
-        <span class="svc-name">Home Improvements</span>
-        <span class="svc-desc">Smaller upgrades and repairs that add lasting value.</span>
+        <span class="svc-name" data-i18n="services.item10.name">Home Improvements</span>
+        <span class="svc-desc" data-i18n="services.item10.desc">Smaller upgrades and repairs that add lasting value.</span>
         <span class="svc-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
       </a>
     </div>
@@ -828,40 +852,40 @@ footer .footer-links a:hover{color:var(--copper-light);}
 <section class="why section-pad">
   <div class="container">
     <div class="section-head center reveal">
-      <span class="eyebrow">Why Isa Home Investments</span>
-      <h2>Why Homeowners Choose Isa Home Investments</h2>
-      <p>We combine professional project management with genuine care for the outcome of every home we work on.</p>
+      <span class="eyebrow" data-i18n="why.eyebrow">Why Isa Home Investments</span>
+      <h2 data-i18n="why.title">Why Homeowners Choose Isa Home Investments</h2>
+      <p data-i18n="why.body">We combine professional project management with genuine care for the outcome of every home we work on.</p>
     </div>
     <div class="why-grid">
       <div class="why-item reveal">
         <div class="wi-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 3 4 6v6c0 5 3.5 8 8 9 4.5-1 8-4 8-9V6Z"/><path d="m9 12 2 2 4-4"/></svg></div>
-        <h3>Quality Workmanship</h3>
-        <p>Every project is executed with care, precision and respect for your home.</p>
+        <h3 data-i18n="why.item1.title">Quality Workmanship</h3>
+        <p data-i18n="why.item1.desc">Every project is executed with care, precision and respect for your home.</p>
       </div>
       <div class="why-item reveal reveal-delay-1">
         <div class="wi-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M21 12a8 8 0 1 1-3.5-6.6"/><path d="M21 4v6h-6"/></svg></div>
-        <h3>Reliable Communication</h3>
-        <p>You'll always know the status of your project — no guessing games.</p>
+        <h3 data-i18n="why.item2.title">Reliable Communication</h3>
+        <p data-i18n="why.item2.desc">You'll always know the status of your project — no guessing games.</p>
       </div>
       <div class="why-item reveal reveal-delay-2">
         <div class="wi-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="5" y="4" width="14" height="17" rx="2"/><path d="M9 3h6v3H9zM8 11h8M8 15h5"/></svg></div>
-        <h3>Professional Project Management</h3>
-        <p>Every phase is planned, tracked and coordinated from start to finish.</p>
+        <h3 data-i18n="why.item3.title">Professional Project Management</h3>
+        <p data-i18n="why.item3.desc">Every phase is planned, tracked and coordinated from start to finish.</p>
       </div>
       <div class="why-item reveal">
         <div class="wi-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="11" cy="11" r="6"/><path d="m20 20-4-4"/></svg></div>
-        <h3>Attention to Detail</h3>
-        <p>The small decisions matter — we treat them that way.</p>
+        <h3 data-i18n="why.item4.title">Attention to Detail</h3>
+        <p data-i18n="why.item4.desc">The small decisions matter — we treat them that way.</p>
       </div>
       <div class="why-item reveal reveal-delay-1">
         <div class="wi-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M9 3v4M15 3v4M4 8h16M6 8v11a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V8"/><path d="M9 13h6M9 17h4"/></svg></div>
-        <h3>Customized Solutions</h3>
-        <p>Every home and every client is different — your plan is built for you.</p>
+        <h3 data-i18n="why.item5.title">Customized Solutions</h3>
+        <p data-i18n="why.item5.desc">Every home and every client is different — your plan is built for you.</p>
       </div>
       <div class="why-item reveal reveal-delay-2">
         <div class="wi-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="9"/><path d="M9 9h.01M15 15h.01M15 9 9 15"/></svg></div>
-        <h3>Financing Options Available</h3>
-        <p>We can help connect you with third-party financing options for your project.</p>
+        <h3 data-i18n="why.item6.title">Financing Options Available</h3>
+        <p data-i18n="why.item6.desc">We can help connect you with third-party financing options for your project.</p>
       </div>
     </div>
   </div>
@@ -873,97 +897,97 @@ footer .footer-links a:hover{color:var(--copper-light);}
 <section class="projects section-pad" id="projects">
   <div class="container">
     <div class="section-head reveal">
-      <span class="eyebrow">Our Work</span>
-      <h2>Our Work Speaks for Itself</h2>
-      <p>A look at the type of residential projects we take on — from full renovations to focused room remodels. Real project photography will replace these placeholders as jobs are completed.</p>
+      <span class="eyebrow" data-i18n="projects.eyebrow">Our Work</span>
+      <h2 data-i18n="projects.title">Our Work Speaks for Itself</h2>
+      <p data-i18n="projects.body">A look at the type of residential projects we take on — from full renovations to focused room remodels. Real project photography will replace these placeholders as jobs are completed.</p>
     </div>
 
     <div class="filter-bar reveal" id="filterBar">
-      <button class="filter-btn active" data-filter="all">All</button>
-      <button class="filter-btn" data-filter="interior">Interior</button>
-      <button class="filter-btn" data-filter="exterior">Exterior</button>
-      <button class="filter-btn" data-filter="kitchen">Kitchen</button>
-      <button class="filter-btn" data-filter="bathroom">Bathroom</button>
-      <button class="filter-btn" data-filter="renovation">Renovations</button>
+      <button class="filter-btn active" data-filter="all" data-i18n="projects.filter.all">All</button>
+      <button class="filter-btn" data-filter="interior" data-i18n="projects.filter.interior">Interior</button>
+      <button class="filter-btn" data-filter="exterior" data-i18n="projects.filter.exterior">Exterior</button>
+      <button class="filter-btn" data-filter="kitchen" data-i18n="projects.filter.kitchen">Kitchen</button>
+      <button class="filter-btn" data-filter="bathroom" data-i18n="projects.filter.bathroom">Bathroom</button>
+      <button class="filter-btn" data-filter="renovation" data-i18n="projects.filter.renovation">Renovations</button>
     </div>
 
     <div class="projects-grid" id="projectsGrid">
       <!-- Each card: data-category holds space separated filter tags -->
       <article class="proj-card reveal" data-category="kitchen interior renovation" data-title="Kitchen Remodel" data-cat-label="Kitchen">
         <div class="media-ph"><div class="ph-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><rect x="4" y="8" width="16" height="10" rx="1.5"/><circle cx="8" cy="13" r="1.3" fill="currentColor" stroke="none"/><circle cx="12" cy="13" r="1.3" fill="currentColor" stroke="none"/><circle cx="16" cy="13" r="1.3" fill="currentColor" stroke="none"/></svg></div></div>
-        <div class="proj-overlay"><span class="p-cat">Kitchen</span><h4>Kitchen Remodel</h4></div>
+        <div class="proj-overlay"><span class="p-cat" data-i18n="projects.filter.kitchen">Kitchen</span><h4 data-i18n="projects.card1.title">Kitchen Remodel</h4></div>
         <div class="proj-expand"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></div>
       </article>
 
       <article class="proj-card reveal" data-category="bathroom interior renovation" data-title="Bathroom Remodel" data-cat-label="Bathroom">
         <div class="media-ph tone-3"><div class="ph-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M4 12h16v3a3 3 0 0 1-3 3H7a3 3 0 0 1-3-3Z"/><path d="M6 12V6a2 2 0 0 1 2-2"/></svg></div></div>
-        <div class="proj-overlay"><span class="p-cat">Bathroom</span><h4>Bathroom Remodel</h4></div>
+        <div class="proj-overlay"><span class="p-cat" data-i18n="projects.filter.bathroom">Bathroom</span><h4 data-i18n="projects.card2.title">Bathroom Remodel</h4></div>
         <div class="proj-expand"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></div>
       </article>
 
       <article class="proj-card reveal" data-category="exterior renovation" data-title="Exterior Facade Upgrade" data-cat-label="Exterior">
         <div class="media-ph tone-2"><div class="ph-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M3 11 12 4l9 7"/><path d="M5 10v9.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V10"/></svg></div></div>
-        <div class="proj-overlay"><span class="p-cat">Exterior</span><h4>Exterior Facade Upgrade</h4></div>
+        <div class="proj-overlay"><span class="p-cat" data-i18n="projects.filter.exterior">Exterior</span><h4 data-i18n="projects.card3.title">Exterior Facade Upgrade</h4></div>
         <div class="proj-expand"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></div>
       </article>
 
       <article class="proj-card reveal" data-category="interior renovation" data-title="Open-Concept Living Renovation" data-cat-label="Interior">
         <div class="media-ph"><div class="ph-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M4 20 15 9l3 3L7 23Z"/><path d="M13 6l5 5"/></svg></div></div>
-        <div class="proj-overlay"><span class="p-cat">Interior</span><h4>Open-Concept Living Renovation</h4></div>
+        <div class="proj-overlay"><span class="p-cat" data-i18n="projects.filter.interior">Interior</span><h4 data-i18n="projects.card4.title">Open-Concept Living Renovation</h4></div>
         <div class="proj-expand"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></div>
       </article>
 
       <article class="proj-card reveal" data-category="exterior" data-title="Roof Replacement" data-cat-label="Exterior">
         <div class="media-ph tone-3"><div class="ph-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M3 12 12 5l9 7"/><path d="M6 11v8h12v-8"/></svg></div></div>
-        <div class="proj-overlay"><span class="p-cat">Exterior</span><h4>Roof Replacement</h4></div>
+        <div class="proj-overlay"><span class="p-cat" data-i18n="projects.filter.exterior">Exterior</span><h4 data-i18n="projects.card5.title">Roof Replacement</h4></div>
         <div class="proj-expand"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></div>
       </article>
 
       <article class="proj-card reveal" data-category="kitchen interior" data-title="Custom Cabinetry Install" data-cat-label="Kitchen">
         <div class="media-ph tone-2"><div class="ph-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M3 4h18v16H3ZM12 4v16"/></svg></div></div>
-        <div class="proj-overlay"><span class="p-cat">Kitchen</span><h4>Custom Cabinetry Install</h4></div>
+        <div class="proj-overlay"><span class="p-cat" data-i18n="projects.filter.kitchen">Kitchen</span><h4 data-i18n="projects.card6.title">Custom Cabinetry Install</h4></div>
         <div class="proj-expand"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></div>
       </article>
     </div>
 
     <!-- Before & After comparisons -->
     <div class="ba-heading reveal">
-      <h3>Before &amp; After</h3>
-      <span>Drag the slider to compare</span>
+      <h3 data-i18n="projects.ba.heading">Before &amp; After</h3>
+      <span data-i18n="projects.ba.sub">Drag the slider to compare</span>
     </div>
     <div class="ba-grid">
       <div class="ba-card reveal">
         <div class="ba-slider" data-ba>
-          <div class="ba-media media-ph tone-2"><div class="ph-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><rect x="4" y="8" width="16" height="10" rx="1.5"/></svg></div><span class="ph-tag">Before</span></div>
-          <div class="ba-media ba-after media-ph"><div class="ph-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><rect x="4" y="8" width="16" height="10" rx="1.5"/><circle cx="8" cy="13" r="1.3" fill="currentColor" stroke="none"/><circle cx="12" cy="13" r="1.3" fill="currentColor" stroke="none"/><circle cx="16" cy="13" r="1.3" fill="currentColor" stroke="none"/></svg></div><span class="ph-tag">After</span></div>
-          <div class="ba-label before">Before</div>
-          <div class="ba-label after">After</div>
+          <div class="ba-media media-ph tone-2"><div class="ph-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><rect x="4" y="8" width="16" height="10" rx="1.5"/></svg></div><span class="ph-tag" data-i18n="common.before">Before</span></div>
+          <div class="ba-media ba-after media-ph"><div class="ph-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><rect x="4" y="8" width="16" height="10" rx="1.5"/><circle cx="8" cy="13" r="1.3" fill="currentColor" stroke="none"/><circle cx="12" cy="13" r="1.3" fill="currentColor" stroke="none"/><circle cx="16" cy="13" r="1.3" fill="currentColor" stroke="none"/></svg></div><span class="ph-tag" data-i18n="common.after">After</span></div>
+          <div class="ba-label before" data-i18n="common.before">Before</div>
+          <div class="ba-label after" data-i18n="common.after">After</div>
           <div class="ba-handle"></div>
           <input type="range" min="0" max="100" value="50" aria-label="Drag to compare before and after">
         </div>
-        <div class="ba-caption"><h4>Kitchen Transformation</h4><span>Full remodel — cabinets, counters &amp; layout</span></div>
+        <div class="ba-caption"><h4 data-i18n="projects.ba1.title">Kitchen Transformation</h4><span data-i18n="projects.ba1.desc">Full remodel — cabinets, counters &amp; layout</span></div>
       </div>
       <div class="ba-card reveal reveal-delay-1">
         <div class="ba-slider" data-ba>
-          <div class="ba-media media-ph tone-3"><div class="ph-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M4 12h16v3a3 3 0 0 1-3 3H7a3 3 0 0 1-3-3Z"/></svg></div><span class="ph-tag">Before</span></div>
-          <div class="ba-media ba-after media-ph"><div class="ph-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M4 12h16v3a3 3 0 0 1-3 3H7a3 3 0 0 1-3-3Z"/><path d="M6 12V6a2 2 0 0 1 2-2"/></svg></div><span class="ph-tag">After</span></div>
-          <div class="ba-label before">Before</div>
-          <div class="ba-label after">After</div>
+          <div class="ba-media media-ph tone-3"><div class="ph-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M4 12h16v3a3 3 0 0 1-3 3H7a3 3 0 0 1-3-3Z"/></svg></div><span class="ph-tag" data-i18n="common.before">Before</span></div>
+          <div class="ba-media ba-after media-ph"><div class="ph-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M4 12h16v3a3 3 0 0 1-3 3H7a3 3 0 0 1-3-3Z"/><path d="M6 12V6a2 2 0 0 1 2-2"/></svg></div><span class="ph-tag" data-i18n="common.after">After</span></div>
+          <div class="ba-label before" data-i18n="common.before">Before</div>
+          <div class="ba-label after" data-i18n="common.after">After</div>
           <div class="ba-handle"></div>
           <input type="range" min="0" max="100" value="50" aria-label="Drag to compare before and after">
         </div>
-        <div class="ba-caption"><h4>Bathroom Renovation</h4><span>New vanity, tile &amp; fixtures</span></div>
+        <div class="ba-caption"><h4 data-i18n="projects.ba2.title">Bathroom Renovation</h4><span data-i18n="projects.ba2.desc">New vanity, tile &amp; fixtures</span></div>
       </div>
       <div class="ba-card reveal reveal-delay-2">
         <div class="ba-slider" data-ba>
-          <div class="ba-media media-ph"><div class="ph-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M3 11 12 4l9 7"/></svg></div><span class="ph-tag">Before</span></div>
-          <div class="ba-media ba-after media-ph tone-2"><div class="ph-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M3 11 12 4l9 7"/><path d="M5 10v9.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V10"/></svg></div><span class="ph-tag">After</span></div>
-          <div class="ba-label before">Before</div>
-          <div class="ba-label after">After</div>
+          <div class="ba-media media-ph"><div class="ph-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M3 11 12 4l9 7"/></svg></div><span class="ph-tag" data-i18n="common.before">Before</span></div>
+          <div class="ba-media ba-after media-ph tone-2"><div class="ph-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M3 11 12 4l9 7"/><path d="M5 10v9.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V10"/></svg></div><span class="ph-tag" data-i18n="common.after">After</span></div>
+          <div class="ba-label before" data-i18n="common.before">Before</div>
+          <div class="ba-label after" data-i18n="common.after">After</div>
           <div class="ba-handle"></div>
           <input type="range" min="0" max="100" value="50" aria-label="Drag to compare before and after">
         </div>
-        <div class="ba-caption"><h4>Exterior Update</h4><span>Facade, paint &amp; entry improvements</span></div>
+        <div class="ba-caption"><h4 data-i18n="projects.ba3.title">Exterior Update</h4><span data-i18n="projects.ba3.desc">Facade, paint &amp; entry improvements</span></div>
       </div>
     </div>
   </div>
@@ -983,22 +1007,22 @@ footer .footer-links a:hover{color:var(--copper-light);}
       </div>
     </div>
     <div class="about-copy reveal reveal-delay-1">
-      <span class="eyebrow">About Isa Home Investments</span>
-      <h2>Building With Purpose</h2>
-      <p>Isa Home Investments was created with a commitment to helping homeowners improve, renovate and transform their properties with professionalism, transparency and attention to detail.</p>
-      <p>Every project is approached with the same objective: understand the client's vision, provide practical solutions and deliver work that adds value to their home.</p>
+      <span class="eyebrow" data-i18n="about.eyebrow">About Isa Home Investments</span>
+      <h2 data-i18n="about.title">Building With Purpose</h2>
+      <p data-i18n="about.p1">Isa Home Investments was created with a commitment to helping homeowners improve, renovate and transform their properties with professionalism, transparency and attention to detail.</p>
+      <p data-i18n="about.p2">Every project is approached with the same objective: understand the client's vision, provide practical solutions and deliver work that adds value to their home.</p>
       <div class="about-mini">
         <div>
-          <h4>Our Mission</h4>
-          <p>Deliver reliable, high-quality construction and remodeling for every homeowner we work with.</p>
+          <h4 data-i18n="about.mission.title">Our Mission</h4>
+          <p data-i18n="about.mission.desc">Deliver reliable, high-quality construction and remodeling for every homeowner we work with.</p>
         </div>
         <div>
-          <h4>Our Commitment</h4>
-          <p>Clear communication, honest timelines and respect for your home throughout the project.</p>
+          <h4 data-i18n="about.commitment.title">Our Commitment</h4>
+          <p data-i18n="about.commitment.desc">Clear communication, honest timelines and respect for your home throughout the project.</p>
         </div>
         <div>
-          <h4>Our Approach</h4>
-          <p>Listen first, plan carefully, then build with precision and care.</p>
+          <h4 data-i18n="about.approach.title">Our Approach</h4>
+          <p data-i18n="about.approach.desc">Listen first, plan carefully, then build with precision and care.</p>
         </div>
       </div>
     </div>
@@ -1011,26 +1035,26 @@ footer .footer-links a:hover{color:var(--copper-light);}
 <section class="financing section-pad" id="financing">
   <div class="container">
     <div class="reveal">
-      <span class="eyebrow">Financing</span>
-      <h2>Financing Your Project</h2>
-      <p>Your renovation doesn't always have to wait. Isa Home Investments can help connect customers with third-party financing companies that specialize in home improvement and construction financing.</p>
-      <p class="fin-disclaimer">Financing options are provided by independent, third-party financing companies and are subject to their individual approval requirements, terms and conditions. Isa Home Investments does not provide financing directly and does not guarantee approval.</p>
-      <a href="#contact" class="btn btn-primary" id="exploreFinancingBtn">Explore Financing Options
+      <span class="eyebrow" data-i18n="financing.eyebrow">Financing</span>
+      <h2 data-i18n="financing.title">Financing Your Project</h2>
+      <p data-i18n="financing.body">Your renovation doesn't always have to wait. Isa Home Investments can help connect customers with third-party financing companies that specialize in home improvement and construction financing.</p>
+      <p class="fin-disclaimer" data-i18n="financing.disclaimer">Financing options are provided by independent, third-party financing companies and are subject to their individual approval requirements, terms and conditions. Isa Home Investments does not provide financing directly and does not guarantee approval.</p>
+      <a href="#contact" class="btn btn-primary" id="exploreFinancingBtn"><span data-i18n="financing.cta">Explore Financing Options</span>
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
       </a>
     </div>
     <div class="fin-points reveal reveal-delay-1">
       <div class="fin-point">
         <div class="fp-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M5 12h14M12 5v14"/></svg></div>
-        <div><h4>No Obligation to Start</h4><p>Exploring financing options doesn't commit you to anything.</p></div>
+        <div><h4 data-i18n="financing.point1.title">No Obligation to Start</h4><p data-i18n="financing.point1.desc">Exploring financing options doesn't commit you to anything.</p></div>
       </div>
       <div class="fin-point">
         <div class="fp-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M17 20h5v-1a5 5 0 0 0-9-3M9 20H4v-1a5 5 0 0 1 9-3m-4-3a3 3 0 1 0 0-6 3 3 0 0 0 0 6Zm7 0a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z"/></svg></div>
-        <div><h4>Independent, Specialized Lenders</h4><p>We connect you with companies focused on home improvement financing.</p></div>
+        <div><h4 data-i18n="financing.point2.title">Independent, Specialized Lenders</h4><p data-i18n="financing.point2.desc">We connect you with companies focused on home improvement financing.</p></div>
       </div>
       <div class="fin-point">
         <div class="fp-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M4 6h16v12H4Z"/><path d="M4 10h16"/></svg></div>
-        <div><h4>Simple Inquiry Process</h4><p>Tell us you're interested and we'll point you in the right direction.</p></div>
+        <div><h4 data-i18n="financing.point3.title">Simple Inquiry Process</h4><p data-i18n="financing.point3.desc">Tell us you're interested and we'll point you in the right direction.</p></div>
       </div>
     </div>
   </div>
@@ -1042,19 +1066,19 @@ footer .footer-links a:hover{color:var(--copper-light);}
 <section class="process section-pad">
   <div class="container">
     <div class="section-head reveal">
-      <span class="eyebrow">How It Works</span>
-      <h2>From Idea to Completion</h2>
-      <p>A clear, structured process so you always know what happens next.</p>
+      <span class="eyebrow" data-i18n="process.eyebrow">How It Works</span>
+      <h2 data-i18n="process.title">From Idea to Completion</h2>
+      <p data-i18n="process.body">A clear, structured process so you always know what happens next.</p>
     </div>
     <div class="process-track">
       <div class="process-line"></div>
       <div class="process-grid">
-        <div class="proc-step reveal"><span class="proc-ghost">01</span><div class="proc-num">1</div><h3>Consultation</h3><p>Tell us about your project.</p></div>
-        <div class="proc-step reveal reveal-delay-1"><span class="proc-ghost">02</span><div class="proc-num">2</div><h3>Project Evaluation</h3><p>We review the scope, goals and requirements.</p></div>
-        <div class="proc-step reveal reveal-delay-2"><span class="proc-ghost">03</span><div class="proc-num">3</div><h3>Estimate</h3><p>Receive a clear project estimate.</p></div>
-        <div class="proc-step reveal"><span class="proc-ghost">04</span><div class="proc-num">4</div><h3>Planning</h3><p>We coordinate the project details.</p></div>
-        <div class="proc-step reveal reveal-delay-1"><span class="proc-ghost">05</span><div class="proc-num">5</div><h3>Construction</h3><p>Our team brings the project to life.</p></div>
-        <div class="proc-step reveal reveal-delay-2"><span class="proc-ghost">06</span><div class="proc-num">6</div><h3>Final Walkthrough</h3><p>We review the completed work with you.</p></div>
+        <div class="proc-step reveal"><span class="proc-ghost">01</span><div class="proc-num">1</div><h3 data-i18n="process.step1.title">Consultation</h3><p data-i18n="process.step1.desc">Tell us about your project.</p></div>
+        <div class="proc-step reveal reveal-delay-1"><span class="proc-ghost">02</span><div class="proc-num">2</div><h3 data-i18n="process.step2.title">Project Evaluation</h3><p data-i18n="process.step2.desc">We review the scope, goals and requirements.</p></div>
+        <div class="proc-step reveal reveal-delay-2"><span class="proc-ghost">03</span><div class="proc-num">3</div><h3 data-i18n="process.step3.title">Estimate</h3><p data-i18n="process.step3.desc">Receive a clear project estimate.</p></div>
+        <div class="proc-step reveal"><span class="proc-ghost">04</span><div class="proc-num">4</div><h3 data-i18n="process.step4.title">Planning</h3><p data-i18n="process.step4.desc">We coordinate the project details.</p></div>
+        <div class="proc-step reveal reveal-delay-1"><span class="proc-ghost">05</span><div class="proc-num">5</div><h3 data-i18n="process.step5.title">Construction</h3><p data-i18n="process.step5.desc">Our team brings the project to life.</p></div>
+        <div class="proc-step reveal reveal-delay-2"><span class="proc-ghost">06</span><div class="proc-num">6</div><h3 data-i18n="process.step6.title">Final Walkthrough</h3><p data-i18n="process.step6.desc">We review the completed work with you.</p></div>
       </div>
     </div>
   </div>
@@ -1065,9 +1089,9 @@ footer .footer-links a:hover{color:var(--copper-light);}
      ============================================================ -->
 <section class="cta-band">
   <div class="container reveal">
-    <h2>Ready to Transform Your Home?</h2>
-    <p>Tell us about your project and let Isa Home Investments help you take the next step.</p>
-    <a href="#contact" class="btn btn-outline">Request Your Free Estimate
+    <h2 data-i18n="cta.title">Ready to Transform Your Home?</h2>
+    <p data-i18n="cta.body">Tell us about your project and let Isa Home Investments help you take the next step.</p>
+    <a href="#contact" class="btn btn-outline"><span data-i18n="cta.button">Request Your Free Estimate</span>
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
     </a>
   </div>
@@ -1079,28 +1103,28 @@ footer .footer-links a:hover{color:var(--copper-light);}
 <section class="contact section-pad" id="contact">
   <div class="container">
     <div class="contact-info reveal">
-      <span class="eyebrow">Get In Touch</span>
-      <h2 style="font-size:clamp(24px,3vw,32px);font-weight:800;margin-bottom:26px;">Request Your Free Estimate</h2>
+      <span class="eyebrow" data-i18n="contact.eyebrow">Get In Touch</span>
+      <h2 style="font-size:clamp(24px,3vw,32px);font-weight:800;margin-bottom:26px;" data-i18n="contact.title">Request Your Free Estimate</h2>
       <div class="info-row">
         <div class="ir-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M4 4h16v16H4z"/><path d="m4 6 8 7 8-7"/></svg></div>
-        <div><b>Email</b><a href="mailto:info@isahomeus.com">info@isahomeus.com</a></div>
+        <div><b data-i18n="contact.emailLabel">Email</b><a href="mailto:info@isahomeus.com">info@isahomeus.com</a></div>
       </div>
       <!-- Phone number intentionally omitted until Isa Home Investments provides one. Add a matching .info-row here once available. -->
       <div class="info-row">
         <div class="ir-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M12 21s-7-6-7-11a7 7 0 0 1 14 0c0 5-7 11-7 11Z"/><circle cx="12" cy="10" r="2.4"/></svg></div>
-        <div><b>Service Area</b><span class="val">South Florida</span></div>
+        <div><b data-i18n="contact.areaLabel">Service Area</b><span class="val" data-i18n="contact.areaValue">South Florida</span></div>
       </div>
-      <h3 style="margin-top:26px;">Follow Us</h3>
+      <h3 style="margin-top:26px;" data-i18n="contact.followUs">Follow Us</h3>
       <div class="social-row">
-        <span class="soc" data-tip="Coming soon" aria-label="Instagram — coming soon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg></span>
-        <span class="soc" data-tip="Coming soon" aria-label="Facebook — coming soon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M14 9h3V6h-3a3 3 0 0 0-3 3v2H9v3h2v6h3v-6h3l1-3h-4V9a1 1 0 0 1 1-1Z"/></svg></span>
+        <span class="soc" data-platform="Instagram" data-i18n-attr="data-tip:common.comingSoon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg></span>
+        <span class="soc" data-platform="Facebook" data-i18n-attr="data-tip:common.comingSoon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M14 9h3V6h-3a3 3 0 0 0-3 3v2H9v3h2v6h3v-6h3l1-3h-4V9a1 1 0 0 1 1-1Z"/></svg></span>
       </div>
     </div>
 
     <div class="form-card reveal reveal-delay-1">
       <div class="form-body" id="formBody">
-        <h3>Request My Estimate</h3>
-        <p class="lead">Fields marked <span style="color:var(--copper);">*</span> are required. We'll get back to you shortly.</p>
+        <h3 data-i18n="form.heading">Request My Estimate</h3>
+        <p class="lead" data-i18n-html="form.lead">Fields marked <span style="color:var(--copper);">*</span> are required. We'll get back to you shortly.</p>
         <form id="estimateForm" novalidate>
           <!-- Honeypot (spam trap, hidden from real users) -->
           <div class="hp-field"><label>Company Website</label><input type="text" name="company_website" tabindex="-1" autocomplete="off"></div>
@@ -1109,107 +1133,107 @@ footer .footer-links a:hover{color:var(--copper-light);}
 
           <div class="form-grid">
             <div class="form-field">
-              <label>First Name <span class="req">*</span></label>
+              <label><span data-i18n="form.firstName">First Name</span> <span class="req">*</span></label>
               <input type="text" name="firstName" required>
-              <span class="err-msg">Please enter your first name.</span>
+              <span class="err-msg" data-i18n="form.err.firstName">Please enter your first name.</span>
             </div>
             <div class="form-field">
-              <label>Last Name <span class="req">*</span></label>
+              <label><span data-i18n="form.lastName">Last Name</span> <span class="req">*</span></label>
               <input type="text" name="lastName" required>
-              <span class="err-msg">Please enter your last name.</span>
+              <span class="err-msg" data-i18n="form.err.lastName">Please enter your last name.</span>
             </div>
             <div class="form-field">
-              <label>Email <span class="req">*</span></label>
+              <label><span data-i18n="form.email">Email</span> <span class="req">*</span></label>
               <input type="email" name="email" required>
-              <span class="err-msg">Please enter a valid email address.</span>
+              <span class="err-msg" data-i18n="form.err.email">Please enter a valid email address.</span>
             </div>
             <div class="form-field">
-              <label>Phone Number <span class="req">*</span></label>
+              <label><span data-i18n="form.phone">Phone Number</span> <span class="req">*</span></label>
               <input type="tel" name="phone" required placeholder="(555) 555-5555">
-              <span class="err-msg">Please enter a valid phone number.</span>
+              <span class="err-msg" data-i18n="form.err.phone">Please enter a valid phone number.</span>
             </div>
             <div class="form-field">
-              <label>Project Address <span class="req">*</span></label>
+              <label><span data-i18n="form.address">Project Address</span> <span class="req">*</span></label>
               <input type="text" name="projectAddress" required>
-              <span class="err-msg">Please enter the project address.</span>
+              <span class="err-msg" data-i18n="form.err.address">Please enter the project address.</span>
             </div>
             <div class="form-field">
-              <label>City <span class="req">*</span></label>
+              <label><span data-i18n="form.city">City</span> <span class="req">*</span></label>
               <input type="text" name="city" required>
-              <span class="err-msg">Please enter a city.</span>
+              <span class="err-msg" data-i18n="form.err.city">Please enter a city.</span>
             </div>
             <div class="form-field">
-              <label>Project Type <span class="req">*</span></label>
+              <label><span data-i18n="form.projectType">Project Type</span> <span class="req">*</span></label>
               <select name="projectType" id="projectTypeSelect" required>
-                <option value="">Select a project type</option>
-                <option>Home Remodeling</option>
-                <option>Kitchen Remodeling</option>
-                <option>Bathroom Remodeling</option>
-                <option>Flooring</option>
-                <option>Painting</option>
-                <option>Roofing</option>
-                <option>Interior Renovations</option>
-                <option>Exterior Improvements</option>
-                <option>General Construction</option>
-                <option>Home Improvements</option>
-                <option>Other</option>
+                <option value="" data-i18n="form.selectProjectType">Select a project type</option>
+                <option value="Home Remodeling" data-i18n="services.item1.name">Home Remodeling</option>
+                <option value="Kitchen Remodeling" data-i18n="services.item2.name">Kitchen Remodeling</option>
+                <option value="Bathroom Remodeling" data-i18n="services.item3.name">Bathroom Remodeling</option>
+                <option value="Flooring" data-i18n="services.item4.name">Flooring</option>
+                <option value="Painting" data-i18n="services.item5.name">Painting</option>
+                <option value="Roofing" data-i18n="services.item6.name">Roofing</option>
+                <option value="Interior Renovations" data-i18n="services.item7.name">Interior Renovations</option>
+                <option value="Exterior Improvements" data-i18n="services.item8.name">Exterior Improvements</option>
+                <option value="General Construction" data-i18n="services.item9.name">General Construction</option>
+                <option value="Home Improvements" data-i18n="services.item10.name">Home Improvements</option>
+                <option value="Other" data-i18n="form.other">Other</option>
               </select>
-              <span class="err-msg">Please select a project type.</span>
+              <span class="err-msg" data-i18n="form.err.projectType">Please select a project type.</span>
             </div>
             <div class="form-field">
-              <label>Estimated Budget</label>
+              <label data-i18n="form.budget">Estimated Budget</label>
               <select name="budget">
-                <option value="">Not sure yet</option>
-                <option>Under $10,000</option>
-                <option>$10,000 – $25,000</option>
-                <option>$25,000 – $50,000</option>
-                <option>$50,000 – $100,000</option>
-                <option>$100,000+</option>
+                <option value="" data-i18n="form.notSure">Not sure yet</option>
+                <option value="Under $10,000" data-i18n="form.budget1">Under $10,000</option>
+                <option value="$10,000 – $25,000" data-i18n="form.budget2">$10,000 – $25,000</option>
+                <option value="$25,000 – $50,000" data-i18n="form.budget3">$25,000 – $50,000</option>
+                <option value="$50,000 – $100,000" data-i18n="form.budget4">$50,000 – $100,000</option>
+                <option value="$100,000+" data-i18n="form.budget5">$100,000+</option>
               </select>
             </div>
             <div class="form-field full">
-              <label>Project Description <span class="req">*</span></label>
-              <textarea name="description" required placeholder="Tell us a bit about what you'd like to do..."></textarea>
-              <span class="err-msg">Please describe your project.</span>
+              <label><span data-i18n="form.description">Project Description</span> <span class="req">*</span></label>
+              <textarea name="description" required data-i18n-ph="form.descriptionPh" placeholder="Tell us a bit about what you'd like to do..."></textarea>
+              <span class="err-msg" data-i18n="form.err.description">Please describe your project.</span>
             </div>
             <div class="form-field">
-              <label>Desired Start Date</label>
+              <label data-i18n="form.startDate">Desired Start Date</label>
               <input type="date" name="startDate">
             </div>
             <div class="form-field">
-              <label>Preferred Contact Method <span class="req">*</span></label>
+              <label><span data-i18n="form.contactMethod">Preferred Contact Method</span> <span class="req">*</span></label>
               <div class="radio-row" data-radiogroup="contactMethod">
-                <label class="radio-chip"><input type="radio" name="contactMethod" value="Phone" required> Phone</label>
-                <label class="radio-chip"><input type="radio" name="contactMethod" value="Text"> Text</label>
-                <label class="radio-chip"><input type="radio" name="contactMethod" value="Email"> Email</label>
+                <label class="radio-chip"><input type="radio" name="contactMethod" value="Phone" required> <span data-i18n="form.phoneOption">Phone</span></label>
+                <label class="radio-chip"><input type="radio" name="contactMethod" value="Text"> <span data-i18n="form.textOption">Text</span></label>
+                <label class="radio-chip"><input type="radio" name="contactMethod" value="Email"> <span data-i18n="form.email">Email</span></label>
               </div>
-              <span class="err-msg" id="contactMethodErr">Please choose a preferred contact method.</span>
+              <span class="err-msg" id="contactMethodErr" data-i18n="form.err.contactMethod">Please choose a preferred contact method.</span>
             </div>
             <div class="form-field full">
-              <label>Interested in Financing? <span class="req">*</span></label>
+              <label><span data-i18n="form.financingQuestion">Interested in Financing?</span> <span class="req">*</span></label>
               <div class="radio-row" data-radiogroup="financing">
-                <label class="radio-chip"><input type="radio" name="financing" value="Yes" required> Yes</label>
-                <label class="radio-chip"><input type="radio" name="financing" value="No"> No</label>
-                <label class="radio-chip"><input type="radio" name="financing" value="I would like more information"> I would like more information</label>
+                <label class="radio-chip"><input type="radio" name="financing" value="Yes" required> <span data-i18n="form.yes">Yes</span></label>
+                <label class="radio-chip"><input type="radio" name="financing" value="No"> <span data-i18n="form.no">No</span></label>
+                <label class="radio-chip"><input type="radio" name="financing" value="I would like more information"> <span data-i18n="form.moreInfo">I would like more information</span></label>
               </div>
-              <span class="err-msg" id="financingErr">Please let us know your interest in financing.</span>
+              <span class="err-msg" id="financingErr" data-i18n="form.err.financing">Please let us know your interest in financing.</span>
             </div>
           </div>
 
           <div class="form-actions">
-            <button type="submit" class="btn btn-primary" id="submitEstimateBtn">Request My Estimate
+            <button type="submit" class="btn btn-primary" id="submitEstimateBtn"><span data-i18n="form.submit">Request My Estimate</span>
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
             </button>
-            <span class="form-note">Or email us directly at <a href="mailto:info@isahomeus.com" style="color:var(--copper);font-weight:600;">info@isahomeus.com</a></span>
+            <span class="form-note" data-i18n-html="form.note">Or email us directly at <a href="mailto:info@isahomeus.com" style="color:var(--copper);font-weight:600;">info@isahomeus.com</a></span>
           </div>
         </form>
       </div>
 
       <div class="form-success" id="formSuccess">
         <div class="fs-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg></div>
-        <h3>Thank you!</h3>
-        <p>Your project request has been received. The Isa Home Investments team will contact you soon.</p>
-        <p class="fs-fallback">Didn't hear from us right away? Email <a href="mailto:info@isahomeus.com">info@isahomeus.com</a> directly.</p>
+        <h3 data-i18n="form.thankYou">Thank you!</h3>
+        <p data-i18n="form.successBody">Your project request has been received. The Isa Home Investments team will contact you soon.</p>
+        <p class="fs-fallback" data-i18n-html="form.successFallback">Didn't hear from us right away? Email <a href="mailto:info@isahomeus.com">info@isahomeus.com</a> directly.</p>
       </div>
     </div>
   </div>
@@ -1226,45 +1250,45 @@ footer .footer-links a:hover{color:var(--copper-light);}
         <a href="#home" class="footer-logo-full nav-link" aria-label="Isa Home Investments — Home">
           <img src="assets/logo.jpg" alt="Isa Home Investments">
         </a>
-        <p>Professional construction, renovation and remodeling services for homeowners — from the first consultation to the final walkthrough.</p>
+        <p data-i18n="footer.tagline">Professional construction, renovation and remodeling services for homeowners — from the first consultation to the final walkthrough.</p>
         <div class="footer-social">
-          <span class="soc" title="Instagram — coming soon" aria-label="Instagram — coming soon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/></svg></span>
-          <span class="soc" title="Facebook — coming soon" aria-label="Facebook — coming soon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M14 9h3V6h-3a3 3 0 0 0-3 3v2H9v3h2v6h3v-6h3l1-3h-4V9a1 1 0 0 1 1-1Z"/></svg></span>
+          <span class="soc" data-i18n-attr="title:footer.social.instagram|aria-label:footer.social.instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/></svg></span>
+          <span class="soc" data-i18n-attr="title:footer.social.facebook|aria-label:footer.social.facebook"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M14 9h3V6h-3a3 3 0 0 0-3 3v2H9v3h2v6h3v-6h3l1-3h-4V9a1 1 0 0 1 1-1Z"/></svg></span>
         </div>
       </div>
       <div>
-        <h4>Quick Links</h4>
+        <h4 data-i18n="footer.quickLinks">Quick Links</h4>
         <ul class="footer-links">
-          <li><a href="#home" class="nav-link">Home</a></li>
-          <li><a href="#about" class="nav-link">About</a></li>
-          <li><a href="#services" class="nav-link">Services</a></li>
-          <li><a href="#projects" class="nav-link">Projects</a></li>
-          <li><a href="#financing" class="nav-link">Financing</a></li>
-          <li><a href="#contact" class="nav-link">Contact</a></li>
+          <li><a href="#home" class="nav-link" data-i18n="nav.home">Home</a></li>
+          <li><a href="#about" class="nav-link" data-i18n="footer.about">About</a></li>
+          <li><a href="#services" class="nav-link" data-i18n="nav.services">Services</a></li>
+          <li><a href="#projects" class="nav-link" data-i18n="nav.projects">Projects</a></li>
+          <li><a href="#financing" class="nav-link" data-i18n="nav.financing">Financing</a></li>
+          <li><a href="#contact" class="nav-link" data-i18n="nav.contact">Contact</a></li>
         </ul>
       </div>
       <div>
-        <h4>Services</h4>
+        <h4 data-i18n="nav.services">Services</h4>
         <ul class="footer-links">
-          <li><a href="#services" class="nav-link">Home Remodeling</a></li>
-          <li><a href="#services" class="nav-link">Kitchen Remodeling</a></li>
-          <li><a href="#services" class="nav-link">Bathroom Remodeling</a></li>
-          <li><a href="#services" class="nav-link">General Construction</a></li>
+          <li><a href="#services" class="nav-link" data-i18n="services.item1.name">Home Remodeling</a></li>
+          <li><a href="#services" class="nav-link" data-i18n="services.item2.name">Kitchen Remodeling</a></li>
+          <li><a href="#services" class="nav-link" data-i18n="services.item3.name">Bathroom Remodeling</a></li>
+          <li><a href="#services" class="nav-link" data-i18n="services.item9.name">General Construction</a></li>
         </ul>
       </div>
       <div>
-        <h4>Contact</h4>
+        <h4 data-i18n="nav.contact">Contact</h4>
         <ul class="footer-links">
           <li><a href="mailto:info@isahomeus.com">info@isahomeus.com</a></li>
-          <li><span>South Florida</span></li>
+          <li><span data-i18n="contact.areaValue">South Florida</span></li>
         </ul>
       </div>
     </div>
     <div class="footer-bottom">
       <span id="copyrightText">© 2026 Isa Home Investments. All Rights Reserved.</span>
       <div class="legal-links">
-        <button type="button" data-legal="privacy">Privacy Policy</button>
-        <button type="button" data-legal="terms">Terms &amp; Conditions</button>
+        <button type="button" data-legal="privacy" data-i18n="footer.privacy">Privacy Policy</button>
+        <button type="button" data-legal="terms" data-i18n="footer.terms">Terms &amp; Conditions</button>
       </div>
     </div>
   </div>
@@ -1296,6 +1320,250 @@ footer .footer-links a:hover{color:var(--copper-light);}
 <script>
 document.documentElement.classList.add('js');
 
+/* ============================================================
+   TRANSLATIONS (EN / ES) — covers the whole site
+   ============================================================ */
+const translations = {
+en: {
+  'nav.home':'Home','nav.about':'About Us','nav.services':'Services','nav.projects':'Projects','nav.financing':'Financing','nav.contact':'Contact',
+  'nav.cta':'Get a Free Estimate',
+  'nav.emailUs':'Email us at <a href="mailto:info@isahomeus.com">info@isahomeus.com</a>',
+  'common.before':'Before','common.after':'After','common.photoPlaceholder':'Photo placeholder','common.comingSoon':'Coming soon',
+  'hero.eyebrow':'South Florida • Construction & Remodeling',
+  'hero.headline':'We Build.<br>You Live <em>Better.</em>',
+  'hero.sub':'Construction and remodeling designed around your vision, built with precision.',
+  'hero.ctaEstimate':'Get a Free Estimate','hero.ctaProjects':'View Our Projects',
+  'hero.photoTag':'Photo placeholder — real project photography coming soon',
+  'intro.eyebrow':'Who We Are','intro.title':'Your Vision. Our Expertise.',
+  'intro.body':"At Isa Home Investments, we help homeowners transform their properties through professional construction, renovation and remodeling services. From the initial consultation to the final details, our goal is to deliver functional, beautiful spaces built around our clients' needs.",
+  'intro.badge1':'Residential Focus','intro.badge2':'Clear Communication','intro.badge3':'Detail-Driven Craftsmanship',
+  'intro.cta':'About Isa Home Investments',
+  'intro.badgeTitle':'Client-Centered Process','intro.badgeText':'Every project starts with listening to what you actually need.',
+  'services.eyebrow':'What We Do','services.title':'Services Built Around Your Home',
+  'services.body':'From full remodels to targeted improvements, our team manages every phase of your project with the same level of care and professionalism.',
+  'services.item1.name':'Home Remodeling','services.item1.desc':"Full-scale remodeling that reimagines your home's layout, function and finishes from the ground up.",
+  'services.item2.name':'Kitchen Remodeling','services.item2.desc':'Modern, functional kitchens designed around how you actually cook and live.',
+  'services.item3.name':'Bathroom Remodeling','services.item3.desc':'Spa-inspired, practical bathroom renovations built to last.',
+  'services.item4.name':'Flooring','services.item4.desc':'Tile, hardwood, laminate and more — installed with precision.',
+  'services.item5.name':'Painting','services.item5.desc':'Interior and exterior painting with a clean, lasting finish.',
+  'services.item6.name':'Roofing','services.item6.desc':'Reliable roof repairs and replacements to protect your home.',
+  'services.item7.name':'Interior Renovations','services.item7.desc':'Reworking interior spaces for better flow and everyday living.',
+  'services.item8.name':'Exterior Improvements','services.item8.desc':'Siding, facades and outdoor upgrades that boost curb appeal.',
+  'services.item9.name':'General Construction','services.item9.desc':'End-to-end construction management for residential projects.',
+  'services.item10.name':'Home Improvements','services.item10.desc':'Smaller upgrades and repairs that add lasting value.',
+  'why.eyebrow':'Why Isa Home Investments','why.title':'Why Homeowners Choose Isa Home Investments',
+  'why.body':'We combine professional project management with genuine care for the outcome of every home we work on.',
+  'why.item1.title':'Quality Workmanship','why.item1.desc':'Every project is executed with care, precision and respect for your home.',
+  'why.item2.title':'Reliable Communication','why.item2.desc':"You'll always know the status of your project — no guessing games.",
+  'why.item3.title':'Professional Project Management','why.item3.desc':'Every phase is planned, tracked and coordinated from start to finish.',
+  'why.item4.title':'Attention to Detail','why.item4.desc':'The small decisions matter — we treat them that way.',
+  'why.item5.title':'Customized Solutions','why.item5.desc':'Every home and every client is different — your plan is built for you.',
+  'why.item6.title':'Financing Options Available','why.item6.desc':'We can help connect you with third-party financing options for your project.',
+  'projects.eyebrow':'Our Work','projects.title':'Our Work Speaks for Itself',
+  'projects.body':'A look at the type of residential projects we take on — from full renovations to focused room remodels. Real project photography will replace these placeholders as jobs are completed.',
+  'projects.filter.all':'All','projects.filter.interior':'Interior','projects.filter.exterior':'Exterior','projects.filter.kitchen':'Kitchen','projects.filter.bathroom':'Bathroom','projects.filter.renovation':'Renovations',
+  'projects.card1.title':'Kitchen Remodel','projects.card2.title':'Bathroom Remodel','projects.card3.title':'Exterior Facade Upgrade',
+  'projects.card4.title':'Open-Concept Living Renovation','projects.card5.title':'Roof Replacement','projects.card6.title':'Custom Cabinetry Install',
+  'projects.ba.heading':'Before & After','projects.ba.sub':'Drag the slider to compare',
+  'projects.ba1.title':'Kitchen Transformation','projects.ba1.desc':'Full remodel — cabinets, counters & layout',
+  'projects.ba2.title':'Bathroom Renovation','projects.ba2.desc':'New vanity, tile & fixtures',
+  'projects.ba3.title':'Exterior Update','projects.ba3.desc':'Facade, paint & entry improvements',
+  'about.eyebrow':'About Isa Home Investments','about.title':'Building With Purpose',
+  'about.p1':'Isa Home Investments was created with a commitment to helping homeowners improve, renovate and transform their properties with professionalism, transparency and attention to detail.',
+  'about.p2':"Every project is approached with the same objective: understand the client's vision, provide practical solutions and deliver work that adds value to their home.",
+  'about.mission.title':'Our Mission','about.mission.desc':'Deliver reliable, high-quality construction and remodeling for every homeowner we work with.',
+  'about.commitment.title':'Our Commitment','about.commitment.desc':'Clear communication, honest timelines and respect for your home throughout the project.',
+  'about.approach.title':'Our Approach','about.approach.desc':'Listen first, plan carefully, then build with precision and care.',
+  'financing.eyebrow':'Financing','financing.title':'Financing Your Project',
+  'financing.body':'Your renovation doesn\'t always have to wait. Isa Home Investments can help connect customers with third-party financing companies that specialize in home improvement and construction financing.',
+  'financing.disclaimer':'Financing options are provided by independent, third-party financing companies and are subject to their individual approval requirements, terms and conditions. Isa Home Investments does not provide financing directly and does not guarantee approval.',
+  'financing.cta':'Explore Financing Options',
+  'financing.point1.title':'No Obligation to Start','financing.point1.desc':"Exploring financing options doesn't commit you to anything.",
+  'financing.point2.title':'Independent, Specialized Lenders','financing.point2.desc':'We connect you with companies focused on home improvement financing.',
+  'financing.point3.title':'Simple Inquiry Process','financing.point3.desc':"Tell us you're interested and we'll point you in the right direction.",
+  'process.eyebrow':'How It Works','process.title':'From Idea to Completion','process.body':'A clear, structured process so you always know what happens next.',
+  'process.step1.title':'Consultation','process.step1.desc':'Tell us about your project.',
+  'process.step2.title':'Project Evaluation','process.step2.desc':'We review the scope, goals and requirements.',
+  'process.step3.title':'Estimate','process.step3.desc':'Receive a clear project estimate.',
+  'process.step4.title':'Planning','process.step4.desc':'We coordinate the project details.',
+  'process.step5.title':'Construction','process.step5.desc':'Our team brings the project to life.',
+  'process.step6.title':'Final Walkthrough','process.step6.desc':'We review the completed work with you.',
+  'cta.title':'Ready to Transform Your Home?','cta.body':'Tell us about your project and let Isa Home Investments help you take the next step.','cta.button':'Request Your Free Estimate',
+  'contact.eyebrow':'Get In Touch','contact.title':'Request Your Free Estimate',
+  'contact.emailLabel':'Email','contact.areaLabel':'Service Area','contact.areaValue':'South Florida','contact.followUs':'Follow Us',
+  'form.heading':'Request My Estimate',
+  'form.lead':'Fields marked <span style="color:var(--copper);">*</span> are required. We\'ll get back to you shortly.',
+  'form.firstName':'First Name','form.lastName':'Last Name','form.email':'Email','form.phone':'Phone Number',
+  'form.address':'Project Address','form.city':'City','form.projectType':'Project Type','form.selectProjectType':'Select a project type','form.other':'Other',
+  'form.budget':'Estimated Budget','form.notSure':'Not sure yet','form.budget1':'Under $10,000','form.budget2':'$10,000 – $25,000','form.budget3':'$25,000 – $50,000','form.budget4':'$50,000 – $100,000','form.budget5':'$100,000+',
+  'form.description':'Project Description','form.descriptionPh':"Tell us a bit about what you'd like to do...",
+  'form.startDate':'Desired Start Date','form.contactMethod':'Preferred Contact Method','form.phoneOption':'Phone','form.textOption':'Text',
+  'form.financingQuestion':'Interested in Financing?','form.yes':'Yes','form.no':'No','form.moreInfo':'I would like more information',
+  'form.submit':'Request My Estimate','form.sending':'Sending…',
+  'form.note':'Or email us directly at <a href="mailto:info@isahomeus.com" style="color:var(--copper);font-weight:600;">info@isahomeus.com</a>',
+  'form.thankYou':'Thank you!','form.successBody':'Your project request has been received. The Isa Home Investments team will contact you soon.',
+  'form.successFallback':'Didn\'t hear from us right away? Email <a href="mailto:info@isahomeus.com">info@isahomeus.com</a> directly.',
+  'form.err.firstName':'Please enter your first name.','form.err.lastName':'Please enter your last name.',
+  'form.err.email':'Please enter a valid email address.','form.err.phone':'Please enter a valid phone number.',
+  'form.err.address':'Please enter the project address.','form.err.city':'Please enter a city.',
+  'form.err.projectType':'Please select a project type.','form.err.description':'Please describe your project.',
+  'form.err.contactMethod':'Please choose a preferred contact method.','form.err.financing':'Please let us know your interest in financing.',
+  'footer.tagline':'Professional construction, renovation and remodeling services for homeowners — from the first consultation to the final walkthrough.',
+  'footer.quickLinks':'Quick Links','footer.about':'About','footer.privacy':'Privacy Policy','footer.terms':'Terms & Conditions','footer.rights':'All Rights Reserved.',
+  'footer.social.instagram':'Instagram — coming soon','footer.social.facebook':'Facebook — coming soon',
+  'legal.privacy.title':'Privacy Policy',
+  'legal.privacy.body':'<p>Isa Home Investments respects your privacy. Information submitted through this website (such as your name, contact details and project information) is used only to respond to your inquiry and provide requested services.</p><p>A full, detailed Privacy Policy for Isa Home Investments is currently being prepared and will be published here. For questions about your information, contact us at <a href="mailto:info@isahomeus.com" style="color:var(--copper);">info@isahomeus.com</a>.</p>',
+  'legal.terms.title':'Terms & Conditions',
+  'legal.terms.body':'<p>These Terms & Conditions govern the use of the Isa Home Investments website. By using this site, you agree to use it only for lawful purposes.</p><p>Full Terms & Conditions for Isa Home Investments are currently being prepared and will be published here. For questions, contact us at <a href="mailto:info@isahomeus.com" style="color:var(--copper);">info@isahomeus.com</a>.</p>'
+},
+es: {
+  'nav.home':'Inicio','nav.about':'Sobre Nosotros','nav.services':'Servicios','nav.projects':'Proyectos','nav.financing':'Financiamiento','nav.contact':'Contacto',
+  'nav.cta':'Solicitar Cotización Gratis',
+  'nav.emailUs':'Escríbenos a <a href="mailto:info@isahomeus.com">info@isahomeus.com</a>',
+  'common.before':'Antes','common.after':'Después','common.photoPlaceholder':'Imagen provisional','common.comingSoon':'Próximamente',
+  'hero.eyebrow':'Sur de Florida • Construcción y Remodelación',
+  'hero.headline':'Construimos.<br>Tú Vives <em>Mejor.</em>',
+  'hero.sub':'Construcción y remodelación diseñadas alrededor de tu visión, construidas con precisión.',
+  'hero.ctaEstimate':'Solicitar Cotización Gratis','hero.ctaProjects':'Ver Nuestros Proyectos',
+  'hero.photoTag':'Imagen provisional — pronto fotos reales de proyectos',
+  'intro.eyebrow':'Quiénes Somos','intro.title':'Tu Visión. Nuestra Experiencia.',
+  'intro.body':'En Isa Home Investments, ayudamos a los propietarios a transformar sus propiedades a través de servicios profesionales de construcción, renovación y remodelación. Desde la consulta inicial hasta los últimos detalles, nuestro objetivo es entregar espacios funcionales y hermosos, diseñados en torno a las necesidades de nuestros clientes.',
+  'intro.badge1':'Enfoque Residencial','intro.badge2':'Comunicación Clara','intro.badge3':'Oficio con Atención al Detalle',
+  'intro.cta':'Conoce Isa Home Investments',
+  'intro.badgeTitle':'Un Proceso Centrado en el Cliente','intro.badgeText':'Cada proyecto comienza escuchando lo que realmente necesitas.',
+  'services.eyebrow':'Qué Hacemos','services.title':'Servicios Diseñados para tu Hogar',
+  'services.body':'Desde remodelaciones completas hasta mejoras puntuales, nuestro equipo gestiona cada fase de tu proyecto con el mismo nivel de cuidado y profesionalismo.',
+  'services.item1.name':'Remodelación de Hogar','services.item1.desc':'Remodelaciones integrales que reinventan la distribución, función y acabados de tu hogar desde cero.',
+  'services.item2.name':'Remodelación de Cocina','services.item2.desc':'Cocinas modernas y funcionales, diseñadas según cómo realmente cocinas y vives.',
+  'services.item3.name':'Remodelación de Baño','services.item3.desc':'Renovaciones de baño prácticas, inspiradas en spa y construidas para durar.',
+  'services.item4.name':'Pisos','services.item4.desc':'Cerámica, madera, laminado y más — instalados con precisión.',
+  'services.item5.name':'Pintura','services.item5.desc':'Pintura interior y exterior con un acabado limpio y duradero.',
+  'services.item6.name':'Techos','services.item6.desc':'Reparaciones y reemplazos de techo confiables para proteger tu hogar.',
+  'services.item7.name':'Renovaciones Interiores','services.item7.desc':'Rediseño de espacios interiores para mejorar el flujo y la vida diaria.',
+  'services.item8.name':'Mejoras Exteriores','services.item8.desc':'Revestimientos, fachadas y mejoras exteriores que realzan la fachada de tu hogar.',
+  'services.item9.name':'Construcción General','services.item9.desc':'Gestión integral de construcción para proyectos residenciales.',
+  'services.item10.name':'Mejoras del Hogar','services.item10.desc':'Mejoras y reparaciones puntuales que añaden valor duradero.',
+  'why.eyebrow':'Por Qué Isa Home Investments','why.title':'Por Qué los Propietarios Eligen Isa Home Investments',
+  'why.body':'Combinamos una gestión de proyectos profesional con un cuidado genuino por el resultado de cada hogar en el que trabajamos.',
+  'why.item1.title':'Calidad en el Trabajo','why.item1.desc':'Cada proyecto se ejecuta con cuidado, precisión y respeto por tu hogar.',
+  'why.item2.title':'Comunicación Confiable','why.item2.desc':'Siempre sabrás el estado de tu proyecto — sin adivinanzas.',
+  'why.item3.title':'Gestión Profesional de Proyectos','why.item3.desc':'Cada fase se planifica, monitorea y coordina de principio a fin.',
+  'why.item4.title':'Atención al Detalle','why.item4.desc':'Las pequeñas decisiones importan — las tratamos así.',
+  'why.item5.title':'Soluciones Personalizadas','why.item5.desc':'Cada hogar y cada cliente es diferente — tu plan se diseña para ti.',
+  'why.item6.title':'Opciones de Financiamiento Disponibles','why.item6.desc':'Podemos ayudarte a conectar con opciones de financiamiento de terceros para tu proyecto.',
+  'projects.eyebrow':'Nuestro Trabajo','projects.title':'Nuestro Trabajo Habla por Sí Solo',
+  'projects.body':'Un vistazo al tipo de proyectos residenciales que realizamos — desde renovaciones completas hasta remodelaciones puntuales. Fotografías reales de proyectos reemplazarán estas imágenes provisionales a medida que se completen los trabajos.',
+  'projects.filter.all':'Todos','projects.filter.interior':'Interior','projects.filter.exterior':'Exterior','projects.filter.kitchen':'Cocina','projects.filter.bathroom':'Baño','projects.filter.renovation':'Renovaciones',
+  'projects.card1.title':'Remodelación de Cocina','projects.card2.title':'Remodelación de Baño','projects.card3.title':'Mejora de Fachada Exterior',
+  'projects.card4.title':'Renovación de Sala de Concepto Abierto','projects.card5.title':'Reemplazo de Techo','projects.card6.title':'Instalación de Gabinetes a Medida',
+  'projects.ba.heading':'Antes y Después','projects.ba.sub':'Arrastra el control para comparar',
+  'projects.ba1.title':'Transformación de Cocina','projects.ba1.desc':'Remodelación completa — gabinetes, encimeras y distribución',
+  'projects.ba2.title':'Renovación de Baño','projects.ba2.desc':'Nuevo tocador, cerámica y accesorios',
+  'projects.ba3.title':'Actualización Exterior','projects.ba3.desc':'Fachada, pintura y mejoras de entrada',
+  'about.eyebrow':'Sobre Isa Home Investments','about.title':'Construyendo con Propósito',
+  'about.p1':'Isa Home Investments nació con el compromiso de ayudar a los propietarios a mejorar, renovar y transformar sus propiedades con profesionalismo, transparencia y atención al detalle.',
+  'about.p2':'Cada proyecto se aborda con el mismo objetivo: entender la visión del cliente, ofrecer soluciones prácticas y entregar un trabajo que agregue valor a su hogar.',
+  'about.mission.title':'Nuestra Misión','about.mission.desc':'Ofrecer construcción y remodelación confiable y de alta calidad para cada propietario con quien trabajamos.',
+  'about.commitment.title':'Nuestro Compromiso','about.commitment.desc':'Comunicación clara, plazos honestos y respeto por tu hogar durante todo el proyecto.',
+  'about.approach.title':'Nuestro Enfoque','about.approach.desc':'Escuchar primero, planificar con cuidado y luego construir con precisión y esmero.',
+  'financing.eyebrow':'Financiamiento','financing.title':'Financiamiento para tu Proyecto',
+  'financing.body':'Tu renovación no siempre tiene que esperar. Isa Home Investments puede ayudarte a conectar con compañías de financiamiento externas especializadas en financiamiento para construcción y mejoras del hogar.',
+  'financing.disclaimer':'Las opciones de financiamiento son ofrecidas por compañías de financiamiento independientes y están sujetas a sus propios requisitos de aprobación, términos y condiciones. Isa Home Investments no otorga financiamiento directamente ni garantiza su aprobación.',
+  'financing.cta':'Explorar Opciones de Financiamiento',
+  'financing.point1.title':'Sin Obligación de Empezar','financing.point1.desc':'Explorar opciones de financiamiento no te compromete a nada.',
+  'financing.point2.title':'Prestamistas Independientes y Especializados','financing.point2.desc':'Te conectamos con compañías enfocadas en financiamiento para mejoras del hogar.',
+  'financing.point3.title':'Proceso de Consulta Simple','financing.point3.desc':'Dinos que estás interesado y te orientaremos en la dirección correcta.',
+  'process.eyebrow':'Cómo Funciona','process.title':'De la Idea a la Finalización','process.body':'Un proceso claro y estructurado para que siempre sepas qué sigue.',
+  'process.step1.title':'Consulta','process.step1.desc':'Cuéntanos sobre tu proyecto.',
+  'process.step2.title':'Evaluación del Proyecto','process.step2.desc':'Revisamos el alcance, los objetivos y los requisitos.',
+  'process.step3.title':'Cotización','process.step3.desc':'Recibe una cotización clara del proyecto.',
+  'process.step4.title':'Planificación','process.step4.desc':'Coordinamos los detalles del proyecto.',
+  'process.step5.title':'Construcción','process.step5.desc':'Nuestro equipo da vida al proyecto.',
+  'process.step6.title':'Recorrido Final','process.step6.desc':'Revisamos contigo el trabajo terminado.',
+  'cta.title':'¿Listo para Transformar tu Hogar?','cta.body':'Cuéntanos sobre tu proyecto y deja que Isa Home Investments te ayude a dar el siguiente paso.','cta.button':'Solicita tu Cotización Gratis',
+  'contact.eyebrow':'Ponte en Contacto','contact.title':'Solicita tu Cotización Gratis',
+  'contact.emailLabel':'Correo Electrónico','contact.areaLabel':'Área de Servicio','contact.areaValue':'Sur de Florida','contact.followUs':'Síguenos',
+  'form.heading':'Solicitar Mi Cotización',
+  'form.lead':'Los campos marcados con <span style="color:var(--copper);">*</span> son obligatorios. Nos pondremos en contacto contigo pronto.',
+  'form.firstName':'Nombre','form.lastName':'Apellido','form.email':'Correo Electrónico','form.phone':'Número de Teléfono',
+  'form.address':'Dirección del Proyecto','form.city':'Ciudad','form.projectType':'Tipo de Proyecto','form.selectProjectType':'Selecciona un tipo de proyecto','form.other':'Otro',
+  'form.budget':'Presupuesto Estimado','form.notSure':'Aún no lo sé','form.budget1':'Menos de $10,000','form.budget2':'$10,000 – $25,000','form.budget3':'$25,000 – $50,000','form.budget4':'$50,000 – $100,000','form.budget5':'$100,000+',
+  'form.description':'Descripción del Proyecto','form.descriptionPh':'Cuéntanos un poco sobre lo que te gustaría hacer...',
+  'form.startDate':'Fecha de Inicio Deseada','form.contactMethod':'Método de Contacto Preferido','form.phoneOption':'Teléfono','form.textOption':'Mensaje de Texto',
+  'form.financingQuestion':'¿Interesado en Financiamiento?','form.yes':'Sí','form.no':'No','form.moreInfo':'Me gustaría más información',
+  'form.submit':'Solicitar Mi Cotización','form.sending':'Enviando…',
+  'form.note':'O escríbenos directamente a <a href="mailto:info@isahomeus.com" style="color:var(--copper);font-weight:600;">info@isahomeus.com</a>',
+  'form.thankYou':'¡Gracias!','form.successBody':'Tu solicitud de proyecto ha sido recibida. El equipo de Isa Home Investments se pondrá en contacto contigo pronto.',
+  'form.successFallback':'¿No recibiste noticias nuestras enseguida? Escribe directamente a <a href="mailto:info@isahomeus.com">info@isahomeus.com</a>.',
+  'form.err.firstName':'Por favor ingresa tu nombre.','form.err.lastName':'Por favor ingresa tu apellido.',
+  'form.err.email':'Por favor ingresa un correo electrónico válido.','form.err.phone':'Por favor ingresa un número de teléfono válido.',
+  'form.err.address':'Por favor ingresa la dirección del proyecto.','form.err.city':'Por favor ingresa una ciudad.',
+  'form.err.projectType':'Por favor selecciona un tipo de proyecto.','form.err.description':'Por favor describe tu proyecto.',
+  'form.err.contactMethod':'Por favor elige un método de contacto preferido.','form.err.financing':'Por favor indícanos tu interés en financiamiento.',
+  'footer.tagline':'Servicios profesionales de construcción, renovación y remodelación para propietarios — desde la primera consulta hasta el recorrido final.',
+  'footer.quickLinks':'Enlaces Rápidos','footer.about':'Nosotros','footer.privacy':'Política de Privacidad','footer.terms':'Términos y Condiciones','footer.rights':'Todos los Derechos Reservados.',
+  'footer.social.instagram':'Instagram — próximamente','footer.social.facebook':'Facebook — próximamente',
+  'legal.privacy.title':'Política de Privacidad',
+  'legal.privacy.body':'<p>Isa Home Investments respeta tu privacidad. La información enviada a través de este sitio web (como tu nombre, datos de contacto e información del proyecto) se utiliza únicamente para responder a tu consulta y brindar los servicios solicitados.</p><p>Una Política de Privacidad completa y detallada para Isa Home Investments está en preparación y será publicada aquí. Si tienes preguntas sobre tu información, contáctanos en <a href="mailto:info@isahomeus.com" style="color:var(--copper);">info@isahomeus.com</a>.</p>',
+  'legal.terms.title':'Términos y Condiciones',
+  'legal.terms.body':'<p>Estos Términos y Condiciones rigen el uso del sitio web de Isa Home Investments. Al usar este sitio, aceptas utilizarlo únicamente para fines lícitos.</p><p>Los Términos y Condiciones completos de Isa Home Investments están en preparación y serán publicados aquí. Si tienes preguntas, contáctanos en <a href="mailto:info@isahomeus.com" style="color:var(--copper);">info@isahomeus.com</a>.</p>'
+}
+};
+
+let currentLang = 'en';
+function t(key){
+  const dict = translations[currentLang] || translations.en;
+  return (key in dict) ? dict[key] : (translations.en[key] || '');
+}
+
+function applyTranslations(lang){
+  currentLang = translations[lang] ? lang : 'en';
+  document.documentElement.lang = currentLang;
+
+  document.querySelectorAll('[data-i18n]').forEach(el=>{
+    const val = t(el.getAttribute('data-i18n'));
+    if(val) el.textContent = val;
+  });
+  document.querySelectorAll('[data-i18n-html]').forEach(el=>{
+    const val = t(el.getAttribute('data-i18n-html'));
+    if(val) el.innerHTML = val;
+  });
+  document.querySelectorAll('[data-i18n-ph]').forEach(el=>{
+    const val = t(el.getAttribute('data-i18n-ph'));
+    if(val) el.setAttribute('placeholder', val);
+  });
+  document.querySelectorAll('[data-i18n-attr]').forEach(el=>{
+    el.getAttribute('data-i18n-attr').split('|').forEach(pair=>{
+      const [attr, key] = pair.split(':');
+      const val = t(key);
+      if(val) el.setAttribute(attr, val);
+    });
+  });
+  document.querySelectorAll('[data-platform]').forEach(el=>{
+    el.setAttribute('aria-label', `${el.getAttribute('data-platform')} — ${t('common.comingSoon')}`);
+  });
+
+  document.querySelectorAll('.lang-btn').forEach(btn=>{
+    btn.classList.toggle('active', btn.getAttribute('data-lang')===currentLang);
+  });
+
+  const copyrightEl = document.getElementById('copyrightText');
+  if(copyrightEl) copyrightEl.textContent = `© ${new Date().getFullYear()} Isa Home Investments. ${t('footer.rights')}`;
+}
+
+function setLang(lang){
+  applyTranslations(lang);
+  try{ localStorage.setItem('isaLang', lang); }catch(e){}
+}
+
+document.querySelectorAll('.lang-btn').forEach(btn=>{
+  btn.addEventListener('click', () => setLang(btn.getAttribute('data-lang')));
+});
+
+let savedLang = 'en';
+try{ savedLang = localStorage.getItem('isaLang') || 'en'; }catch(e){}
+applyTranslations(savedLang);
+
 /* ---------- Header scroll state ---------- */
 const header = document.getElementById('siteHeader');
 function onScroll(){
@@ -1303,6 +1571,20 @@ function onScroll(){
 }
 onScroll();
 window.addEventListener('scroll', onScroll, {passive:true});
+
+/* ---------- Hero visual parallax (subtle, disabled for reduced-motion) ---------- */
+const heroVisualMedia = document.getElementById('heroVisualMedia');
+const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+if (heroVisualMedia && !prefersReducedMotion) {
+  const heroSection = document.getElementById('home');
+  function onHeroParallax(){
+    const rect = heroSection.getBoundingClientRect();
+    if (rect.bottom < 0 || rect.top > window.innerHeight) return;
+    heroVisualMedia.style.transform = `translateY(${window.scrollY * 0.08}px)`;
+  }
+  onHeroParallax();
+  window.addEventListener('scroll', onHeroParallax, {passive:true});
+}
 
 /* ---------- Mobile menu ---------- */
 const hamburger = document.getElementById('hamburgerBtn');
@@ -1404,8 +1686,8 @@ projCards.forEach(card=>{
   card.addEventListener('click', () => {
     lightboxMedia.innerHTML = card.querySelector('.media-ph').innerHTML;
     lightboxMedia.className = 'media-ph ' + (card.querySelector('.media-ph').classList.contains('tone-2') ? 'tone-2' : card.querySelector('.media-ph').classList.contains('tone-3') ? 'tone-3' : '');
-    lightboxTitle.textContent = card.getAttribute('data-title');
-    lightboxCat.textContent = card.getAttribute('data-cat-label');
+    lightboxTitle.textContent = card.querySelector('h4').textContent;
+    lightboxCat.textContent = card.querySelector('.p-cat').textContent;
     lightbox.classList.add('open');
     document.body.style.overflow='hidden';
   });
@@ -1473,7 +1755,7 @@ form.addEventListener('submit', async (e) => {
   }
 
   submitBtn.setAttribute('disabled','disabled');
-  submitBtn.textContent = 'Sending…';
+  submitBtn.querySelector('span').textContent = t('form.sending');
 
   const fd = new FormData(form);
   const financing = fd.get('financing') || 'No';
@@ -1506,23 +1788,11 @@ form.addEventListener('submit', async (e) => {
 const legalModal = document.getElementById('legalModal');
 const legalModalTitle = document.getElementById('legalModalTitle');
 const legalModalBody = document.getElementById('legalModalBody');
-const legalContent = {
-  privacy: {
-    title:'Privacy Policy',
-    body:`<p>Isa Home Investments respects your privacy. Information submitted through this website (such as your name, contact details and project information) is used only to respond to your inquiry and provide requested services.</p>
-          <p>A full, detailed Privacy Policy for Isa Home Investments is currently being prepared and will be published here. For questions about your information, contact us at <a href="mailto:info@isahomeus.com" style="color:var(--copper);">info@isahomeus.com</a>.</p>`
-  },
-  terms: {
-    title:'Terms & Conditions',
-    body:`<p>These Terms &amp; Conditions govern the use of the Isa Home Investments website. By using this site, you agree to use it only for lawful purposes.</p>
-          <p>Full Terms &amp; Conditions for Isa Home Investments are currently being prepared and will be published here. For questions, contact us at <a href="mailto:info@isahomeus.com" style="color:var(--copper);">info@isahomeus.com</a>.</p>`
-  }
-};
 document.querySelectorAll('[data-legal]').forEach(btn=>{
   btn.addEventListener('click', () => {
-    const data = legalContent[btn.getAttribute('data-legal')];
-    legalModalTitle.textContent = data.title;
-    legalModalBody.innerHTML = data.body;
+    const which = btn.getAttribute('data-legal');
+    legalModalTitle.textContent = t(`legal.${which}.title`);
+    legalModalBody.innerHTML = t(`legal.${which}.body`);
     legalModal.classList.add('open');
     document.body.style.overflow='hidden';
   });
@@ -1530,9 +1800,6 @@ document.querySelectorAll('[data-legal]').forEach(btn=>{
 function closeLegalModal(){ legalModal.classList.remove('open'); document.body.style.overflow=''; }
 document.getElementById('legalModalClose').addEventListener('click', closeLegalModal);
 legalModal.addEventListener('click', (e)=>{ if(e.target===legalModal) closeLegalModal(); });
-
-/* ---------- Dynamic copyright year ---------- */
-document.getElementById('copyrightText').textContent = `© ${new Date().getFullYear()} Isa Home Investments. All Rights Reserved.`;
 </script>
 </body>
 </html>
