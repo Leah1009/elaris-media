@@ -238,27 +238,22 @@ nav.primary-nav ul li a:hover::after,nav.primary-nav ul li a.active::after{width
   background-image:linear-gradient(rgba(255,255,255,0.045) 1px, transparent 1px),linear-gradient(90deg, rgba(255,255,255,0.045) 1px, transparent 1px);
   background-size:46px 46px;
 }
-/* ---- Right-side architectural visual (40-50% of hero width) ---- */
+/* ---- Right-side hero photo (40-50% of hero width, blended into the black bg) ---- */
 .hero-visual{position:absolute;inset:0 0 0 auto;top:0;right:0;bottom:0;width:46%;overflow:hidden;z-index:1;}
 .hero-visual-media{
   position:absolute;inset:-8% -6%;
   background:linear-gradient(150deg,#1c1c1c 0%,#0A0A0A 55%,#232323 100%);
   will-change:transform;
 }
-.hero-arch{position:absolute;inset:0;width:100%;height:100%;color:rgba(255,255,255,0.5);}
-.hero-visual::before{ /* blend left edge into the hero background */
+.hero-photo{width:100%;height:100%;object-fit:cover;object-position:62% 42%;display:block;filter:saturate(0.94) brightness(0.92);}
+.hero-visual::before{ /* strong left-to-right reveal: solid black at the text edge, gradually shows the photo */
   content:'';position:absolute;inset:0;z-index:2;
-  background:linear-gradient(90deg, var(--ink) 0%, rgba(10,10,10,0.7) 14%, rgba(10,10,10,0) 46%);
+  background:linear-gradient(90deg, var(--ink) 0%, rgba(10,10,10,0.92) 10%, rgba(10,10,10,0.6) 26%, rgba(10,10,10,0.18) 46%, rgba(10,10,10,0) 62%);
 }
-.hero-visual::after{ /* blend bottom edge */
+.hero-visual::after{ /* blend bottom edge + a light overall cool-dark tint to unify with the palette */
   content:'';position:absolute;inset:0;z-index:2;
-  background:linear-gradient(0deg, var(--ink) 0%, rgba(10,10,10,0) 32%);
-}
-.hero-visual-tag{
-  position:absolute;left:20px;bottom:20px;z-index:3;
-  font-family:'Archivo',sans-serif;font-size:9.5px;letter-spacing:0.14em;text-transform:uppercase;
-  color:var(--text-on-dark-soft);background:rgba(0,0,0,0.55);border:1px solid var(--line-dark);
-  padding:5px 10px;border-radius:20px;backdrop-filter:blur(4px);
+  background:linear-gradient(0deg, var(--ink) 0%, rgba(10,10,10,0) 30%),
+    linear-gradient(160deg, rgba(10,14,20,0.28), rgba(10,10,10,0.12));
 }
 .hero .container{position:relative;z-index:3;max-width:none;margin:0;padding-left:clamp(24px,5vw,80px);padding-right:32px;}
 .hero-copy{max-width:560px;}
@@ -699,27 +694,8 @@ footer .footer-links a:hover{color:var(--copper-light);}
 <section class="hero" id="home">
   <div class="hero-visual" id="heroVisual" aria-hidden="true">
     <div class="hero-visual-media" id="heroVisualMedia">
-      <svg class="hero-arch" viewBox="0 0 420 560" preserveAspectRatio="xMidYMid slice" fill="none" stroke="currentColor" stroke-width="1.1">
-        <line x1="30" y1="486" x2="404" y2="486"/>
-        <rect x="70" y="266" width="290" height="220"/>
-        <rect x="118" y="156" width="214" height="112"/>
-        <line x1="100" y1="156" x2="350" y2="156"/>
-        <rect x="96" y="306" width="150" height="104"/>
-        <line x1="134" y1="306" x2="134" y2="410"/>
-        <line x1="172" y1="306" x2="172" y2="410"/>
-        <line x1="210" y1="306" x2="210" y2="410"/>
-        <line x1="96" y1="358" x2="246" y2="358"/>
-        <rect x="278" y="392" width="46" height="94"/>
-        <line x1="278" y1="440" x2="324" y2="440"/>
-        <line x1="140" y1="180" x2="140" y2="266" stroke-opacity="0.55"/>
-        <line x1="200" y1="180" x2="200" y2="266" stroke-opacity="0.55"/>
-        <line x1="260" y1="180" x2="260" y2="266" stroke-opacity="0.55"/>
-        <line x1="310" y1="180" x2="310" y2="266" stroke-opacity="0.55"/>
-        <path d="M382 156v330" stroke-opacity="0.35" stroke-dasharray="2 6"/>
-        <path d="M375 156h14M375 486h14" stroke-opacity="0.35"/>
-      </svg>
+      <img src="assets/hero.jpg" alt="" class="hero-photo">
     </div>
-    <span class="hero-visual-tag" data-i18n="hero.photoTag">Photo placeholder — real project photography coming soon</span>
   </div>
   <div class="container">
     <div class="hero-copy">
@@ -1332,7 +1308,6 @@ en: {
   'hero.headline':'We Build.<br>You Live <em>Better.</em>',
   'hero.sub':'Construction and remodeling designed around your vision, built with precision.',
   'hero.ctaEstimate':'Get a Free Estimate','hero.ctaProjects':'View Our Projects',
-  'hero.photoTag':'Photo placeholder — real project photography coming soon',
   'intro.eyebrow':'Who We Are','intro.title':'Your Vision. Our Expertise.',
   'intro.body':"At Isa Home Investments, we help homeowners transform their properties through professional construction, renovation and remodeling services. From the initial consultation to the final details, our goal is to deliver functional, beautiful spaces built around our clients' needs.",
   'intro.badge1':'Residential Focus','intro.badge2':'Clear Communication','intro.badge3':'Detail-Driven Craftsmanship',
@@ -1424,7 +1399,6 @@ es: {
   'hero.headline':'Construimos.<br>Tú Vives <em>Mejor.</em>',
   'hero.sub':'Construcción y remodelación diseñadas alrededor de tu visión, construidas con precisión.',
   'hero.ctaEstimate':'Solicitar Cotización Gratis','hero.ctaProjects':'Ver Nuestros Proyectos',
-  'hero.photoTag':'Imagen provisional — pronto fotos reales de proyectos',
   'intro.eyebrow':'Quiénes Somos','intro.title':'Tu Visión. Nuestra Experiencia.',
   'intro.body':'En Isa Home Investments, ayudamos a los propietarios a transformar sus propiedades a través de servicios profesionales de construcción, renovación y remodelación. Desde la consulta inicial hasta los últimos detalles, nuestro objetivo es entregar espacios funcionales y hermosos, diseñados en torno a las necesidades de nuestros clientes.',
   'intro.badge1':'Enfoque Residencial','intro.badge2':'Comunicación Clara','intro.badge3':'Oficio con Atención al Detalle',
