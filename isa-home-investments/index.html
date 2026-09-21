@@ -376,7 +376,8 @@ html.js .hero-copy>*:nth-child(4){animation-delay:.42s;}
 .proj-card .media-ph .ph-icon{transition:transform .5s ease;}
 .proj-card:hover .media-ph .ph-icon{transform:translate(-50%,-50%) scale(1.12);}
 .media-ph.has-photo::before,.media-ph.has-photo::after{display:none;}
-.proj-photo{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;transition:transform .5s ease;}
+.proj-photo{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center;display:block;transition:transform .5s ease;}
+.proj-photo-top{object-position:center top;}
 .proj-card:hover .proj-photo{transform:scale(1.03);}
 .proj-overlay{
   position:absolute;inset:0;z-index:2;display:flex;flex-direction:column;justify-content:flex-end;padding:20px;
@@ -925,7 +926,7 @@ footer .footer-links a:hover{color:var(--copper-light);}
       </article>
 
       <article class="proj-card reveal" data-category="exterior" data-title="Roof Replacement" data-cat-label="Exterior">
-        <div class="media-ph tone-3"><div class="ph-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M3 12 12 5l9 7"/><path d="M6 11v8h12v-8"/></svg></div></div>
+        <div class="media-ph tone-3 has-photo"><img class="proj-photo proj-photo-top" src="assets/project-roof-replacement.jpg" alt="Roof Replacement" loading="lazy"></div>
         <div class="proj-overlay"><span class="p-cat" data-i18n="projects.filter.exterior">Exterior</span><h4 data-i18n="projects.card5.title">Roof Replacement</h4></div>
         <div class="proj-expand"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></div>
       </article>
