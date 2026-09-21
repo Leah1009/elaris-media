@@ -551,7 +551,7 @@ html.js .hero-copy>*:nth-child(4){animation-delay:.42s;}
 .form-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px 22px;}
 .form-field{display:flex;flex-direction:column;gap:8px;}
 .form-field.full{grid-column:1/-1;}
-.form-field label{font-family:'Archivo',sans-serif;font-size:11.5px;font-weight:700;letter-spacing:0.05em;text-transform:uppercase;color:var(--text-soft);}
+.form-field>label{font-family:'Archivo',sans-serif;font-size:11.5px;font-weight:700;letter-spacing:0.05em;text-transform:uppercase;color:var(--text-soft);}
 .form-field label .req{color:var(--copper);}
 .form-field input,.form-field select,.form-field textarea{
   border:1.5px solid var(--line);border-radius:5px;padding:13px 14px;font-family:'Inter',sans-serif;font-size:14.5px;color:var(--text);
@@ -564,14 +564,23 @@ html.js .hero-copy>*:nth-child(4){animation-delay:.42s;}
 .form-field.invalid input,.form-field.invalid select,.form-field.invalid textarea{border-color:#C0392B;background:#FDF3F2;}
 .form-field .err-msg{display:none;font-size:12px;color:#C0392B;}
 .form-field.invalid .err-msg{display:block;}
-.radio-row{display:flex;flex-wrap:wrap;gap:10px;}
+.radio-row{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;}
+.radio-row[data-radiogroup="financing"]{grid-template-columns:minmax(100px,120px) minmax(100px,120px) minmax(220px,1fr);}
 .radio-chip{
-  border:1.5px solid var(--line);border-radius:30px;padding:9px 16px;font-size:13px;font-weight:600;
-  display:flex;align-items:center;gap:8px;cursor:pointer;transition:all .2s ease;background:var(--paper);
+  border:1.5px solid var(--line);border-radius:7px;padding:11px 12px;font-size:13px;font-weight:600;
+  display:flex;align-items:center;justify-content:center;gap:8px;cursor:pointer;transition:all .2s ease;
+  background:var(--paper);min-height:46px;text-align:center;line-height:1.25;
 }
-.radio-chip input{accent-color:var(--copper);}
-.radio-chip:hover{border-color:var(--copper);}
-.radio-chip.checked{border-color:var(--copper);background:rgba(0,0,0,0.05);color:var(--copper-deep);}
+.radio-chip input{flex-shrink:0;width:15px;height:15px;margin:0;accent-color:var(--copper);}
+.radio-chip span{white-space:normal;}
+.radio-chip:hover{border-color:var(--ink);}
+.radio-chip.checked{border-color:var(--ink);background:var(--ink);color:var(--white);}
+.radio-chip.checked input{accent-color:var(--white);}
+@media (max-width:640px){
+  .radio-row,
+  .radio-row[data-radiogroup="financing"]{grid-template-columns:1fr;}
+  .radio-chip{justify-content:flex-start;text-align:left;padding:13px 16px;}
+}
 .form-actions{margin-top:8px;display:flex;align-items:center;gap:18px;flex-wrap:wrap;}
 .form-note{font-size:12px;color:var(--text-soft);}
 .hp-field{position:absolute;left:-9999px;top:-9999px;opacity:0;height:0;width:0;}
@@ -1127,12 +1136,7 @@ footer .footer-links a:hover{color:var(--copper-light);}
               <input type="tel" name="phone" required placeholder="(555) 555-5555">
               <span class="err-msg" data-i18n="form.err.phone">Please enter a valid phone number.</span>
             </div>
-            <div class="form-field">
-              <label><span data-i18n="form.address">Project Address</span> <span class="req">*</span></label>
-              <input type="text" name="projectAddress" required>
-              <span class="err-msg" data-i18n="form.err.address">Please enter the project address.</span>
-            </div>
-            <div class="form-field">
+            <div class="form-field full">
               <label><span data-i18n="form.city">City</span> <span class="req">*</span></label>
               <input type="text" name="city" required>
               <span class="err-msg" data-i18n="form.err.city">Please enter a city.</span>
@@ -1368,7 +1372,7 @@ en: {
   'form.heading':'Request My Estimate',
   'form.lead':'Fields marked <span style="color:var(--copper);">*</span> are required. We\'ll get back to you shortly.',
   'form.firstName':'First Name','form.lastName':'Last Name','form.email':'Email','form.phone':'Phone Number',
-  'form.address':'Project Address','form.city':'City','form.projectType':'Project Type','form.selectProjectType':'Select a project type','form.other':'Other',
+  'form.city':'City','form.projectType':'Project Type','form.selectProjectType':'Select a project type','form.other':'Other',
   'form.budget':'Estimated Budget','form.notSure':'Not sure yet','form.budget1':'Under $10,000','form.budget2':'$10,000 – $25,000','form.budget3':'$25,000 – $50,000','form.budget4':'$50,000 – $100,000','form.budget5':'$100,000+',
   'form.description':'Project Description','form.descriptionPh':"Tell us a bit about what you'd like to do...",
   'form.startDate':'Desired Start Date','form.contactMethod':'Preferred Contact Method','form.phoneOption':'Phone','form.textOption':'Text',
@@ -1379,7 +1383,7 @@ en: {
   'form.successFallback':'Didn\'t hear from us right away? Email <a href="mailto:info@isahomeus.com">info@isahomeus.com</a> directly.',
   'form.err.firstName':'Please enter your first name.','form.err.lastName':'Please enter your last name.',
   'form.err.email':'Please enter a valid email address.','form.err.phone':'Please enter a valid phone number.',
-  'form.err.address':'Please enter the project address.','form.err.city':'Please enter a city.',
+  'form.err.city':'Please enter a city.',
   'form.err.projectType':'Please select a project type.','form.err.description':'Please describe your project.',
   'form.err.contactMethod':'Please choose a preferred contact method.','form.err.financing':'Please let us know your interest in financing.',
   'footer.tagline':'Professional construction, renovation and remodeling services for homeowners — from the first consultation to the final walkthrough.',
@@ -1459,7 +1463,7 @@ es: {
   'form.heading':'Solicitar Mi Cotización',
   'form.lead':'Los campos marcados con <span style="color:var(--copper);">*</span> son obligatorios. Nos pondremos en contacto contigo pronto.',
   'form.firstName':'Nombre','form.lastName':'Apellido','form.email':'Correo Electrónico','form.phone':'Número de Teléfono',
-  'form.address':'Dirección del Proyecto','form.city':'Ciudad','form.projectType':'Tipo de Proyecto','form.selectProjectType':'Selecciona un tipo de proyecto','form.other':'Otro',
+  'form.city':'Ciudad','form.projectType':'Tipo de Proyecto','form.selectProjectType':'Selecciona un tipo de proyecto','form.other':'Otro',
   'form.budget':'Presupuesto Estimado','form.notSure':'Aún no lo sé','form.budget1':'Menos de $10,000','form.budget2':'$10,000 – $25,000','form.budget3':'$25,000 – $50,000','form.budget4':'$50,000 – $100,000','form.budget5':'$100,000+',
   'form.description':'Descripción del Proyecto','form.descriptionPh':'Cuéntanos un poco sobre lo que te gustaría hacer...',
   'form.startDate':'Fecha de Inicio Deseada','form.contactMethod':'Método de Contacto Preferido','form.phoneOption':'Teléfono','form.textOption':'Mensaje de Texto',
@@ -1470,7 +1474,7 @@ es: {
   'form.successFallback':'¿No recibiste noticias nuestras enseguida? Escribe directamente a <a href="mailto:info@isahomeus.com">info@isahomeus.com</a>.',
   'form.err.firstName':'Por favor ingresa tu nombre.','form.err.lastName':'Por favor ingresa tu apellido.',
   'form.err.email':'Por favor ingresa un correo electrónico válido.','form.err.phone':'Por favor ingresa un número de teléfono válido.',
-  'form.err.address':'Por favor ingresa la dirección del proyecto.','form.err.city':'Por favor ingresa una ciudad.',
+  'form.err.city':'Por favor ingresa una ciudad.',
   'form.err.projectType':'Por favor selecciona un tipo de proyecto.','form.err.description':'Por favor describe tu proyecto.',
   'form.err.contactMethod':'Por favor elige un método de contacto preferido.','form.err.financing':'Por favor indícanos tu interés en financiamiento.',
   'footer.tagline':'Servicios profesionales de construcción, renovación y remodelación para propietarios — desde la primera consulta hasta el recorrido final.',
