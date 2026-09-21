@@ -375,9 +375,12 @@ html.js .hero-copy>*:nth-child(4){animation-delay:.42s;}
 .proj-card .media-ph{position:absolute;inset:0;}
 .proj-card .media-ph .ph-icon{transition:transform .5s ease;}
 .proj-card:hover .media-ph .ph-icon{transform:translate(-50%,-50%) scale(1.12);}
+.media-ph.has-photo::before,.media-ph.has-photo::after{display:none;}
+.proj-photo{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;transition:transform .5s ease;}
+.proj-card:hover .proj-photo{transform:scale(1.03);}
 .proj-overlay{
   position:absolute;inset:0;z-index:2;display:flex;flex-direction:column;justify-content:flex-end;padding:20px;
-  background:linear-gradient(0deg, rgba(0,0,0,0.88), transparent 65%);
+  background:linear-gradient(to bottom, rgba(0,0,0,0.02) 40%, rgba(0,0,0,0.78) 100%);
 }
 .proj-overlay .p-cat{font-family:'Archivo',sans-serif;font-size:10px;letter-spacing:0.14em;text-transform:uppercase;color:var(--copper-light);margin-bottom:5px;}
 .proj-overlay h4{color:var(--white);font-size:16.5px;font-weight:700;}
@@ -898,25 +901,25 @@ footer .footer-links a:hover{color:var(--copper-light);}
     <div class="projects-grid" id="projectsGrid">
       <!-- Each card: data-category holds space separated filter tags -->
       <article class="proj-card reveal" data-category="kitchen interior renovation" data-title="Kitchen Remodel" data-cat-label="Kitchen">
-        <div class="media-ph"><div class="ph-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><rect x="4" y="8" width="16" height="10" rx="1.5"/><circle cx="8" cy="13" r="1.3" fill="currentColor" stroke="none"/><circle cx="12" cy="13" r="1.3" fill="currentColor" stroke="none"/><circle cx="16" cy="13" r="1.3" fill="currentColor" stroke="none"/></svg></div></div>
+        <div class="media-ph has-photo"><img class="proj-photo" src="assets/project-kitchen-remodel.jpg" alt="Kitchen Remodel" loading="lazy"></div>
         <div class="proj-overlay"><span class="p-cat" data-i18n="projects.filter.kitchen">Kitchen</span><h4 data-i18n="projects.card1.title">Kitchen Remodel</h4></div>
         <div class="proj-expand"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></div>
       </article>
 
       <article class="proj-card reveal" data-category="bathroom interior renovation" data-title="Bathroom Remodel" data-cat-label="Bathroom">
-        <div class="media-ph tone-3"><div class="ph-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M4 12h16v3a3 3 0 0 1-3 3H7a3 3 0 0 1-3-3Z"/><path d="M6 12V6a2 2 0 0 1 2-2"/></svg></div></div>
+        <div class="media-ph tone-3 has-photo"><img class="proj-photo" src="assets/project-bathroom-remodel.jpg" alt="Bathroom Remodel" loading="lazy"></div>
         <div class="proj-overlay"><span class="p-cat" data-i18n="projects.filter.bathroom">Bathroom</span><h4 data-i18n="projects.card2.title">Bathroom Remodel</h4></div>
         <div class="proj-expand"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></div>
       </article>
 
       <article class="proj-card reveal" data-category="exterior renovation" data-title="Exterior Facade Upgrade" data-cat-label="Exterior">
-        <div class="media-ph tone-2"><div class="ph-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M3 11 12 4l9 7"/><path d="M5 10v9.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V10"/></svg></div></div>
+        <div class="media-ph tone-2 has-photo"><img class="proj-photo" src="assets/project-exterior-facade.jpg" alt="Exterior Facade Upgrade" loading="lazy"></div>
         <div class="proj-overlay"><span class="p-cat" data-i18n="projects.filter.exterior">Exterior</span><h4 data-i18n="projects.card3.title">Exterior Facade Upgrade</h4></div>
         <div class="proj-expand"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></div>
       </article>
 
       <article class="proj-card reveal" data-category="interior renovation" data-title="Open-Concept Living Renovation" data-cat-label="Interior">
-        <div class="media-ph"><div class="ph-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M4 20 15 9l3 3L7 23Z"/><path d="M13 6l5 5"/></svg></div></div>
+        <div class="media-ph has-photo"><img class="proj-photo" src="assets/project-open-concept-living.jpg" alt="Open-Concept Living Renovation" loading="lazy"></div>
         <div class="proj-overlay"><span class="p-cat" data-i18n="projects.filter.interior">Interior</span><h4 data-i18n="projects.card4.title">Open-Concept Living Renovation</h4></div>
         <div class="proj-expand"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></div>
       </article>
@@ -928,7 +931,7 @@ footer .footer-links a:hover{color:var(--copper-light);}
       </article>
 
       <article class="proj-card reveal" data-category="kitchen interior" data-title="Custom Cabinetry Install" data-cat-label="Kitchen">
-        <div class="media-ph tone-2"><div class="ph-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M3 4h18v16H3ZM12 4v16"/></svg></div></div>
+        <div class="media-ph tone-2 has-photo"><img class="proj-photo" src="assets/project-custom-cabinetry.jpg" alt="Custom Cabinetry Install" loading="lazy"></div>
         <div class="proj-overlay"><span class="p-cat" data-i18n="projects.filter.kitchen">Kitchen</span><h4 data-i18n="projects.card6.title">Custom Cabinetry Install</h4></div>
         <div class="proj-expand"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></div>
       </article>
