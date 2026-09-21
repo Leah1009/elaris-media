@@ -423,6 +423,7 @@ html.js .hero-copy>*:nth-child(4){animation-delay:.42s;}
   background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%230A0A0A' stroke-width='2'%3E%3Cpath d='M8 7 4 12l4 5M16 7l4 5-4 5'/%3E%3C/svg%3E");
   background-repeat:no-repeat;background-position:center;
 }
+.ba-media.has-photo img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;}
 .ba-caption{padding:16px 18px;background:var(--white);}
 .ba-caption h4{font-size:15px;font-weight:700;margin-bottom:3px;}
 .ba-caption span{font-size:12.5px;color:var(--text-soft);}
@@ -946,8 +947,8 @@ footer .footer-links a:hover{color:var(--copper-light);}
     <div class="ba-grid">
       <div class="ba-card reveal">
         <div class="ba-slider" data-ba>
-          <div class="ba-media media-ph tone-2"><div class="ph-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><rect x="4" y="8" width="16" height="10" rx="1.5"/></svg></div><span class="ph-tag" data-i18n="common.before">Before</span></div>
-          <div class="ba-media ba-after media-ph"><div class="ph-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><rect x="4" y="8" width="16" height="10" rx="1.5"/><circle cx="8" cy="13" r="1.3" fill="currentColor" stroke="none"/><circle cx="12" cy="13" r="1.3" fill="currentColor" stroke="none"/><circle cx="16" cy="13" r="1.3" fill="currentColor" stroke="none"/></svg></div><span class="ph-tag" data-i18n="common.after">After</span></div>
+          <div class="ba-media media-ph has-photo"><img src="assets/ba-kitchen-before.jpg" alt="Kitchen before renovation" loading="lazy"></div>
+          <div class="ba-media ba-after media-ph has-photo"><img src="assets/ba-kitchen-after.jpg" alt="Kitchen after renovation" loading="lazy"></div>
           <div class="ba-label before" data-i18n="common.before">Before</div>
           <div class="ba-label after" data-i18n="common.after">After</div>
           <div class="ba-handle"></div>
@@ -957,8 +958,8 @@ footer .footer-links a:hover{color:var(--copper-light);}
       </div>
       <div class="ba-card reveal reveal-delay-1">
         <div class="ba-slider" data-ba>
-          <div class="ba-media media-ph tone-3"><div class="ph-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M4 12h16v3a3 3 0 0 1-3 3H7a3 3 0 0 1-3-3Z"/></svg></div><span class="ph-tag" data-i18n="common.before">Before</span></div>
-          <div class="ba-media ba-after media-ph"><div class="ph-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M4 12h16v3a3 3 0 0 1-3 3H7a3 3 0 0 1-3-3Z"/><path d="M6 12V6a2 2 0 0 1 2-2"/></svg></div><span class="ph-tag" data-i18n="common.after">After</span></div>
+          <div class="ba-media media-ph has-photo"><img src="assets/ba-bathroom-before.jpg" alt="Bathroom before renovation" loading="lazy"></div>
+          <div class="ba-media ba-after media-ph has-photo"><img src="assets/ba-bathroom-after.jpg" alt="Bathroom after renovation" loading="lazy"></div>
           <div class="ba-label before" data-i18n="common.before">Before</div>
           <div class="ba-label after" data-i18n="common.after">After</div>
           <div class="ba-handle"></div>
