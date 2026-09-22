@@ -496,6 +496,32 @@ html.js .hero-copy>*:nth-child(4){animation-delay:.42s;}
 }
 
 /* ============================================================
+   MEET THE FOUNDER
+   ============================================================ */
+.founder{background:var(--white);}
+.founder .container{display:grid;grid-template-columns:0.82fr 1.18fr;gap:74px;align-items:center;}
+.founder-photo{position:relative;}
+.founder-photo .frame{position:relative;aspect-ratio:3/3.9;border-radius:8px;overflow:hidden;background:var(--ink);}
+.founder-photo-frame img{width:100%;height:100%;object-fit:cover;display:block;}
+.founder-name{font-family:'Playfair Display',serif;font-size:clamp(32px,4.4vw,48px);font-weight:800;margin-bottom:6px;color:var(--text);}
+.founder-title{display:block;font-family:'Archivo',sans-serif;font-size:12.5px;font-weight:700;letter-spacing:0.16em;text-transform:uppercase;color:var(--steel);margin-bottom:24px;}
+.founder-divider{width:60px;height:2px;background:var(--copper);margin-bottom:28px;}
+.founder-copy p{font-size:16px;line-height:1.8;color:var(--text-soft);margin-bottom:18px;}
+.founder-copy .founder-closing{font-weight:700;color:var(--text);margin-bottom:0;}
+.founder-facts{display:grid;grid-template-columns:repeat(3,1fr);gap:0;margin-top:38px;border-top:1px solid var(--line);padding-top:26px;}
+.founder-facts div{padding:0 22px;border-left:1px solid var(--line);}
+.founder-facts div:first-child{border-left:none;padding-left:0;}
+.founder-facts h4{font-family:'Archivo',sans-serif;font-size:10.5px;font-weight:800;letter-spacing:0.13em;text-transform:uppercase;color:var(--steel);margin-bottom:8px;}
+.founder-facts p{font-family:'Playfair Display',serif;font-size:16px;font-weight:600;margin:0;color:var(--text);line-height:1.4;}
+@media (max-width:900px){
+  .founder .container{grid-template-columns:1fr;gap:44px;}
+  .founder-photo{max-width:340px;margin:0 auto;}
+  .founder-facts{grid-template-columns:1fr;border-top:none;padding-top:0;}
+  .founder-facts div{padding:18px 0;border-left:none;border-top:1px solid var(--line);}
+  .founder-facts div:first-child{border-top:none;padding-top:0;}
+}
+
+/* ============================================================
    FINANCING
    ============================================================ */
 .financing{background:var(--ink);color:var(--white);overflow:hidden;position:relative;}
@@ -1087,6 +1113,43 @@ footer .footer-links a:hover{color:var(--copper-light);}
 </section>
 
 <!-- ============================================================
+     MEET THE FOUNDER
+     ============================================================ -->
+<section class="founder section-pad" id="founder">
+  <div class="container">
+    <div class="founder-photo reveal">
+      <div class="frame founder-photo-frame">
+        <img src="assets/owner.jpg" alt="Israel Jimenez, Founder of Isa Home Investments">
+      </div>
+    </div>
+    <div class="founder-copy reveal reveal-delay-1">
+      <span class="eyebrow" data-i18n="founder.eyebrow">Meet the Founder</span>
+      <h2 class="founder-name" data-i18n="founder.name">Israel Jimenez</h2>
+      <span class="founder-title" data-i18n="founder.title">Founder &amp; Real Estate Developer</span>
+      <div class="founder-divider"></div>
+      <p data-i18n="founder.p1">I'm Israel Jimenez, founder of Isa Home Investments, a Florida-based residential development company focused on building modern homes and creating long-term value through real estate.</p>
+      <p data-i18n="founder.p2">With a hands-on approach and a strong understanding of the construction process, I'm involved in every stage of each project — from land selection and planning to design, construction and final delivery.</p>
+      <p data-i18n="founder.p3">Our focus is simple: build high-quality homes with modern design, functionality and long-term value, whether the goal is to live in them, rent them, or sell them as part of an investment strategy.</p>
+      <p class="founder-closing" data-i18n="founder.p4">At Isa Home Investments, we don't just build houses. We develop opportunities from the ground up.</p>
+      <div class="founder-facts">
+        <div>
+          <h4 data-i18n="founder.fact1.label">Florida</h4>
+          <p data-i18n="founder.fact1.value">South Florida</p>
+        </div>
+        <div>
+          <h4 data-i18n="founder.fact2.label">Residential Development</h4>
+          <p data-i18n="founder.fact2.value">Building Modern Communities</p>
+        </div>
+        <div>
+          <h4 data-i18n="founder.fact3.label">New Home Construction</h4>
+          <p data-i18n="founder.fact3.value">Quality / Design / Long-Term Value</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
      FINANCING
      ============================================================ -->
 <section class="financing section-pad" id="financing">
@@ -1432,6 +1495,14 @@ en: {
   'about.mission.title':'Our Mission','about.mission.desc':'Deliver reliable, high-quality construction and remodeling for every homeowner we work with.',
   'about.commitment.title':'Our Commitment','about.commitment.desc':'Clear communication, honest timelines and respect for your home throughout the project.',
   'about.approach.title':'Our Approach','about.approach.desc':'Listen first, plan carefully, then build with precision and care.',
+  'founder.eyebrow':'Meet the Founder','founder.name':'Israel Jimenez','founder.title':'Founder & Real Estate Developer',
+  'founder.p1':'I’m Israel Jimenez, founder of Isa Home Investments, a Florida-based residential development company focused on building modern homes and creating long-term value through real estate.',
+  'founder.p2':'With a hands-on approach and a strong understanding of the construction process, I’m involved in every stage of each project — from land selection and planning to design, construction and final delivery.',
+  'founder.p3':'Our focus is simple: build high-quality homes with modern design, functionality and long-term value, whether the goal is to live in them, rent them, or sell them as part of an investment strategy.',
+  'founder.p4':'At Isa Home Investments, we don’t just build houses. We develop opportunities from the ground up.',
+  'founder.fact1.label':'Florida','founder.fact1.value':'South Florida',
+  'founder.fact2.label':'Residential Development','founder.fact2.value':'Building Modern Communities',
+  'founder.fact3.label':'New Home Construction','founder.fact3.value':'Quality / Design / Long-Term Value',
   'financing.eyebrow':'Financing','financing.title':'Financing Your Project',
   'financing.body':'Your renovation doesn\'t always have to wait. Isa Home Investments can help connect customers with third-party financing companies that specialize in home improvement and construction financing.',
   'financing.disclaimer':'Financing options are provided by independent, third-party financing companies and are subject to their individual approval requirements, terms and conditions. Isa Home Investments does not provide financing directly and does not guarantee approval.',
@@ -1530,6 +1601,14 @@ es: {
   'about.mission.title':'Nuestra Misión','about.mission.desc':'Ofrecer construcción y remodelación confiable y de alta calidad para cada propietario con quien trabajamos.',
   'about.commitment.title':'Nuestro Compromiso','about.commitment.desc':'Comunicación clara, plazos honestos y respeto por tu hogar durante todo el proyecto.',
   'about.approach.title':'Nuestro Enfoque','about.approach.desc':'Escuchar primero, planificar con cuidado y luego construir con precisión y esmero.',
+  'founder.eyebrow':'Conoce al Fundador','founder.name':'Israel Jimenez','founder.title':'Fundador y Desarrollador Inmobiliario',
+  'founder.p1':'Soy Israel Jimenez, fundador de Isa Home Investments, una empresa de desarrollo residencial con sede en Florida enfocada en construir hogares modernos y generar valor a largo plazo a través de bienes raíces.',
+  'founder.p2':'Con un enfoque práctico y un conocimiento sólido del proceso de construcción, participo en cada etapa del proyecto — desde la selección del terreno y la planificación hasta el diseño, la construcción y la entrega final.',
+  'founder.p3':'Nuestro enfoque es simple: construir hogares de alta calidad con diseño moderno, funcionalidad y valor a largo plazo, ya sea que el objetivo sea vivir en ellos, alquilarlos o venderlos como parte de una estrategia de inversión.',
+  'founder.p4':'En Isa Home Investments, no solo construimos casas. Desarrollamos oportunidades desde cero.',
+  'founder.fact1.label':'Florida','founder.fact1.value':'Sur de Florida',
+  'founder.fact2.label':'Desarrollo Residencial','founder.fact2.value':'Construyendo Comunidades Modernas',
+  'founder.fact3.label':'Nueva Construcción de Hogares','founder.fact3.value':'Calidad / Diseño / Valor a Largo Plazo',
   'financing.eyebrow':'Financiamiento','financing.title':'Financiamiento para tu Proyecto',
   'financing.body':'Tu renovación no siempre tiene que esperar. Isa Home Investments puede ayudarte a conectar con compañías de financiamiento externas especializadas en financiamiento para construcción y mejoras del hogar.',
   'financing.disclaimer':'Las opciones de financiamiento son ofrecidas por compañías de financiamiento independientes y están sujetas a sus propios requisitos de aprobación, términos y condiciones. Isa Home Investments no otorga financiamiento directamente ni garantiza su aprobación.',
