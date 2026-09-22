@@ -472,31 +472,7 @@ html.js .hero-copy>*:nth-child(4){animation-delay:.42s;}
 .lightbox-close svg{width:18px;height:18px;}
 
 /* ============================================================
-   ABOUT
-   ============================================================ */
-.about{background:var(--paper-2);}
-.about .container{display:grid;grid-template-columns:0.82fr 1.18fr;gap:74px;align-items:center;}
-.about-photo{position:relative;}
-.about-photo .frame{position:relative;aspect-ratio:3/3.7;border-radius:8px;overflow:hidden;background:var(--ink);}
-.owner-photo-frame img{width:100%;height:100%;object-fit:cover;display:block;}
-.about-photo .frame::before{content:'';position:absolute;inset:0;border:2px solid var(--copper);border-radius:8px;transform:translate(16px,16px);z-index:-1;}
-.about-photo .frame-corner{position:absolute;width:46px;height:46px;border:3px solid var(--copper);z-index:3;}
-.about-photo .frame-corner.tl{top:-14px;left:-14px;border-right:none;border-bottom:none;}
-.about-photo .frame-corner.br{bottom:-14px;right:-14px;border-left:none;border-top:none;}
-.about-copy h2{font-size:clamp(28px,4vw,42px);font-weight:800;margin-bottom:22px;}
-.about-copy p{font-size:16px;line-height:1.8;color:var(--text-soft);margin-bottom:18px;}
-.about-mini{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:36px;}
-.about-mini div{border-top:2px solid var(--copper);padding-top:14px;}
-.about-mini h4{font-family:'Archivo',sans-serif;font-size:13.5px;font-weight:800;text-transform:uppercase;letter-spacing:0.03em;margin-bottom:7px;}
-.about-mini p{font-size:13.5px;line-height:1.6;margin:0;}
-@media (max-width:960px){
-  .about .container{grid-template-columns:1fr;gap:50px;}
-  .about-photo{max-width:340px;margin:0 auto;}
-  .about-mini{grid-template-columns:1fr;}
-}
-
-/* ============================================================
-   MEET THE FOUNDER
+   ABOUT US — Meet the Founder (single About Us section)
    ============================================================ */
 .founder{background:var(--white);}
 .founder .container{display:grid;grid-template-columns:0.82fr 1.18fr;gap:74px;align-items:center;}
@@ -1077,45 +1053,9 @@ footer .footer-links a:hover{color:var(--copper-light);}
 </section>
 
 <!-- ============================================================
-     ABOUT
+     ABOUT US — Meet the Founder (single About Us section)
      ============================================================ -->
-<section class="about section-pad" id="about">
-  <div class="container">
-    <div class="about-photo reveal">
-      <div class="frame-corner tl"></div>
-      <div class="frame-corner br"></div>
-      <!-- Owner photo, treated in black & white to match the Isa Home Investments brand identity. -->
-      <div class="frame owner-photo-frame">
-        <img src="assets/owner.jpg" alt="Founder of Isa Home Investments on a residential construction site">
-      </div>
-    </div>
-    <div class="about-copy reveal reveal-delay-1">
-      <span class="eyebrow" data-i18n="about.eyebrow">About Isa Home Investments</span>
-      <h2 data-i18n="about.title">Building With Purpose</h2>
-      <p data-i18n="about.p1">Isa Home Investments was created with a commitment to helping homeowners improve, renovate and transform their properties with professionalism, transparency and attention to detail.</p>
-      <p data-i18n="about.p2">Every project is approached with the same objective: understand the client's vision, provide practical solutions and deliver work that adds value to their home.</p>
-      <div class="about-mini">
-        <div>
-          <h4 data-i18n="about.mission.title">Our Mission</h4>
-          <p data-i18n="about.mission.desc">Deliver reliable, high-quality construction and remodeling for every homeowner we work with.</p>
-        </div>
-        <div>
-          <h4 data-i18n="about.commitment.title">Our Commitment</h4>
-          <p data-i18n="about.commitment.desc">Clear communication, honest timelines and respect for your home throughout the project.</p>
-        </div>
-        <div>
-          <h4 data-i18n="about.approach.title">Our Approach</h4>
-          <p data-i18n="about.approach.desc">Listen first, plan carefully, then build with precision and care.</p>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ============================================================
-     MEET THE FOUNDER
-     ============================================================ -->
-<section class="founder section-pad" id="founder">
+<section class="founder section-pad" id="about">
   <div class="container">
     <div class="founder-photo reveal">
       <div class="frame founder-photo-frame">
@@ -1489,12 +1429,6 @@ en: {
   'projects.ba1.title':'From Empty Lot to Custom Home','projects.ba1.desc':'Ground-up residential construction',
   'projects.ba2.title':'From Vacant Land to Waterfront Residence','projects.ba2.desc':'Designed for living or long-term investment',
   'projects.ba3.title':'From Raw Property to Market-Ready Home','projects.ba3.desc':'Built from scratch with resale potential',
-  'about.eyebrow':'About Isa Home Investments','about.title':'Building With Purpose',
-  'about.p1':'Isa Home Investments was created with a commitment to helping homeowners improve, renovate and transform their properties with professionalism, transparency and attention to detail.',
-  'about.p2':"Every project is approached with the same objective: understand the client's vision, provide practical solutions and deliver work that adds value to their home.",
-  'about.mission.title':'Our Mission','about.mission.desc':'Deliver reliable, high-quality construction and remodeling for every homeowner we work with.',
-  'about.commitment.title':'Our Commitment','about.commitment.desc':'Clear communication, honest timelines and respect for your home throughout the project.',
-  'about.approach.title':'Our Approach','about.approach.desc':'Listen first, plan carefully, then build with precision and care.',
   'founder.eyebrow':'Meet the Founder','founder.name':'Israel Jimenez','founder.title':'Founder & Real Estate Developer',
   'founder.p1':'I’m Israel Jimenez, founder of Isa Home Investments, a Florida-based residential development company focused on building modern homes and creating long-term value through real estate.',
   'founder.p2':'With a hands-on approach and a strong understanding of the construction process, I’m involved in every stage of each project — from land selection and planning to design, construction and final delivery.',
@@ -1595,12 +1529,6 @@ es: {
   'projects.ba1.title':'De Terreno Baldío a Casa a Medida','projects.ba1.desc':'Construcción residencial desde cero',
   'projects.ba2.title':'De Terreno Vacío a Residencia Frente al Agua','projects.ba2.desc':'Diseñada para vivir o como inversión a largo plazo',
   'projects.ba3.title':'De Propiedad en Bruto a Casa Lista para Vender','projects.ba3.desc':'Construida desde cero con potencial de reventa',
-  'about.eyebrow':'Sobre Isa Home Investments','about.title':'Construyendo con Propósito',
-  'about.p1':'Isa Home Investments nació con el compromiso de ayudar a los propietarios a mejorar, renovar y transformar sus propiedades con profesionalismo, transparencia y atención al detalle.',
-  'about.p2':'Cada proyecto se aborda con el mismo objetivo: entender la visión del cliente, ofrecer soluciones prácticas y entregar un trabajo que agregue valor a su hogar.',
-  'about.mission.title':'Nuestra Misión','about.mission.desc':'Ofrecer construcción y remodelación confiable y de alta calidad para cada propietario con quien trabajamos.',
-  'about.commitment.title':'Nuestro Compromiso','about.commitment.desc':'Comunicación clara, plazos honestos y respeto por tu hogar durante todo el proyecto.',
-  'about.approach.title':'Nuestro Enfoque','about.approach.desc':'Escuchar primero, planificar con cuidado y luego construir con precisión y esmero.',
   'founder.eyebrow':'Conoce al Fundador','founder.name':'Israel Jimenez','founder.title':'Fundador y Desarrollador Inmobiliario',
   'founder.p1':'Soy Israel Jimenez, fundador de Isa Home Investments, una empresa de desarrollo residencial con sede en Florida enfocada en construir hogares modernos y generar valor a largo plazo a través de bienes raíces.',
   'founder.p2':'Con un enfoque práctico y un conocimiento sólido del proceso de construcción, participo en cada etapa del proyecto — desde la selección del terreno y la planificación hasta el diseño, la construcción y la entrega final.',
