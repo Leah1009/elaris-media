@@ -3,16 +3,16 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Isa Home Investments | Construction &amp; Home Remodeling</title>
-<meta name="description" content="Professional construction, remodeling and home improvement services. Transform your home with Isa Home Investments.">
-<meta name="keywords" content="home remodeling, construction company, kitchen remodeling, bathroom remodeling, home renovations, South Florida construction, Isa Home Investments">
+<title>Isa Home Investments | New Construction &amp; Investment Properties</title>
+<meta name="description" content="Isa Home Investments builds new homes for sale, rental or personal use — helping investors and homeowners plan and execute new-construction projects with an investment-minded strategy in South Florida.">
+<meta name="keywords" content="new construction, build to rent, build to sell, investment property construction, custom home builder, South Florida new homes, home remodeling, Isa Home Investments">
 <meta name="robots" content="index, follow">
 <!-- Update canonical/OG urls once the live domain is confirmed -->
 <link rel="canonical" href="https://www.isahomeus.com/">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Isa Home Investments">
-<meta property="og:title" content="Isa Home Investments | Construction & Home Remodeling">
-<meta property="og:description" content="Professional construction, remodeling and home improvement services. Transform your home with Isa Home Investments.">
+<meta property="og:title" content="Isa Home Investments | New Construction & Investment Properties">
+<meta property="og:description" content="Isa Home Investments builds new homes for sale, rental or personal use — helping investors and homeowners plan and execute new-construction projects with an investment-minded strategy in South Florida.">
 <meta property="og:url" content="https://www.isahomeus.com/">
 <meta name="theme-color" content="#0A0A0A">
 
@@ -288,6 +288,31 @@ html.js .hero-copy>*:nth-child(4){animation-delay:.42s;}
   .hero{padding:130px 0 80px;}
   .hero-btns .btn{flex:1 1 auto;justify-content:center;}
 }
+
+/* ============================================================
+   BUSINESS MODELS
+   ============================================================ */
+.models{background:var(--paper-2);}
+.models-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;}
+.model-card{background:var(--white);border:1px solid var(--line);border-radius:8px;padding:40px 32px;transition:transform .3s ease, box-shadow .3s ease;}
+.model-card:hover{transform:translateY(-4px);box-shadow:var(--shadow);}
+.model-card .mc-index{font-family:'Archivo',sans-serif;font-size:12px;font-weight:800;letter-spacing:0.14em;color:var(--steel);display:block;margin-bottom:20px;}
+.model-card h3{font-size:21px;font-weight:800;margin-bottom:12px;}
+.model-card p{font-size:14.5px;line-height:1.7;color:var(--text-soft);}
+@media (max-width:860px){.models-grid{grid-template-columns:1fr;gap:16px;}}
+
+/* ============================================================
+   WHY BUILD FROM THE GROUND UP
+   ============================================================ */
+.ground-up{
+  background:linear-gradient(120deg,#000000,#1a1a1a 55%,#000000);
+  color:var(--white);text-align:center;position:relative;overflow:hidden;
+}
+.ground-up::before{content:'';position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,0.06) 1px, transparent 1px),linear-gradient(90deg, rgba(255,255,255,0.06) 1px, transparent 1px);background-size:40px 40px;}
+.ground-up-inner{position:relative;z-index:1;max-width:800px;margin:0 auto;}
+.ground-up .eyebrow{color:var(--copper-light);justify-content:center;}
+.ground-up h2{color:var(--white);font-size:clamp(28px,4.4vw,44px);font-weight:900;margin-bottom:22px;}
+.ground-up p{color:var(--text-on-dark-soft);font-size:17px;line-height:1.8;}
 
 /* ============================================================
    INTRO
@@ -718,16 +743,57 @@ footer .footer-links a:hover{color:var(--copper-light);}
   </div>
   <div class="container">
     <div class="hero-copy">
-      <span class="hero-eyebrow" data-i18n="hero.eyebrow">South Florida &bull; Construction &amp; Remodeling</span>
-      <h1 data-i18n-html="hero.headline">We Build.<br>You Live <em>Better.</em></h1>
-      <p class="hero-sub" data-i18n="hero.sub">Construction and remodeling designed around your vision, built with precision.</p>
+      <span class="hero-eyebrow" data-i18n="hero.eyebrow">South Florida &bull; New Construction &amp; Investment</span>
+      <h1 data-i18n-html="hero.headline">Build From the Ground Up.<br>Build With a <em>Strategy.</em></h1>
+      <p class="hero-sub" data-i18n="hero.sub">We help homeowners and investors build new properties designed for living, renting, or resale — with a clear plan from concept to completion.</p>
       <div class="hero-btns">
-        <a href="#contact" class="btn btn-primary"><span data-i18n="hero.ctaEstimate">Get a Free Estimate</span>
+        <a href="#contact" class="btn btn-primary"><span data-i18n="hero.ctaEstimate">Start Your Project</span>
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
         </a>
-        <a href="#projects" class="btn btn-outline" data-i18n="hero.ctaProjects">View Our Projects</a>
+        <a href="#model" class="btn btn-outline" data-i18n="hero.ctaModel">Explore Our Model</a>
       </div>
     </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     BUSINESS MODELS
+     ============================================================ -->
+<section class="models section-pad" id="model">
+  <div class="container">
+    <div class="section-head center reveal">
+      <span class="eyebrow" data-i18n="model.eyebrow">How We Work</span>
+      <h2 data-i18n="model.title">Three Ways to Build With Us</h2>
+      <p data-i18n="model.body">Every new-construction project starts with a clear goal. We structure the plan, budget and finishes around it from day one.</p>
+    </div>
+    <div class="models-grid">
+      <div class="model-card reveal">
+        <span class="mc-index">01</span>
+        <h3 data-i18n="model.card1.title">Build to Sell</h3>
+        <p data-i18n="model.card1.desc">Build strategically with resale potential and marketability in mind.</p>
+      </div>
+      <div class="model-card reveal reveal-delay-1">
+        <span class="mc-index">02</span>
+        <h3 data-i18n="model.card2.title">Build to Rent</h3>
+        <p data-i18n="model.card2.desc">Develop new properties designed for rental income and long-term ownership.</p>
+      </div>
+      <div class="model-card reveal reveal-delay-2">
+        <span class="mc-index">03</span>
+        <h3 data-i18n="model.card3.title">Build for Yourself</h3>
+        <p data-i18n="model.card3.desc">Build your own home from the ground up with greater control over layout, finishes and project decisions.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     WHY BUILD FROM THE GROUND UP
+     ============================================================ -->
+<section class="ground-up section-pad">
+  <div class="container ground-up-inner reveal">
+    <span class="eyebrow" data-i18n="groundup.eyebrow">The Investment Case</span>
+    <h2 data-i18n="groundup.title">Why Build From The Ground Up?</h2>
+    <p data-i18n="groundup.body">Buying an existing property often means paying for someone else's design decisions, renovations and margin. Building from the ground up can give you greater control over your project, finishes, costs and investment strategy — when properly planned.</p>
   </div>
 </section>
 
@@ -747,12 +813,12 @@ footer .footer-links a:hover{color:var(--copper-light);}
     </div>
     <div class="intro-copy reveal reveal-delay-1">
       <span class="eyebrow" data-i18n="intro.eyebrow">Who We Are</span>
-      <h2 data-i18n="intro.title">Your Vision. Our Expertise.</h2>
-      <p data-i18n="intro.body">At Isa Home Investments, we help homeowners transform their properties through professional construction, renovation and remodeling services. From the initial consultation to the final details, our goal is to deliver functional, beautiful spaces built around our clients' needs.</p>
+      <h2 data-i18n="intro.title">More Than Construction. A Smarter Way to Build.</h2>
+      <p data-i18n="intro.body">At Isa Home Investments, we specialize in new construction for homeowners and investors who want more control over their project and long-term goals. Whether you're building to sell, rent, or create your own home, we help structure the project from the ground up with a practical, investment-minded approach.</p>
       <div class="intro-badges">
-        <span data-i18n="intro.badge1">Residential Focus</span>
-        <span data-i18n="intro.badge2">Clear Communication</span>
-        <span data-i18n="intro.badge3">Detail-Driven Craftsmanship</span>
+        <span data-i18n="intro.badge1">New Construction Focus</span>
+        <span data-i18n="intro.badge2">Investment-Minded Planning</span>
+        <span data-i18n="intro.badge3">Transparent Communication</span>
       </div>
       <a href="#about" class="btn btn-outline-dark"><span data-i18n="intro.cta">About Isa Home Investments</span>
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
@@ -769,14 +835,14 @@ footer .footer-links a:hover{color:var(--copper-light);}
     <div class="section-head reveal">
       <span class="eyebrow" data-i18n="services.eyebrow">What We Do</span>
       <h2 data-i18n="services.title">Services Built Around Your Home</h2>
-      <p data-i18n="services.body">From full remodels to targeted improvements, our team manages every phase of your project with the same level of care and professionalism.</p>
+      <p data-i18n="services.body">From new construction to full remodels, our team manages every phase of your project with the same level of care and professionalism.</p>
     </div>
 
     <div class="services-list reveal" id="servicesGrid">
-      <a href="#contact" class="svc-row svc-more" data-svc="Home Remodeling">
+      <a href="#contact" class="svc-row svc-more" data-svc="New Construction">
         <span class="svc-index">01</span>
-        <span class="svc-name" data-i18n="services.item1.name">Home Remodeling</span>
-        <span class="svc-desc" data-i18n="services.item1.desc">Full-scale remodeling that reimagines your home's layout, function and finishes from the ground up.</span>
+        <span class="svc-name" data-i18n="services.item1.name">New Construction</span>
+        <span class="svc-desc" data-i18n="services.item1.desc">Ground-up construction for homeowners and investors, planned around a resale, rental or long-term ownership strategy.</span>
         <span class="svc-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
       </a>
       <a href="#contact" class="svc-row svc-more" data-svc="Kitchen Remodeling">
@@ -827,10 +893,10 @@ footer .footer-links a:hover{color:var(--copper-light);}
         <span class="svc-desc" data-i18n="services.item9.desc">End-to-end construction management for residential projects.</span>
         <span class="svc-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
       </a>
-      <a href="#contact" class="svc-row svc-more" data-svc="Home Improvements">
+      <a href="#contact" class="svc-row svc-more" data-svc="Home Remodeling">
         <span class="svc-index">10</span>
-        <span class="svc-name" data-i18n="services.item10.name">Home Improvements</span>
-        <span class="svc-desc" data-i18n="services.item10.desc">Smaller upgrades and repairs that add lasting value.</span>
+        <span class="svc-name" data-i18n="services.item10.name">Home Remodeling</span>
+        <span class="svc-desc" data-i18n="services.item10.desc">Full-scale remodeling that reimagines your home's layout, function and finishes.</span>
         <span class="svc-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
       </a>
     </div>
@@ -1152,7 +1218,7 @@ footer .footer-links a:hover{color:var(--copper-light);}
               <label><span data-i18n="form.projectType">Project Type</span> <span class="req">*</span></label>
               <select name="projectType" id="projectTypeSelect" required>
                 <option value="" data-i18n="form.selectProjectType">Select a project type</option>
-                <option value="Home Remodeling" data-i18n="services.item1.name">Home Remodeling</option>
+                <option value="New Construction" data-i18n="services.item1.name">New Construction</option>
                 <option value="Kitchen Remodeling" data-i18n="services.item2.name">Kitchen Remodeling</option>
                 <option value="Bathroom Remodeling" data-i18n="services.item3.name">Bathroom Remodeling</option>
                 <option value="Flooring" data-i18n="services.item4.name">Flooring</option>
@@ -1161,7 +1227,7 @@ footer .footer-links a:hover{color:var(--copper-light);}
                 <option value="Interior Renovations" data-i18n="services.item7.name">Interior Renovations</option>
                 <option value="Exterior Improvements" data-i18n="services.item8.name">Exterior Improvements</option>
                 <option value="General Construction" data-i18n="services.item9.name">General Construction</option>
-                <option value="Home Improvements" data-i18n="services.item10.name">Home Improvements</option>
+                <option value="Home Remodeling" data-i18n="services.item10.name">Home Remodeling</option>
                 <option value="Other" data-i18n="form.other">Other</option>
               </select>
               <span class="err-msg" data-i18n="form.err.projectType">Please select a project type.</span>
@@ -1315,18 +1381,25 @@ en: {
   'nav.cta':'Get a Free Estimate',
   'nav.emailUs':'Email us at <a href="mailto:info@isahomeus.com">info@isahomeus.com</a>',
   'common.before':'Before','common.after':'After','common.photoPlaceholder':'Photo placeholder','common.comingSoon':'Coming soon',
-  'hero.eyebrow':'South Florida • Construction & Remodeling',
-  'hero.headline':'We Build.<br>You Live <em>Better.</em>',
-  'hero.sub':'Construction and remodeling designed around your vision, built with precision.',
-  'hero.ctaEstimate':'Get a Free Estimate','hero.ctaProjects':'View Our Projects',
-  'intro.eyebrow':'Who We Are','intro.title':'Your Vision. Our Expertise.',
-  'intro.body':"At Isa Home Investments, we help homeowners transform their properties through professional construction, renovation and remodeling services. From the initial consultation to the final details, our goal is to deliver functional, beautiful spaces built around our clients' needs.",
-  'intro.badge1':'Residential Focus','intro.badge2':'Clear Communication','intro.badge3':'Detail-Driven Craftsmanship',
+  'hero.eyebrow':'South Florida • New Construction & Investment',
+  'hero.headline':'Build From the Ground Up.<br>Build With a <em>Strategy.</em>',
+  'hero.sub':'We help homeowners and investors build new properties designed for living, renting, or resale — with a clear plan from concept to completion.',
+  'hero.ctaEstimate':'Start Your Project','hero.ctaModel':'Explore Our Model',
+  'model.eyebrow':'How We Work','model.title':'Three Ways to Build With Us',
+  'model.body':'Every new-construction project starts with a clear goal. We structure the plan, budget and finishes around it from day one.',
+  'model.card1.title':'Build to Sell','model.card1.desc':'Build strategically with resale potential and marketability in mind.',
+  'model.card2.title':'Build to Rent','model.card2.desc':'Develop new properties designed for rental income and long-term ownership.',
+  'model.card3.title':'Build for Yourself','model.card3.desc':'Build your own home from the ground up with greater control over layout, finishes and project decisions.',
+  'groundup.eyebrow':'The Investment Case','groundup.title':'Why Build From The Ground Up?',
+  'groundup.body':"Buying an existing property often means paying for someone else's design decisions, renovations and margin. Building from the ground up can give you greater control over your project, finishes, costs and investment strategy — when properly planned.",
+  'intro.eyebrow':'Who We Are','intro.title':'More Than Construction. A Smarter Way to Build.',
+  'intro.body':"At Isa Home Investments, we specialize in new construction for homeowners and investors who want more control over their project and long-term goals. Whether you're building to sell, rent, or create your own home, we help structure the project from the ground up with a practical, investment-minded approach.",
+  'intro.badge1':'New Construction Focus','intro.badge2':'Investment-Minded Planning','intro.badge3':'Transparent Communication',
   'intro.cta':'About Isa Home Investments',
   'intro.badgeTitle':'Client-Centered Process','intro.badgeText':'Every project starts with listening to what you actually need.',
   'services.eyebrow':'What We Do','services.title':'Services Built Around Your Home',
-  'services.body':'From full remodels to targeted improvements, our team manages every phase of your project with the same level of care and professionalism.',
-  'services.item1.name':'Home Remodeling','services.item1.desc':"Full-scale remodeling that reimagines your home's layout, function and finishes from the ground up.",
+  'services.body':'From new construction to full remodels, our team manages every phase of your project with the same level of care and professionalism.',
+  'services.item1.name':'New Construction','services.item1.desc':'Ground-up construction for homeowners and investors, planned around a resale, rental or long-term ownership strategy.',
   'services.item2.name':'Kitchen Remodeling','services.item2.desc':'Modern, functional kitchens designed around how you actually cook and live.',
   'services.item3.name':'Bathroom Remodeling','services.item3.desc':'Spa-inspired, practical bathroom renovations built to last.',
   'services.item4.name':'Flooring','services.item4.desc':'Tile, hardwood, laminate and more — installed with precision.',
@@ -1335,7 +1408,7 @@ en: {
   'services.item7.name':'Interior Renovations','services.item7.desc':'Reworking interior spaces for better flow and everyday living.',
   'services.item8.name':'Exterior Improvements','services.item8.desc':'Siding, facades and outdoor upgrades that boost curb appeal.',
   'services.item9.name':'General Construction','services.item9.desc':'End-to-end construction management for residential projects.',
-  'services.item10.name':'Home Improvements','services.item10.desc':'Smaller upgrades and repairs that add lasting value.',
+  'services.item10.name':'Home Remodeling','services.item10.desc':"Full-scale remodeling that reimagines your home's layout, function and finishes.",
   'why.eyebrow':'Why Isa Home Investments','why.title':'Why Homeowners Choose Isa Home Investments',
   'why.body':'We combine professional project management with genuine care for the outcome of every home we work on.',
   'why.item1.title':'Quality Workmanship','why.item1.desc':'Every project is executed with care, precision and respect for your home.',
@@ -1345,7 +1418,7 @@ en: {
   'why.item5.title':'Customized Solutions','why.item5.desc':'Every home and every client is different — your plan is built for you.',
   'why.item6.title':'Financing Options Available','why.item6.desc':'We can help connect you with third-party financing options for your project.',
   'projects.eyebrow':'Our Work','projects.title':'Our Work Speaks for Itself',
-  'projects.body':'A look at the type of residential projects we take on — from full renovations to focused room remodels. Real project photography will replace these placeholders as jobs are completed.',
+  'projects.body':'A look at the type of residential projects we take on — from new construction to full renovations and focused room remodels.',
   'projects.filter.all':'All','projects.filter.interior':'Interior','projects.filter.exterior':'Exterior','projects.filter.kitchen':'Kitchen','projects.filter.bathroom':'Bathroom','projects.filter.renovation':'Renovations',
   'projects.card1.title':'Kitchen Remodel','projects.card2.title':'Bathroom Remodel','projects.card3.title':'Exterior Facade Upgrade',
   'projects.card4.title':'Open-Concept Living Renovation','projects.card5.title':'Roof Replacement','projects.card6.title':'Custom Cabinetry Install',
@@ -1406,18 +1479,25 @@ es: {
   'nav.cta':'Solicitar Cotización Gratis',
   'nav.emailUs':'Escríbenos a <a href="mailto:info@isahomeus.com">info@isahomeus.com</a>',
   'common.before':'Antes','common.after':'Después','common.photoPlaceholder':'Imagen provisional','common.comingSoon':'Próximamente',
-  'hero.eyebrow':'Sur de Florida • Construcción y Remodelación',
-  'hero.headline':'Construimos.<br>Tú Vives <em>Mejor.</em>',
-  'hero.sub':'Construcción y remodelación diseñadas alrededor de tu visión, construidas con precisión.',
-  'hero.ctaEstimate':'Solicitar Cotización Gratis','hero.ctaProjects':'Ver Nuestros Proyectos',
-  'intro.eyebrow':'Quiénes Somos','intro.title':'Tu Visión. Nuestra Experiencia.',
-  'intro.body':'En Isa Home Investments, ayudamos a los propietarios a transformar sus propiedades a través de servicios profesionales de construcción, renovación y remodelación. Desde la consulta inicial hasta los últimos detalles, nuestro objetivo es entregar espacios funcionales y hermosos, diseñados en torno a las necesidades de nuestros clientes.',
-  'intro.badge1':'Enfoque Residencial','intro.badge2':'Comunicación Clara','intro.badge3':'Oficio con Atención al Detalle',
+  'hero.eyebrow':'Sur de Florida • Nueva Construcción e Inversión',
+  'hero.headline':'Construimos Desde Cero.<br>Construimos con <em>Estrategia.</em>',
+  'hero.sub':'Ayudamos a propietarios e inversionistas a construir propiedades nuevas pensadas para vivir, alquilar o vender — con un plan claro desde el concepto hasta la entrega.',
+  'hero.ctaEstimate':'Inicia Tu Proyecto','hero.ctaModel':'Conoce Nuestro Modelo',
+  'model.eyebrow':'Cómo Trabajamos','model.title':'Tres Formas de Construir con Nosotros',
+  'model.body':'Todo proyecto de nueva construcción comienza con un objetivo claro. Estructuramos el plan, el presupuesto y los acabados en torno a él desde el primer día.',
+  'model.card1.title':'Construir para Vender','model.card1.desc':'Construye de forma estratégica, pensando en el potencial de reventa y su atractivo comercial.',
+  'model.card2.title':'Construir para Alquilar','model.card2.desc':'Desarrolla propiedades nuevas diseñadas para generar ingresos por alquiler y propiedad a largo plazo.',
+  'model.card3.title':'Construir para Ti Mismo','model.card3.desc':'Construye tu propia casa desde cero, con mayor control sobre la distribución, los acabados y las decisiones del proyecto.',
+  'groundup.eyebrow':'El Caso de la Inversión','groundup.title':'¿Por Qué Construir Desde Cero?',
+  'groundup.body':'Comprar una propiedad existente a menudo significa pagar por las decisiones de diseño, renovaciones y margen de otra persona. Construir desde cero puede darte mayor control sobre tu proyecto, los acabados, los costos y tu estrategia de inversión — cuando se planifica correctamente.',
+  'intro.eyebrow':'Quiénes Somos','intro.title':'Más que Construcción. Una Forma Más Inteligente de Construir.',
+  'intro.body':'En Isa Home Investments, nos especializamos en nueva construcción para propietarios e inversionistas que buscan mayor control sobre su proyecto y sus objetivos a largo plazo. Ya sea que quieras construir para vender, alquilar o crear tu propio hogar, te ayudamos a estructurar el proyecto desde cero con un enfoque práctico y orientado a la inversión.',
+  'intro.badge1':'Enfoque en Nueva Construcción','intro.badge2':'Planificación con Visión de Inversión','intro.badge3':'Comunicación Transparente',
   'intro.cta':'Conoce Isa Home Investments',
   'intro.badgeTitle':'Un Proceso Centrado en el Cliente','intro.badgeText':'Cada proyecto comienza escuchando lo que realmente necesitas.',
   'services.eyebrow':'Qué Hacemos','services.title':'Servicios Diseñados para tu Hogar',
-  'services.body':'Desde remodelaciones completas hasta mejoras puntuales, nuestro equipo gestiona cada fase de tu proyecto con el mismo nivel de cuidado y profesionalismo.',
-  'services.item1.name':'Remodelación de Hogar','services.item1.desc':'Remodelaciones integrales que reinventan la distribución, función y acabados de tu hogar desde cero.',
+  'services.body':'Desde nueva construcción hasta remodelaciones completas, nuestro equipo gestiona cada fase de tu proyecto con el mismo nivel de cuidado y profesionalismo.',
+  'services.item1.name':'Nueva Construcción','services.item1.desc':'Construcción desde cero para propietarios e inversionistas, planificada en torno a una estrategia de reventa, alquiler o propiedad a largo plazo.',
   'services.item2.name':'Remodelación de Cocina','services.item2.desc':'Cocinas modernas y funcionales, diseñadas según cómo realmente cocinas y vives.',
   'services.item3.name':'Remodelación de Baño','services.item3.desc':'Renovaciones de baño prácticas, inspiradas en spa y construidas para durar.',
   'services.item4.name':'Pisos','services.item4.desc':'Cerámica, madera, laminado y más — instalados con precisión.',
@@ -1426,7 +1506,7 @@ es: {
   'services.item7.name':'Renovaciones Interiores','services.item7.desc':'Rediseño de espacios interiores para mejorar el flujo y la vida diaria.',
   'services.item8.name':'Mejoras Exteriores','services.item8.desc':'Revestimientos, fachadas y mejoras exteriores que realzan la fachada de tu hogar.',
   'services.item9.name':'Construcción General','services.item9.desc':'Gestión integral de construcción para proyectos residenciales.',
-  'services.item10.name':'Mejoras del Hogar','services.item10.desc':'Mejoras y reparaciones puntuales que añaden valor duradero.',
+  'services.item10.name':'Remodelación de Hogar','services.item10.desc':'Remodelaciones integrales que reinventan la distribución, función y acabados de tu hogar.',
   'why.eyebrow':'Por Qué Isa Home Investments','why.title':'Por Qué los Propietarios Eligen Isa Home Investments',
   'why.body':'Combinamos una gestión de proyectos profesional con un cuidado genuino por el resultado de cada hogar en el que trabajamos.',
   'why.item1.title':'Calidad en el Trabajo','why.item1.desc':'Cada proyecto se ejecuta con cuidado, precisión y respeto por tu hogar.',
@@ -1436,7 +1516,7 @@ es: {
   'why.item5.title':'Soluciones Personalizadas','why.item5.desc':'Cada hogar y cada cliente es diferente — tu plan se diseña para ti.',
   'why.item6.title':'Opciones de Financiamiento Disponibles','why.item6.desc':'Podemos ayudarte a conectar con opciones de financiamiento de terceros para tu proyecto.',
   'projects.eyebrow':'Nuestro Trabajo','projects.title':'Nuestro Trabajo Habla por Sí Solo',
-  'projects.body':'Un vistazo al tipo de proyectos residenciales que realizamos — desde renovaciones completas hasta remodelaciones puntuales. Fotografías reales de proyectos reemplazarán estas imágenes provisionales a medida que se completen los trabajos.',
+  'projects.body':'Un vistazo al tipo de proyectos residenciales que realizamos — desde nueva construcción hasta renovaciones completas y remodelaciones puntuales.',
   'projects.filter.all':'Todos','projects.filter.interior':'Interior','projects.filter.exterior':'Exterior','projects.filter.kitchen':'Cocina','projects.filter.bathroom':'Baño','projects.filter.renovation':'Renovaciones',
   'projects.card1.title':'Remodelación de Cocina','projects.card2.title':'Remodelación de Baño','projects.card3.title':'Mejora de Fachada Exterior',
   'projects.card4.title':'Renovación de Sala de Concepto Abierto','projects.card5.title':'Reemplazo de Techo','projects.card6.title':'Instalación de Gabinetes a Medida',
