@@ -1015,36 +1015,42 @@ footer .footer-links a:hover{color:var(--copper-light);}
     <div class="ba-grid">
       <div class="ba-card reveal">
         <div class="ba-slider" data-ba>
-          <div class="ba-media media-ph has-photo"><img src="assets/ba-kitchen-after.jpg" alt="Kitchen after renovation" loading="lazy"></div>
-          <div class="ba-media ba-after media-ph has-photo"><img src="assets/ba-kitchen-before.jpg" alt="Kitchen before renovation" loading="lazy"></div>
+          <!-- STEP 2 will insert: before = empty lot / vacant land photo -->
+          <div class="ba-media media-ph" data-ba-slot="before"></div>
+          <!-- STEP 2 will insert: after = completed house photo -->
+          <div class="ba-media ba-after media-ph tone-2" data-ba-slot="after"></div>
           <div class="ba-label before" data-i18n="common.before">Before</div>
           <div class="ba-label after" data-i18n="common.after">After</div>
           <div class="ba-handle"></div>
           <input type="range" min="0" max="100" value="50" aria-label="Drag to compare before and after">
         </div>
-        <div class="ba-caption"><h4 data-i18n="projects.ba1.title">Kitchen Transformation</h4><span data-i18n="projects.ba1.desc">Full remodel — cabinets, counters &amp; layout</span></div>
+        <div class="ba-caption"><h4 data-i18n="projects.ba1.title">From Empty Lot to Custom Home</h4><span data-i18n="projects.ba1.desc">Ground-up residential construction</span></div>
       </div>
       <div class="ba-card reveal reveal-delay-1">
         <div class="ba-slider" data-ba>
-          <div class="ba-media media-ph has-photo"><img src="assets/ba-bathroom-after.jpg" alt="Bathroom after renovation" loading="lazy"></div>
-          <div class="ba-media ba-after media-ph has-photo"><img src="assets/ba-bathroom-before.jpg" alt="Bathroom before renovation" loading="lazy"></div>
+          <!-- STEP 2 will insert: before = empty lot / vacant land photo -->
+          <div class="ba-media media-ph tone-3" data-ba-slot="before"></div>
+          <!-- STEP 2 will insert: after = completed house photo -->
+          <div class="ba-media ba-after media-ph" data-ba-slot="after"></div>
           <div class="ba-label before" data-i18n="common.before">Before</div>
           <div class="ba-label after" data-i18n="common.after">After</div>
           <div class="ba-handle"></div>
           <input type="range" min="0" max="100" value="50" aria-label="Drag to compare before and after">
         </div>
-        <div class="ba-caption"><h4 data-i18n="projects.ba2.title">Bathroom Renovation</h4><span data-i18n="projects.ba2.desc">New vanity, tile &amp; fixtures</span></div>
+        <div class="ba-caption"><h4 data-i18n="projects.ba2.title">From Vacant Land to Waterfront Residence</h4><span data-i18n="projects.ba2.desc">Designed for living or long-term investment</span></div>
       </div>
       <div class="ba-card reveal reveal-delay-2">
         <div class="ba-slider" data-ba>
-          <div class="ba-media media-ph has-photo"><img src="assets/ba-exterior-after.jpg" alt="Exterior after renovation" loading="lazy"></div>
-          <div class="ba-media ba-after media-ph has-photo"><img src="assets/ba-exterior-before.jpg" alt="Exterior before renovation" loading="lazy"></div>
+          <!-- STEP 2 will insert: before = empty lot / vacant land photo -->
+          <div class="ba-media media-ph" data-ba-slot="before"></div>
+          <!-- STEP 2 will insert: after = completed house photo -->
+          <div class="ba-media ba-after media-ph tone-2" data-ba-slot="after"></div>
           <div class="ba-label before" data-i18n="common.before">Before</div>
           <div class="ba-label after" data-i18n="common.after">After</div>
           <div class="ba-handle"></div>
           <input type="range" min="0" max="100" value="50" aria-label="Drag to compare before and after">
         </div>
-        <div class="ba-caption"><h4 data-i18n="projects.ba3.title">Exterior Update</h4><span data-i18n="projects.ba3.desc">Facade, paint &amp; entry improvements</span></div>
+        <div class="ba-caption"><h4 data-i18n="projects.ba3.title">From Raw Property to Market-Ready Home</h4><span data-i18n="projects.ba3.desc">Built from scratch with resale potential</span></div>
       </div>
     </div>
   </div>
@@ -1423,9 +1429,9 @@ en: {
   'projects.card1.title':'Kitchen Remodel','projects.card2.title':'Bathroom Remodel','projects.card3.title':'Exterior Facade Upgrade',
   'projects.card4.title':'Open-Concept Living Renovation','projects.card5.title':'Roof Replacement','projects.card6.title':'Custom Cabinetry Install',
   'projects.ba.heading':'Before & After','projects.ba.sub':'Drag the slider to compare',
-  'projects.ba1.title':'Kitchen Transformation','projects.ba1.desc':'Full remodel — cabinets, counters & layout',
-  'projects.ba2.title':'Bathroom Renovation','projects.ba2.desc':'New vanity, tile & fixtures',
-  'projects.ba3.title':'Exterior Update','projects.ba3.desc':'Facade, paint & entry improvements',
+  'projects.ba1.title':'From Empty Lot to Custom Home','projects.ba1.desc':'Ground-up residential construction',
+  'projects.ba2.title':'From Vacant Land to Waterfront Residence','projects.ba2.desc':'Designed for living or long-term investment',
+  'projects.ba3.title':'From Raw Property to Market-Ready Home','projects.ba3.desc':'Built from scratch with resale potential',
   'about.eyebrow':'About Isa Home Investments','about.title':'Building With Purpose',
   'about.p1':'Isa Home Investments was created with a commitment to helping homeowners improve, renovate and transform their properties with professionalism, transparency and attention to detail.',
   'about.p2':"Every project is approached with the same objective: understand the client's vision, provide practical solutions and deliver work that adds value to their home.",
@@ -1521,9 +1527,9 @@ es: {
   'projects.card1.title':'Remodelación de Cocina','projects.card2.title':'Remodelación de Baño','projects.card3.title':'Mejora de Fachada Exterior',
   'projects.card4.title':'Renovación de Sala de Concepto Abierto','projects.card5.title':'Reemplazo de Techo','projects.card6.title':'Instalación de Gabinetes a Medida',
   'projects.ba.heading':'Antes y Después','projects.ba.sub':'Arrastra el control para comparar',
-  'projects.ba1.title':'Transformación de Cocina','projects.ba1.desc':'Remodelación completa — gabinetes, encimeras y distribución',
-  'projects.ba2.title':'Renovación de Baño','projects.ba2.desc':'Nuevo tocador, cerámica y accesorios',
-  'projects.ba3.title':'Actualización Exterior','projects.ba3.desc':'Fachada, pintura y mejoras de entrada',
+  'projects.ba1.title':'De Terreno Baldío a Casa a Medida','projects.ba1.desc':'Construcción residencial desde cero',
+  'projects.ba2.title':'De Terreno Vacío a Residencia Frente al Agua','projects.ba2.desc':'Diseñada para vivir o como inversión a largo plazo',
+  'projects.ba3.title':'De Propiedad en Bruto a Casa Lista para Vender','projects.ba3.desc':'Construida desde cero con potencial de reventa',
   'about.eyebrow':'Sobre Isa Home Investments','about.title':'Construyendo con Propósito',
   'about.p1':'Isa Home Investments nació con el compromiso de ayudar a los propietarios a mejorar, renovar y transformar sus propiedades con profesionalismo, transparencia y atención al detalle.',
   'about.p2':'Cada proyecto se aborda con el mismo objetivo: entender la visión del cliente, ofrecer soluciones prácticas y entregar un trabajo que agregue valor a su hogar.',
