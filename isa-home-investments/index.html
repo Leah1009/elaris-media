@@ -167,7 +167,7 @@ section{position:relative;}
 }
 #siteHeader .container{display:flex;align-items:center;justify-content:space-between;gap:24px;}
 #siteHeader.scrolled{padding:16px 0;background:rgba(247,247,245,0.92);backdrop-filter:blur(10px);box-shadow:0 8px 30px -20px rgba(0,0,0,0.4);border-bottom:1px solid var(--line);}
-.logo-lockup{display:flex;align-items:center;gap:12px;}
+.logo-lockup{display:flex;align-items:center;gap:12px;flex-shrink:0;}
 /* Plain, unboxed logo — no badge background, no rounded clipping, no border:
    this renders the real uploaded logo exactly as designed, just larger. */
 .logo-mark-badge{height:172px;display:flex;align-items:center;flex-shrink:0;transition:height .3s ease;}
@@ -190,15 +190,26 @@ section{position:relative;}
 #siteHeader.scrolled .lang-btn.active{color:var(--ink);}
 #siteHeader.scrolled .lang-sep{color:var(--line);}
 .btn-sm{padding:11px 20px;font-size:10.5px;}
-nav.primary-nav ul{display:flex;align-items:center;gap:34px;}
+nav.primary-nav ul{display:flex;align-items:center;gap:26px;flex-shrink:0;}
 nav.primary-nav ul li a{
   font-family:'Archivo',sans-serif;font-size:12px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;
-  color:rgba(255,255,255,0.9);position:relative;padding-bottom:5px;transition:color .3s ease;
+  color:rgba(255,255,255,0.9);position:relative;padding-bottom:5px;transition:color .3s ease;white-space:nowrap;
 }
 #siteHeader.scrolled nav.primary-nav ul li a{color:var(--text);}
 nav.primary-nav ul li a::after{content:'';position:absolute;left:0;bottom:0;width:0;height:2px;background:var(--copper);transition:width .3s ease;}
 nav.primary-nav ul li a:hover::after,nav.primary-nav ul li a.active::after{width:100%;}
-.header-actions{display:flex;align-items:center;gap:18px;}
+.header-actions{display:flex;align-items:center;gap:14px;}
+.header-social{display:flex;align-items:center;gap:6px;flex-shrink:0;}
+.header-social a{display:flex;align-items:center;justify-content:center;width:26px;height:26px;color:rgba(255,255,255,0.85);transition:color .25s ease, transform .25s ease;}
+.header-social a svg{width:14px;height:14px;}
+.header-social a:hover{color:var(--white);transform:scale(1.12);}
+#siteHeader.scrolled .header-social a{color:var(--steel);}
+#siteHeader.scrolled .header-social a:hover{color:var(--ink);}
+@media (max-width:1140px){#siteHeader .header-social{display:none;}}
+.mobile-menu .header-social{gap:18px;margin-top:10px;}
+.mobile-menu .header-social a{width:42px;height:42px;color:rgba(255,255,255,0.85);}
+.mobile-menu .header-social a svg{width:20px;height:20px;}
+.mobile-menu .header-social a:hover{color:var(--white);}
 .hamburger{display:none;flex-direction:column;justify-content:center;gap:5px;width:28px;height:22px;z-index:210;}
 .hamburger span{display:block;width:100%;height:2px;background:var(--white);transition:transform .3s ease, opacity .3s ease, background .3s ease;}
 #siteHeader.scrolled .hamburger span{background:var(--ink);}
@@ -573,18 +584,13 @@ html.js .hero-copy>*:nth-child(4){animation-delay:.42s;}
 .info-row b{display:block;font-family:'Archivo',sans-serif;font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-soft);margin-bottom:4px;}
 .info-row a,.info-row span.val{font-size:15px;font-weight:600;color:var(--ink);}
 .info-row a:hover{color:var(--copper);}
-.social-row{display:flex;gap:10px;margin-top:22px;}
+.social-row{display:flex;gap:10px;margin-top:22px;flex-wrap:wrap;}
 .social-row .soc{
   width:40px;height:40px;border-radius:50%;background:var(--white);display:flex;align-items:center;justify-content:center;
-  color:var(--steel);box-shadow:0 8px 18px -12px rgba(0,0,0,0.3);position:relative;cursor:default;
+  color:var(--steel);box-shadow:0 8px 18px -12px rgba(0,0,0,0.3);transition:background .25s ease, color .25s ease, transform .25s ease;
 }
 .social-row .soc svg{width:17px;height:17px;}
-.social-row .soc::after{
-  content:attr(data-tip);position:absolute;bottom:calc(100% + 8px);left:50%;transform:translateX(-50%);
-  background:var(--ink);color:var(--white);font-size:11px;padding:5px 10px;border-radius:4px;white-space:nowrap;
-  opacity:0;pointer-events:none;transition:opacity .2s ease;
-}
-.social-row .soc:hover::after{opacity:1;}
+.social-row .soc:hover{background:var(--ink);color:var(--white);transform:scale(1.08);}
 
 .form-card{background:var(--white);border-radius:10px;padding:44px;box-shadow:var(--shadow);}
 .form-card h3{font-size:24px;font-weight:800;margin-bottom:8px;}
@@ -724,6 +730,16 @@ footer .footer-links a:hover{color:var(--copper-light);}
       </ul>
     </nav>
     <div class="header-actions">
+      <div class="header-social">
+        <!-- TODO: replace href="#" with the real Instagram profile URL -->
+        <a href="#" target="_blank" rel="noopener noreferrer" data-i18n-attr="aria-label:follow.instagram" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg></a>
+        <!-- TODO: replace href="#" with the real Facebook page URL -->
+        <a href="#" target="_blank" rel="noopener noreferrer" data-i18n-attr="aria-label:follow.facebook" aria-label="Facebook"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M14 9h3V6h-3a3 3 0 0 0-3 3v2H9v3h2v6h3v-6h3l1-3h-4V9a1 1 0 0 1 1-1Z"/></svg></a>
+        <!-- TODO: replace href="#" with the real TikTok profile URL -->
+        <a href="#" target="_blank" rel="noopener noreferrer" data-i18n-attr="aria-label:follow.tiktok" aria-label="TikTok"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M14 3.5v11a3.5 3.5 0 1 1-2.8-3.43"/><path d="M14 3.5c.4 2.5 2.1 4.2 4.5 4.6v2.6c-1.7-.1-3.2-.7-4.5-1.7"/></svg></a>
+        <!-- TODO: replace href="#" with the real WhatsApp chat link, e.g. https://wa.me/1XXXXXXXXXX -->
+        <a href="#" target="_blank" rel="noopener noreferrer" data-i18n-attr="aria-label:follow.whatsapp" aria-label="WhatsApp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 3a9 9 0 0 0-7.8 13.5L3 21l4.7-1.2A9 9 0 1 0 12 3Z"/><path d="M8.5 8.8c.3-.7.6-.7.9-.7h.6c.2 0 .4 0 .6.5l.7 1.6c.1.3 0 .5-.1.7l-.5.6c-.1.2-.1.3 0 .5.4.7 1.5 1.9 2.9 2.4.2.1.4.1.5-.1l.6-.7c.2-.2.4-.2.6-.1l1.5.8c.2.1.3.3.3.5 0 .8-.9 1.6-1.7 1.6-1.9 0-4.9-1.6-6.1-4.7-.2-.6-.3-1.1-.3-1.5 0-.6.2-1 .5-1.4Z" fill="currentColor" stroke="none"/></svg></a>
+      </div>
       <div class="lang-switch" role="group" aria-label="Language">
         <button type="button" class="lang-btn active" data-lang="en">EN</button>
         <span class="lang-sep">|</span>
@@ -755,6 +771,16 @@ footer .footer-links a:hover{color:var(--copper-light);}
     <button type="button" class="lang-btn active" data-lang="en">EN</button>
     <span class="lang-sep">|</span>
     <button type="button" class="lang-btn" data-lang="es">ES</button>
+  </div>
+  <div class="header-social">
+    <!-- TODO: replace href="#" with the real Instagram profile URL -->
+    <a href="#" target="_blank" rel="noopener noreferrer" data-i18n-attr="aria-label:follow.instagram" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg></a>
+    <!-- TODO: replace href="#" with the real Facebook page URL -->
+    <a href="#" target="_blank" rel="noopener noreferrer" data-i18n-attr="aria-label:follow.facebook" aria-label="Facebook"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M14 9h3V6h-3a3 3 0 0 0-3 3v2H9v3h2v6h3v-6h3l1-3h-4V9a1 1 0 0 1 1-1Z"/></svg></a>
+    <!-- TODO: replace href="#" with the real TikTok profile URL -->
+    <a href="#" target="_blank" rel="noopener noreferrer" data-i18n-attr="aria-label:follow.tiktok" aria-label="TikTok"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M14 3.5v11a3.5 3.5 0 1 1-2.8-3.43"/><path d="M14 3.5c.4 2.5 2.1 4.2 4.5 4.6v2.6c-1.7-.1-3.2-.7-4.5-1.7"/></svg></a>
+    <!-- TODO: replace href="#" with the real WhatsApp chat link, e.g. https://wa.me/1XXXXXXXXXX -->
+    <a href="#" target="_blank" rel="noopener noreferrer" data-i18n-attr="aria-label:follow.whatsapp" aria-label="WhatsApp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 3a9 9 0 0 0-7.8 13.5L3 21l4.7-1.2A9 9 0 1 0 12 3Z"/><path d="M8.5 8.8c.3-.7.6-.7.9-.7h.6c.2 0 .4 0 .6.5l.7 1.6c.1.3 0 .5-.1.7l-.5.6c-.1.2-.1.3 0 .5.4.7 1.5 1.9 2.9 2.4.2.1.4.1.5-.1l.6-.7c.2-.2.4-.2.6-.1l1.5.8c.2.1.3.3.3.5 0 .8-.9 1.6-1.7 1.6-1.9 0-4.9-1.6-6.1-4.7-.2-.6-.3-1.1-.3-1.5 0-.6.2-1 .5-1.4Z" fill="currentColor" stroke="none"/></svg></a>
   </div>
   <div class="mobile-menu-foot" data-i18n-html="nav.emailUs">Email us at <a href="mailto:info@isahomeus.com">info@isahomeus.com</a></div>
 </div>
@@ -1202,8 +1228,14 @@ footer .footer-links a:hover{color:var(--copper-light);}
       </div>
       <h3 style="margin-top:26px;" data-i18n="contact.followUs">Follow Us</h3>
       <div class="social-row">
-        <span class="soc" data-platform="Instagram" data-i18n-attr="data-tip:common.comingSoon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg></span>
-        <span class="soc" data-platform="Facebook" data-i18n-attr="data-tip:common.comingSoon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M14 9h3V6h-3a3 3 0 0 0-3 3v2H9v3h2v6h3v-6h3l1-3h-4V9a1 1 0 0 1 1-1Z"/></svg></span>
+        <!-- TODO: replace href="#" with the real Instagram profile URL -->
+        <a class="soc" href="#" target="_blank" rel="noopener noreferrer" data-i18n-attr="aria-label:follow.instagram|title:follow.instagram" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg></a>
+        <!-- TODO: replace href="#" with the real Facebook page URL -->
+        <a class="soc" href="#" target="_blank" rel="noopener noreferrer" data-i18n-attr="aria-label:follow.facebook|title:follow.facebook" aria-label="Facebook"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M14 9h3V6h-3a3 3 0 0 0-3 3v2H9v3h2v6h3v-6h3l1-3h-4V9a1 1 0 0 1 1-1Z"/></svg></a>
+        <!-- TODO: replace href="#" with the real TikTok profile URL -->
+        <a class="soc" href="#" target="_blank" rel="noopener noreferrer" data-i18n-attr="aria-label:follow.tiktok|title:follow.tiktok" aria-label="TikTok"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M14 3.5v11a3.5 3.5 0 1 1-2.8-3.43"/><path d="M14 3.5c.4 2.5 2.1 4.2 4.5 4.6v2.6c-1.7-.1-3.2-.7-4.5-1.7"/></svg></a>
+        <!-- TODO: replace href="#" with the real WhatsApp chat link, e.g. https://wa.me/1XXXXXXXXXX -->
+        <a class="soc" href="#" target="_blank" rel="noopener noreferrer" data-i18n-attr="aria-label:follow.whatsapp|title:follow.whatsapp" aria-label="WhatsApp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M12 3a9 9 0 0 0-7.8 13.5L3 21l4.7-1.2A9 9 0 1 0 12 3Z"/><path d="M8.5 8.8c.3-.7.6-.7.9-.7h.6c.2 0 .4 0 .6.5l.7 1.6c.1.3 0 .5-.1.7l-.5.6c-.1.2-.1.3 0 .5.4.7 1.5 1.9 2.9 2.4.2.1.4.1.5-.1l.6-.7c.2-.2.4-.2.6-.1l1.5.8c.2.1.3.3.3.5 0 .8-.9 1.6-1.7 1.6-1.9 0-4.9-1.6-6.1-4.7-.2-.6-.3-1.1-.3-1.5 0-.6.2-1 .5-1.4Z" fill="currentColor" stroke="none"/></svg></a>
       </div>
     </div>
 
