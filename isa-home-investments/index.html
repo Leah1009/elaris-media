@@ -1444,13 +1444,13 @@ footer .footer-links a:hover{color:var(--copper-light);}
 </div>
 
 <!--
-  Supabase config: __SUPABASE_URL__ / __SUPABASE_PUBLISHABLE_KEY__ are placeholder
-  tokens substituted at Vercel build time from the NEXT_PUBLIC_SUPABASE_URL and
-  NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY project environment variables — see build.js.
-  This publishable key is safe to ship to the browser by design (it is not a
-  secret); the security boundary is the Row Level Security policy on the
-  "Leads" table, which allows public INSERT only (verified: no SELECT/UPDATE/
-  DELETE grants for the anon role). Never put a service_role key here.
+  Supabase config is hardcoded directly here (no build-time substitution step)
+  so it ships correctly regardless of which platform/build process deploys
+  this static site. This publishable key is safe to ship to the browser by
+  design (it is not a secret); the security boundary is the Row Level
+  Security policy on the "Leads" table, which allows public INSERT only
+  (verified: no SELECT/UPDATE/DELETE grants for the anon role). Never put a
+  service_role key here.
 -->
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
@@ -1459,13 +1459,13 @@ footer .footer-links a:hover{color:var(--copper-light);}
   // that throw here and take down every other script on the page — the lead
   // form's submit handler checks for a null supabaseClient and shows the normal
   // friendly error state instead.
-  const SUPABASE_URL = '__SUPABASE_URL__';
-  const SUPABASE_PUBLISHABLE_KEY = '__SUPABASE_PUBLISHABLE_KEY__';
+  const SUPABASE_URL = 'https://ggteqxyygsvtmahhsdzc.supabase.co';
+  const SUPABASE_PUBLISHABLE_KEY = 'sb_publishable_49gKIic8e9GERmDq3i2KAQ_qnIq_itG';
   let supabaseClient = null;
   try{
     supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY);
   }catch(e){
-    console.error('Supabase client failed to initialize:', e);
+    console.error('SUPABASE SUBMISSION ERROR', e);
   }
 </script>
 <script>
@@ -1959,28 +1959,13 @@ form.addEventListener('submit', async (e) => {
   try{
     if(!supabaseClient) throw new Error('Supabase client is not available.');
 
+    // DEBUG PASS: FORM -> SUPABASE ONLY. The FormSubmit.co email call is
+    // temporarily removed so a submission failure can only mean the
+    // Supabase insert itself failed — no other code path can swallow it.
     // Public anon key can only INSERT here — RLS on "Leads" has no public
     // SELECT/UPDATE/DELETE policy, so we never chain .select() on this call.
     const { error } = await supabaseClient.from('Leads').insert([leadPayload]);
     if(error) throw error;
-
-    /*
-      Email delivery via FormSubmit.co (existing best-effort notification,
-      kept unchanged for now — a proper Supabase-driven notification will
-      replace this in a separate step). Failures here never block success:
-      the lead is already safely stored in the database above.
-    */
-    try{
-      fd.set('_subject', `New Project Request — ${fd.get('firstName')} ${fd.get('lastName')} — FINANCING INTEREST: ${financing.toUpperCase()}`);
-      fd.append('FINANCING_INTEREST_FLAG', `FINANCING INTEREST: ${financing.toUpperCase()}`);
-      await fetch('https://formsubmit.co/ajax/info@isahomeus.com', {
-        method:'POST',
-        headers:{ 'Accept':'application/json' },
-        body: fd
-      });
-    }catch(emailErr){
-      // Non-blocking — do not surface this to the user.
-    }
 
     form.reset();
     form.querySelectorAll('.form-field.invalid').forEach(el => el.classList.remove('invalid'));
@@ -1989,7 +1974,7 @@ form.addEventListener('submit', async (e) => {
     formSuccess.classList.add('show');
     formSuccess.scrollIntoView({behavior:'smooth', block:'center'});
   }catch(err){
-    console.error('Failed to save lead to Supabase:', err);
+    console.error('SUPABASE SUBMISSION ERROR', err);
     formError.classList.add('show');
     formError.scrollIntoView({behavior:'smooth', block:'center'});
   }finally{

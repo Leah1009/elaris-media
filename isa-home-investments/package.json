@@ -1,9 +1,0 @@
-{
-  "name": "isa-home-investments",
-  "private": true,
-  "version": "1.0.0",
-  "description": "Isa Home Investments marketing site (static HTML, no framework). A minimal build step injects Supabase config from environment variables at deploy time.",
-  "scripts": {
-    "build": "node build.js"
-  }
-}
