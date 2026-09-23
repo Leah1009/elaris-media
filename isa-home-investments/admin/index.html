@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin | Isa Home Investments</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="icon" href="/assets/logo.jpg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;800&family=Playfair+Display:ital,wght@0,700;0,800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/admin/admin.css">
+</head>
+<body>
+
+<div class="admin-topbar">
+  <div class="admin-topbar-brand">
+    <img src="/assets/logo.jpg" alt="Isa Home Investments">
+    <span>Isa Home Investments — Admin</span>
+  </div>
+  <div class="admin-topbar-user">
+    <span>Signed in as</span> <b id="adminUserEmail"></b>
+    <button class="btn btn-outline-dark btn-sm" id="logoutBtn" type="button">Log Out</button>
+  </div>
+</div>
+
+<main class="admin-main">
+  <div class="admin-page-head">
+    <span class="eyebrow">Media Manager</span>
+    <h1>Website Media</h1>
+    <p>Replace the photos and short videos used across the site. Pick a new file with Replace, then press Save — the live website picks up the change automatically, no redeploy needed.</p>
+  </div>
+
+  <div id="loadingState" class="admin-loading">Loading media…</div>
+  <div id="groupsContainer" style="display:none;"></div>
+</main>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="/admin/supabase-client.js"></script>
+<script>
+const GROUP_DEFS = [
+  { name: 'Hero', keys: ['hero_photo'] },
+  { name: 'Founder / About', keys: ['about_intro', 'founder_photo'] },
+  { name: 'Projects', keys: ['project_kitchen', 'project_bathroom', 'project_exterior', 'project_open_concept', 'project_roof', 'project_cabinetry'] },
+  { name: 'Before & After', keys: ['ba_newbuild1_before', 'ba_newbuild1_after', 'ba_newbuild2_before', 'ba_newbuild2_after', 'ba_newbuild3_before', 'ba_newbuild3_after'] }
+];
+
+const pendingFiles = new Map();
+
+function escapeHtml(str){
+  return String(str == null ? '' : str).replace(/[&<>"']/g, s => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[s]));
+}
+
+function computeGroups(rows){
+  const used = new Set();
+  const groups = GROUP_DEFS.map(def => ({
+    name: def.name,
+    items: def.keys.map(k => rows.find(r => r.section_key === k)).filter(Boolean)
+  }));
+  groups.forEach(g => g.items.forEach(r => used.add(r.section_key)));
+
+  const videoItems = rows.filter(r => r.media_type === 'video');
+  videoItems.forEach(r => used.add(r.section_key));
+
+  const otherItems = rows.filter(r => !used.has(r.section_key) && r.media_type !== 'video');
+
+  groups.push({ name: 'Other Editable Images', items: otherItems, emptyText: 'No other editable images right now.' });
+  groups.push({ name: 'Short Videos', items: videoItems, emptyText: 'No short-form videos are in use on the site yet.' });
+  return groups;
+}
+
+function renderCard(row){
+  const isVideo = row.media_type === 'video';
+  const previewTag = isVideo
+    ? `<video src="${escapeHtml(row.file_url)}" muted playsinline></video>`
+    : `<img src="${escapeHtml(row.file_url)}" alt="">`;
+  return `
+    <div class="media-card" data-id="${row.id}">
+      <div class="media-card-preview">${previewTag}</div>
+      <div class="media-card-body">
+        <div class="media-card-label">${escapeHtml(row.alt_text || row.section_key)}</div>
+        <div class="media-card-meta"><span class="badge">${isVideo ? 'Video' : 'Image'}</span></div>
+        <div class="media-card-filename" data-role="filename"></div>
+        <input type="file" data-role="file-input" accept="${isVideo ? 'video/*' : 'image/*'}" hidden>
+        <div class="media-card-actions">
+          <button class="btn btn-outline btn-sm" data-role="replace-btn" type="button">Replace</button>
+          <button class="btn btn-primary btn-sm" data-role="save-btn" type="button" disabled>Save</button>
+        </div>
+        <div class="progress-track" data-role="progress-track"><div class="progress-fill" data-role="progress-fill"></div></div>
+        <div class="status-msg" data-role="status-msg"></div>
+      </div>
+    </div>`;
+}
+
+function renderGroups(groups){
+  const container = document.getElementById('groupsContainer');
+  container.innerHTML = groups.map(g => `
+    <section class="media-group">
+      <h2 class="media-group-title">${escapeHtml(g.name)}</h2>
+      ${g.items.length
+        ? `<div class="media-grid">${g.items.map(renderCard).join('')}</div>`
+        : `<p class="media-empty">${escapeHtml(g.emptyText || 'No items in this section yet.')}</p>`}
+    </section>
+  `).join('');
+  document.getElementById('loadingState').style.display = 'none';
+  container.style.display = 'block';
+  groups.forEach(g => g.items.forEach(wireCard));
+}
+
+function uploadWithProgress(path, file, accessToken, onProgress){
+  return new Promise((resolve, reject) => {
+    const xhr = new XMLHttpRequest();
+    const url = SUPABASE_URL + '/storage/v1/object/site-media/' + encodeURIComponent(path);
+    xhr.open('POST', url, true);
+    xhr.setRequestHeader('Authorization', 'Bearer ' + accessToken);
+    xhr.setRequestHeader('apikey', SUPABASE_PUBLISHABLE_KEY);
+    xhr.setRequestHeader('Content-Type', file.type || 'application/octet-stream');
+    xhr.setRequestHeader('x-upsert', 'true');
+    xhr.upload.onprogress = (e) => {
+      if(e.lengthComputable && onProgress) onProgress(Math.round((e.loaded / e.total) * 100));
+    };
+    xhr.onload = () => {
+      if(xhr.status >= 200 && xhr.status < 300){ resolve(); return; }
+      let msg = 'Upload failed (status ' + xhr.status + ').';
+      try{ const parsed = JSON.parse(xhr.responseText); if(parsed.message) msg = parsed.message; }catch(_){}
+      reject(new Error(msg));
+    };
+    xhr.onerror = () => reject(new Error('Network error during upload.'));
+    xhr.send(file);
+  });
+}
+
+function wireCard(row){
+  const card = document.querySelector('.media-card[data-id="' + row.id + '"]');
+  if(!card) return;
+  const fileInput = card.querySelector('[data-role="file-input"]');
+  const replaceBtn = card.querySelector('[data-role="replace-btn"]');
+  const saveBtn = card.querySelector('[data-role="save-btn"]');
+  const filenameEl = card.querySelector('[data-role="filename"]');
+  const progressTrack = card.querySelector('[data-role="progress-track"]');
+  const progressFill = card.querySelector('[data-role="progress-fill"]');
+  const statusEl = card.querySelector('[data-role="status-msg"]');
+  const previewEl = card.querySelector('.media-card-preview img, .media-card-preview video');
+
+  replaceBtn.addEventListener('click', () => fileInput.click());
+
+  fileInput.addEventListener('change', () => {
+    const file = fileInput.files[0];
+    statusEl.classList.remove('show', 'success', 'error');
+    if(!file) return;
+    const expectedPrefix = row.media_type === 'video' ? 'video/' : 'image/';
+    if(!file.type.startsWith(expectedPrefix)){
+      statusEl.textContent = 'Please choose ' + (row.media_type === 'video' ? 'a video' : 'an image') + ' file.';
+      statusEl.classList.add('show', 'error');
+      fileInput.value = '';
+      saveBtn.setAttribute('disabled', 'disabled');
+      pendingFiles.delete(row.id);
+      return;
+    }
+    pendingFiles.set(row.id, file);
+    filenameEl.textContent = file.name;
+    saveBtn.removeAttribute('disabled');
+    if(previewEl) previewEl.src = URL.createObjectURL(file);
+  });
+
+  saveBtn.addEventListener('click', async () => {
+    const file = pendingFiles.get(row.id);
+    if(!file) return;
+    replaceBtn.setAttribute('disabled', 'disabled');
+    saveBtn.setAttribute('disabled', 'disabled');
+    statusEl.classList.remove('show', 'success', 'error');
+    progressTrack.classList.add('active');
+    progressFill.style.width = '0%';
+
+    try{
+      const { data: { session } } = await supabaseClient.auth.getSession();
+      if(!session) throw new Error('Your session expired. Please log in again.');
+
+      await uploadWithProgress(row.section_key, file, session.access_token, (pct) => {
+        progressFill.style.width = pct + '%';
+      });
+
+      const { data: publicUrlData } = supabaseClient.storage.from('site-media').getPublicUrl(row.section_key);
+      const freshUrl = publicUrlData.publicUrl + '?v=' + Date.now();
+
+      const { error: updateError } = await supabaseClient
+        .from('media_assets')
+        .update({ file_url: freshUrl, updated_at: new Date().toISOString() })
+        .eq('id', row.id);
+      if(updateError) throw updateError;
+
+      row.file_url = freshUrl;
+      pendingFiles.delete(row.id);
+      filenameEl.textContent = '';
+      statusEl.textContent = 'Saved — the website now shows this file.';
+      statusEl.classList.add('show', 'success');
+    }catch(err){
+      console.error('MEDIA SAVE ERROR', err);
+      statusEl.textContent = err.message || 'Something went wrong while saving. Please try again.';
+      statusEl.classList.add('show', 'error');
+    }finally{
+      progressTrack.classList.remove('active');
+      progressFill.style.width = '0%';
+      replaceBtn.removeAttribute('disabled');
+      fileInput.value = '';
+    }
+  });
+}
+
+document.getElementById('logoutBtn').addEventListener('click', async () => {
+  if(supabaseClient) await supabaseClient.auth.signOut();
+  window.location.href = '/admin/login';
+});
+
+(async function init(){
+  if(!supabaseClient){
+    document.getElementById('loadingState').textContent = 'Could not load required scripts. Please check your connection and refresh the page.';
+    return;
+  }
+  const session = await requireAdminSession();
+  if(!session) return;
+
+  document.getElementById('adminUserEmail').textContent = session.user.email;
+  supabaseClient.auth.onAuthStateChange((event) => {
+    if(event === 'SIGNED_OUT') window.location.replace('/admin/login');
+  });
+
+  try{
+    const { data, error } = await supabaseClient
+      .from('media_assets')
+      .select('id, section_key, media_type, file_url, alt_text, sort_order, is_active')
+      .eq('is_active', true)
+      .order('sort_order', { ascending: true });
+    if(error) throw error;
+    renderGroups(computeGroups(data || []));
+  }catch(err){
+    console.error('MEDIA LOAD ERROR', err);
+    document.getElementById('loadingState').textContent = 'Could not load media. Please refresh the page.';
+  }
+})();
+</script>
+</body>
+</html>

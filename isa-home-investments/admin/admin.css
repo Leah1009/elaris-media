@@ -1,0 +1,167 @@
+/* Isa Home Investments — Admin Panel
+   Shares the public site's design tokens (see index.html :root) so the
+   admin feels like part of the same brand, without touching the public
+   site's own stylesheet. */
+:root{
+  --ink:#0A0A0A;
+  --ink-2:#171717;
+  --ink-soft:#262626;
+  --paper:#F7F7F5;
+  --paper-2:#EDEDEB;
+  --white:#FFFFFF;
+  --accent:#141414;
+  --accent-deep:#000000;
+  --steel:#4D4D4D;
+  --text:#141414;
+  --text-soft:#5C5C5C;
+  --text-on-dark:#F0F0EE;
+  --text-on-dark-soft:#A8A8A8;
+  --line:rgba(0,0,0,0.12);
+  --danger:#B3261E;
+  --danger-bg:#FBEAE9;
+  --success:#1E7A4C;
+  --success-bg:#E9F5EE;
+  --radius:8px;
+  --shadow:0 20px 50px -20px rgba(0,0,0,0.35);
+}
+*{box-sizing:border-box;}
+html,body{margin:0;padding:0;}
+body{
+  font-family:'Inter',sans-serif;
+  color:var(--text);
+  background:var(--paper);
+  -webkit-font-smoothing:antialiased;
+  min-height:100vh;
+}
+img{max-width:100%;display:block;}
+a{color:inherit;text-decoration:none;}
+button{font-family:inherit;cursor:pointer;}
+h1,h2,h3,h4{margin:0;color:var(--ink);}
+h1,h2{font-family:'Playfair Display',serif;letter-spacing:-0.015em;}
+h3,h4{font-family:'Archivo',sans-serif;letter-spacing:-0.005em;}
+p{margin:0;}
+
+.admin-topbar{
+  display:flex;align-items:center;justify-content:space-between;gap:16px;
+  background:var(--ink);color:var(--text-on-dark);
+  padding:16px 28px;
+}
+.admin-topbar-brand{display:flex;align-items:center;gap:12px;}
+.admin-topbar-brand img{width:34px;height:34px;border-radius:4px;object-fit:cover;}
+.admin-topbar-brand span{
+  font-family:'Archivo',sans-serif;font-weight:700;letter-spacing:0.04em;
+  font-size:14px;text-transform:uppercase;color:var(--text-on-dark);
+}
+.admin-topbar-user{display:flex;align-items:center;gap:14px;font-size:13px;color:var(--text-on-dark-soft);}
+.admin-topbar-user b{color:var(--text-on-dark);font-weight:600;}
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:8px;
+  padding:11px 20px;border:none;border-radius:4px;
+  font-family:'Archivo',sans-serif;font-size:12px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;
+  transition:transform .2s ease,box-shadow .2s ease,background .2s ease,opacity .2s ease;
+}
+.btn:disabled{opacity:0.45;cursor:not-allowed;}
+.btn-primary{background:var(--accent);color:var(--white);}
+.btn-primary:hover:not(:disabled){background:var(--accent-deep);}
+.btn-outline{background:transparent;border:1.5px solid var(--line);color:var(--text);}
+.btn-outline:hover:not(:disabled){border-color:var(--ink);}
+.btn-outline-dark{background:transparent;border:1.5px solid rgba(255,255,255,0.35);color:var(--text-on-dark);}
+.btn-outline-dark:hover:not(:disabled){border-color:var(--text-on-dark);}
+.btn-sm{padding:8px 16px;font-size:11px;}
+
+.admin-main{max-width:1180px;margin:0 auto;padding:40px 24px 100px;}
+.admin-page-head{margin-bottom:36px;}
+.admin-page-head .eyebrow{
+  font-family:'Archivo',sans-serif;font-size:11px;font-weight:700;letter-spacing:0.22em;
+  text-transform:uppercase;color:var(--steel);display:block;margin-bottom:8px;
+}
+.admin-page-head h1{font-size:clamp(24px,3vw,32px);font-weight:800;}
+.admin-page-head p{margin-top:8px;color:var(--text-soft);font-size:14.5px;line-height:1.6;}
+
+.media-group{margin-bottom:44px;}
+.media-group-title{
+  font-family:'Archivo',sans-serif;font-size:13px;font-weight:700;letter-spacing:0.14em;
+  text-transform:uppercase;color:var(--ink);padding-bottom:10px;margin-bottom:20px;
+  border-bottom:1.5px solid var(--line);
+}
+.media-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:20px;}
+.media-empty{
+  font-size:13.5px;color:var(--text-soft);font-style:italic;
+  padding:18px 0;
+}
+
+.media-card{
+  background:var(--white);border:1px solid var(--line);border-radius:var(--radius);
+  overflow:hidden;display:flex;flex-direction:column;
+}
+.media-card-preview{
+  aspect-ratio:4/3;background:var(--paper-2);position:relative;overflow:hidden;
+}
+.media-card-preview img,.media-card-preview video{
+  width:100%;height:100%;object-fit:cover;
+}
+.media-card-body{padding:14px 16px 16px;display:flex;flex-direction:column;gap:10px;flex:1;}
+.media-card-label{font-size:13.5px;font-weight:600;color:var(--ink);line-height:1.35;}
+.media-card-meta{display:flex;align-items:center;gap:8px;}
+.badge{
+  display:inline-block;font-family:'Archivo',sans-serif;font-size:10px;font-weight:700;
+  letter-spacing:0.08em;text-transform:uppercase;color:var(--steel);
+  background:var(--paper-2);border-radius:3px;padding:3px 8px;
+}
+.media-card-filename{font-size:11.5px;color:var(--text-soft);word-break:break-all;}
+.media-card-actions{display:flex;gap:8px;margin-top:2px;}
+.media-card-actions .btn{flex:1;}
+
+.progress-track{
+  width:100%;height:6px;border-radius:3px;background:var(--paper-2);overflow:hidden;display:none;
+}
+.progress-track.active{display:block;}
+.progress-fill{height:100%;width:0%;background:var(--accent);transition:width .15s ease;}
+
+.status-msg{font-size:12px;line-height:1.4;padding:8px 10px;border-radius:4px;display:none;}
+.status-msg.show{display:block;}
+.status-msg.success{background:var(--success-bg);color:var(--success);}
+.status-msg.error{background:var(--danger-bg);color:var(--danger);}
+
+.admin-loading{
+  display:flex;align-items:center;justify-content:center;min-height:60vh;
+  color:var(--text-soft);font-size:14px;font-family:'Archivo',sans-serif;letter-spacing:0.04em;
+}
+
+/* ---- Login page ---- */
+.login-shell{
+  min-height:100vh;display:flex;align-items:center;justify-content:center;
+  background:var(--ink);padding:24px;
+}
+.login-card{
+  width:100%;max-width:380px;background:var(--white);border-radius:var(--radius);
+  box-shadow:var(--shadow);padding:40px 36px;text-align:center;
+}
+.login-card img{width:56px;height:56px;border-radius:6px;object-fit:cover;margin:0 auto 18px;}
+.login-card .eyebrow{
+  font-family:'Archivo',sans-serif;font-size:11px;font-weight:700;letter-spacing:0.22em;
+  text-transform:uppercase;color:var(--steel);display:block;margin-bottom:6px;
+}
+.login-card h1{font-size:22px;font-weight:800;margin-bottom:26px;}
+.login-field{text-align:left;margin-bottom:16px;}
+.login-field label{
+  display:block;font-family:'Archivo',sans-serif;font-size:11px;font-weight:700;
+  letter-spacing:0.08em;text-transform:uppercase;color:var(--steel);margin-bottom:6px;
+}
+.login-field input{
+  width:100%;padding:12px 14px;border:1.5px solid var(--line);border-radius:4px;
+  font-family:'Inter',sans-serif;font-size:14px;color:var(--text);background:var(--white);
+}
+.login-field input:focus{outline:none;border-color:var(--ink);}
+.login-submit{width:100%;margin-top:6px;padding:14px;}
+.login-error{
+  margin-top:16px;font-size:12.5px;color:var(--danger);background:var(--danger-bg);
+  border-radius:4px;padding:10px 12px;display:none;
+}
+.login-error.show{display:block;}
+
+@media (max-width:600px){
+  .admin-topbar{padding:14px 16px;}
+  .admin-topbar-user span:not(b){display:none;}
+  .admin-main{padding:28px 16px 80px;}
+}
