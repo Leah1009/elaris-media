@@ -163,19 +163,23 @@ section{position:relative;}
    ============================================================ */
 #siteHeader{
   position:fixed;top:0;left:0;right:0;z-index:200;
-  padding:22px 0;transition:padding .3s ease, background .3s ease, box-shadow .3s ease;
+  padding:26px 0;transition:padding .3s ease, background .3s ease, box-shadow .3s ease;
 }
 #siteHeader .container{display:flex;align-items:center;justify-content:space-between;gap:24px;}
-#siteHeader.scrolled{padding:13px 0;background:rgba(247,247,245,0.92);backdrop-filter:blur(10px);box-shadow:0 8px 30px -20px rgba(0,0,0,0.4);border-bottom:1px solid var(--line);}
+#siteHeader.scrolled{padding:16px 0;background:rgba(247,247,245,0.92);backdrop-filter:blur(10px);box-shadow:0 8px 30px -20px rgba(0,0,0,0.4);border-bottom:1px solid var(--line);}
 .logo-lockup{display:flex;align-items:center;gap:12px;}
 /* Plain, unboxed logo — no badge background, no rounded clipping, no border:
    this renders the real uploaded logo exactly as designed, just larger. */
-.logo-mark-badge{height:120px;display:flex;align-items:center;flex-shrink:0;transition:height .3s ease;}
-.logo-mark-badge img{height:100%;width:auto;max-width:340px;object-fit:contain;display:block;}
-#siteHeader.scrolled .logo-mark-badge{height:88px;}
+.logo-mark-badge{height:172px;display:flex;align-items:center;flex-shrink:0;transition:height .3s ease;}
+.logo-mark-badge img{height:100%;width:auto;max-width:480px;object-fit:contain;display:block;}
+#siteHeader.scrolled .logo-mark-badge{height:120px;}
+@media (max-width:900px){
+  .logo-mark-badge{height:130px;}
+  #siteHeader.scrolled .logo-mark-badge{height:96px;}
+}
 @media (max-width:600px){
-  .logo-mark-badge{height:76px;}
-  #siteHeader.scrolled .logo-mark-badge{height:62px;}
+  .logo-mark-badge{height:104px;}
+  #siteHeader.scrolled .logo-mark-badge{height:80px;}
 }
 .lang-switch{display:flex;align-items:center;gap:7px;font-family:'Archivo',sans-serif;font-size:12px;font-weight:700;letter-spacing:0.06em;}
 .lang-btn{color:rgba(255,255,255,0.5);transition:color .25s ease;padding:2px 1px;}
@@ -234,7 +238,7 @@ nav.primary-nav ul li a:hover::after,nav.primary-nav ul li a.active::after{width
    ============================================================ */
 .hero{
   min-height:100vh;display:flex;align-items:center;position:relative;
-  background:var(--ink);color:var(--white);overflow:hidden;padding:150px 0 90px;
+  background:var(--ink);color:var(--white);overflow:hidden;padding:200px 0 90px;
 }
 .hero::before{
   content:'';position:absolute;inset:0;opacity:0.55;z-index:0;
@@ -285,7 +289,7 @@ html.js .hero-copy>*:nth-child(4){animation-delay:.42s;}
   .hero-copy{max-width:100%;}
 }
 @media (max-width:600px){
-  .hero{padding:130px 0 80px;}
+  .hero{padding:170px 0 80px;}
   .hero-btns .btn{flex:1 1 auto;justify-content:center;}
 }
 
@@ -641,6 +645,27 @@ html.js .hero-copy>*:nth-child(4){animation-delay:.42s;}
 }
 
 /* ============================================================
+   FOLLOW OUR PROJECTS (social)
+   ============================================================ */
+.follow-projects{background:var(--paper);text-align:center;}
+.follow-projects .container{max-width:640px;}
+.follow-projects h2{font-size:clamp(26px,3.6vw,38px);font-weight:800;margin-bottom:14px;}
+.follow-projects p{font-size:16px;line-height:1.7;color:var(--text-soft);}
+.follow-icons{display:flex;justify-content:center;align-items:center;gap:22px;margin-top:38px;flex-wrap:wrap;}
+.follow-icons .f-icon{
+  width:64px;height:64px;border-radius:50%;border:1.5px solid var(--line);
+  display:flex;align-items:center;justify-content:center;color:var(--text);text-decoration:none;
+  transition:transform .3s cubic-bezier(.2,.8,.2,1), border-color .3s ease, background .3s ease, color .3s ease;
+}
+.follow-icons .f-icon svg{width:26px;height:26px;}
+.follow-icons .f-icon:hover{transform:scale(1.08);border-color:var(--ink);background:var(--ink);color:var(--white);}
+@media (max-width:560px){
+  .follow-icons{gap:16px;}
+  .follow-icons .f-icon{width:56px;height:56px;}
+  .follow-icons .f-icon svg{width:22px;height:22px;}
+}
+
+/* ============================================================
    FOOTER
    ============================================================ */
 footer{background:var(--ink);color:var(--text-on-dark-soft);padding:80px 0 0;}
@@ -653,8 +678,9 @@ footer .footer-links li{margin-bottom:12px;}
 footer .footer-links a{font-size:14.5px;transition:color .2s ease;}
 footer .footer-links a:hover{color:var(--copper-light);}
 .footer-social{display:flex;gap:10px;margin-top:18px;}
-.footer-social .soc{width:36px;height:36px;border-radius:50%;border:1px solid var(--line-dark);display:flex;align-items:center;justify-content:center;color:var(--text-on-dark-soft);}
+.footer-social .soc{width:36px;height:36px;border-radius:50%;border:1px solid var(--line-dark);display:flex;align-items:center;justify-content:center;color:var(--text-on-dark-soft);text-decoration:none;transition:border-color .25s ease, background .25s ease, color .25s ease, transform .25s ease;}
 .footer-social .soc svg{width:15px;height:15px;}
+.footer-social .soc:hover{border-color:var(--white);background:var(--white);color:var(--ink);transform:scale(1.08);}
 .footer-bottom{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:14px;padding:26px 0;font-size:13px;}
 .footer-bottom .legal-links{display:flex;gap:22px;}
 .footer-bottom .legal-links button{font-size:13px;color:var(--text-on-dark-soft);transition:color .2s ease;}
@@ -1293,6 +1319,34 @@ footer .footer-links a:hover{color:var(--copper-light);}
     </div>
   </div>
 </section>
+
+<!-- ============================================================
+     FOLLOW OUR PROJECTS (social)
+     ============================================================ -->
+<section class="follow-projects section-pad">
+  <div class="container reveal">
+    <h2 data-i18n="follow.title">Follow Our Projects</h2>
+    <p data-i18n="follow.body">Follow Isa Home Investments on social media and see our latest builds, construction progress and completed projects.</p>
+    <div class="follow-icons">
+      <!-- TODO: replace href="#" with the real Instagram profile URL -->
+      <a class="f-icon" href="#" target="_blank" rel="noopener noreferrer" data-i18n-attr="aria-label:follow.instagram" aria-label="Instagram">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
+      </a>
+      <!-- TODO: replace href="#" with the real Facebook page URL -->
+      <a class="f-icon" href="#" target="_blank" rel="noopener noreferrer" data-i18n-attr="aria-label:follow.facebook" aria-label="Facebook">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M14 9h3V6h-3a3 3 0 0 0-3 3v2H9v3h2v6h3v-6h3l1-3h-4V9a1 1 0 0 1 1-1Z"/></svg>
+      </a>
+      <!-- TODO: replace href="#" with the real TikTok profile URL -->
+      <a class="f-icon" href="#" target="_blank" rel="noopener noreferrer" data-i18n-attr="aria-label:follow.tiktok" aria-label="TikTok">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M14 3.5v11a3.5 3.5 0 1 1-2.8-3.43"/><path d="M14 3.5c.4 2.5 2.1 4.2 4.5 4.6v2.6c-1.7-.1-3.2-.7-4.5-1.7"/></svg>
+      </a>
+      <!-- TODO: replace href="#" with the real WhatsApp chat link, e.g. https://wa.me/1XXXXXXXXXX -->
+      <a class="f-icon" href="#" target="_blank" rel="noopener noreferrer" data-i18n-attr="aria-label:follow.whatsapp" aria-label="WhatsApp">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 3a9 9 0 0 0-7.8 13.5L3 21l4.7-1.2A9 9 0 1 0 12 3Z"/><path d="M8.5 8.8c.3-.7.6-.7.9-.7h.6c.2 0 .4 0 .6.5l.7 1.6c.1.3 0 .5-.1.7l-.5.6c-.1.2-.1.3 0 .5.4.7 1.5 1.9 2.9 2.4.2.1.4.1.5-.1l.6-.7c.2-.2.4-.2.6-.1l1.5.8c.2.1.3.3.3.5 0 .8-.9 1.6-1.7 1.6-1.9 0-4.9-1.6-6.1-4.7-.2-.6-.3-1.1-.3-1.5 0-.6.2-1 .5-1.4Z" fill="currentColor" stroke="none"/></svg>
+      </a>
+    </div>
+  </div>
+</section>
 </main>
 
 <!-- ============================================================
@@ -1307,8 +1361,14 @@ footer .footer-links a:hover{color:var(--copper-light);}
         </a>
         <p data-i18n="footer.tagline">Professional construction, renovation and remodeling services for homeowners — from the first consultation to the final walkthrough.</p>
         <div class="footer-social">
-          <span class="soc" data-i18n-attr="title:footer.social.instagram|aria-label:footer.social.instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/></svg></span>
-          <span class="soc" data-i18n-attr="title:footer.social.facebook|aria-label:footer.social.facebook"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M14 9h3V6h-3a3 3 0 0 0-3 3v2H9v3h2v6h3v-6h3l1-3h-4V9a1 1 0 0 1 1-1Z"/></svg></span>
+          <!-- TODO: replace href="#" with the real Instagram profile URL -->
+          <a class="soc" href="#" target="_blank" rel="noopener noreferrer" data-i18n-attr="title:follow.instagram|aria-label:follow.instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg></a>
+          <!-- TODO: replace href="#" with the real Facebook page URL -->
+          <a class="soc" href="#" target="_blank" rel="noopener noreferrer" data-i18n-attr="title:follow.facebook|aria-label:follow.facebook"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M14 9h3V6h-3a3 3 0 0 0-3 3v2H9v3h2v6h3v-6h3l1-3h-4V9a1 1 0 0 1 1-1Z"/></svg></a>
+          <!-- TODO: replace href="#" with the real TikTok profile URL -->
+          <a class="soc" href="#" target="_blank" rel="noopener noreferrer" data-i18n-attr="title:follow.tiktok|aria-label:follow.tiktok"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M14 3.5v11a3.5 3.5 0 1 1-2.8-3.43"/><path d="M14 3.5c.4 2.5 2.1 4.2 4.5 4.6v2.6c-1.7-.1-3.2-.7-4.5-1.7"/></svg></a>
+          <!-- TODO: replace href="#" with the real WhatsApp chat link, e.g. https://wa.me/1XXXXXXXXXX -->
+          <a class="soc" href="#" target="_blank" rel="noopener noreferrer" data-i18n-attr="title:follow.whatsapp|aria-label:follow.whatsapp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M12 3a9 9 0 0 0-7.8 13.5L3 21l4.7-1.2A9 9 0 1 0 12 3Z"/><path d="M8.5 8.8c.3-.7.6-.7.9-.7h.6c.2 0 .4 0 .6.5l.7 1.6c.1.3 0 .5-.1.7l-.5.6c-.1.2-.1.3 0 .5.4.7 1.5 1.9 2.9 2.4.2.1.4.1.5-.1l.6-.7c.2-.2.4-.2.6-.1l1.5.8c.2.1.3.3.3.5 0 .8-.9 1.6-1.7 1.6-1.9 0-4.9-1.6-6.1-4.7-.2-.6-.3-1.1-.3-1.5 0-.6.2-1 .5-1.4Z" fill="currentColor" stroke="none"/></svg></a>
         </div>
       </div>
       <div>
@@ -1473,7 +1533,9 @@ en: {
   'form.err.contactMethod':'Please choose a preferred contact method.','form.err.financing':'Please let us know your interest in financing.',
   'footer.tagline':'Professional construction, renovation and remodeling services for homeowners — from the first consultation to the final walkthrough.',
   'footer.quickLinks':'Quick Links','footer.about':'About','footer.privacy':'Privacy Policy','footer.terms':'Terms & Conditions','footer.rights':'All Rights Reserved.',
-  'footer.social.instagram':'Instagram — coming soon','footer.social.facebook':'Facebook — coming soon',
+  'follow.title':'Follow Our Projects',
+  'follow.body':'Follow Isa Home Investments on social media and see our latest builds, construction progress and completed projects.',
+  'follow.instagram':'Instagram','follow.facebook':'Facebook','follow.tiktok':'TikTok','follow.whatsapp':'WhatsApp',
   'legal.privacy.title':'Privacy Policy',
   'legal.privacy.body':'<p>Isa Home Investments respects your privacy. Information submitted through this website (such as your name, contact details and project information) is used only to respond to your inquiry and provide requested services.</p><p>A full, detailed Privacy Policy for Isa Home Investments is currently being prepared and will be published here. For questions about your information, contact us at <a href="mailto:info@isahomeus.com" style="color:var(--copper);">info@isahomeus.com</a>.</p>',
   'legal.terms.title':'Terms & Conditions',
@@ -1573,7 +1635,9 @@ es: {
   'form.err.contactMethod':'Por favor elige un método de contacto preferido.','form.err.financing':'Por favor indícanos tu interés en financiamiento.',
   'footer.tagline':'Servicios profesionales de construcción, renovación y remodelación para propietarios — desde la primera consulta hasta el recorrido final.',
   'footer.quickLinks':'Enlaces Rápidos','footer.about':'Nosotros','footer.privacy':'Política de Privacidad','footer.terms':'Términos y Condiciones','footer.rights':'Todos los Derechos Reservados.',
-  'footer.social.instagram':'Instagram — próximamente','footer.social.facebook':'Facebook — próximamente',
+  'follow.title':'Síguenos en Nuestros Proyectos',
+  'follow.body':'Sigue a Isa Home Investments en redes sociales y conoce nuestras construcciones más recientes, el progreso de obra y los proyectos terminados.',
+  'follow.instagram':'Instagram','follow.facebook':'Facebook','follow.tiktok':'TikTok','follow.whatsapp':'WhatsApp',
   'legal.privacy.title':'Política de Privacidad',
   'legal.privacy.body':'<p>Isa Home Investments respeta tu privacidad. La información enviada a través de este sitio web (como tu nombre, datos de contacto e información del proyecto) se utiliza únicamente para responder a tu consulta y brindar los servicios solicitados.</p><p>Una Política de Privacidad completa y detallada para Isa Home Investments está en preparación y será publicada aquí. Si tienes preguntas sobre tu información, contáctanos en <a href="mailto:info@isahomeus.com" style="color:var(--copper);">info@isahomeus.com</a>.</p>',
   'legal.terms.title':'Términos y Condiciones',
