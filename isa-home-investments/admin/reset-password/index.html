@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Reset Password | Isa Home Investments</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="icon" href="/assets/logo.jpg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;800&family=Playfair+Display:ital,wght@0,700;0,800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/admin/admin.css">
+</head>
+<body>
+
+<div class="login-shell">
+  <div class="login-card" id="resetCard" style="visibility:hidden;">
+    <img src="/assets/logo.jpg" alt="Isa Home Investments">
+    <span class="eyebrow">Isa Home Investments</span>
+    <h1>Reset Password</h1>
+
+    <div id="resetFormWrap">
+      <form id="resetForm">
+        <div class="login-field">
+          <label for="newPassword">New Password</label>
+          <input type="password" id="newPassword" autocomplete="new-password" required minlength="8">
+        </div>
+        <div class="login-field">
+          <label for="confirmPassword">Confirm New Password</label>
+          <input type="password" id="confirmPassword" autocomplete="new-password" required minlength="8">
+        </div>
+        <button type="submit" class="btn btn-primary login-submit" id="resetBtn">Update Password</button>
+      </form>
+    </div>
+
+    <div id="invalidLinkWrap" style="display:none;">
+      <p style="font-size:13px;color:var(--text-soft);line-height:1.6;margin-bottom:18px;">This password reset link is invalid or has expired.</p>
+      <a href="/admin/forgot-password" class="btn btn-primary login-submit" style="display:flex;">Request a New Link</a>
+    </div>
+
+    <div class="login-success" id="resetSuccess">Your password has been updated. Redirecting to log in…</div>
+    <div class="login-error" id="resetError"></div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="/admin/supabase-client.js"></script>
+<script>
+const resetCard = document.getElementById('resetCard');
+const resetFormWrap = document.getElementById('resetFormWrap');
+const resetForm = document.getElementById('resetForm');
+const resetBtn = document.getElementById('resetBtn');
+const resetSuccess = document.getElementById('resetSuccess');
+const resetError = document.getElementById('resetError');
+const invalidLinkWrap = document.getElementById('invalidLinkWrap');
+
+function showInvalidLink(){
+  resetFormWrap.style.display = 'none';
+  invalidLinkWrap.style.display = 'block';
+  resetCard.style.visibility = 'visible';
+}
+
+let recoveryReady = false;
+
+(async function init(){
+  if(!supabaseClient){
+    resetCard.style.visibility = 'visible';
+    resetError.textContent = 'Could not load required scripts. Please check your connection and refresh the page.';
+    resetError.classList.add('show');
+    resetBtn.setAttribute('disabled', 'disabled');
+    return;
+  }
+
+  // Clicking the emailed link lands here with a recovery token in the URL;
+  // supabase-js parses it and fires this event once the session is ready.
+  supabaseClient.auth.onAuthStateChange((event) => {
+    if(event === 'PASSWORD_RECOVERY'){
+      recoveryReady = true;
+      resetCard.style.visibility = 'visible';
+    }
+  });
+
+  const { data: { session } } = await supabaseClient.auth.getSession();
+  if(session){
+    recoveryReady = true;
+    resetCard.style.visibility = 'visible';
+  }else{
+    // Give the URL-hash parsing above a moment to fire before concluding
+    // this page was opened without a valid recovery link.
+    setTimeout(() => { if(!recoveryReady) showInvalidLink(); }, 1500);
+  }
+})();
+
+resetForm.addEventListener('submit', async (e) => {
+  e.preventDefault();
+  resetError.classList.remove('show');
+  resetSuccess.classList.remove('show');
+
+  const newPassword = document.getElementById('newPassword').value;
+  const confirmPassword = document.getElementById('confirmPassword').value;
+
+  if(newPassword !== confirmPassword){
+    resetError.textContent = 'Passwords do not match.';
+    resetError.classList.add('show');
+    return;
+  }
+  if(newPassword.length < 8){
+    resetError.textContent = 'Password must be at least 8 characters.';
+    resetError.classList.add('show');
+    return;
+  }
+
+  resetBtn.setAttribute('disabled', 'disabled');
+  resetBtn.textContent = 'Updating…';
+
+  try{
+    const { error } = await supabaseClient.auth.updateUser({ password: newPassword });
+    if(error) throw error;
+
+    resetFormWrap.style.display = 'none';
+    resetSuccess.classList.add('show');
+
+    // Sign out of the one-time recovery session so /admin/login shows an
+    // actual login form instead of bouncing straight into the dashboard.
+    await supabaseClient.auth.signOut();
+    setTimeout(() => { window.location.href = '/admin/login'; }, 2000);
+  }catch(err){
+    console.error('ADMIN RESET PASSWORD ERROR', err);
+    resetError.textContent = err.message || 'Could not update your password. Please try again.';
+    resetError.classList.add('show');
+    resetBtn.removeAttribute('disabled');
+    resetBtn.textContent = 'Update Password';
+  }
+});
+</script>
+</body>
+</html>

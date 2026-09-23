@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Forgot Password | Isa Home Investments</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="icon" href="/assets/logo.jpg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;800&family=Playfair+Display:ital,wght@0,700;0,800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/admin/admin.css">
+</head>
+<body>
+
+<div class="login-shell">
+  <div class="login-card" id="forgotCard" style="visibility:hidden;">
+    <img src="/assets/logo.jpg" alt="Isa Home Investments">
+    <span class="eyebrow">Isa Home Investments</span>
+    <h1>Forgot Password</h1>
+    <form id="forgotForm">
+      <div class="login-field">
+        <label for="forgotEmail">Email</label>
+        <input type="email" id="forgotEmail" autocomplete="username" required>
+      </div>
+      <button type="submit" class="btn btn-primary login-submit" id="forgotBtn">Send Reset Instructions</button>
+    </form>
+    <div class="login-success" id="forgotSuccess">Password reset instructions have been sent to your email.</div>
+    <div class="login-error" id="forgotError">We couldn't send the reset email. Please try again.</div>
+    <a href="/admin/login" class="login-back-link">Back to Log In</a>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="/admin/supabase-client.js"></script>
+<script>
+const forgotCard = document.getElementById('forgotCard');
+const forgotForm = document.getElementById('forgotForm');
+const forgotBtn = document.getElementById('forgotBtn');
+const forgotSuccess = document.getElementById('forgotSuccess');
+const forgotError = document.getElementById('forgotError');
+
+(async function init(){
+  if(!supabaseClient){
+    forgotCard.style.visibility = 'visible';
+    forgotError.classList.add('show');
+    forgotBtn.setAttribute('disabled', 'disabled');
+    return;
+  }
+  forgotCard.style.visibility = 'visible';
+})();
+
+forgotForm.addEventListener('submit', async (e) => {
+  e.preventDefault();
+  if(!supabaseClient){
+    forgotError.classList.add('show');
+    return;
+  }
+  forgotSuccess.classList.remove('show');
+  forgotError.classList.remove('show');
+  forgotBtn.setAttribute('disabled', 'disabled');
+  forgotBtn.textContent = 'Sending…';
+
+  const email = document.getElementById('forgotEmail').value.trim();
+
+  try{
+    // redirectTo must be in this Supabase project's Auth > URL Configuration
+    // "Redirect URLs" allow list, or Supabase silently falls back to the
+    // project's default Site URL instead of sending the user here.
+    const { error } = await supabaseClient.auth.resetPasswordForEmail(email, {
+      redirectTo: window.location.origin + '/admin/reset-password'
+    });
+    if(error) throw error;
+
+    forgotSuccess.classList.add('show');
+    forgotForm.reset();
+  }catch(err){
+    console.error('ADMIN FORGOT PASSWORD ERROR', err);
+    forgotError.classList.add('show');
+  }finally{
+    forgotBtn.removeAttribute('disabled');
+    forgotBtn.textContent = 'Send Reset Instructions';
+  }
+});
+</script>
+</body>
+</html>

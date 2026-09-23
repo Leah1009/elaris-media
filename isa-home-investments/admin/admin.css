@@ -175,11 +175,26 @@ p{margin:0;}
 }
 .login-field input:focus{outline:none;border-color:var(--ink);}
 .login-submit{width:100%;margin-top:6px;padding:14px;}
+.login-forgot-link{
+  display:block;text-align:right;margin:-8px 0 18px;font-size:12.5px;
+  color:var(--steel);text-decoration:underline;text-underline-offset:2px;
+}
+.login-forgot-link:hover{color:var(--ink);}
+.login-back-link{
+  display:block;margin-top:18px;font-size:12.5px;color:var(--steel);
+  text-decoration:underline;text-underline-offset:2px;
+}
+.login-back-link:hover{color:var(--ink);}
 .login-error{
   margin-top:16px;font-size:12.5px;color:var(--danger);background:var(--danger-bg);
   border-radius:4px;padding:10px 12px;display:none;
 }
 .login-error.show{display:block;}
+.login-success{
+  margin-top:16px;font-size:12.5px;color:var(--success);background:var(--success-bg);
+  border-radius:4px;padding:10px 12px;display:none;
+}
+.login-success.show{display:block;}
 
 @media (max-width:600px){
   .admin-topbar{padding:14px 16px;}
