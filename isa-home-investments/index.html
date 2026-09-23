@@ -651,6 +651,9 @@ html.js .hero-copy>*:nth-child(4){animation-delay:.42s;}
 .form-success .fs-fallback{font-size:13px;color:var(--text-soft);margin-top:14px;}
 .form-success .fs-fallback a{color:var(--copper);font-weight:600;}
 .form-body.hidden{display:none;}
+.form-error-banner{display:none;align-items:flex-start;gap:10px;background:#FDF3F2;border:1px solid #C0392B;color:#C0392B;padding:14px 16px;border-radius:8px;font-size:13.5px;line-height:1.5;margin-bottom:24px;}
+.form-error-banner.show{display:flex;}
+.form-error-banner svg{width:19px;height:19px;flex-shrink:0;margin-top:1px;}
 
 @media (max-width:960px){
   .contact .container{grid-template-columns:1fr;gap:40px;}
@@ -1244,6 +1247,10 @@ footer .footer-links a:hover{color:var(--copper-light);}
       <div class="form-body" id="formBody">
         <h3 data-i18n="form.heading">Request My Estimate</h3>
         <p class="lead" data-i18n-html="form.lead">Fields marked <span style="color:var(--copper);">*</span> are required. We'll get back to you shortly.</p>
+        <div class="form-error-banner" id="formError">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16h.01"/></svg>
+          <span data-i18n="form.submitError">Something went wrong and we couldn't submit your request. Please try again, or email us directly at info@isahomeus.com.</span>
+        </div>
         <form id="estimateForm" novalidate>
           <!-- Honeypot (spam trap, hidden from real users) -->
           <div class="hp-field"><label>Company Website</label><input type="text" name="company_website" tabindex="-1" autocomplete="off"></div>
@@ -1436,6 +1443,31 @@ footer .footer-links a:hover{color:var(--copper-light);}
   </div>
 </div>
 
+<!--
+  Supabase config: __SUPABASE_URL__ / __SUPABASE_PUBLISHABLE_KEY__ are placeholder
+  tokens substituted at Vercel build time from the NEXT_PUBLIC_SUPABASE_URL and
+  NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY project environment variables — see build.js.
+  This publishable key is safe to ship to the browser by design (it is not a
+  secret); the security boundary is the Row Level Security policy on the
+  "Leads" table, which allows public INSERT only (verified: no SELECT/UPDATE/
+  DELETE grants for the anon role). Never put a service_role key here.
+-->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+  // Guarded: if the CDN script above fails to load for any reason (ad blocker,
+  // corporate firewall, outage), `window.supabase` won't exist. We must not let
+  // that throw here and take down every other script on the page — the lead
+  // form's submit handler checks for a null supabaseClient and shows the normal
+  // friendly error state instead.
+  const SUPABASE_URL = '__SUPABASE_URL__';
+  const SUPABASE_PUBLISHABLE_KEY = '__SUPABASE_PUBLISHABLE_KEY__';
+  let supabaseClient = null;
+  try{
+    supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY);
+  }catch(e){
+    console.error('Supabase client failed to initialize:', e);
+  }
+</script>
 <script>
 document.documentElement.classList.add('js');
 
@@ -1528,7 +1560,8 @@ en: {
   'form.financingQuestion':'Interested in Financing?','form.yes':'Yes','form.no':'No','form.moreInfo':'I would like more information',
   'form.submit':'Request My Estimate','form.sending':'Sending…',
   'form.note':'Or email us directly at <a href="mailto:info@isahomeus.com" style="color:var(--copper);font-weight:600;">info@isahomeus.com</a>',
-  'form.thankYou':'Thank you!','form.successBody':'Your project request has been received. The Isa Home Investments team will contact you soon.',
+  'form.thankYou':'Thank you!','form.successBody':'Your request has been received. Our team will contact you shortly.',
+  'form.submitError':"Something went wrong and we couldn't submit your request. Please try again, or email us directly at info@isahomeus.com.",
   'form.successFallback':'Didn\'t hear from us right away? Email <a href="mailto:info@isahomeus.com">info@isahomeus.com</a> directly.',
   'form.err.firstName':'Please enter your first name.','form.err.lastName':'Please enter your last name.',
   'form.err.email':'Please enter a valid email address.','form.err.phone':'Please enter a valid phone number.',
@@ -1628,7 +1661,8 @@ es: {
   'form.financingQuestion':'¿Interesado en Financiamiento?','form.yes':'Sí','form.no':'No','form.moreInfo':'Me gustaría más información',
   'form.submit':'Solicitar Mi Cotización','form.sending':'Enviando…',
   'form.note':'O escríbenos directamente a <a href="mailto:info@isahomeus.com" style="color:var(--copper);font-weight:600;">info@isahomeus.com</a>',
-  'form.thankYou':'¡Gracias!','form.successBody':'Tu solicitud de proyecto ha sido recibida. El equipo de Isa Home Investments se pondrá en contacto contigo pronto.',
+  'form.thankYou':'¡Gracias!','form.successBody':'Hemos recibido tu solicitud. Nuestro equipo se pondrá en contacto contigo muy pronto.',
+  'form.submitError':'Ocurrió un error y no pudimos enviar tu solicitud. Por favor intenta de nuevo, o escríbenos directamente a info@isahomeus.com.',
   'form.successFallback':'¿No recibiste noticias nuestras enseguida? Escribe directamente a <a href="mailto:info@isahomeus.com">info@isahomeus.com</a>.',
   'form.err.firstName':'Por favor ingresa tu nombre.','form.err.lastName':'Por favor ingresa tu apellido.',
   'form.err.email':'Por favor ingresa un correo electrónico válido.','form.err.phone':'Por favor ingresa un número de teléfono válido.',
@@ -1849,7 +1883,10 @@ document.querySelectorAll('[data-ba]').forEach(slider=>{
 const form = document.getElementById('estimateForm');
 const formBody = document.getElementById('formBody');
 const formSuccess = document.getElementById('formSuccess');
+const formError = document.getElementById('formError');
 const submitBtn = document.getElementById('submitEstimateBtn');
+const submitBtnLabel = submitBtn.querySelector('span');
+let isSubmittingLead = false;
 
 function setFieldError(field, hasError){
   const wrap = field.closest('.form-field');
@@ -1876,8 +1913,15 @@ function validateForm(){
   return valid;
 }
 
+function resetRadioChipVisuals(){
+  document.querySelectorAll('.radio-chip.checked').forEach(el => el.classList.remove('checked'));
+}
+
 form.addEventListener('submit', async (e) => {
   e.preventDefault();
+
+  // Prevent double submissions (double-click, double Enter, slow network, etc.)
+  if(isSubmittingLead) return;
 
   // Honeypot check — silently drop bot submissions
   const honeypot = form.querySelector('input[name="company_website"]');
@@ -1889,34 +1933,70 @@ form.addEventListener('submit', async (e) => {
     return;
   }
 
+  isSubmittingLead = true;
+  formError.classList.remove('show');
   submitBtn.setAttribute('disabled','disabled');
-  submitBtn.querySelector('span').textContent = t('form.sending');
+  submitBtnLabel.textContent = t('form.sending');
 
   const fd = new FormData(form);
   const financing = fd.get('financing') || 'No';
-  fd.set('_subject', `New Project Request — ${fd.get('firstName')} ${fd.get('lastName')} — FINANCING INTEREST: ${financing.toUpperCase()}`);
-  fd.append('FINANCING_INTEREST_FLAG', `FINANCING INTEREST: ${financing.toUpperCase()}`);
 
-  /*
-    Email delivery via FormSubmit.co (no backend required for a static site).
-    IMPORTANT: the first submission triggers a one-time confirmation email to
-    info@isahomeus.com — it must be approved once before messages start
-    arriving in the inbox. If this project later gets a real backend/CRM,
-    swap this fetch call for that endpoint.
-  */
+  // Maps the existing form fields to the Supabase "Leads" table columns.
+  const leadPayload = {
+    first_name: (fd.get('firstName') || '').trim(),
+    last_name: (fd.get('lastName') || '').trim(),
+    email: (fd.get('email') || '').trim(),
+    phone: (fd.get('phone') || '').trim(),
+    city: (fd.get('city') || '').trim(),
+    project_type: fd.get('projectType') || null,
+    estimated_budget: fd.get('budget') || null,
+    project_description: (fd.get('description') || '').trim(),
+    desired_start_date: fd.get('startDate') || null,
+    preferred_contact_method: fd.get('contactMethod') || null,
+    interested_in_financing: financing
+  };
+
   try{
-    await fetch('https://formsubmit.co/ajax/info@isahomeus.com', {
-      method:'POST',
-      headers:{ 'Accept':'application/json' },
-      body: fd
-    });
-  }catch(err){
-    // Network/service issue — user still gets the confirmation + mailto fallback below.
-  }
+    if(!supabaseClient) throw new Error('Supabase client is not available.');
 
-  formBody.classList.add('hidden');
-  formSuccess.classList.add('show');
-  formSuccess.scrollIntoView({behavior:'smooth', block:'center'});
+    // Public anon key can only INSERT here — RLS on "Leads" has no public
+    // SELECT/UPDATE/DELETE policy, so we never chain .select() on this call.
+    const { error } = await supabaseClient.from('Leads').insert([leadPayload]);
+    if(error) throw error;
+
+    /*
+      Email delivery via FormSubmit.co (existing best-effort notification,
+      kept unchanged for now — a proper Supabase-driven notification will
+      replace this in a separate step). Failures here never block success:
+      the lead is already safely stored in the database above.
+    */
+    try{
+      fd.set('_subject', `New Project Request — ${fd.get('firstName')} ${fd.get('lastName')} — FINANCING INTEREST: ${financing.toUpperCase()}`);
+      fd.append('FINANCING_INTEREST_FLAG', `FINANCING INTEREST: ${financing.toUpperCase()}`);
+      await fetch('https://formsubmit.co/ajax/info@isahomeus.com', {
+        method:'POST',
+        headers:{ 'Accept':'application/json' },
+        body: fd
+      });
+    }catch(emailErr){
+      // Non-blocking — do not surface this to the user.
+    }
+
+    form.reset();
+    form.querySelectorAll('.form-field.invalid').forEach(el => el.classList.remove('invalid'));
+    resetRadioChipVisuals();
+    formBody.classList.add('hidden');
+    formSuccess.classList.add('show');
+    formSuccess.scrollIntoView({behavior:'smooth', block:'center'});
+  }catch(err){
+    console.error('Failed to save lead to Supabase:', err);
+    formError.classList.add('show');
+    formError.scrollIntoView({behavior:'smooth', block:'center'});
+  }finally{
+    isSubmittingLead = false;
+    submitBtn.removeAttribute('disabled');
+    submitBtnLabel.textContent = t('form.submit');
+  }
 });
 
 /* ---------- Legal modal ---------- */
