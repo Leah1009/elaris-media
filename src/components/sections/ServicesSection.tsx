@@ -51,13 +51,17 @@ export default function ServicesSection() {
 
         <div className="grid gap-x-8 gap-y-10 sm:grid-cols-2 lg:grid-cols-3">
           {SERVICES.map((service, i) => (
-            <Reveal key={service.id} delay={(i % 3) * 0.06}>
+            <Reveal
+              key={service.id}
+              delay={(i % 3) * 0.06}
+              className="group cursor-default rounded-lg p-3 -m-3 transition-transform duration-300 hover:-translate-y-1"
+            >
               <svg
                 viewBox="0 0 24 24"
                 fill="none"
                 stroke="currentColor"
                 strokeWidth={1.4}
-                className="mb-3 h-6 w-6 text-gold-deep"
+                className="mb-3 h-6 w-6 text-gold-deep transition-transform duration-300 group-hover:scale-110"
               >
                 <path d={ICONS[service.id]} />
               </svg>

@@ -43,9 +43,10 @@ export default function Nav() {
               <a
                 key={link.href}
                 href={link.href}
-                className="text-[13px] uppercase tracking-[0.08em] text-ink/70 transition hover:text-ink"
+                className="group relative text-[13px] uppercase tracking-[0.08em] text-ink/70 transition hover:text-ink"
               >
                 {t(link.key)}
+                <span className="absolute -bottom-1 left-0 h-[1px] w-0 bg-gold-deep transition-all duration-300 group-hover:w-full" />
               </a>
             ))}
           </nav>

@@ -27,3 +27,12 @@ h4 {
   line-height: 1.12;
   letter-spacing: -0.01em;
 }
+
+.has-custom-cursor {
+  cursor: none;
+}
+.has-custom-cursor input,
+.has-custom-cursor textarea,
+.has-custom-cursor select {
+  cursor: auto;
+}
