@@ -38,8 +38,7 @@ export const metadata: Metadata = {
     "Elaris Media",
   ],
   alternates: { canonical: SITE_URL },
-  // Flip to index:true once this rebuild replaces the live site.
-  robots: { index: false, follow: false },
+  robots: { index: true, follow: true },
   openGraph: {
     type: "website",
     url: SITE_URL,
