@@ -6,16 +6,9 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useLanguage } from "@/lib/i18n/LanguageProvider";
 import type { DictKey } from "@/lib/i18n/dictionary";
 
-const CHANNELS = [
-  { key: "meta", icon: "M", widthPct: 82 },
-  { key: "google", icon: "G", widthPct: 64 },
-  { key: "analytics", icon: "A", widthPct: 46 },
-] as const;
-
 export default function AdsAnalyticsSection() {
   const { t } = useLanguage();
   const sectionRef = useRef<HTMLDivElement>(null);
-  const barRefs = useRef<(HTMLDivElement | null)[]>([]);
 
   useEffect(() => {
     gsap.registerPlugin(ScrollTrigger);
@@ -31,22 +24,6 @@ export default function AdsAnalyticsSection() {
         stagger: 0.12,
         ease: "power2.out",
         scrollTrigger: { trigger: sectionRef.current, start: "top 75%" },
-      });
-
-      barRefs.current.forEach((bar, i) => {
-        if (!bar) return;
-        const target = bar.dataset.width;
-        gsap.fromTo(
-          bar,
-          { width: "0%" },
-          {
-            width: `${target}%`,
-            duration: 1.1,
-            delay: 0.15 * i,
-            ease: "power3.out",
-            scrollTrigger: { trigger: sectionRef.current, start: "top 70%" },
-          }
-        );
       });
     }, sectionRef);
 
@@ -79,27 +56,6 @@ export default function AdsAnalyticsSection() {
               <p className="mt-2 text-sm text-ink/60">{t(card.bodyKey)}</p>
             </div>
           ))}
-        </div>
-
-        <div data-reveal className="mt-14 rounded-lg border border-ink/10 bg-cream-soft p-8">
-          <div className="flex flex-col gap-5">
-            {CHANNELS.map((c, i) => (
-              <div key={c.key} className="flex items-center gap-4">
-                <span className="w-6 shrink-0 font-display text-sm text-gold-deep">{c.icon}</span>
-                <div className="h-2 w-full overflow-hidden rounded-full bg-ink/8">
-                  <div
-                    ref={(el) => {
-                      barRefs.current[i] = el;
-                    }}
-                    data-width={c.widthPct}
-                    className="h-full rounded-full bg-gold-deep"
-                    style={{ width: 0 }}
-                  />
-                </div>
-              </div>
-            ))}
-          </div>
-          <p className="mt-5 text-[11px] uppercase tracking-[0.14em] text-ink/40">{t("ads.chartLabel")}</p>
         </div>
       </div>
     </section>

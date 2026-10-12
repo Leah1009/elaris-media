@@ -27,7 +27,6 @@ export const dict = {
     "ads.google.body": "Show up when people are already searching for what you offer — on Search and Maps.",
     "ads.analytics.title": "Analytics",
     "ads.analytics.body": "Every campaign tracked and reported honestly, so decisions are based on what's actually working.",
-    "ads.chartLabel": "Illustrative funnel — not client data",
 
     "services.eyebrow": "Our Services",
     "services.headline": "Everything Your Brand<br>Needs to Stand Out.",
@@ -166,7 +165,6 @@ export const dict = {
     "ads.google.body": "Aparece cuando la gente ya está buscando lo que ofreces — en Google Search y Maps.",
     "ads.analytics.title": "Analítica",
     "ads.analytics.body": "Cada campaña medida y reportada con honestidad, para decidir según lo que realmente funciona.",
-    "ads.chartLabel": "Embudo ilustrativo — no son datos de clientes",
 
     "services.eyebrow": "Nuestros Servicios",
     "services.headline": "Todo lo que Tu Marca<br>Necesita para Destacar.",
