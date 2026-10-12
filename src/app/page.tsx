@@ -1,7 +1,7 @@
 import Nav from "@/components/Nav";
 import Footer from "@/components/Footer";
 import FloatingWhatsApp from "@/components/FloatingWhatsApp";
-import CinematicHero from "@/components/depth/CinematicHero";
+import HeroSection from "@/components/sections/HeroSection";
 import AdsAnalyticsSection from "@/components/sections/AdsAnalyticsSection";
 import AboutSection from "@/components/sections/AboutSection";
 import ServicesSection from "@/components/sections/ServicesSection";
@@ -17,9 +17,7 @@ export default function Home() {
       <Nav />
 
       <main>
-        <div id="home">
-          <CinematicHero />
-        </div>
+        <HeroSection />
 
         <AboutSection />
         <ServicesSection />

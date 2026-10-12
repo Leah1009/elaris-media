@@ -33,17 +33,17 @@ export default function Nav() {
           solid ? "bg-cream-soft/90 backdrop-blur border-b border-ink/10" : "bg-transparent"
         }`}
       >
-        <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
+        <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4 lg:px-10">
           <a href="#home" className="font-display text-lg tracking-wide text-ink">
             Elaris <span className="text-gold-deep">Media</span>
           </a>
 
-          <nav className="hidden items-center gap-7 lg:flex">
+          <nav className="hidden items-center gap-8 lg:flex">
             {LINKS.map((link) => (
               <a
                 key={link.href}
                 href={link.href}
-                className="group relative text-[13px] uppercase tracking-[0.08em] text-ink/70 transition hover:text-ink"
+                className="group relative whitespace-nowrap text-[12px] uppercase tracking-[0.05em] text-ink/70 transition hover:text-ink"
               >
                 {t(link.key)}
                 <span className="absolute -bottom-1 left-0 h-[1px] w-0 bg-gold-deep transition-all duration-300 group-hover:w-full" />
