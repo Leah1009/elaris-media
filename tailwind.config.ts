@@ -6,19 +6,20 @@ const config: Config = {
     extend: {
       colors: {
         cream: {
-          DEFAULT: "#F3E8D6",
-          soft: "#FBF6EA",
-          deep: "#E9DAC0",
+          DEFAULT: "#F6F1E7",
+          soft: "#FDFBF6",
+          deep: "#EADFC8",
         },
         ink: {
-          DEFAULT: "#16130F",
-          soft: "#2A241C",
+          DEFAULT: "#15120D",
+          soft: "#2B2520",
         },
         gold: {
-          DEFAULT: "#B08A54",
-          deep: "#8C6C3A",
-          light: "#D9BE8E",
+          DEFAULT: "#A8824F",
+          deep: "#7D5E34",
+          light: "#CBA876",
         },
+        rule: "rgba(21,18,13,0.12)",
       },
       fontFamily: {
         display: ["var(--font-playfair)", "serif"],

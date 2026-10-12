@@ -6,10 +6,10 @@ import type { DictKey } from "@/lib/i18n/dictionary";
 import LangToggle from "./LangToggle";
 
 const LINKS: { href: string; key: DictKey }[] = [
+  { href: "#about", key: "nav.about" },
   { href: "#services", key: "nav.services" },
   { href: "#dental-billing", key: "nav.dental" },
   { href: "#admin-services", key: "nav.admin" },
-  { href: "#about", key: "nav.about" },
   { href: "#faq", key: "nav.faq" },
   { href: "#contact", key: "nav.contact" },
 ];

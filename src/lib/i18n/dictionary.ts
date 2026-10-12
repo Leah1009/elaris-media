@@ -67,6 +67,10 @@ export const dict = {
     "services.s12.title": "Marketing Strategy",
     "services.s12.body": "A clear roadmap tying every channel together around one growth plan.",
 
+    "specialized.eyebrow": "Specialized For",
+    "specialized.headline": "Built for Practices<br>and Businesses That Run Lean.",
+    "specialized.body": "Two verticals we know in depth — because generic support doesn't cut it in either one.",
+
     "dental.eyebrow": "Dental Billing",
     "dental.headline": "Billing Support Built<br>for Dental Practices.",
     "dental.body": "Behind-the-scenes billing work so your front desk can focus on patients, not paperwork.",
@@ -251,6 +255,10 @@ export const dict = {
     "services.s11.body": "Logos, colores y sistemas visuales que hacen tu negocio instantáneamente reconocible.",
     "services.s12.title": "Estrategia de Marketing",
     "services.s12.body": "Una ruta clara que conecta cada canal alrededor de un plan de crecimiento.",
+
+    "specialized.eyebrow": "Especializados En",
+    "specialized.headline": "Hechos para Consultorios<br>y Negocios que Operan sin Grasa.",
+    "specialized.body": "Dos áreas que conocemos a fondo — porque el soporte genérico no funciona en ninguna de las dos.",
 
     "dental.eyebrow": "Facturación Dental",
     "dental.headline": "Soporte de Facturación<br>para Consultorios Dentales.",

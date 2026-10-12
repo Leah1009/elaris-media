@@ -6,8 +6,7 @@ import AdsAnalyticsSection from "@/components/sections/AdsAnalyticsSection";
 import AboutSection from "@/components/sections/AboutSection";
 import ServicesSection from "@/components/sections/ServicesSection";
 import HowItWorksSection from "@/components/sections/HowItWorksSection";
-import DentalBillingSection from "@/components/sections/DentalBillingSection";
-import AdminServicesSection from "@/components/sections/AdminServicesSection";
+import SpecializedSection from "@/components/sections/SpecializedSection";
 import PortfolioReviewsSection from "@/components/sections/PortfolioReviewsSection";
 import FaqSection from "@/components/sections/FaqSection";
 import ContactSection from "@/components/sections/ContactSection";
@@ -22,12 +21,11 @@ export default function Home() {
           <CinematicHero />
         </div>
 
-        <AdsAnalyticsSection />
         <AboutSection />
         <ServicesSection />
         <HowItWorksSection />
-        <DentalBillingSection />
-        <AdminServicesSection />
+        <SpecializedSection />
+        <AdsAnalyticsSection />
         <PortfolioReviewsSection />
         <FaqSection />
         <ContactSection />

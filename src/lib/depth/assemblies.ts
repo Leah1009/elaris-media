@@ -2,11 +2,11 @@ import type { StaticPart } from "./types";
 import { CAMERA_TO_PHONE } from "@/lib/chapters/cameraToPhone";
 import { PHONE_TO_LAPTOP } from "@/lib/chapters/phoneToLaptop";
 
-const GOLD = "#B08A54";
-const GOLD_DEEP = "#8C6C3A";
-const GOLD_LIGHT = "#D9BE8E";
-const INK = "#16130F";
-const INK_SOFT = "#2A241C";
+const GOLD = "#A8824F";
+const GOLD_DEEP = "#7D5E34";
+const GOLD_LIGHT = "#CBA876";
+const INK = "#15120D";
+const INK_SOFT = "#2B2520";
 
 /**
  * The depth-cinematic hero doesn't morph one shape into the next anymore —
