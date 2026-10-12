@@ -83,14 +83,14 @@ export const dict = {
     "portfolio.headline": "Portfolio.",
     "portfolio.body": "Reels, feeds, branding, websites and campaigns we've built for real clients.",
     "portfolio.pendingT": "Our project gallery is being curated.",
-    "portfolio.pendingS": "We're putting together real work samples from Elaris Media clients. In the meantime, message us on WhatsApp and we'll walk you through examples directly.",
-    "portfolio.pendingCta": "See Examples on WhatsApp",
+    "portfolio.pendingS": "We're putting together real work samples from Elaris Media clients. Check back soon.",
 
     "reviews.eyebrow": "Client Reviews",
     "reviews.headline": "Real People.<br>Real Results.",
     "reviews.body": "Reviews from real Elaris Media clients — published as soon as they're in.",
     "reviews.pendingT": "Client reviews coming soon.",
     "reviews.pendingS": "We only publish testimonials from real clients — nothing invented. Been a client? We'd love your feedback.",
+    "reviews.pendingCta": "Leave Us a Review",
 
     "faq.eyebrow": "Resources",
     "faq.headline": "Frequently Asked<br>Questions.",
@@ -222,14 +222,14 @@ export const dict = {
     "portfolio.headline": "Portafolio.",
     "portfolio.body": "Reels, feeds, branding, sitios web y campañas que hemos creado para clientes reales.",
     "portfolio.pendingT": "Nuestra galería de proyectos está en preparación.",
-    "portfolio.pendingS": "Estamos reuniendo muestras reales de trabajo de clientes de Elaris Media. Mientras tanto, escríbenos por WhatsApp y te mostramos ejemplos directamente.",
-    "portfolio.pendingCta": "Ver Ejemplos por WhatsApp",
+    "portfolio.pendingS": "Estamos reuniendo muestras reales de trabajo de clientes de Elaris Media. Vuelve pronto.",
 
     "reviews.eyebrow": "Reseñas de Clientes",
     "reviews.headline": "Personas Reales.<br>Resultados Reales.",
     "reviews.body": "Reseñas de clientes reales de Elaris Media — publicadas en cuanto las recibimos.",
     "reviews.pendingT": "Las reseñas de clientes llegarán pronto.",
     "reviews.pendingS": "Solo publicamos testimonios de clientes reales — nada inventado. ¿Fuiste cliente? Nos encantaría tu opinión.",
+    "reviews.pendingCta": "Déjanos Tu Reseña",
 
     "faq.eyebrow": "Recursos",
     "faq.headline": "Preguntas<br>Frecuentes.",
