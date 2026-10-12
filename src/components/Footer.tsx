@@ -20,8 +20,6 @@ export default function Footer() {
           <div className="text-[11px] uppercase tracking-[0.2em] text-gold-light">{t("footer.quickLinks")}</div>
           <ul className="mt-4 flex flex-col gap-2 text-sm text-cream-soft/70">
             <li><a href="#services" className="hover:text-cream-soft">{t("nav.services")}</a></li>
-            <li><a href="#dental-billing" className="hover:text-cream-soft">{t("nav.dental")}</a></li>
-            <li><a href="#admin-services" className="hover:text-cream-soft">{t("nav.admin")}</a></li>
             <li><a href="#about" className="hover:text-cream-soft">{t("nav.about")}</a></li>
             <li><a href="#faq" className="hover:text-cream-soft">{t("nav.faq")}</a></li>
           </ul>

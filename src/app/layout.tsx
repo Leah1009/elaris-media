@@ -23,9 +23,9 @@ const SITE_URL = "https://www.elarismedia.com";
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
-  title: "Elaris Media — Marketing, Web & Business Support for Small Businesses",
+  title: "Elaris Media — Marketing & Web for Small Businesses",
   description:
-    "Elaris Media helps small businesses grow with strategy, content, web development, Meta & Google Ads, dental billing and administrative support — built around your business and your budget.",
+    "Elaris Media helps small businesses grow with strategy, content, web development and Meta & Google Ads — built around your business and your budget.",
   keywords: [
     "marketing agency Miami",
     "small business marketing",
@@ -33,8 +33,6 @@ export const metadata: Metadata = {
     "Meta ads",
     "Google ads",
     "web development",
-    "dental billing services",
-    "administrative support",
     "Elaris Media",
   ],
   alternates: { canonical: SITE_URL },
@@ -45,13 +43,13 @@ export const metadata: Metadata = {
     siteName: "Elaris Media",
     title: "Elaris Media — Big Brand Presence for Small Business",
     description:
-      "Strategy, content, web development, ads and business support built around your goals, your business and your budget.",
+      "Strategy, content, web development and ads built around your goals, your business and your budget.",
     locale: "en_US",
   },
   twitter: {
     card: "summary_large_image",
     title: "Elaris Media — Big Brand Presence for Small Business",
-    description: "Strategy, content, web development, ads and business support built around your business.",
+    description: "Strategy, content, web development and ads built around your business.",
   },
 };
 
@@ -60,7 +58,7 @@ const jsonLd = {
   "@type": "MarketingAgency",
   name: "Elaris Media",
   description:
-    "Marketing agency helping small businesses grow with strategy, content, web development, digital ads, dental billing and administrative support.",
+    "Marketing agency helping small businesses grow with strategy, content, web development and digital ads.",
   telephone: "+1-786-765-9267",
   email: "elarismediaservices@gmail.com",
   areaServed: "Miami, FL",

@@ -11,8 +11,6 @@ const CHIPS: { key: string; labelKey: DictKey }[] = [
   { key: "web", labelKey: "form.chip.web" },
   { key: "ads", labelKey: "form.chip.ads" },
   { key: "branding", labelKey: "form.chip.branding" },
-  { key: "dental", labelKey: "form.chip.dental" },
-  { key: "admin", labelKey: "form.chip.admin" },
   { key: "notsure", labelKey: "form.chip.notsure" },
 ];
 
