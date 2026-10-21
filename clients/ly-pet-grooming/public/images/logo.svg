@@ -1,0 +1,10 @@
+<!-- PLACEHOLDER — replace with the official L&Y's Pet Grooming logo (logo.svg or logo.png) -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120">
+  <circle cx="60" cy="60" r="58" fill="#FFFFFF"/>
+  <circle cx="60" cy="60" r="52" fill="none" stroke="#D7C0A6" stroke-width="2"/>
+  <text x="60" y="68" text-anchor="middle" font-family="Georgia, serif" font-size="30" fill="#BFA184">L&amp;Y’s</text>
+  <g fill="#E9B9BE">
+    <ellipse cx="60" cy="90" rx="5" ry="4"/>
+    <circle cx="53.5" cy="84" r="2"/><circle cx="58" cy="81.5" r="2"/><circle cx="62" cy="81.5" r="2"/><circle cx="66.5" cy="84" r="2"/>
+  </g>
+</svg>
