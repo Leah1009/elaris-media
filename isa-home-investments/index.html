@@ -265,12 +265,13 @@ nav.primary-nav ul li a:hover::after,nav.primary-nav ul li a.active::after{width
 .hero .container{position:relative;z-index:3;max-width:none;margin:0;padding-left:clamp(24px,5vw,80px);padding-right:32px;}
 .hero-social{position:absolute;right:clamp(24px,5vw,80px);bottom:40px;z-index:4;display:flex;gap:14px;}
 .hero-social a{
-  width:48px;height:48px;border-radius:50%;border:1.5px solid rgba(255,255,255,0.32);
-  display:flex;align-items:center;justify-content:center;color:var(--white);text-decoration:none;
-  transition:transform .3s cubic-bezier(.2,.8,.2,1), border-color .3s ease, background .3s ease;
+  width:48px;height:48px;border-radius:50%;background:var(--white);
+  display:flex;align-items:center;justify-content:center;text-decoration:none;
+  box-shadow:0 8px 18px -10px rgba(0,0,0,0.5);
+  transition:transform .3s cubic-bezier(.2,.8,.2,1), box-shadow .3s ease;
 }
-.hero-social a svg{width:20px;height:20px;}
-.hero-social a:hover{transform:scale(1.08);border-color:var(--white);background:rgba(255,255,255,0.16);}
+.hero-social a svg{width:24px;height:24px;}
+.hero-social a:hover{transform:scale(1.08);box-shadow:0 10px 22px -8px rgba(0,0,0,0.55);}
 @media (max-width:760px){.hero-social{display:none;}}
 .hero-copy{max-width:560px;}
 html.js .hero-copy>*{opacity:0;transform:translateY(18px);animation:heroIn .8s cubic-bezier(.2,.7,.2,1) forwards;}
@@ -328,16 +329,17 @@ html.js .hero-copy>*:nth-child(4){animation-delay:.42s;}
 .ground-up-text p{color:var(--text-on-dark-soft);font-size:17px;line-height:1.8;}
 .ground-up-social{display:flex;justify-content:center;align-items:center;gap:24px;margin-top:52px;flex-wrap:wrap;}
 .ground-up-social a{
-  width:66px;height:66px;border-radius:50%;border:1.5px solid rgba(255,255,255,0.28);
-  display:flex;align-items:center;justify-content:center;color:var(--white);text-decoration:none;
-  transition:transform .3s cubic-bezier(.2,.8,.2,1), border-color .3s ease, background .3s ease;
+  width:66px;height:66px;border-radius:50%;background:var(--white);
+  display:flex;align-items:center;justify-content:center;text-decoration:none;
+  box-shadow:0 10px 22px -10px rgba(0,0,0,0.5);
+  transition:transform .3s cubic-bezier(.2,.8,.2,1), box-shadow .3s ease;
 }
-.ground-up-social a svg{width:28px;height:28px;}
-.ground-up-social a:hover{transform:scale(1.08);border-color:var(--white);background:rgba(255,255,255,0.14);}
+.ground-up-social a svg{width:34px;height:34px;}
+.ground-up-social a:hover{transform:scale(1.08);box-shadow:0 12px 26px -8px rgba(0,0,0,0.55);}
 @media (max-width:560px){
   .ground-up-social{gap:16px;margin-top:38px;}
   .ground-up-social a{width:58px;height:58px;}
-  .ground-up-social a svg{width:26px;height:26px;}
+  .ground-up-social a svg{width:30px;height:30px;}
 }
 
 /* ============================================================
@@ -503,8 +505,8 @@ html.js .hero-copy>*:nth-child(4){animation-delay:.42s;}
 .founder{background:var(--white);}
 .founder .container{display:grid;grid-template-columns:0.82fr 1.18fr;gap:74px;align-items:center;}
 .founder-photo{position:relative;}
-.founder-photo .frame{position:relative;aspect-ratio:3/3.9;border-radius:8px;overflow:hidden;background:var(--ink);}
-.founder-photo-frame img,.founder-photo-frame video{width:100%;height:100%;object-fit:cover;display:block;}
+.founder-photo .frame{position:relative;aspect-ratio:3/3.9;border-radius:8px;overflow:hidden;background:var(--paper-2);}
+.founder-photo-frame img,.founder-photo-frame video{width:100%;height:100%;object-fit:contain;display:block;}
 .founder-name{font-family:'Playfair Display',serif;font-size:clamp(32px,4.4vw,48px);font-weight:800;margin-bottom:6px;color:var(--text);}
 .founder-title{display:block;font-family:'Archivo',sans-serif;font-size:12.5px;font-weight:700;letter-spacing:0.16em;text-transform:uppercase;color:var(--steel);margin-bottom:24px;}
 .founder-divider{width:60px;height:2px;background:var(--copper);margin-bottom:28px;}
@@ -598,10 +600,10 @@ html.js .hero-copy>*:nth-child(4){animation-delay:.42s;}
 .social-row{display:flex;gap:10px;margin-top:22px;flex-wrap:wrap;}
 .social-row .soc{
   width:40px;height:40px;border-radius:50%;background:var(--white);display:flex;align-items:center;justify-content:center;
-  color:var(--steel);box-shadow:0 8px 18px -12px rgba(0,0,0,0.3);transition:background .25s ease, color .25s ease, transform .25s ease;
+  box-shadow:0 8px 18px -12px rgba(0,0,0,0.3);transition:transform .25s ease, box-shadow .25s ease;
 }
-.social-row .soc svg{width:17px;height:17px;}
-.social-row .soc:hover{background:var(--ink);color:var(--white);transform:scale(1.08);}
+.social-row .soc svg{width:21px;height:21px;}
+.social-row .soc:hover{transform:scale(1.08);box-shadow:0 10px 22px -10px rgba(0,0,0,0.4);}
 
 .form-card{background:var(--white);border-radius:10px;padding:44px;box-shadow:var(--shadow);}
 .form-card h3{font-size:24px;font-weight:800;margin-bottom:8px;}
@@ -677,9 +679,9 @@ footer .footer-links li{margin-bottom:12px;}
 footer .footer-links a{font-size:14.5px;transition:color .2s ease;}
 footer .footer-links a:hover{color:var(--copper-light);}
 .footer-social{display:flex;gap:10px;margin-top:18px;}
-.footer-social .soc{width:36px;height:36px;border-radius:50%;border:1px solid var(--line-dark);display:flex;align-items:center;justify-content:center;color:var(--text-on-dark-soft);text-decoration:none;transition:border-color .25s ease, background .25s ease, color .25s ease, transform .25s ease;}
-.footer-social .soc svg{width:15px;height:15px;}
-.footer-social .soc:hover{border-color:var(--white);background:var(--white);color:var(--ink);transform:scale(1.08);}
+.footer-social .soc{width:36px;height:36px;border-radius:50%;background:var(--white);display:flex;align-items:center;justify-content:center;text-decoration:none;transition:transform .25s ease, box-shadow .25s ease;}
+.footer-social .soc svg{width:19px;height:19px;}
+.footer-social .soc:hover{transform:scale(1.08);box-shadow:0 8px 18px -8px rgba(0,0,0,0.4);}
 .footer-bottom{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:14px;padding:26px 0;font-size:13px;}
 .footer-bottom .legal-links{display:flex;gap:22px;}
 .footer-bottom .legal-links button{font-size:13px;color:var(--text-on-dark-soft);transition:color .2s ease;}
@@ -783,18 +785,18 @@ footer .footer-links a:hover{color:var(--copper-light);}
   </div>
   <div class="hero-social">
     <a href="https://www.instagram.com/isa_home_investments/" target="_blank" rel="noopener noreferrer" data-i18n-attr="aria-label:follow.instagram" aria-label="Instagram">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
+      <svg viewBox="0 0 24 24"><defs><linearGradient id="igGrad1" x1="2" y1="22" x2="22" y2="2" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#FFDD55"/><stop offset=".5" stop-color="#E1306C"/><stop offset="1" stop-color="#5851DB"/></linearGradient></defs><rect x="2" y="2" width="20" height="20" rx="6" fill="url(#igGrad1)"/><rect x="7.2" y="7.2" width="9.6" height="9.6" rx="3" fill="none" stroke="#fff" stroke-width="1.6"/><circle cx="12" cy="12" r="2.8" fill="none" stroke="#fff" stroke-width="1.6"/><circle cx="17" cy="7" r="1.1" fill="#fff"/></svg>
     </a>
     <!-- TODO: replace href="#" with the real Facebook page URL -->
     <a href="#" target="_blank" rel="noopener noreferrer" data-i18n-attr="aria-label:follow.facebook" aria-label="Facebook">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M14 9h3V6h-3a3 3 0 0 0-3 3v2H9v3h2v6h3v-6h3l1-3h-4V9a1 1 0 0 1 1-1Z"/></svg>
+      <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="11" fill="#1877F2"/><path d="M15.5 12.2h-2.2V20h-3.1v-7.8H8.6V9.6h1.6V7.9c0-2 .9-3.3 3.4-3.3h2.1v2.7h-1.3c-1 0-1.1.4-1.1 1.1v1.2h2.4l-.3 2.6Z" fill="#fff"/></svg>
     </a>
     <!-- TODO: replace href="#" with the real TikTok profile URL -->
     <a href="#" target="_blank" rel="noopener noreferrer" data-i18n-attr="aria-label:follow.tiktok" aria-label="TikTok">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M14 3.5v11a3.5 3.5 0 1 1-2.8-3.43"/><path d="M14 3.5c.4 2.5 2.1 4.2 4.5 4.6v2.6c-1.7-.1-3.2-.7-4.5-1.7"/></svg>
+      <svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="6" fill="#000"/><path d="M14.6 6.1c.4 1.9 1.6 3.1 3.5 3.4v2.1c-1.3-.1-2.5-.5-3.5-1.3v4.9a4.35 4.35 0 1 1-4.35-4.35c.2 0 .4 0 .6.1v2.15a2.1 2.1 0 1 0 1.55 2.03V5.4h2.2v.7Z" fill="#25F4EE"/><path d="M14.2 5.7c.4 1.9 1.6 3.1 3.5 3.4v2.1c-1.3-.1-2.5-.5-3.5-1.3v4.9a4.35 4.35 0 1 1-4.35-4.35c.2 0 .4 0 .6.1v2.15a2.1 2.1 0 1 0 1.55 2.03V5h2.2v.7Z" fill="#FE2C55"/><path d="M14.4 5.9c.4 1.9 1.6 3.1 3.5 3.4v2.1c-1.3-.1-2.5-.5-3.5-1.3v4.9a4.35 4.35 0 1 1-4.35-4.35c.2 0 .4 0 .6.1v2.15a2.1 2.1 0 1 0 1.55 2.03V5.2h2.2v.7Z" fill="#fff"/></svg>
     </a>
     <a href="https://wa.me/18134018001" target="_blank" rel="noopener noreferrer" data-i18n-attr="aria-label:follow.whatsapp" aria-label="WhatsApp">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 3a9 9 0 0 0-7.8 13.5L3 21l4.7-1.2A9 9 0 1 0 12 3Z"/><path d="M8.5 8.8c.3-.7.6-.7.9-.7h.6c.2 0 .4 0 .6.5l.7 1.6c.1.3 0 .5-.1.7l-.5.6c-.1.2-.1.3 0 .5.4.7 1.5 1.9 2.9 2.4.2.1.4.1.5-.1l.6-.7c.2-.2.4-.2.6-.1l1.5.8c.2.1.3.3.3.5 0 .8-.9 1.6-1.7 1.6-1.9 0-4.9-1.6-6.1-4.7-.2-.6-.3-1.1-.3-1.5 0-.6.2-1 .5-1.4Z" fill="currentColor" stroke="none"/></svg>
+      <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="11" fill="#25D366"/><path d="M12 5.8a6.2 6.2 0 0 0-5.3 9.4l-.9 3.1 3.2-.9A6.2 6.2 0 1 0 12 5.8Zm3.6 8.8c-.1.4-.8.8-1.1.8-.3 0-.6.1-2-.5-1.7-.7-2.8-2.4-2.9-2.5-.1-.1-.7-.9-.7-1.8 0-.8.4-1.3.6-1.4.2-.2.4-.2.5-.2h.4c.1 0 .3 0 .5.4l.6 1.4c.1.1.1.3 0 .4l-.3.4c-.1.1-.2.2-.1.4.2.3.6.9 1.2 1.4.7.6 1.2.8 1.4.9.2.1.3 0 .4-.1l.5-.6c.2-.2.3-.2.5-.1l1.3.6c.1.1.2.1.3.2.1.2.1.6-.1.9Z" fill="#fff"/></svg>
     </a>
   </div>
 </section>
@@ -840,18 +842,18 @@ footer .footer-links a:hover{color:var(--copper-light);}
     </div>
     <div class="ground-up-social reveal reveal-delay-1">
       <a href="https://www.instagram.com/isa_home_investments/" target="_blank" rel="noopener noreferrer" data-i18n-attr="aria-label:follow.instagram" aria-label="Instagram">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
+        <svg viewBox="0 0 24 24"><defs><linearGradient id="igGrad2" x1="2" y1="22" x2="22" y2="2" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#FFDD55"/><stop offset=".5" stop-color="#E1306C"/><stop offset="1" stop-color="#5851DB"/></linearGradient></defs><rect x="2" y="2" width="20" height="20" rx="6" fill="url(#igGrad2)"/><rect x="7.2" y="7.2" width="9.6" height="9.6" rx="3" fill="none" stroke="#fff" stroke-width="1.6"/><circle cx="12" cy="12" r="2.8" fill="none" stroke="#fff" stroke-width="1.6"/><circle cx="17" cy="7" r="1.1" fill="#fff"/></svg>
       </a>
       <!-- TODO: replace href="#" with the real Facebook page URL -->
       <a href="#" target="_blank" rel="noopener noreferrer" data-i18n-attr="aria-label:follow.facebook" aria-label="Facebook">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M14 9h3V6h-3a3 3 0 0 0-3 3v2H9v3h2v6h3v-6h3l1-3h-4V9a1 1 0 0 1 1-1Z"/></svg>
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="11" fill="#1877F2"/><path d="M15.5 12.2h-2.2V20h-3.1v-7.8H8.6V9.6h1.6V7.9c0-2 .9-3.3 3.4-3.3h2.1v2.7h-1.3c-1 0-1.1.4-1.1 1.1v1.2h2.4l-.3 2.6Z" fill="#fff"/></svg>
       </a>
       <!-- TODO: replace href="#" with the real TikTok profile URL -->
       <a href="#" target="_blank" rel="noopener noreferrer" data-i18n-attr="aria-label:follow.tiktok" aria-label="TikTok">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M14 3.5v11a3.5 3.5 0 1 1-2.8-3.43"/><path d="M14 3.5c.4 2.5 2.1 4.2 4.5 4.6v2.6c-1.7-.1-3.2-.7-4.5-1.7"/></svg>
+        <svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="6" fill="#000"/><path d="M14.6 6.1c.4 1.9 1.6 3.1 3.5 3.4v2.1c-1.3-.1-2.5-.5-3.5-1.3v4.9a4.35 4.35 0 1 1-4.35-4.35c.2 0 .4 0 .6.1v2.15a2.1 2.1 0 1 0 1.55 2.03V5.4h2.2v.7Z" fill="#25F4EE"/><path d="M14.2 5.7c.4 1.9 1.6 3.1 3.5 3.4v2.1c-1.3-.1-2.5-.5-3.5-1.3v4.9a4.35 4.35 0 1 1-4.35-4.35c.2 0 .4 0 .6.1v2.15a2.1 2.1 0 1 0 1.55 2.03V5h2.2v.7Z" fill="#FE2C55"/><path d="M14.4 5.9c.4 1.9 1.6 3.1 3.5 3.4v2.1c-1.3-.1-2.5-.5-3.5-1.3v4.9a4.35 4.35 0 1 1-4.35-4.35c.2 0 .4 0 .6.1v2.15a2.1 2.1 0 1 0 1.55 2.03V5.2h2.2v.7Z" fill="#fff"/></svg>
       </a>
       <a href="https://wa.me/18134018001" target="_blank" rel="noopener noreferrer" data-i18n-attr="aria-label:follow.whatsapp" aria-label="WhatsApp">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 3a9 9 0 0 0-7.8 13.5L3 21l4.7-1.2A9 9 0 1 0 12 3Z"/><path d="M8.5 8.8c.3-.7.6-.7.9-.7h.6c.2 0 .4 0 .6.5l.7 1.6c.1.3 0 .5-.1.7l-.5.6c-.1.2-.1.3 0 .5.4.7 1.5 1.9 2.9 2.4.2.1.4.1.5-.1l.6-.7c.2-.2.4-.2.6-.1l1.5.8c.2.1.3.3.3.5 0 .8-.9 1.6-1.7 1.6-1.9 0-4.9-1.6-6.1-4.7-.2-.6-.3-1.1-.3-1.5 0-.6.2-1 .5-1.4Z" fill="currentColor" stroke="none"/></svg>
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="11" fill="#25D366"/><path d="M12 5.8a6.2 6.2 0 0 0-5.3 9.4l-.9 3.1 3.2-.9A6.2 6.2 0 1 0 12 5.8Zm3.6 8.8c-.1.4-.8.8-1.1.8-.3 0-.6.1-2-.5-1.7-.7-2.8-2.4-2.9-2.5-.1-.1-.7-.9-.7-1.8 0-.8.4-1.3.6-1.4.2-.2.4-.2.5-.2h.4c.1 0 .3 0 .5.4l.6 1.4c.1.1.1.3 0 .4l-.3.4c-.1.1-.2.2-.1.4.2.3.6.9 1.2 1.4.7.6 1.2.8 1.4.9.2.1.3 0 .4-.1l.5-.6c.2-.2.3-.2.5-.1l1.3.6c.1.1.2.1.3.2.1.2.1.6-.1.9Z" fill="#fff"/></svg>
       </a>
     </div>
   </div>
@@ -1234,12 +1236,12 @@ footer .footer-links a:hover{color:var(--copper-light);}
       </div>
       <h3 style="margin-top:26px;" data-i18n="contact.followUs">Follow Us</h3>
       <div class="social-row">
-        <a class="soc" href="https://www.instagram.com/isa_home_investments/" target="_blank" rel="noopener noreferrer" data-i18n-attr="aria-label:follow.instagram|title:follow.instagram" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg></a>
+        <a class="soc" href="https://www.instagram.com/isa_home_investments/" target="_blank" rel="noopener noreferrer" data-i18n-attr="aria-label:follow.instagram|title:follow.instagram" aria-label="Instagram"><svg viewBox="0 0 24 24"><defs><linearGradient id="igGrad3" x1="2" y1="22" x2="22" y2="2" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#FFDD55"/><stop offset=".5" stop-color="#E1306C"/><stop offset="1" stop-color="#5851DB"/></linearGradient></defs><rect x="2" y="2" width="20" height="20" rx="6" fill="url(#igGrad3)"/><rect x="7.2" y="7.2" width="9.6" height="9.6" rx="3" fill="none" stroke="#fff" stroke-width="1.6"/><circle cx="12" cy="12" r="2.8" fill="none" stroke="#fff" stroke-width="1.6"/><circle cx="17" cy="7" r="1.1" fill="#fff"/></svg></a>
         <!-- TODO: replace href="#" with the real Facebook page URL -->
-        <a class="soc" href="#" target="_blank" rel="noopener noreferrer" data-i18n-attr="aria-label:follow.facebook|title:follow.facebook" aria-label="Facebook"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M14 9h3V6h-3a3 3 0 0 0-3 3v2H9v3h2v6h3v-6h3l1-3h-4V9a1 1 0 0 1 1-1Z"/></svg></a>
+        <a class="soc" href="#" target="_blank" rel="noopener noreferrer" data-i18n-attr="aria-label:follow.facebook|title:follow.facebook" aria-label="Facebook"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="11" fill="#1877F2"/><path d="M15.5 12.2h-2.2V20h-3.1v-7.8H8.6V9.6h1.6V7.9c0-2 .9-3.3 3.4-3.3h2.1v2.7h-1.3c-1 0-1.1.4-1.1 1.1v1.2h2.4l-.3 2.6Z" fill="#fff"/></svg></a>
         <!-- TODO: replace href="#" with the real TikTok profile URL -->
-        <a class="soc" href="#" target="_blank" rel="noopener noreferrer" data-i18n-attr="aria-label:follow.tiktok|title:follow.tiktok" aria-label="TikTok"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M14 3.5v11a3.5 3.5 0 1 1-2.8-3.43"/><path d="M14 3.5c.4 2.5 2.1 4.2 4.5 4.6v2.6c-1.7-.1-3.2-.7-4.5-1.7"/></svg></a>
-        <a class="soc" href="https://wa.me/18134018001" target="_blank" rel="noopener noreferrer" data-i18n-attr="aria-label:follow.whatsapp|title:follow.whatsapp" aria-label="WhatsApp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M12 3a9 9 0 0 0-7.8 13.5L3 21l4.7-1.2A9 9 0 1 0 12 3Z"/><path d="M8.5 8.8c.3-.7.6-.7.9-.7h.6c.2 0 .4 0 .6.5l.7 1.6c.1.3 0 .5-.1.7l-.5.6c-.1.2-.1.3 0 .5.4.7 1.5 1.9 2.9 2.4.2.1.4.1.5-.1l.6-.7c.2-.2.4-.2.6-.1l1.5.8c.2.1.3.3.3.5 0 .8-.9 1.6-1.7 1.6-1.9 0-4.9-1.6-6.1-4.7-.2-.6-.3-1.1-.3-1.5 0-.6.2-1 .5-1.4Z" fill="currentColor" stroke="none"/></svg></a>
+        <a class="soc" href="#" target="_blank" rel="noopener noreferrer" data-i18n-attr="aria-label:follow.tiktok|title:follow.tiktok" aria-label="TikTok"><svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="6" fill="#000"/><path d="M14.6 6.1c.4 1.9 1.6 3.1 3.5 3.4v2.1c-1.3-.1-2.5-.5-3.5-1.3v4.9a4.35 4.35 0 1 1-4.35-4.35c.2 0 .4 0 .6.1v2.15a2.1 2.1 0 1 0 1.55 2.03V5.4h2.2v.7Z" fill="#25F4EE"/><path d="M14.2 5.7c.4 1.9 1.6 3.1 3.5 3.4v2.1c-1.3-.1-2.5-.5-3.5-1.3v4.9a4.35 4.35 0 1 1-4.35-4.35c.2 0 .4 0 .6.1v2.15a2.1 2.1 0 1 0 1.55 2.03V5h2.2v.7Z" fill="#FE2C55"/><path d="M14.4 5.9c.4 1.9 1.6 3.1 3.5 3.4v2.1c-1.3-.1-2.5-.5-3.5-1.3v4.9a4.35 4.35 0 1 1-4.35-4.35c.2 0 .4 0 .6.1v2.15a2.1 2.1 0 1 0 1.55 2.03V5.2h2.2v.7Z" fill="#fff"/></svg></a>
+        <a class="soc" href="https://wa.me/18134018001" target="_blank" rel="noopener noreferrer" data-i18n-attr="aria-label:follow.whatsapp|title:follow.whatsapp" aria-label="WhatsApp"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="11" fill="#25D366"/><path d="M12 5.8a6.2 6.2 0 0 0-5.3 9.4l-.9 3.1 3.2-.9A6.2 6.2 0 1 0 12 5.8Zm3.6 8.8c-.1.4-.8.8-1.1.8-.3 0-.6.1-2-.5-1.7-.7-2.8-2.4-2.9-2.5-.1-.1-.7-.9-.7-1.8 0-.8.4-1.3.6-1.4.2-.2.4-.2.5-.2h.4c.1 0 .3 0 .5.4l.6 1.4c.1.1.1.3 0 .4l-.3.4c-.1.1-.2.2-.1.4.2.3.6.9 1.2 1.4.7.6 1.2.8 1.4.9.2.1.3 0 .4-.1l.5-.6c.2-.2.3-.2.5-.1l1.3.6c.1.1.2.1.3.2.1.2.1.6-.1.9Z" fill="#fff"/></svg></a>
       </div>
     </div>
 
@@ -1374,12 +1376,12 @@ footer .footer-links a:hover{color:var(--copper-light);}
         </a>
         <p data-i18n="footer.tagline">Professional construction, renovation and remodeling services for homeowners — from the first consultation to the final walkthrough.</p>
         <div class="footer-social">
-          <a class="soc" href="https://www.instagram.com/isa_home_investments/" target="_blank" rel="noopener noreferrer" data-i18n-attr="title:follow.instagram|aria-label:follow.instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg></a>
+          <a class="soc" href="https://www.instagram.com/isa_home_investments/" target="_blank" rel="noopener noreferrer" data-i18n-attr="title:follow.instagram|aria-label:follow.instagram"><svg viewBox="0 0 24 24"><defs><linearGradient id="igGrad4" x1="2" y1="22" x2="22" y2="2" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#FFDD55"/><stop offset=".5" stop-color="#E1306C"/><stop offset="1" stop-color="#5851DB"/></linearGradient></defs><rect x="2" y="2" width="20" height="20" rx="6" fill="url(#igGrad4)"/><rect x="7.2" y="7.2" width="9.6" height="9.6" rx="3" fill="none" stroke="#fff" stroke-width="1.6"/><circle cx="12" cy="12" r="2.8" fill="none" stroke="#fff" stroke-width="1.6"/><circle cx="17" cy="7" r="1.1" fill="#fff"/></svg></a>
           <!-- TODO: replace href="#" with the real Facebook page URL -->
-          <a class="soc" href="#" target="_blank" rel="noopener noreferrer" data-i18n-attr="title:follow.facebook|aria-label:follow.facebook"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M14 9h3V6h-3a3 3 0 0 0-3 3v2H9v3h2v6h3v-6h3l1-3h-4V9a1 1 0 0 1 1-1Z"/></svg></a>
+          <a class="soc" href="#" target="_blank" rel="noopener noreferrer" data-i18n-attr="title:follow.facebook|aria-label:follow.facebook"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="11" fill="#1877F2"/><path d="M15.5 12.2h-2.2V20h-3.1v-7.8H8.6V9.6h1.6V7.9c0-2 .9-3.3 3.4-3.3h2.1v2.7h-1.3c-1 0-1.1.4-1.1 1.1v1.2h2.4l-.3 2.6Z" fill="#fff"/></svg></a>
           <!-- TODO: replace href="#" with the real TikTok profile URL -->
-          <a class="soc" href="#" target="_blank" rel="noopener noreferrer" data-i18n-attr="title:follow.tiktok|aria-label:follow.tiktok"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M14 3.5v11a3.5 3.5 0 1 1-2.8-3.43"/><path d="M14 3.5c.4 2.5 2.1 4.2 4.5 4.6v2.6c-1.7-.1-3.2-.7-4.5-1.7"/></svg></a>
-          <a class="soc" href="https://wa.me/18134018001" target="_blank" rel="noopener noreferrer" data-i18n-attr="title:follow.whatsapp|aria-label:follow.whatsapp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M12 3a9 9 0 0 0-7.8 13.5L3 21l4.7-1.2A9 9 0 1 0 12 3Z"/><path d="M8.5 8.8c.3-.7.6-.7.9-.7h.6c.2 0 .4 0 .6.5l.7 1.6c.1.3 0 .5-.1.7l-.5.6c-.1.2-.1.3 0 .5.4.7 1.5 1.9 2.9 2.4.2.1.4.1.5-.1l.6-.7c.2-.2.4-.2.6-.1l1.5.8c.2.1.3.3.3.5 0 .8-.9 1.6-1.7 1.6-1.9 0-4.9-1.6-6.1-4.7-.2-.6-.3-1.1-.3-1.5 0-.6.2-1 .5-1.4Z" fill="currentColor" stroke="none"/></svg></a>
+          <a class="soc" href="#" target="_blank" rel="noopener noreferrer" data-i18n-attr="title:follow.tiktok|aria-label:follow.tiktok"><svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="6" fill="#000"/><path d="M14.6 6.1c.4 1.9 1.6 3.1 3.5 3.4v2.1c-1.3-.1-2.5-.5-3.5-1.3v4.9a4.35 4.35 0 1 1-4.35-4.35c.2 0 .4 0 .6.1v2.15a2.1 2.1 0 1 0 1.55 2.03V5.4h2.2v.7Z" fill="#25F4EE"/><path d="M14.2 5.7c.4 1.9 1.6 3.1 3.5 3.4v2.1c-1.3-.1-2.5-.5-3.5-1.3v4.9a4.35 4.35 0 1 1-4.35-4.35c.2 0 .4 0 .6.1v2.15a2.1 2.1 0 1 0 1.55 2.03V5h2.2v.7Z" fill="#FE2C55"/><path d="M14.4 5.9c.4 1.9 1.6 3.1 3.5 3.4v2.1c-1.3-.1-2.5-.5-3.5-1.3v4.9a4.35 4.35 0 1 1-4.35-4.35c.2 0 .4 0 .6.1v2.15a2.1 2.1 0 1 0 1.55 2.03V5.2h2.2v.7Z" fill="#fff"/></svg></a>
+          <a class="soc" href="https://wa.me/18134018001" target="_blank" rel="noopener noreferrer" data-i18n-attr="title:follow.whatsapp|aria-label:follow.whatsapp"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="11" fill="#25D366"/><path d="M12 5.8a6.2 6.2 0 0 0-5.3 9.4l-.9 3.1 3.2-.9A6.2 6.2 0 1 0 12 5.8Zm3.6 8.8c-.1.4-.8.8-1.1.8-.3 0-.6.1-2-.5-1.7-.7-2.8-2.4-2.9-2.5-.1-.1-.7-.9-.7-1.8 0-.8.4-1.3.6-1.4.2-.2.4-.2.5-.2h.4c.1 0 .3 0 .5.4l.6 1.4c.1.1.1.3 0 .4l-.3.4c-.1.1-.2.2-.1.4.2.3.6.9 1.2 1.4.7.6 1.2.8 1.4.9.2.1.3 0 .4-.1l.5-.6c.2-.2.3-.2.5-.1l1.3.6c.1.1.2.1.3.2.1.2.1.6-.1.9Z" fill="#fff"/></svg></a>
         </div>
       </div>
       <div>
