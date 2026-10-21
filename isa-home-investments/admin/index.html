@@ -404,6 +404,29 @@ document.getElementById('logoutBtn').addEventListener('click', async () => {
   window.location.href = '/admin/login';
 });
 
+// Auto logout after an hour with no activity in the tab (mouse, keyboard,
+// scroll or touch). Starts only once a valid admin session is confirmed
+// below, and every listener is passive so it never slows the page down.
+const INACTIVITY_LIMIT_MS = 60 * 60 * 1000;
+let inactivityTimer = null;
+
+async function handleInactivityLogout(){
+  if(supabaseClient) await supabaseClient.auth.signOut();
+  window.location.href = '/admin/login?reason=inactivity';
+}
+
+function resetInactivityTimer(){
+  if(inactivityTimer) clearTimeout(inactivityTimer);
+  inactivityTimer = setTimeout(handleInactivityLogout, INACTIVITY_LIMIT_MS);
+}
+
+function startInactivityWatch(){
+  ['mousemove', 'mousedown', 'keydown', 'scroll', 'touchstart'].forEach(evt => {
+    document.addEventListener(evt, resetInactivityTimer, { passive: true });
+  });
+  resetInactivityTimer();
+}
+
 (async function init(){
   if(!supabaseClient){
     document.getElementById('loadingState').textContent = 'Could not load required scripts. Please check your connection and refresh the page.';
@@ -416,6 +439,7 @@ document.getElementById('logoutBtn').addEventListener('click', async () => {
   supabaseClient.auth.onAuthStateChange((event) => {
     if(event === 'SIGNED_OUT') window.location.replace('/admin/login');
   });
+  startInactivityWatch();
 
   try{
     const { data, error } = await supabaseClient

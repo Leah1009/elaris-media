@@ -195,6 +195,11 @@ p{margin:0;}
   border-radius:4px;padding:10px 12px;display:none;
 }
 .login-success.show{display:block;}
+.login-info{
+  margin-bottom:16px;font-size:12.5px;color:var(--steel);background:var(--paper-2);
+  border-radius:4px;padding:10px 12px;display:none;
+}
+.login-info.show{display:block;}
 
 @media (max-width:600px){
   .admin-topbar{padding:14px 16px;}

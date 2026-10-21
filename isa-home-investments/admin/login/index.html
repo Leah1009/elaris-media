@@ -30,6 +30,7 @@
       <a href="/admin/forgot-password" class="login-forgot-link">Forgot your password?</a>
       <button type="submit" class="btn btn-primary login-submit" id="loginBtn">Log In</button>
     </form>
+    <div class="login-info" id="loginInfo">You were logged out after an hour of inactivity. Please log in again.</div>
     <div class="login-error" id="loginError"></div>
   </div>
 </div>
@@ -41,10 +42,15 @@ const loginCard = document.getElementById('loginCard');
 const loginForm = document.getElementById('loginForm');
 const loginBtn = document.getElementById('loginBtn');
 const loginError = document.getElementById('loginError');
+const loginInfo = document.getElementById('loginInfo');
 
 function showError(msg){
   loginError.textContent = msg;
   loginError.classList.add('show');
+}
+
+if(new URLSearchParams(window.location.search).get('reason') === 'inactivity'){
+  loginInfo.classList.add('show');
 }
 
 (async function init(){
@@ -55,7 +61,8 @@ function showError(msg){
     return;
   }
   // Already signed in as the admin? Skip straight to the dashboard instead
-  // of flashing a login form.
+  // of flashing a login form. (The auto-logout-on-inactivity flow always
+  // signs out before redirecting here, so this never fights that redirect.)
   const { data: { session } } = await supabaseClient.auth.getSession();
   if(session && session.user && session.user.email === ADMIN_EMAIL){
     window.location.replace('/admin');
