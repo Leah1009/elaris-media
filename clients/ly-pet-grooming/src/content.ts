@@ -4,38 +4,32 @@
  * ─────────────────────────────────────────────────────────────
  *
  *  Edit texts, phone, WhatsApp, hours, reviews and social links here.
- *  Nothing else in the project needs to change for day-to-day updates.
  *
  *  PHOTOS
- *  Put photos in /public/images and reference them as "/images/file.jpg".
- *  The easiest way: replace the placeholder files keeping the SAME name
- *  (e.g. overwrite /public/images/about.jpg with your own about.jpg).
- *  Recommended: JPG or WebP, ~1600px on the long side, under 350 KB each.
+ *  Photos live in /public/images. The easiest way to update them is to
+ *  overwrite the placeholder file keeping the SAME name
+ *  (e.g. replace /public/images/hero.jpg with your own hero.jpg).
+ *  Use JPG or WebP, around 1600px on the long side, under 350 KB each.
  *
  *  Anything marked  ⚠️ PLACEHOLDER  must be replaced before launch.
  */
 
-export type ServiceObject = "bottle" | "scissors" | "comb" | "trio" | "scissors-closed" | "bottle-tilt";
-
 export const site = {
   name: "L&Y's Pet Grooming",
-  shortName: "L&Y's",
-  // ⚠️ PLACEHOLDER — final domain, used for SEO (sitemap, social previews).
+  // ⚠️ PLACEHOLDER — final domain, used for SEO and social previews.
   url: "https://www.example.com",
   description:
-    "Boutique pet grooming with personalized care — bath & brush, full grooming, haircut & styling, nail care, deshedding and ear cleaning.",
-  // Official logo. Replace /public/images/logo.svg (or point to logo.png).
+    "Premium pet grooming with personalized care — bath & brush, full grooming, haircut & styling, deshedding, nail care and ear cleaning.",
+  // Official logo. Replace /public/images/logo.svg (or point this to /images/logo.png).
   logo: "/images/logo.svg",
-  // Show the business name as text next to the logo in the header.
-  showWordmark: true,
 };
 
 export const contact = {
-  // ⚠️ PLACEHOLDER — shown on the page exactly as written here.
+  // ⚠️ PLACEHOLDER — shown on the page exactly as written.
   phoneDisplay: "(555) 000-0000",
   // ⚠️ PLACEHOLDER — digits only, with country code (1 = US).
   phoneDigits: "15550000000",
-  // ⚠️ PLACEHOLDER — digits only, with country code. Can be the same as phone.
+  // ⚠️ PLACEHOLDER — digits only, with country code.
   whatsappDigits: "15550000000",
   whatsappMessage: "Hi L&Y's! I'd like to book a grooming appointment for my pet.",
   // ⚠️ PLACEHOLDER
@@ -44,7 +38,7 @@ export const contact = {
   serviceArea: "Your City & surrounding areas",
   // ⚠️ PLACEHOLDER
   hours: [
-    { days: "Monday – Friday", time: "9:00 AM – 6:00 PM" },
+    { days: "Mon – Fri", time: "9:00 AM – 6:00 PM" },
     { days: "Saturday", time: "9:00 AM – 3:00 PM" },
     { days: "Sunday", time: "Closed" },
   ],
@@ -52,10 +46,11 @@ export const contact = {
   instagram: "https://instagram.com/",
   instagramHandle: "@lyspetgrooming",
   facebook: "https://facebook.com/",
+  facebookName: "L&Y's Pet Grooming",
   /**
-   * "Book Appointment" button destination.
-   * Leave empty ("") to open WhatsApp with the message above.
-   * Or paste a booking link (Square, Calendly, MoeGo, etc.).
+   * Where every "Book" button goes.
+   * Empty ("") = opens WhatsApp with the message above.
+   * Or paste a booking link (Square, MoeGo, Calendly…).
    */
   bookingUrl: "",
 };
@@ -63,166 +58,120 @@ export const contact = {
 export const nav = [
   { label: "Home", href: "#top" },
   { label: "Services", href: "#services" },
+  { label: "Gallery", href: "#gallery" },
   { label: "About", href: "#about" },
-  { label: "Our Work", href: "#work" },
   { label: "Reviews", href: "#reviews" },
   { label: "Contact", href: "#contact" },
 ];
 
 export const hero = {
-  eyebrow: "Boutique Pet Grooming",
-  titleLine1: "Professional Grooming.",
-  titleLine2: "Thoughtful Care.",
-  text: "A personalized grooming experience designed around your pet’s comfort, coat and individual needs.",
+  title: "Premium Grooming.",
+  titleAccent: "Personalized Care.",
+  text: "Professional grooming tailored to your pet’s coat, comfort and individual needs.",
   primaryCta: "Book an Appointment",
-  secondaryCta: "Explore Services",
+  secondaryCta: "View Services",
+  trust: ["Gentle Care", "Professional Grooming", "Personalized Attention"],
+  // The most important photo of the site: a freshly groomed dog, bright,
+  // beige/ivory setting. Vertical, 1400 × 1750 px.
+  image: "/images/hero.jpg",
+  imageAlt: "Freshly groomed dog at L&Y’s Pet Grooming",
+};
+
+/**
+ * Results — 3 or 4 of your BEST transformations.
+ * With `before` + `after` it shows a side-by-side comparison.
+ * With only `after` it shows a single finished photo.
+ * Vertical photos, 1000 × 1250 px, same framing for before & after.
+ */
+export const results = {
+  title: "Beautiful Results. Happy Pets.",
+  items: [
+    { before: "/images/result-1-before.jpg", after: "/images/result-1-after.jpg", label: "Full Grooming" },
+    { before: "/images/result-2-before.jpg", after: "/images/result-2-after.jpg", label: "Haircut & Styling" },
+    { before: "/images/result-3-before.jpg", after: "/images/result-3-after.jpg", label: "Bath & Deshedding" },
+  ] as { before?: string; after: string; label: string }[],
 };
 
 export const services = {
-  eyebrow: "Services",
-  title: "Every groom, tailored.",
-  intro: "Each visit is shaped around your pet’s coat, temperament and routine — never a one-size-fits-all appointment.",
-  /**
-   * `object` decides which 3D tool takes the spotlight while the service is active:
-   *  bottle · bottle-tilt · scissors · scissors-closed · comb · trio (all three)
-   */
+  title: "Grooming Services",
+  intro: "Every service is adapted to your pet’s breed, coat and comfort.",
+  // Small round photos, square 400 × 400 px.
   items: [
-    {
-      title: "Bath & Brush",
-      text: "A gentle bath with coat-appropriate products, a thorough blow-dry and a careful brush-out for a soft, fresh finish.",
-      object: "bottle",
-    },
-    {
-      title: "Full Grooming",
-      text: "The complete experience: bath, brush, haircut, nails and ears — finished with care and attention to every detail.",
-      object: "trio",
-    },
-    {
-      title: "Haircut & Styling",
-      text: "Breed-standard or custom styles, cut with precision and adapted to your pet’s lifestyle and comfort.",
-      object: "scissors",
-    },
-    {
-      title: "Nail Care",
-      text: "Calm, careful trimming and smoothing to keep paws comfortable and healthy between visits.",
-      object: "scissors-closed",
-    },
-    {
-      title: "Deshedding",
-      text: "Targeted detangling and undercoat removal that reduces shedding and leaves the coat light and manageable.",
-      object: "comb",
-    },
-    {
-      title: "Ear Cleaning",
-      text: "Gentle cleaning to keep ears fresh and comfortable, done patiently as part of every routine.",
-      object: "bottle-tilt",
-    },
-  ] satisfies { title: string; text: string; object: ServiceObject }[],
-};
-
-export const about = {
-  eyebrow: "About",
-  title: "Care Beyond the Groom",
-  paragraphs: [
-    "At L&Y’s, grooming is more than a haircut. We take the time to understand each pet — their coat, their comfort and the pace that feels right for them.",
-    "Every appointment is calm, patient and unhurried, with careful attention to the small details that make a pet look and feel their best.",
+    { name: "Bath & Brush", text: "Gentle bath, blow-dry and a soft, thorough brush-out.", image: "/images/service-bath.jpg" },
+    { name: "Full Grooming", text: "The complete experience: bath, haircut, nails and ears.", image: "/images/service-full.jpg" },
+    { name: "Haircut & Styling", text: "Breed-standard or custom cuts, finished with precision.", image: "/images/service-haircut.jpg" },
+    { name: "Deshedding", text: "Undercoat removal for a lighter, healthier coat.", image: "/images/service-deshedding.jpg" },
+    { name: "Nail Care", text: "Careful trimming and smoothing for comfortable paws.", image: "/images/service-nails.jpg" },
+    { name: "Ear Cleaning", text: "Gentle cleaning to keep ears fresh and comfortable.", image: "/images/service-ears.jpg" },
   ],
-  signature: "— The L&Y’s Team",
-  // Recommended: vertical photo, 1200 × 1500 px.
-  image: "/images/about.jpg",
-  imageAlt: "Groomer gently brushing a dog at L&Y’s Pet Grooming",
 };
 
 export const why = {
-  eyebrow: "Why L&Y’s",
-  title: "Small details, made with care.",
+  title: "Why Pet Parents Choose L&Y’s",
   points: [
-    {
-      title: "Personalized Care",
-      text: "Every groom is planned around your pet’s coat, temperament and needs.",
-    },
-    {
-      title: "Gentle Approach",
-      text: "Patient, calm handling so each visit feels safe and comfortable.",
-    },
-    {
-      title: "Attention to Detail",
-      text: "Clean lines, soft finishes and the small touches that make the difference.",
-    },
+    { title: "Personalized Care", text: "Every pet is treated according to their individual needs." },
+    { title: "Gentle Approach", text: "Comfort, patience and safety always come first." },
+    { title: "Attention to Detail", text: "We focus on clean, polished and beautiful results." },
   ],
 };
 
-export const work = {
-  eyebrow: "Our Work",
-  title: "Fresh Looks. Happy Pets.",
-  // Before & After — use two photos with the same framing. Recommended 1600 × 1000 px.
-  beforeAfter: {
-    before: "/images/before.jpg",
-    after: "/images/after.jpg",
-    alt: "Before and after a full grooming session",
-    caption: "Full grooming — before & after",
-  },
-  // Gallery — 5 to 8 photos. `shape`: "portrait" | "square" | "landscape".
-  gallery: [
-    { src: "/images/work-01.jpg", alt: "Freshly groomed dog", caption: "Haircut & Styling", shape: "portrait" },
-    { src: "/images/work-02.jpg", alt: "Dog after a bath and brush", caption: "Bath & Brush", shape: "landscape" },
-    { src: "/images/work-03.jpg", alt: "Close-up of a soft, brushed coat", caption: "Deshedding", shape: "square" },
-    { src: "/images/work-04.jpg", alt: "Groomed dog portrait", caption: "Full Grooming", shape: "portrait" },
-    { src: "/images/work-05.jpg", alt: "Neatly styled pet", caption: "Haircut & Styling", shape: "landscape" },
-    { src: "/images/work-06.jpg", alt: "Happy pet after grooming", caption: "Full Grooming", shape: "portrait" },
-  ] satisfies { src: string; alt: string; caption: string; shape: "portrait" | "square" | "landscape" }[],
+export const about = {
+  title: "A Better Grooming Experience",
+  paragraphs: [
+    "At L&Y’s, every appointment is personal. We take the time to understand your pet so they feel calm and comfortable from start to finish.",
+    "The goal is simple: a pet who leaves clean, cared for and beautifully presented.",
+  ],
+  // Vertical, 1200 × 1500 px — ideally the groomer with a pet.
+  image: "/images/about.jpg",
+  imageAlt: "Groomer caring for a dog at L&Y’s Pet Grooming",
+};
+
+export const gallery = {
+  title: "Our Work",
+  // 6 to 8 photos. Square crops work best (1200 × 1200 px).
+  items: [
+    { src: "/images/gallery-01.jpg", alt: "Groomed dog portrait" },
+    { src: "/images/gallery-02.jpg", alt: "Dog after a full grooming" },
+    { src: "/images/gallery-03.jpg", alt: "Freshly styled coat" },
+    { src: "/images/gallery-04.jpg", alt: "Happy dog after a bath and brush" },
+    { src: "/images/gallery-05.jpg", alt: "Neat haircut and styling" },
+    { src: "/images/gallery-06.jpg", alt: "Soft, brushed coat" },
+    { src: "/images/gallery-07.jpg", alt: "Groomed dog ready to go home" },
+    { src: "/images/gallery-08.jpg", alt: "Clean and polished finish" },
+  ],
+  instagramCta: "See more on Instagram",
 };
 
 /**
  * ⚠️ PLACEHOLDER REVIEWS — replace with REAL reviews from real clients
- * (Google, Facebook, Instagram), with their permission. Publishing invented
- * testimonials is illegal in the US (FTC rule on fake reviews, 2024).
- * Maximum 3.
+ * (Google, Facebook, Instagram) and only with their permission.
+ * Publishing invented testimonials is illegal in the US (FTC rule, 2024).
+ * Maximum 3. `stars` = 1 to 5 (use the real rating the client gave).
  */
 export const reviews = {
-  eyebrow: "Reviews",
-  title: "Kind words.",
+  title: "Loved by Pet Parents",
   items: [
-    {
-      quote: "A real review from a happy client will go here — two or three sentences about their pet’s experience.",
-      name: "Client Name",
-      detail: "Pet name · Service",
-    },
-    {
-      quote: "A second genuine review, ideally mentioning what made the visit feel different and personal.",
-      name: "Client Name",
-      detail: "Pet name · Service",
-    },
-    {
-      quote: "A third short review. Keep each one brief so the section stays clean and easy to read.",
-      name: "Client Name",
-      detail: "Pet name · Service",
-    },
+    { stars: 5, quote: "Real client review goes here — one or two short sentences.", name: "Client Name" },
+    { stars: 5, quote: "Second real review — what they loved about the experience.", name: "Client Name" },
+    { stars: 5, quote: "Third real review — short, genuine and specific.", name: "Client Name" },
   ],
+  // Optional: link to your Google / Facebook reviews page. Leave "" to hide.
+  allReviewsUrl: "",
+};
+
+export const booking = {
+  title: "Ready to Book Your Pet’s Grooming?",
+  text: "Contact us today and let’s find the right grooming service for your pet.",
+  bookCta: "Book Appointment",
+  callCta: "Call Now",
+  whatsappCta: "WhatsApp",
 };
 
 export const contactSection = {
-  eyebrow: "Contact & Booking",
-  title: "Let’s plan their next groom.",
-  text: "Call, send us a message on WhatsApp or book directly — we’ll help you choose the right service for your pet.",
-  callCta: "Call Now",
-  whatsappCta: "WhatsApp",
-  bookCta: "Book Appointment",
-};
-
-export const finalCta = {
-  title: "Ready for Their Freshest Look?",
-  text: "Contact us to schedule your pet’s next grooming appointment.",
-  cta: "Book an Appointment",
+  title: "Contact",
 };
 
 export const footer = {
-  links: [
-    { label: "Services", href: "/#services" },
-    { label: "About", href: "/#about" },
-    { label: "Our Work", href: "/#work" },
-    { label: "Contact", href: "/#contact" },
-  ],
   legal: [
     { label: "Privacy Policy", href: "/privacy/" },
     { label: "Terms", href: "/terms/" },

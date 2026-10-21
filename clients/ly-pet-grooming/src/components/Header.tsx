@@ -9,7 +9,7 @@ export default function Header({ home = true }: { home?: boolean }) {
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 24);
+    const onScroll = () => setScrolled(window.scrollY > 8);
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
@@ -26,12 +26,12 @@ export default function Header({ home = true }: { home?: boolean }) {
   const href = (h: string) => (home ? h : `/${h}`);
 
   return (
-    <header className={`header ${scrolled ? "is-scrolled" : ""} ${open ? "is-open" : ""}`}>
-      <div className="header__inner container">
+    <header className={`header${scrolled || open ? " is-solid" : ""}`}>
+      <div className="container header__inner">
         <a href={home ? "#top" : "/"} className="brand" aria-label={`${site.name} — home`}>
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src={site.logo} alt="" width={44} height={44} className="brand__logo" />
-          {site.showWordmark && <span className="brand__name">{site.name}</span>}
+          <img src={site.logo} alt="" width={44} height={44} />
+          <span>{site.name}</span>
         </a>
 
         <nav className="header__nav" aria-label="Main">
@@ -42,7 +42,7 @@ export default function Header({ home = true }: { home?: boolean }) {
           ))}
         </nav>
 
-        <a href={bookingHref} className="btn btn--small btn--dark header__cta" target="_blank" rel="noopener">
+        <a href={bookingHref} className="btn btn--dark btn--sm" target="_blank" rel="noopener">
           Book Now
         </a>
 
@@ -60,18 +60,13 @@ export default function Header({ home = true }: { home?: boolean }) {
 
       <div id="mobile-menu" className="mobile-menu" hidden={!open}>
         <nav aria-label="Mobile">
-          {nav.map((item, i) => (
-            <a
-              key={item.href}
-              href={href(item.href)}
-              onClick={() => setOpen(false)}
-              style={{ "--i": i } as React.CSSProperties}
-            >
+          {nav.map((item) => (
+            <a key={item.href} href={href(item.href)} onClick={() => setOpen(false)}>
               {item.label}
             </a>
           ))}
         </nav>
-        <a href={bookingHref} className="btn btn--dark" target="_blank" rel="noopener">
+        <a href={bookingHref} className="btn btn--dark btn--block" target="_blank" rel="noopener">
           Book an Appointment
         </a>
       </div>

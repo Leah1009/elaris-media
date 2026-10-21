@@ -1,11 +1,12 @@
 # L&Y's Pet Grooming — website
 
-Static site (Next.js static export + a lightweight WebGL stage). No database, no backend, no monthly costs beyond hosting.
+Static site (Next.js static export), built for bookings: fast, mobile-first, no 3D. No database, no backend, no monthly costs beyond hosting.
 
 ## Day-to-day edits
 - **All text, phone, WhatsApp, email, hours, reviews, social links:** `src/content.ts`
-- **Photos:** replace the files in `public/images/` keeping the same names
-  (`about.jpg`, `before.jpg`, `after.jpg`, `work-01.jpg` … `work-06.jpg`). JPG/WebP, ~1600px, < 350 KB.
+- **Photos:** replace the files in `public/images/` keeping the same names:
+  `hero.jpg` (most important), `result-1-before/after.jpg` … `result-3-…`, `service-*.jpg` (small round),
+  `about.jpg`, `gallery-01.jpg` … `gallery-08.jpg`. JPG/WebP, ~1600px, < 350 KB.
 - **Logo:** replace `public/images/logo.svg` (and `src/app/icon.svg` for the browser tab icon).
   If your logo is a PNG, set `site.logo` in `content.ts` to `/images/logo.png`.
 

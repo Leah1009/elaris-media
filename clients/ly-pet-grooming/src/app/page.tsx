@@ -1,15 +1,7 @@
-import About from "@/components/About";
-import Contact from "@/components/Contact";
-import FinalCta from "@/components/FinalCta";
 import Footer from "@/components/Footer";
 import Header from "@/components/Header";
-import Hero from "@/components/Hero";
-import RevealObserver from "@/components/RevealObserver";
-import Reviews from "@/components/Reviews";
-import Services from "@/components/Services";
-import Why from "@/components/Why";
-import Work from "@/components/Work";
-import Experience from "@/components/three/Experience";
+import MobileBar from "@/components/MobileBar";
+import { About, BookingCta, Contact, Gallery, Hero, Results, Reviews, Services, Why } from "@/components/Sections";
 import { contact, services, site } from "@/content";
 
 const jsonLd = {
@@ -18,34 +10,35 @@ const jsonLd = {
   name: site.name,
   description: site.description,
   url: site.url,
-  image: `${site.url}${site.logo}`,
+  image: `${site.url}/images/hero.jpg`,
   telephone: `+${contact.phoneDigits}`,
   email: contact.email,
   areaServed: contact.serviceArea,
   sameAs: [contact.instagram, contact.facebook],
   makesOffer: services.items.map((s) => ({
     "@type": "Offer",
-    itemOffered: { "@type": "Service", name: s.title, description: s.text },
+    itemOffered: { "@type": "Service", name: s.name, description: s.text },
   })),
 };
 
+// Order follows the booking journey: see → results → services → trust → reviews → book.
 export default function Home() {
   return (
     <>
       <Header />
       <main id="main">
         <Hero />
+        <Results />
         <Services />
-        <About />
         <Why />
-        <Work />
+        <About />
+        <Gallery />
         <Reviews />
+        <BookingCta />
         <Contact />
-        <FinalCta />
       </main>
       <Footer />
-      <Experience />
-      <RevealObserver />
+      <MobileBar />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
     </>
   );
