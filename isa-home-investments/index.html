@@ -1253,11 +1253,12 @@ footer .footer-links a:hover{color:var(--copper-light);}
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16h.01"/></svg>
           <span data-i18n="form.submitError">Something went wrong and we couldn't submit your request. Please try again, or email us directly at info@isahomeus.com.</span>
         </div>
-        <form id="estimateForm" novalidate>
-          <!-- Honeypot (spam trap, hidden from real users) -->
+        <form id="estimateForm" name="estimate" method="POST" action="/" data-netlify="true" netlify-honeypot="company_website" novalidate>
+          <input type="hidden" name="form-name" value="estimate">
+          <!-- Honeypot (spam trap, hidden from real users; also registered with Netlify via netlify-honeypot above) -->
           <div class="hp-field"><label>Company Website</label><input type="text" name="company_website" tabindex="-1" autocomplete="off"></div>
-          <!-- FormSubmit.co config: replace ajax target above / see script for details -->
-          <input type="hidden" name="_subject" value="New Project Request — Isa Home Investments">
+          <!-- Netlify reads this to set the notification email's subject line -->
+          <input type="hidden" name="subject" value="New Project Request — Isa Home Investments">
 
           <div class="form-grid">
             <div class="form-field">
@@ -2044,15 +2045,27 @@ form.addEventListener('submit', async (e) => {
   };
 
   try{
-    if(!supabaseClient) throw new Error('Supabase client is not available.');
+    // Netlify Forms is the reliable path: a plain POST intercepted by
+    // Netlify's own infrastructure, so it works even if a CDN script (like
+    // the Supabase client below) fails to load. This is what the success
+    // message is gated on — nothing is shown until Netlify actually
+    // accepts the submission.
+    const netlifyBody = new URLSearchParams(fd).toString();
+    const resp = await fetch('/', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: netlifyBody
+    });
+    if(!resp.ok) throw new Error('Netlify Forms submission failed (status ' + resp.status + ').');
 
-    // DEBUG PASS: FORM -> SUPABASE ONLY. The FormSubmit.co email call is
-    // temporarily removed so a submission failure can only mean the
-    // Supabase insert itself failed — no other code path can swallow it.
-    // Public anon key can only INSERT here — RLS on "Leads" has no public
-    // SELECT/UPDATE/DELETE policy, so we never chain .select() on this call.
-    const { error } = await supabaseClient.from('Leads').insert([leadPayload]);
-    if(error) throw error;
+    // Best-effort copy into Supabase's "Leads" table — never blocks the
+    // success state above and never surfaces an error to the visitor;
+    // Netlify Forms + its email notification is the path this depends on.
+    if(supabaseClient){
+      supabaseClient.from('Leads').insert([leadPayload]).then(({ error }) => {
+        if(error) console.error('SUPABASE SECONDARY INSERT ERROR', error);
+      });
+    }
 
     form.reset();
     form.querySelectorAll('.form-field.invalid').forEach(el => el.classList.remove('invalid'));
@@ -2061,7 +2074,7 @@ form.addEventListener('submit', async (e) => {
     formSuccess.classList.add('show');
     formSuccess.scrollIntoView({behavior:'smooth', block:'center'});
   }catch(err){
-    console.error('SUPABASE SUBMISSION ERROR', err);
+    console.error('NETLIFY FORM SUBMISSION ERROR', err);
     formError.classList.add('show');
     formError.scrollIntoView({behavior:'smooth', block:'center'});
   }finally{
