@@ -32,7 +32,7 @@ export default function Nav() {
         }`}
       >
         <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4 lg:px-10">
-          <a href="#home" className="font-display text-2xl tracking-wide text-ink sm:text-[28px]">
+          <a href="#home" className="font-display text-[32px] tracking-wide text-ink sm:text-[38px]">
             Elaris <span className="text-gold-deep">Media</span>
           </a>
 

@@ -16,7 +16,7 @@ export const dict = {
       "Strategy, content, web development and ads — built around your goals, your business and your budget. Not someone else's package.",
     "hero.ctaPrimary": "Book a Free Call",
     "hero.ctaSecondary": "See Our Services",
-    "hero.mediaLabel": "Visual coming soon",
+    "hero.mediaQuote": "Every brand has a story worth telling well.",
 
     "ads.eyebrow": "Where the traffic comes from",
     "ads.headline": "Content that's found. Ads that convert.",
@@ -158,7 +158,7 @@ export const dict = {
       "Estrategia, contenido, desarrollo web y publicidad — construido alrededor de tus metas, tu negocio y tu presupuesto. No el paquete de alguien más.",
     "hero.ctaPrimary": "Agendar Llamada Gratis",
     "hero.ctaSecondary": "Ver Nuestros Servicios",
-    "hero.mediaLabel": "Visual próximamente",
+    "hero.mediaQuote": "Toda marca tiene una historia que vale la pena contar bien.",
 
     "ads.eyebrow": "De dónde viene el tráfico",
     "ads.headline": "Contenido que se encuentra. Anuncios que convierten.",

@@ -34,12 +34,17 @@ export default function HeroSection() {
         </Reveal>
 
         <Reveal delay={0.1}>
-          <div className="relative aspect-[4/5] overflow-hidden rounded-2xl border border-rule bg-cream-deep/70">
-            <div className="absolute inset-5 flex items-center justify-center rounded-xl border border-dashed border-gold/40">
-              <span className="text-[11px] uppercase tracking-[0.3em] text-ink/35">{t("hero.mediaLabel")}</span>
+          <div className="relative flex aspect-[4/5] flex-col justify-between overflow-hidden rounded-2xl border border-rule bg-gradient-to-br from-cream-deep to-cream-deep/40 p-10">
+            <span className="font-display text-[160px] leading-none text-gold/25">E</span>
+            <div>
+              <p className="font-display text-xl italic leading-snug text-ink/80 md:text-2xl">
+                {t("hero.mediaQuote")}
+              </p>
+              <span className="mt-5 block h-px w-12 bg-gold-deep" />
+              <span className="mt-3 block text-[11px] uppercase tracking-[0.28em] text-gold-deep">
+                {t("hero.eyebrow")}
+              </span>
             </div>
-            <span className="absolute left-5 top-5 h-2 w-2 rounded-full border border-gold/50" />
-            <span className="absolute bottom-5 right-5 h-2 w-2 rounded-full border border-gold/50" />
           </div>
         </Reveal>
       </div>
