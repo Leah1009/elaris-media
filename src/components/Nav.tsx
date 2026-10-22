@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Image from "next/image";
 import { useLanguage } from "@/lib/i18n/LanguageProvider";
 import type { DictKey } from "@/lib/i18n/dictionary";
 import LangToggle from "./LangToggle";
@@ -32,8 +33,15 @@ export default function Nav() {
         }`}
       >
         <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4 lg:px-10">
-          <a href="#home" className="font-display text-[32px] tracking-wide text-ink sm:text-[38px]">
-            Elaris <span className="text-gold-deep">Media</span>
+          <a href="#home" className="shrink-0">
+            <Image
+              src="/brand/elaris-em.png"
+              alt="Elaris Media"
+              width={490}
+              height={466}
+              priority
+              className="h-11 w-auto sm:h-12"
+            />
           </a>
 
           <nav className="hidden items-center gap-8 lg:flex">
