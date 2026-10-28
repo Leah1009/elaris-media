@@ -16,7 +16,6 @@ export const dict = {
       "Strategy, content, web development and ads — built around your goals, your business and your budget. Not someone else's package.",
     "hero.ctaPrimary": "Book a Free Call",
     "hero.ctaSecondary": "See Our Services",
-    "hero.mediaQuote": "Every brand has a story worth telling well.",
 
     "ads.eyebrow": "Where the traffic comes from",
     "ads.headline": "Content that's found. Ads that convert.",
@@ -77,6 +76,12 @@ export const dict = {
     "hiw.s2.body": "We create a custom plan focused on what your business actually needs — without unnecessary services.",
     "hiw.s3.title": "We Create & Grow",
     "hiw.s3.body": "We bring the strategy to life through content, campaigns, branding, websites and the services your business needs to grow.",
+    "hiw.s1.chipTitle": "New inquiry",
+    "hiw.s1.chipSub": "Just now",
+    "hiw.s2.chipTitle": "Your strategy",
+    "hiw.s2.chipSub": "Ready to review",
+    "hiw.s3.chipTitle": "Campaign live",
+    "hiw.s3.chipSub": "Now growing",
 
     "portfolio.eyebrow": "Our Work",
     "portfolio.headline": "Portfolio.",
@@ -158,7 +163,6 @@ export const dict = {
       "Estrategia, contenido, desarrollo web y publicidad — construido alrededor de tus metas, tu negocio y tu presupuesto. No el paquete de alguien más.",
     "hero.ctaPrimary": "Agendar Llamada Gratis",
     "hero.ctaSecondary": "Ver Nuestros Servicios",
-    "hero.mediaQuote": "Toda marca tiene una historia que vale la pena contar bien.",
 
     "ads.eyebrow": "De dónde viene el tráfico",
     "ads.headline": "Contenido que se encuentra. Anuncios que convierten.",
@@ -219,6 +223,12 @@ export const dict = {
     "hiw.s2.body": "Diseñamos un plan personalizado enfocado en lo que tu negocio realmente necesita.",
     "hiw.s3.title": "Creamos y Crecemos",
     "hiw.s3.body": "Convertimos la estrategia en acción mediante contenido, campañas, branding, sitios web y más.",
+    "hiw.s1.chipTitle": "Nueva consulta",
+    "hiw.s1.chipSub": "Ahora mismo",
+    "hiw.s2.chipTitle": "Tu estrategia",
+    "hiw.s2.chipSub": "Lista para revisar",
+    "hiw.s3.chipTitle": "Campaña activa",
+    "hiw.s3.chipSub": "Ahora creciendo",
 
     "portfolio.eyebrow": "Nuestro Trabajo",
     "portfolio.headline": "Portafolio.",

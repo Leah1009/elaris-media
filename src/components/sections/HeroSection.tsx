@@ -2,13 +2,14 @@
 
 import { useLanguage } from "@/lib/i18n/LanguageProvider";
 import Reveal from "@/components/Reveal";
+import DeviceMockup from "@/components/DeviceMockup";
 
 export default function HeroSection() {
   const { t } = useLanguage();
 
   return (
     <section id="home" className="relative overflow-hidden bg-cream px-6 pb-24 pt-40 md:pt-48">
-      <div className="mx-auto grid max-w-6xl items-center gap-14 lg:grid-cols-[1.1fr_0.9fr] lg:gap-10">
+      <div className="mx-auto grid max-w-6xl items-center gap-14 lg:grid-cols-[1fr_1fr] lg:gap-16">
         <Reveal>
           <span className="text-[11px] uppercase tracking-[0.28em] text-gold-deep">{t("hero.eyebrow")}</span>
           <h1
@@ -34,18 +35,39 @@ export default function HeroSection() {
         </Reveal>
 
         <Reveal delay={0.1}>
-          <div className="relative flex aspect-[4/5] flex-col justify-between overflow-hidden rounded-2xl border border-rule bg-gradient-to-br from-cream-deep to-cream-deep/40 p-10">
-            <span className="font-display text-[160px] leading-none text-gold/25">E</span>
-            <div>
-              <p className="font-display text-xl italic leading-snug text-ink/80 md:text-2xl">
-                {t("hero.mediaQuote")}
-              </p>
-              <span className="mt-5 block h-px w-12 bg-gold-deep" />
-              <span className="mt-3 block text-[11px] uppercase tracking-[0.28em] text-gold-deep">
-                {t("hero.eyebrow")}
-              </span>
-            </div>
-          </div>
+          <DeviceMockup
+            browser={
+              <div className="flex h-full flex-col bg-cream-deep/30 p-6">
+                <div className="flex items-center justify-between">
+                  <span className="font-display text-sm text-ink">
+                    E<span className="text-gold-deep">M</span>
+                  </span>
+                  <div className="flex gap-3">
+                    <span className="h-1 w-8 rounded-full bg-ink/15" />
+                    <span className="h-1 w-8 rounded-full bg-ink/15" />
+                    <span className="h-1 w-8 rounded-full bg-ink/15" />
+                  </div>
+                </div>
+                <div className="mt-auto">
+                  <span className="block h-2.5 w-3/4 rounded-full bg-ink/70" />
+                  <span className="mt-2 block h-2.5 w-1/2 rounded-full bg-ink/70" />
+                  <span className="mt-4 block h-2 w-2/3 rounded-full bg-ink/20" />
+                  <span className="mt-5 inline-block rounded-full bg-gold-deep px-5 py-1.5 text-[9px] uppercase tracking-[0.1em] text-cream-soft">
+                    {t("hero.ctaPrimary")}
+                  </span>
+                </div>
+              </div>
+            }
+            phone={
+              <div className="flex h-full flex-col gap-3 bg-cream-deep/40 p-3 pt-5">
+                <span className="mx-auto h-1 w-7 rounded-full bg-ink/20" />
+                <span className="block h-10 w-full rounded-md bg-gold/30" />
+                <span className="block h-2 w-3/4 rounded-full bg-ink/60" />
+                <span className="block h-2 w-1/2 rounded-full bg-ink/30" />
+                <span className="mt-auto block h-7 w-full rounded-full bg-ink" />
+              </div>
+            }
+          />
         </Reveal>
       </div>
     </section>

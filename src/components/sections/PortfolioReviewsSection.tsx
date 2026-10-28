@@ -3,6 +3,7 @@
 import { useLanguage } from "@/lib/i18n/LanguageProvider";
 import Reveal from "@/components/Reveal";
 import { waLink } from "@/lib/constants";
+import DeviceMockup from "@/components/DeviceMockup";
 
 export default function PortfolioReviewsSection() {
   const { t, lang } = useLanguage();
@@ -22,9 +23,20 @@ export default function PortfolioReviewsSection() {
             <p className="mx-auto mt-4 max-w-xl text-sm text-ink/70">{t("portfolio.body")}</p>
           </Reveal>
 
-          <Reveal delay={0.1} className="mx-auto mt-10 max-w-lg rounded-lg border border-dashed border-ink/20 bg-cream-soft/60 p-10">
-            <h3 className="font-display text-lg text-ink">{t("portfolio.pendingT")}</h3>
-            <p className="mt-2 text-sm text-ink/60">{t("portfolio.pendingS")}</p>
+          <Reveal delay={0.1} className="mx-auto mt-10 max-w-xl">
+            <DeviceMockup
+              browser={
+                <div className="flex h-full flex-col items-center justify-center gap-2 bg-cream-deep/30 p-8 text-center">
+                  <h3 className="font-display text-base text-ink">{t("portfolio.pendingT")}</h3>
+                  <p className="max-w-xs text-[12px] text-ink/55">{t("portfolio.pendingS")}</p>
+                </div>
+              }
+              phone={
+                <div className="flex h-full items-center justify-center bg-cream-deep/40 p-3">
+                  <span className="font-display text-sm text-ink/30">E</span>
+                </div>
+              }
+            />
           </Reveal>
         </div>
       </section>
