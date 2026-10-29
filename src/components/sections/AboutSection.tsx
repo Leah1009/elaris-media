@@ -41,6 +41,37 @@ export default function AboutSection() {
             </Reveal>
           ))}
         </div>
+
+        <div className="mt-20 grid gap-10 border-t border-ink/15 pt-16 md:grid-cols-2 md:gap-16">
+          <div>
+            <Reveal>
+              <span className="text-[11px] uppercase tracking-[0.28em] text-gold-deep">{t("about.philosophy.eyebrow")}</span>
+            </Reveal>
+            <MaskReveal
+              as="h3"
+              delay={0.06}
+              className="mt-3 font-display text-2xl text-ink"
+              html={t("about.philosophy.headline")}
+            />
+            <Reveal delay={0.16}>
+              <p className="mt-4 text-sm leading-relaxed text-ink/70">{t("about.philosophy.body")}</p>
+            </Reveal>
+          </div>
+          <div>
+            <Reveal>
+              <span className="text-[11px] uppercase tracking-[0.28em] text-gold-deep">{t("about.personal.eyebrow")}</span>
+            </Reveal>
+            <MaskReveal
+              as="h3"
+              delay={0.06}
+              className="mt-3 font-display text-2xl text-ink"
+              html={t("about.personal.headline")}
+            />
+            <Reveal delay={0.16}>
+              <p className="mt-4 text-sm leading-relaxed text-ink/70">{t("about.personal.body")}</p>
+            </Reveal>
+          </div>
+        </div>
       </div>
     </section>
   );

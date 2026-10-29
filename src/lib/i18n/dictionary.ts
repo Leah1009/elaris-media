@@ -69,6 +69,13 @@ export const dict = {
     "about.p4.title": "Relationships",
     "about.p4.sub": "That last.",
 
+    "about.philosophy.eyebrow": "Our Philosophy",
+    "about.philosophy.headline": "Marketing Built Around You,<br>Not a Template.",
+    "about.philosophy.body": "We don't sell fixed packages. Every strategy starts with a real conversation about your business, your budget and your goals — then we build the marketing that fits, instead of asking you to fit the marketing.",
+    "about.personal.eyebrow": "How We Work",
+    "about.personal.headline": "Direct Access.<br>Real Attention.",
+    "about.personal.body": "You talk directly to the people managing your account — not a rotating contact relaying messages. Clear communication, honest timelines, and decisions explained in plain language, every step of the way.",
+
     "hiw.eyebrow": "How It Works",
     "hiw.headline": "From Idea<br>to Growth.",
     "hiw.body": "No complicated agency process. Just a strategy built around your business.",
@@ -221,6 +228,13 @@ export const dict = {
     "about.p3.sub": "Que importan.",
     "about.p4.title": "Relaciones",
     "about.p4.sub": "Que perduran.",
+
+    "about.philosophy.eyebrow": "Nuestra Filosofía",
+    "about.philosophy.headline": "Marketing Creado Para Ti,<br>No Desde una Plantilla.",
+    "about.philosophy.body": "No vendemos paquetes fijos. Cada estrategia empieza con una conversación real sobre tu negocio, tu presupuesto y tus objetivos — y a partir de ahí construimos el marketing que se ajusta a ti, en vez de pedirte que te ajustes tú al marketing.",
+    "about.personal.eyebrow": "Cómo Trabajamos",
+    "about.personal.headline": "Acceso Directo.<br>Atención Real.",
+    "about.personal.body": "Hablas directamente con las personas que manejan tu cuenta — no con un contacto que rota y transmite mensajes. Comunicación clara, plazos honestos y decisiones explicadas en lenguaje simple, en cada paso del camino.",
 
     "hiw.eyebrow": "Cómo Funciona",
     "hiw.headline": "De una Idea<br>al Crecimiento.",
