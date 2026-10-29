@@ -3,6 +3,7 @@
 import { useLanguage } from "@/lib/i18n/LanguageProvider";
 import type { DictKey } from "@/lib/i18n/dictionary";
 import Reveal from "@/components/Reveal";
+import MaskReveal from "@/components/MaskReveal";
 
 const ICONS: Record<string, string> = {
   s1: "M3 3h18v18H3zM12 12m-4 0a4 4 0 1 0 8 0a4 4 0 1 0 -8 0M17.5 6.5h.01",
@@ -40,21 +41,27 @@ export default function ServicesSection() {
   return (
     <section id="services" className="bg-cream px-6 py-28">
       <div className="mx-auto max-w-6xl">
-        <Reveal className="mb-14 max-w-xl">
-          <span className="text-[11px] uppercase tracking-[0.28em] text-gold-deep">{t("services.eyebrow")}</span>
-          <h2
+        <div className="mb-14 max-w-xl">
+          <Reveal>
+            <span className="text-[11px] uppercase tracking-[0.28em] text-gold-deep">{t("services.eyebrow")}</span>
+          </Reveal>
+          <MaskReveal
+            as="h2"
+            delay={0.08}
             className="mt-3 font-display text-3xl text-ink md:text-4xl"
-            dangerouslySetInnerHTML={{ __html: t("services.headline") }}
+            html={t("services.headline")}
           />
-          <p className="mt-4 text-sm text-ink/70">{t("services.body")}</p>
-        </Reveal>
+          <Reveal delay={0.2}>
+            <p className="mt-4 text-sm text-ink/70">{t("services.body")}</p>
+          </Reveal>
+        </div>
 
         <div className="grid gap-x-8 gap-y-10 sm:grid-cols-2 lg:grid-cols-3">
           {SERVICES.map((service, i) => (
             <Reveal
               key={service.id}
               delay={(i % 3) * 0.06}
-              className="group cursor-default rounded-lg p-3 -m-3 transition-transform duration-300 hover:-translate-y-1"
+              className="group rounded-lg p-3 -m-3 transition-transform duration-300 hover:-translate-y-1"
             >
               <svg
                 viewBox="0 0 24 24"
@@ -67,6 +74,12 @@ export default function ServicesSection() {
               </svg>
               <h3 className="font-display text-base text-ink">{t(service.titleKey)}</h3>
               <p className="mt-1.5 text-sm text-ink/60">{t(service.bodyKey)}</p>
+              <a
+                href="#contact"
+                className="mt-2 inline-block text-[11px] uppercase tracking-[0.1em] text-gold-deep opacity-0 transition-opacity duration-300 group-hover:opacity-100"
+              >
+                {t("services.cta")} →
+              </a>
             </Reveal>
           ))}
         </div>

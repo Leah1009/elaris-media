@@ -2,7 +2,9 @@
 
 import { useLanguage } from "@/lib/i18n/LanguageProvider";
 import Reveal from "@/components/Reveal";
+import MaskReveal from "@/components/MaskReveal";
 import DeviceMockup from "@/components/DeviceMockup";
+import Parallax from "@/components/Parallax";
 
 export default function HeroSection() {
   const { t } = useLanguage();
@@ -10,12 +12,17 @@ export default function HeroSection() {
   return (
     <section id="home" className="relative overflow-hidden bg-cream px-6 pb-24 pt-40 md:pt-48">
       <div className="mx-auto grid max-w-6xl items-center gap-14 lg:grid-cols-[1fr_1fr] lg:gap-16">
-        <Reveal>
-          <span className="text-[11px] uppercase tracking-[0.28em] text-gold-deep">{t("hero.eyebrow")}</span>
-          <h1
+        <div>
+          <Reveal>
+            <span className="text-[11px] uppercase tracking-[0.28em] text-gold-deep">{t("hero.eyebrow")}</span>
+          </Reveal>
+          <MaskReveal
+            as="h1"
+            delay={0.08}
             className="mt-5 font-display text-[42px] leading-[1.08] text-ink sm:text-5xl lg:text-[56px]"
-            dangerouslySetInnerHTML={{ __html: t("hero.headline") }}
+            html={t("hero.headline")}
           />
+          <Reveal delay={0.2}>
           <p className="mt-6 max-w-md text-[15px] leading-relaxed text-ink/70">{t("hero.body")}</p>
 
           <div className="mt-10 flex flex-wrap items-center gap-4">
@@ -32,9 +39,11 @@ export default function HeroSection() {
               {t("hero.ctaSecondary")}
             </a>
           </div>
-        </Reveal>
+          </Reveal>
+        </div>
 
         <Reveal delay={0.1}>
+         <Parallax amount={20}>
           <DeviceMockup
             browser={
               <div className="flex h-full flex-col bg-cream-deep/30 p-6">
@@ -68,6 +77,7 @@ export default function HeroSection() {
               </div>
             }
           />
+         </Parallax>
         </Reveal>
       </div>
     </section>

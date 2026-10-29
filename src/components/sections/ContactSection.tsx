@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useLanguage } from "@/lib/i18n/LanguageProvider";
 import type { DictKey } from "@/lib/i18n/dictionary";
 import Reveal from "@/components/Reveal";
+import MaskReveal from "@/components/MaskReveal";
 import { waLink } from "@/lib/constants";
 import { supabase } from "@/lib/supabase";
 
@@ -97,12 +98,18 @@ export default function ContactSection() {
             </div>
           ) : (
             <>
-              <span className="text-[11px] uppercase tracking-[0.28em] text-gold-deep">{t("form.eyebrow")}</span>
-              <h3
+              <Reveal>
+                <span className="text-[11px] uppercase tracking-[0.28em] text-gold-deep">{t("form.eyebrow")}</span>
+              </Reveal>
+              <MaskReveal
+                as="h3"
+                delay={0.08}
                 className="mt-2 font-display text-2xl text-ink"
-                dangerouslySetInnerHTML={{ __html: t("form.headline") }}
+                html={t("form.headline")}
               />
-              <p className="mt-2 text-sm text-ink/60">{t("form.body")}</p>
+              <Reveal delay={0.2}>
+                <p className="mt-2 text-sm text-ink/60">{t("form.body")}</p>
+              </Reveal>
 
               <form onSubmit={handleSubmit} className="mt-7 flex flex-col gap-5">
                 <input

@@ -2,6 +2,7 @@
 
 import { useLanguage } from "@/lib/i18n/LanguageProvider";
 import Reveal from "@/components/Reveal";
+import MaskReveal from "@/components/MaskReveal";
 import { waLink } from "@/lib/constants";
 import DeviceMockup from "@/components/DeviceMockup";
 
@@ -17,11 +18,21 @@ export default function PortfolioReviewsSection() {
     <>
       <section id="portfolio" className="bg-cream-deep px-6 py-28">
         <div className="mx-auto max-w-6xl">
-          <Reveal className="max-w-xl">
-            <span className="text-[11px] uppercase tracking-[0.28em] text-gold-deep">{t("portfolio.eyebrow")}</span>
-            <h2 className="mt-3 font-display text-3xl text-ink md:text-4xl">{t("portfolio.headline")}</h2>
-            <p className="mt-4 text-sm text-ink/70">{t("portfolio.body")}</p>
-          </Reveal>
+          <div className="max-w-xl">
+            <Reveal>
+              <span className="text-[11px] uppercase tracking-[0.28em] text-gold-deep">{t("portfolio.eyebrow")}</span>
+            </Reveal>
+            <MaskReveal
+              as="h2"
+              delay={0.08}
+              className="mt-3 font-display text-3xl text-ink md:text-4xl"
+            >
+              {t("portfolio.headline")}
+            </MaskReveal>
+            <Reveal delay={0.2}>
+              <p className="mt-4 text-sm text-ink/70">{t("portfolio.body")}</p>
+            </Reveal>
+          </div>
 
           <div className="mt-14 grid gap-6 lg:grid-cols-[1.6fr_1fr]">
             <Reveal delay={0.1}>
@@ -71,10 +82,14 @@ export default function PortfolioReviewsSection() {
         <div className="mx-auto max-w-4xl text-center">
           <Reveal>
             <span className="text-[11px] uppercase tracking-[0.28em] text-gold-deep">{t("reviews.eyebrow")}</span>
-            <h2
-              className="mt-3 font-display text-3xl text-ink md:text-4xl"
-              dangerouslySetInnerHTML={{ __html: t("reviews.headline") }}
-            />
+          </Reveal>
+          <MaskReveal
+            as="h2"
+            delay={0.08}
+            className="mt-3 font-display text-3xl text-ink md:text-4xl"
+            html={t("reviews.headline")}
+          />
+          <Reveal delay={0.2}>
             <p className="mx-auto mt-4 max-w-xl text-sm text-ink/70">{t("reviews.body")}</p>
           </Reveal>
 

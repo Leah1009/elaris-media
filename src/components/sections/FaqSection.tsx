@@ -3,6 +3,7 @@
 import { useLanguage } from "@/lib/i18n/LanguageProvider";
 import type { DictKey } from "@/lib/i18n/dictionary";
 import Reveal from "@/components/Reveal";
+import MaskReveal from "@/components/MaskReveal";
 
 const QA: { qKey: DictKey; aKey: DictKey }[] = [
   { qKey: "faq.q1", aKey: "faq.a1" },
@@ -19,13 +20,17 @@ export default function FaqSection() {
   return (
     <section id="faq" className="bg-cream-deep px-6 py-28">
       <div className="mx-auto max-w-3xl">
-        <Reveal className="mb-12">
-          <span className="text-[11px] uppercase tracking-[0.28em] text-gold-deep">{t("faq.eyebrow")}</span>
-          <h2
+        <div className="mb-12">
+          <Reveal>
+            <span className="text-[11px] uppercase tracking-[0.28em] text-gold-deep">{t("faq.eyebrow")}</span>
+          </Reveal>
+          <MaskReveal
+            as="h2"
+            delay={0.08}
             className="mt-3 font-display text-3xl text-ink md:text-4xl"
-            dangerouslySetInnerHTML={{ __html: t("faq.headline") }}
+            html={t("faq.headline")}
           />
-        </Reveal>
+        </div>
 
         <div className="flex flex-col divide-y divide-ink/10 border-y border-ink/10">
           {QA.map((qa, i) => (
