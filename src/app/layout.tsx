@@ -19,7 +19,7 @@ const jost = Jost({
   display: "swap",
 });
 
-const SITE_URL = "https://www.elarismedia.com";
+const SITE_URL = "https://elarismedia.net";
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
@@ -52,11 +52,13 @@ export const metadata: Metadata = {
     description:
       "Strategy, content, web development and ads built around your goals, your business and your budget.",
     locale: "en_US",
+    images: [{ url: "/brand/og-image.png", width: 1200, height: 630, alt: "Elaris Media" }],
   },
   twitter: {
     card: "summary_large_image",
     title: "Elaris Media — Big Brand Presence for Small Business",
     description: "Strategy, content, web development and ads built around your business.",
+    images: ["/brand/og-image.png"],
   },
 };
 

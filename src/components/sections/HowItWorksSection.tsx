@@ -49,7 +49,7 @@ export default function HowItWorksSection() {
                 </span>
                 <div className="min-w-0">
                   <p className="truncate text-[13px] font-medium text-ink">{t(step.chipTitleKey)}</p>
-                  <p className="text-[11px] text-ink/45">{t(step.chipSubKey)}</p>
+                  <p className="text-[11px] text-ink/60">{t(step.chipSubKey)}</p>
                 </div>
               </div>
 

@@ -69,7 +69,7 @@ export default function PortfolioReviewsSection() {
                   </svg>
                   <div>
                     <p className="font-display text-sm text-ink">{t(cat.labelKey)}</p>
-                    <p className="text-[11px] uppercase tracking-[0.1em] text-ink/40">{t("portfolio.catPending")}</p>
+                    <p className="text-[11px] uppercase tracking-[0.1em] text-ink/60">{t("portfolio.catPending")}</p>
                   </div>
                 </Reveal>
               ))}

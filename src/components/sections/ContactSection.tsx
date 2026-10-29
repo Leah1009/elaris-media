@@ -129,7 +129,7 @@ export default function ContactSection() {
                       required
                       value={business}
                       onChange={(e) => setBusiness(e.target.value)}
-                      className="rounded-md border border-ink/15 bg-cream px-3.5 py-2.5 text-sm normal-case tracking-normal text-ink outline-none focus:border-gold-deep"
+                      className="rounded-md border border-ink/15 bg-cream px-3.5 py-2.5 text-sm normal-case tracking-normal text-ink outline-none focus-visible:ring-2 focus-visible:ring-gold-deep focus-visible:ring-offset-2 focus-visible:ring-offset-cream-soft focus:border-gold-deep"
                     />
                   </label>
                   <label className="flex flex-col gap-1.5 text-[12px] uppercase tracking-[0.1em] text-ink/60">
@@ -138,7 +138,7 @@ export default function ContactSection() {
                       required
                       value={name}
                       onChange={(e) => setName(e.target.value)}
-                      className="rounded-md border border-ink/15 bg-cream px-3.5 py-2.5 text-sm normal-case tracking-normal text-ink outline-none focus:border-gold-deep"
+                      className="rounded-md border border-ink/15 bg-cream px-3.5 py-2.5 text-sm normal-case tracking-normal text-ink outline-none focus-visible:ring-2 focus-visible:ring-gold-deep focus-visible:ring-offset-2 focus-visible:ring-offset-cream-soft focus:border-gold-deep"
                     />
                   </label>
                   <label className="flex flex-col gap-1.5 text-[12px] uppercase tracking-[0.1em] text-ink/60">
@@ -148,7 +148,7 @@ export default function ContactSection() {
                       type="email"
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
-                      className="rounded-md border border-ink/15 bg-cream px-3.5 py-2.5 text-sm normal-case tracking-normal text-ink outline-none focus:border-gold-deep"
+                      className="rounded-md border border-ink/15 bg-cream px-3.5 py-2.5 text-sm normal-case tracking-normal text-ink outline-none focus-visible:ring-2 focus-visible:ring-gold-deep focus-visible:ring-offset-2 focus-visible:ring-offset-cream-soft focus:border-gold-deep"
                     />
                   </label>
                   <label className="flex flex-col gap-1.5 text-[12px] uppercase tracking-[0.1em] text-ink/60">
@@ -156,7 +156,7 @@ export default function ContactSection() {
                     <input
                       value={phone}
                       onChange={(e) => setPhone(e.target.value)}
-                      className="rounded-md border border-ink/15 bg-cream px-3.5 py-2.5 text-sm normal-case tracking-normal text-ink outline-none focus:border-gold-deep"
+                      className="rounded-md border border-ink/15 bg-cream px-3.5 py-2.5 text-sm normal-case tracking-normal text-ink outline-none focus-visible:ring-2 focus-visible:ring-gold-deep focus-visible:ring-offset-2 focus-visible:ring-offset-cream-soft focus:border-gold-deep"
                     />
                   </label>
                 </div>
@@ -187,7 +187,7 @@ export default function ContactSection() {
                     rows={3}
                     value={message}
                     onChange={(e) => setMessage(e.target.value)}
-                    className="resize-none rounded-md border border-ink/15 bg-cream px-3.5 py-2.5 text-sm normal-case tracking-normal text-ink outline-none focus:border-gold-deep"
+                    className="resize-none rounded-md border border-ink/15 bg-cream px-3.5 py-2.5 text-sm normal-case tracking-normal text-ink outline-none focus-visible:ring-2 focus-visible:ring-gold-deep focus-visible:ring-offset-2 focus-visible:ring-offset-cream-soft focus:border-gold-deep"
                   />
                 </label>
 
@@ -199,7 +199,7 @@ export default function ContactSection() {
                   {status === "submitting" ? t("form.submitting") : t("form.submit")}
                 </button>
                 {status === "error" && <p className="text-[12px] text-red-700/80">{t("form.errorBody")}</p>}
-                <p className="text-[11px] text-ink/40">{t("form.disclaimer")}</p>
+                <p className="text-[11px] text-ink/60">{t("form.disclaimer")}</p>
               </form>
             </>
           )}
