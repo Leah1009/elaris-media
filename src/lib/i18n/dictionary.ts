@@ -5,6 +5,7 @@ export const dict = {
     "nav.home": "Home",
     "nav.services": "Services",
     "nav.about": "About",
+    "nav.portfolio": "Work",
     "nav.faq": "Resources",
     "nav.contact": "Contact",
     "nav.bookCall": "Book a Call",
@@ -15,7 +16,7 @@ export const dict = {
     "hero.body":
       "Strategy, content, web development and ads — built around your goals, your business and your budget. Not someone else's package.",
     "hero.ctaPrimary": "Book a Free Call",
-    "hero.ctaSecondary": "See Our Services",
+    "hero.ctaSecondary": "Explore Our Work",
 
     "ads.eyebrow": "Where the traffic comes from",
     "ads.headline": "Content that's found. Ads that convert.",
@@ -88,6 +89,10 @@ export const dict = {
     "portfolio.body": "Reels, feeds, branding, websites and campaigns we've built for real clients.",
     "portfolio.pendingT": "Our project gallery is being curated.",
     "portfolio.pendingS": "We're putting together real work samples from Elaris Media clients. Check back soon.",
+    "portfolio.cat1": "Social Media",
+    "portfolio.cat2": "Branding",
+    "portfolio.cat3": "Web Design",
+    "portfolio.catPending": "Coming soon",
 
     "reviews.eyebrow": "Client Reviews",
     "reviews.headline": "Real People.<br>Real Results.",
@@ -152,6 +157,7 @@ export const dict = {
     "nav.home": "Inicio",
     "nav.services": "Servicios",
     "nav.about": "Nosotros",
+    "nav.portfolio": "Trabajo",
     "nav.faq": "Recursos",
     "nav.contact": "Contacto",
     "nav.bookCall": "Agendar Llamada",
@@ -162,7 +168,7 @@ export const dict = {
     "hero.body":
       "Estrategia, contenido, desarrollo web y publicidad — construido alrededor de tus metas, tu negocio y tu presupuesto. No el paquete de alguien más.",
     "hero.ctaPrimary": "Agendar Llamada Gratis",
-    "hero.ctaSecondary": "Ver Nuestros Servicios",
+    "hero.ctaSecondary": "Ver Nuestro Trabajo",
 
     "ads.eyebrow": "De dónde viene el tráfico",
     "ads.headline": "Contenido que se encuentra. Anuncios que convierten.",
@@ -235,6 +241,10 @@ export const dict = {
     "portfolio.body": "Reels, feeds, branding, sitios web y campañas que hemos creado para clientes reales.",
     "portfolio.pendingT": "Nuestra galería de proyectos está en preparación.",
     "portfolio.pendingS": "Estamos reuniendo muestras reales de trabajo de clientes de Elaris Media. Vuelve pronto.",
+    "portfolio.cat1": "Redes Sociales",
+    "portfolio.cat2": "Branding",
+    "portfolio.cat3": "Diseño Web",
+    "portfolio.catPending": "Próximamente",
 
     "reviews.eyebrow": "Reseñas de Clientes",
     "reviews.headline": "Personas Reales.<br>Resultados Reales.",

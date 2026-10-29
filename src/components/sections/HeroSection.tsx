@@ -26,7 +26,7 @@ export default function HeroSection() {
               {t("hero.ctaPrimary")}
             </a>
             <a
-              href="#services"
+              href="#portfolio"
               className="rounded-full border border-ink/15 px-7 py-3.5 text-[12px] uppercase tracking-[0.14em] text-ink transition hover:border-ink/40"
             >
               {t("hero.ctaSecondary")}

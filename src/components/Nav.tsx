@@ -9,6 +9,7 @@ import LangToggle from "./LangToggle";
 const LINKS: { href: string; key: DictKey }[] = [
   { href: "#about", key: "nav.about" },
   { href: "#services", key: "nav.services" },
+  { href: "#portfolio", key: "nav.portfolio" },
   { href: "#faq", key: "nav.faq" },
   { href: "#contact", key: "nav.contact" },
 ];
